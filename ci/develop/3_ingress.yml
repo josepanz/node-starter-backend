@@ -1,0 +1,18 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: ingress-node-starter-backend
+  namespace: default
+spec:
+  ingressClassName: nginx
+  rules:
+    - host: dev-node-starter.com.py
+      http:
+        paths:
+          - path: /node-starter-backend/api
+            pathType: Prefix
+            backend:
+              service:
+                name: service-node-starter-backend
+                port:
+                  number: 10005

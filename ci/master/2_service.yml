@@ -1,0 +1,13 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: service-node-starter-backend
+  namespace: default
+spec:
+  type: ClusterIP
+  ports:
+    - port: 10005
+      targetPort: 3000
+      name: service-node-starter-backend
+  selector:
+    app: deploy-node-starter-backend

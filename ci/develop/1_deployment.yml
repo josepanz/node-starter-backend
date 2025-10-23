@@ -1,0 +1,53 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: deploy-node-starter-backend
+  namespace: servicio-externo
+spec:
+  minReadySeconds: 10
+  strategy:
+    rollingUpdate:
+      maxSurge: 1
+      maxUnavailable: 0
+    type: RollingUpdate
+  selector:
+    matchLabels:
+      app: deploy-node-starter-backend
+  template:
+    metadata:
+      name: deploy-node-starter-backend
+      labels:
+        app: deploy-node-starter-backend
+      annotations:
+        vault.hashicorp.com/agent-inject: 'true'
+        vault.hashicorp.com/auth-path: auth/dev-k3s
+        vault.hashicorp.com/role: node-starter-backend-role
+        vault.hashicorp.com/agent-inject-secret-node-starter-backend-configmap: project/data/dev/node-starter-backend-configmap
+        vault.hashicorp.com/agent-inject-template-node-starter-backend-configmap: |
+          {{- with secret "project/data/dev/node-starter-backend-configmap" -}}
+          {{- range $key, $value := .Data.data }}
+            export {{ $key }}="{{ $value }}"
+          {{- end }}
+          {{ end }}
+    spec:
+      serviceAccountName: node-starter-backend
+      imagePullSecrets:
+        - name: regcred
+      enableServiceLinks: false
+      containers:
+        - image: host:port/ruta/node-starter-backend:1.0.0 
+          resources:
+            limits:
+              cpu: '800m'
+              memory: '400Mi'
+            requests:
+              cpu: 100m
+              memory: 100Mi
+          name: deploy-node-starter-backend
+          imagePullPolicy: Always
+          command:
+            - '/bin/sh'
+            - '-c'
+            - |
+              . /vault/secrets/node-starter-backend-configmap
+              node dist/main

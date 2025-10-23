@@ -1,0 +1,57 @@
+stages:
+  - lint
+  - build
+  - release
+  - deploy
+
+variables:
+  PNPM_VERSION: 'latest'
+
+default:
+  image: node:22
+  before_script:
+    - npm i -g pnpm@9.15.5
+    - pnpm install
+
+cache:
+  key: ${CI_COMMIT_REF_SLUG}
+  paths:
+    - node_modules/
+    - .pnpm-store/
+
+lint:
+  stage: lint
+  script:
+    - pnpm exec prisma generate
+    - pnpm run lint
+  rules:
+    - if: $CI_MERGE_REQUEST_ID
+
+build:
+  stage: build
+  script:
+    - echo "Compilando..."
+    - pnpm exec prisma generate
+    - pnpm run build
+  artifacts:
+    paths:
+      - dist/
+  only:
+    - master
+    - qa
+    - develop
+    - feat/ci-cd-work
+
+release:
+  image: docker:dind
+  before_script:
+    - apk --update add nodejs npm
+  stage: release
+  script:
+    - echo "Proceso de semantic release"
+    - npx semantic-release
+  only:
+    - master
+    - qa
+    - develop
+    - feat/ci-cd-work
