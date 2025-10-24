@@ -76,11 +76,11 @@ export class ExampleApiController {
   @Get()
   @Version('1')
   @ApiOperation({
-    summary: 'Crear un nuevo ejemplo',
-    description: 'Registrar un nuevo ejemplo con datos proveidos',
+    summary: 'Obtener todos los ejemplos',
+    description: 'Obtener todos los ejemplos',
   })
   @ApiCreatedResponse({
-    description: 'Ejemplo creado satisfactoriamente',
+    description: 'Ejemplo obtenido satisfactoriamente',
     type: CreateExampleResponseDto,
   })
   @ApiBadRequestResponse({

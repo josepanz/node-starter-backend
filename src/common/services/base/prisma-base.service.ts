@@ -3,63 +3,63 @@ import { PrismaBaseRepository } from '@core/database/prisma-base.repository';
 export class PrismaBaseService<T> {
   constructor(protected readonly repository: PrismaBaseRepository<T>) {}
 
-  findAll(params?: any) {
+  findAll(params?: unknown) {
     return this.repository.findMany(params);
   }
 
-  findOne(params: any) {
+  findOne(params: unknown) {
     return this.repository.findUnique(params);
   }
 
-  findFirst(params?: any) {
+  findFirst(params?: unknown) {
     return this.repository.findFirst(params);
   }
 
-  create(data: any) {
+  create(data: unknown) {
     return this.repository.create(data);
   }
 
-  createMany(data: any[]) {
+  createMany(data: unknown[]) {
     return this.repository.createMany(data);
   }
 
-  update(params: any) {
+  update(params: unknown) {
     return this.repository.update(params);
   }
 
-  updateMany(params: any) {
+  updateMany(params: unknown) {
     return this.repository.updateMany(params);
   }
 
-  upsert(params: any) {
+  upsert(params: unknown) {
     return this.repository.upsert(params);
   }
 
-  delete(params: any) {
+  delete(params: unknown) {
     return this.repository.delete(params);
   }
 
-  deleteMany(params?: any) {
+  deleteMany(params?: unknown) {
     return this.repository.deleteMany(params);
   }
 
-  count(params?: any) {
+  count(params?: unknown) {
     return this.repository.count(params);
   }
 
-  aggregate(params?: any) {
+  aggregate(params?: unknown) {
     return this.repository.aggregate(params);
   }
 
-  groupBy(params: any) {
+  groupBy(params: unknown) {
     return this.repository.groupBy(params);
   }
 
-  rawQuery(query: string, params?: any[]) {
+  rawQuery(query: string, params?: unknown[]) {
     return this.repository.rawQuery(query, params);
   }
 
-  rawExecute(query: string, params?: any[]) {
+  rawExecute(query: string, params?: unknown[]) {
     return this.repository.rawExecute(query, params);
   }
 }
