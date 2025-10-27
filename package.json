@@ -1,9 +1,14 @@
 {
   "name": "node-started-backend",
   "version": "1.0.0-develop.1",
-  "description": "",
-  "author": "",
+  "description": "Proyecto inicial para backend con NestJS y TypeScript",
+  "author": "Jose Panza",
   "private": true,
+  "commitlint": {
+    "extends": [
+      "@commitlint/config-conventional"
+    ]
+  },
   "license": "UNLICENSED",
   "scripts": {
     "build": "nest build",
@@ -13,6 +18,7 @@
     "start:debug": "nest start --debug --watch",
     "start:prod": "node dist/main",
     "lint": "eslint \"{src,apps,libs,test}/**/*.ts\" --quiet",
+    "check:types": "tsc --noEmit",
     "test": "jest",
     "test:watch": "jest --watch",
     "test:cov": "jest --coverage",

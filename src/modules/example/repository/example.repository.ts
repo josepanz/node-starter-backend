@@ -1,4 +1,3 @@
-// src/data/modules/user/user.repository.ts
 import { PrismaBaseRepository } from '@core/database/prisma-base.repository';
 import { PrismaDatasource } from '@core/database/prisma.service';
 import { Injectable } from '@nestjs/common';

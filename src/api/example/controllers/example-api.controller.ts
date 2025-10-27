@@ -1,11 +1,4 @@
-import {
-  Controller,
-  Post,
-  Body,
-  Version,
-  UnauthorizedException,
-  Get,
-} from '@nestjs/common';
+import { Controller, Post, Body, Version, Get } from '@nestjs/common';
 import {
   ApiTags,
   ApiOperation,
@@ -15,12 +8,13 @@ import {
   ApiForbiddenResponse,
   ApiInternalServerErrorResponse,
   ApiUnauthorizedResponse,
+  ApiOkResponse,
 } from '@nestjs/swagger';
 import { ExampleApiService } from '../services/example-api.service';
 import { CreateExampleRequestDto } from '../dtos/requests/create-example.request.dto';
 import { CreateExampleResponseDto } from '../dtos/responses/create-example.response.dto';
 
-@ApiTags('example')
+@ApiTags('Example')
 @ApiBearerAuth()
 @Controller('example')
 export class ExampleApiController {
@@ -47,7 +41,6 @@ export class ExampleApiController {
   })
   @ApiUnauthorizedResponse({
     description: 'Credenciales inválidas.',
-    type: UnauthorizedException,
     example: {
       statusCode: 401,
       message: 'Credenciales inválidas.',
@@ -79,9 +72,9 @@ export class ExampleApiController {
     summary: 'Obtener todos los ejemplos',
     description: 'Obtener todos los ejemplos',
   })
-  @ApiCreatedResponse({
+  @ApiOkResponse({
     description: 'Ejemplo obtenido satisfactoriamente',
-    type: CreateExampleResponseDto,
+    type: [CreateExampleResponseDto],
   })
   @ApiBadRequestResponse({
     description:
@@ -94,7 +87,6 @@ export class ExampleApiController {
   })
   @ApiUnauthorizedResponse({
     description: 'Credenciales inválidas.',
-    type: UnauthorizedException,
     example: {
       statusCode: 401,
       message: 'Credenciales inválidas.',

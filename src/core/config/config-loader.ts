@@ -21,9 +21,6 @@ export const APP_CONFIG = registerAs('config', () => {
       accessTokenExpires: process.env.ACCESS_TOKEN_EXPIRES ?? '15m',
       tempTokenExpires: process.env.TEMP_TOKEN_EXPIRES ?? '1h',
       refreshTokenExpires: process.env.REFRESH_TOKEN_EXPIRES ?? '7d',
-      nonceTtlMs: process.env.NONCE_TTL_MS
-        ? parseInt(process.env.NONCE_TTL_MS)
-        : 5 * 60 * 1000,
     },
     email: {
       host: process.env.EMAIL_HOST,

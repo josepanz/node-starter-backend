@@ -16,3 +16,186 @@ model Example {
 
   @@map("example")
 }
+
+model AuditLogs {
+  id            BigInt   @id @default(autoincrement())
+  tableName     String   @map("table_name")
+  recordId      String   @map("record_id")
+  operationType String   @map("operation_type")
+  oldData       Json?    @map("old_data")
+  newData       Json?    @map("new_data")
+  changedAt     DateTime @default(now()) @map("changed_at")
+  changedBy     String   @map("changed_by")
+
+  @@map("audit_logs")
+  @@index([changedAt(sort: Desc)], name: "idx_audit_changed_at")
+  @@index([changedBy], name: "idx_audit_changed_by")
+  @@index([tableName, recordId], name: "idx_audit_table_record")
+}
+
+enum UserStatus {
+  ACTIVE
+  BLOCKED
+  DELETED
+  INACTIVE
+  PENDING_VERIFICATION
+}
+
+model Users {
+  id                  Int        @id @default(autoincrement())
+  email               String    @unique @map("email")
+  status              UserStatus @default(ACTIVE) @map("status")
+  lastLogin           DateTime?  @map("last_login")
+  firstName           String     @map("first_name")
+  lastName            String     @map("last_name")
+  documentNumber      String?    @map("document_number")
+  phoneNumber         String?    @map("phone_number")
+  createdAt           DateTime   @default(now()) @map("created_at")
+  createdBy           String     @map("created_by")
+  lastChangedAt       DateTime?  @default(now()) @map("last_changed_at")
+  lastChangedBy       String?    @map("last_changed_by")
+  verifiedEmail     String?      @map("verified_email")
+  changedReason       String?    @map("changed_reason")
+
+  roles               UserRoles[]
+  UserPermissions     UserPermissions[]
+  credentials         UserCredentials[]
+  refreshTokens       RefreshTokens[]
+
+  @@unique([documentNumber, email], name: "UK_users_docNumber_email")
+  @@map("users")
+}
+
+model UserRoles {
+  id      Int    @id @default(autoincrement())
+  userId  Int @map("user_id")
+  roleId  Int    @map("role_id")
+
+  createdAt           DateTime   @default(now()) @map("created_at")
+  createdBy           String     @map("created_by")
+  lastChangedAt       DateTime?  @default(now()) @map("last_changed_at")
+  lastChangedBy       String?    @map("last_changed_by")
+  changedReason       String?    @map("changed_reason")
+  isActive            Boolean    @default(true) @map("is_active")
+
+  user    Users   @relation(fields: [userId], references: [id])
+  role    Roles   @relation(fields: [roleId], references: [id])
+
+  @@unique([userId, roleId])
+  @@map("user_roles")
+}
+
+model Roles {
+  id        Int         @id @default(autoincrement())
+  name      String      @map("name")
+
+  createdAt           DateTime   @default(now()) @map("created_at")
+  createdBy           String     @map("created_by")
+  lastChangedAt       DateTime?  @default(now()) @map("last_changed_at")
+  lastChangedBy       String?    @map("last_changed_by")
+  changedReason       String?    @map("changed_reason")
+  isActive            Boolean    @default(true) @map("is_active")
+
+  permissions RolePermissions[]
+  users     UserRoles[]
+
+  @@map("roles")
+}
+
+model Permission {
+  id        Int      @id @default(autoincrement())
+  name      String   @map("name")
+  code      String   @unique @map("code")
+
+  createdAt           DateTime   @default(now()) @map("created_at")
+  createdBy           String     @map("created_by")
+  lastChangedAt       DateTime?  @default(now()) @map("last_changed_at")
+  lastChangedBy       String?    @map("last_changed_by")
+  changedReason       String?    @map("changed_reason")
+  isActive            Boolean    @default(true) @map("is_active")
+
+  roles     RolePermissions[]
+  userPermissions     UserPermissions[]
+
+  @@map("permission")
+}
+
+model RolePermissions {
+  id          Int        @id @default(autoincrement())
+  roleId      Int        @map("role_id")
+  permissionId Int       @map("permission_id")
+
+  createdAt           DateTime   @default(now()) @map("created_at")
+  createdBy           String     @map("created_by")
+  lastChangedAt       DateTime?  @default(now()) @map("last_changed_at")
+  lastChangedBy       String?    @map("last_changed_by")
+  changedReason       String?    @map("changed_reason")
+  isActive            Boolean    @default(true) @map("is_active")
+
+  role        Roles       @relation(fields: [roleId], references: [id])
+  permission  Permission @relation(fields: [permissionId], references: [id])
+
+  @@unique([roleId, permissionId])
+  @@map("role_permissions")
+}
+
+model UserPermissions {
+  id          Int        @id @default(autoincrement())
+  userId      Int        @map("user_id")
+  permissionId Int       @map("permission_id")
+
+  createdAt           DateTime   @default(now()) @map("created_at")
+  createdBy           String     @map("created_by")
+  lastChangedAt       DateTime?  @default(now()) @map("last_changed_at")
+  lastChangedBy       String?    @map("last_changed_by")
+  changedReason       String?    @map("changed_reason")
+  isActive            Boolean    @default(true) @map("is_active")
+
+  user        Users      @relation(fields: [userId], references: [id])
+  permission  Permission @relation(fields: [permissionId], references: [id])
+
+  @@unique([userId, permissionId])
+  @@map("user_permissions")
+}
+
+model UserCredentials {
+  id           Int      @id @default(autoincrement())
+  userId       Int   @map("user_id")
+  passwordHash String   @map("password_hash")
+  isActive     Boolean  @map("is_active")  @default(true)
+  createdAt    DateTime @map("created_at") @default(now())
+  expiredAt    DateTime? @map("expired_at")
+  attempts     Int      @map("attempts") @default(0)
+
+  user         Users    @relation(fields: [userId], references: [id])
+
+  @@index([userId])
+  @@map("user_credentials")
+}
+
+model RefreshTokens {
+  id        Int      @id @default(autoincrement())
+  token     String   @unique @map("token")
+  userId    Int      @map("user_id")
+  createdAt DateTime @default(now()) @map("created_at")
+  expiresAt DateTime @map("expires_at")
+  revokedAt DateTime? @map("revoked_at")
+  userAgent String?  @map("user_agent")
+  isActive  Boolean  @map("is_active")  @default(true)
+  
+  user      Users    @relation(fields: [userId], references: [id])
+
+  @@map("refresh_tokens")
+}
+
+model ApiClientCredential {
+  id          Int       @id @default(autoincrement())
+  clientId    String    @unique @map("client_id") 
+  clientName  String?   @map("client_name")
+  secretKey   String    @unique @map("secret_key")
+  isActive    Boolean   @map("is_active") @default(true)
+  createdAt   DateTime  @map("created_at") @default(now())
+  updatedAt   DateTime? @map("updated_at")
+
+  @@map("api_client_credential")
+}

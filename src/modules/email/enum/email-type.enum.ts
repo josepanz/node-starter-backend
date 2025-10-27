@@ -1,0 +1,4 @@
+export enum EmailTypeEnum {
+  VERIFICATION = 'VERIFICATION',
+  FORGOT_PASSWORD = 'FORGOT-PASSWORD',
+}
