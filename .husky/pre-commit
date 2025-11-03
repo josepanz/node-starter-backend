@@ -1,0 +1,2 @@
+pnpm check:types
+npx lint-staged

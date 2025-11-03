@@ -6,6 +6,7 @@ import { ObservabilityModule } from '@core/observability/observability.module';
 import { DatabaseModule } from '@core/database/database.module';
 import { TraceIdMiddleware } from '@core/middlewares/trace-id.middleware';
 import { ApiModule } from './api/api.module';
+import { ObservabilityInterceptor } from '@core/observability/observability.interceptor';
 
 @Module({
   imports: [
@@ -16,7 +17,7 @@ import { ApiModule } from './api/api.module';
     ObservabilityModule,
   ],
   controllers: [],
-  providers: [],
+  providers: [ObservabilityInterceptor],
 })
 export class AppModule {
   configure(consumer: MiddlewareConsumer) {
