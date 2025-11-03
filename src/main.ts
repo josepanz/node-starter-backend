@@ -8,6 +8,8 @@ import * as fs from 'fs';
 import * as cookieParser from 'cookie-parser';
 import { APP_CONFIG, AppConfigType } from '@core/config/config-loader';
 import { AppModule } from './app.module';
+import { ObservabilityInterceptor } from '@core/observability/observability.interceptor';
+import { AllExceptionsFilter } from '@core/global-filters/http-exception.filter';
 
 interface PackageJson {
   version: string;
@@ -22,6 +24,9 @@ async function bootstrap() {
   const app = await NestFactory.create(AppModule);
   app.use(cookieParser());
   app.useLogger(app.get(Logger));
+  
+  app.useGlobalInterceptors(app.get(ObservabilityInterceptor));
+  app.useGlobalFilters(new AllExceptionsFilter());
 
   app.useGlobalPipes(
     new ValidationPipe({
