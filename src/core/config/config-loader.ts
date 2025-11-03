@@ -1,5 +1,6 @@
 import { registerAs } from '@nestjs/config';
-import { version, name, description } from '../../../package.json';
+import * as path from 'path';
+const pkg = require(path.join(process.cwd(), 'package.json'));
 
 export const APP_CONFIG = registerAs('config', () => {
   return {
@@ -13,9 +14,9 @@ export const APP_CONFIG = registerAs('config', () => {
       seqEnabled: process.env.SEQ_ENABLED === 'true',
     },
     project: {
-      name: process.env.PROJECT_NAME ?? name,
-      description: process.env.PROJECT_DESCRIPTION ?? description,
-      version: version ?? '1',
+      name: process.env.PROJECT_NAME ?? pkg?.name,
+      description: process.env.PROJECT_DESCRIPTION ?? pkg?.description,
+      version: pkg?.version ?? '1',
     },
     authentication: {
       privateKey: process.env.JWT_PRIVATE_KEY?.replace(/\\n/g, '\n') ?? '',
