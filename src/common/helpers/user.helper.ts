@@ -1,4 +1,4 @@
-import { UserResponseDto } from '@modules/users/dto/user.response.dto';
+import { UserResponseDto } from '@api/users/dtos/response/user.response.dto';
 import { Users } from '@prisma/client';
 
 export class UserHelper {

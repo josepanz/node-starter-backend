@@ -1,0 +1,384 @@
+<!doctype html>
+<html class="no-js" lang="">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="x-ua-compatible" content="ie=edge">
+        <title>node-started-backend documentation</title>
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+
+        <link rel="icon" type="image/x-icon" href="./images/favicon.ico">
+	   <link rel="stylesheet" href="./styles/style.css">
+        <link rel="stylesheet" href="./styles/dark.css">
+    </head>
+    <body>
+          <script>
+               // Blocking script to avoid flickering dark mode
+               // Dark mode toggle button
+               var useDark = window.matchMedia('(prefers-color-scheme: dark)');
+               var darkModeState = useDark.matches;
+               var $darkModeToggleSwitchers = document.querySelectorAll('.dark-mode-switch input');
+               var $darkModeToggles = document.querySelectorAll('.dark-mode-switch');
+               var darkModeStateLocal = localStorage.getItem('compodoc_darkmode-state');
+
+               function checkToggle(check) {
+                    for (var i = 0; i < $darkModeToggleSwitchers.length; i++) {
+                         $darkModeToggleSwitchers[i].checked = check;
+                    }
+               }
+
+               function toggleDarkMode(state) {
+                    if (window.localStorage) {
+                         localStorage.setItem('compodoc_darkmode-state', state);
+                    }
+
+                    checkToggle(state);
+
+                    const hasClass = document.body.classList.contains('dark');
+
+                    if (state) {
+                         for (var i = 0; i < $darkModeToggles.length; i++) {
+                              $darkModeToggles[i].classList.add('dark');
+                         }
+                         if (!hasClass) {
+                              document.body.classList.add('dark');
+                         }
+                    } else {
+                         for (var i = 0; i < $darkModeToggles.length; i++) {
+                              $darkModeToggles[i].classList.remove('dark');
+                         }
+                         if (hasClass) {
+                              document.body.classList.remove('dark');
+                         }
+                    }
+               }
+
+               useDark.addEventListener('change', function (evt) {
+                    toggleDarkMode(evt.matches);
+               });
+               if (darkModeStateLocal) {
+                    darkModeState = darkModeStateLocal === 'true';
+               }
+               toggleDarkMode(darkModeState);
+          </script>
+          <script>
+              // --- Iframe navigation tracking for Template Playground ---
+              function sendCurrentUrlToParent() {
+                  if (window.parent && window.parent !== window) {
+                      window.parent.postMessage({
+                          type: 'compodoc-iframe-navigate',
+                          url: window.location.pathname + window.location.hash
+                      }, '*');
+                  }
+              }
+              window.addEventListener('hashchange', sendCurrentUrlToParent, false);
+              window.addEventListener('popstate', sendCurrentUrlToParent, false);
+              window.addEventListener('DOMContentLoaded', sendCurrentUrlToParent, false);
+          </script>
+
+        <div class="navbar navbar-default navbar-fixed-top d-md-none p-0">
+               <div class="d-flex">
+                    <a href="./" class="navbar-brand">node-started-backend documentation</a>
+                    <button type="button" class="btn btn-default btn-menu ion-ios-menu" id="btn-menu"></button>
+               </div>
+        </div>
+
+        <div class="xs-menu menu" id="mobile-menu">
+                <div id="book-search-input" role="search"><input type="text" placeholder="Type to search"></div>            <compodoc-menu></compodoc-menu>
+        </div>
+
+        <div class="container-fluid main">
+           <div class="row main">
+               <div class="d-none d-md-block menu">
+                   <compodoc-menu mode="normal"></compodoc-menu>
+               </div>
+               <!-- START CONTENT -->
+               <div class="content readme">
+                   <div class="content-data">
+
+
+<h1>node-started-backend</h1>
+<p><a href="https://www.npmjs.com/package/node-started-backend"><img src="https://badge.fury.io/js/node-started-backend.svg" alt="npm" class="img-responsive"></a></p>
+<p>Proyecto inicial para backend con NestJS y TypeScript</p>
+<p>Última actualización: <!-- LAST_UPDATE --> 04 de noviembre de 2025, 04:50 p. m.</p>
+<h2>🗎 Documentación disponible en</h2>
+<!-- START:documentation -->
+
+<p>El proyecto expone dos tipos principales de documentación:</p>
+<ol>
+<li><p><strong>Swagger (API):</strong> Documentación interactiva de todos los <em>endpoints</em>.</p>
+<ul>
+<li><strong>Ruta de acceso:</strong> <code>/node-starter-backend/api/swagger</code></li>
+<li><strong>Ejemplo Local:</strong> <code>http://localhost:3000/node-starter-backend/api/swagger</code></li>
+</ul>
+</li>
+<li><p><strong>Compodoc (Código):</strong> Documentación estática de módulos, controladores, <em>providers</em>, etc.</p>
+<ul>
+<li><strong>Ruta de acceso:</strong> <code>/node-starter-backend/api/docs</code></li>
+<li><strong>Ejemplo Local:</strong> <code>http://localhost:3000/node-starter-backend/api/docs</code></li>
+</ul>
+</li>
+</ol>
+<blockquote>
+<p>Reemplaza <code>http://localhost:3000</code> con el dominio y puerto de tu entorno (DEV, QA, PROD) para acceder a la documentación remota.</p>
+</blockquote>
+<!-- END:documentation -->
+
+<!-- anything below this line will be safe from template removal -->
+
+<!-- START:initial-setup -->
+
+<h2>🛠️ Instalación y Dependencias</h2>
+<p>Esta aplicación utiliza <strong>pnpm</strong> como gestor de paquetes para una gestión eficiente de dependencias.</p>
+<ol>
+<li><p><strong>Instalar pnpm globalmente (si aún no lo tienes):</strong></p>
+<b>Example :</b><div><pre class="line-numbers"><code class="language-bash">npm install -g pnpm</code></pre></div></li>
+<li><p><strong>Instalar todas las dependencias del proyecto:</strong></p>
+<b>Example :</b><div><pre class="line-numbers"><code class="language-bash">pnpm install</code></pre></div></li>
+<li><p><strong>Configuración del Entorno:</strong>
+Crea un archivo <code>.env</code> en la raíz del proyecto y define las variables de entorno necesarias (ej: <code>DATABASE_URL</code>, <code>JWT_SECRET</code>, etc.).</p>
+</li>
+<li><p><strong>Opcionales:</strong></p>
+<ul>
+<li>Si se quiere generar documentación de compodocs (docs/documentation.json) y actualizar archivo readme en base a este <code>pnpm docs:update-readme</code></li>
+<li>Si se quiere generar documentación de compodocs con htmls (docs/*) <code>pnpm docs:generate</code></li>
+</ul>
+</li>
+<li><p><strong>Compilar y ejecutar:</strong></p>
+<ul>
+<li>Desarrollo (watch):</li>
+</ul>
+<b>Example :</b><div><pre class="line-numbers"><code class="language-bash">pnpm run start:dev</code></pre></div><ul>
+<li>Producción:</li>
+</ul>
+<b>Example :</b><div><pre class="line-numbers"><code class="language-bash">pnpm run build</code></pre></div><b>Example :</b><div><pre class="line-numbers"><code class="language-bash">pnpm run start:prod</code></pre></div></li>
+</ol>
+<!-- END:initial-setup -->
+<h2>📦 Prisma</h2>
+<!-- START:prisma-setup -->
+
+<h3>💾 Configuración de Prisma (Base de Datos)</h3>
+<p>Para interactuar con la base de datos a través de <strong>Prisma</strong>, sigue estos pasos:</p>
+<ol>
+<li><p><strong>Instalar dependencias de desarrollo y el cliente (ya incluido en <code>pnpm install</code>, pero listado para referencia):</strong></p>
+<b>Example :</b><div><pre class="line-numbers"><code class="language-bash">pnpm install prisma &#64;prisma/client</code></pre></div></li>
+<li><p><strong>Inicializar Prisma (crea <code>prisma/schema.prisma</code> y <code>.env</code>):</strong></p>
+<b>Example :</b><div><pre class="line-numbers"><code class="language-bash">pnpm prisma init</code></pre></div></li>
+<li><p><strong>Configurar tu base de datos en <code>.env</code></strong> (con <code>DATABASE_URL</code>) <strong>y definir tus modelos en <code>prisma/schema.prisma</code></strong>.</p>
+</li>
+<li><p><strong>Generar el Cliente de Prisma:</strong>
+Siempre que modifiques el esquema, debes regenerar el cliente:</p>
+<b>Example :</b><div><pre class="line-numbers"><code class="language-bash">pnpm prisma generate</code></pre></div></li>
+<li><p><strong>Crear y Aplicar una Migración:</strong>
+Para sincronizar el esquema con la base de datos:</p>
+<b>Example :</b><div><pre class="line-numbers"><code class="language-bash">pnpm prisma migrate dev --name &lt;nombre-descriptivo-de-la-migracion&gt;</code></pre></div></li>
+</ol>
+<!-- END:prisma-setup -->
+
+<h2>📦 Dependencias</h2>
+<!-- START:dependencies -->
+<ul>
+<li><strong>@autotelic/pino-seq-transport</strong> <code>^0.1.0</code></li>
+<li><strong>@nestjs/axios</strong> <code>^4.0.0</code></li>
+<li><strong>@nestjs/common</strong> <code>^11.0.1</code></li>
+<li><strong>@nestjs/config</strong> <code>^4.0.1</code></li>
+<li><strong>@nestjs/core</strong> <code>^11.0.1</code></li>
+<li><strong>@nestjs/jwt</strong> <code>^11.0.0</code></li>
+<li><strong>@nestjs/mapped-types</strong> <code>^2.1.0</code></li>
+<li><strong>@nestjs/passport</strong> <code>^11.0.5</code></li>
+<li><strong>@nestjs/platform-express</strong> <code>^11.0.1</code></li>
+<li><strong>@nestjs/swagger</strong> <code>^11.0.7</code></li>
+<li><strong>@nestjs/terminus</strong> <code>^11.0.0</code></li>
+<li><strong>@prisma/client</strong> <code>6.18.0</code></li>
+<li><strong>axios</strong> <code>^1.9.0</code></li>
+<li><strong>bcrypt</strong> <code>^6.0.0</code></li>
+<li><strong>class-transformer</strong> <code>^0.5.1</code></li>
+<li><strong>class-validator</strong> <code>^0.14.1</code></li>
+<li><strong>cookie-parser</strong> <code>^1.4.7</code></li>
+<li><strong>date-fns</strong> <code>^4.1.0</code></li>
+<li><strong>date-fns-tz</strong> <code>^3.2.0</code></li>
+<li><strong>express</strong> <code>^5.1.0</code></li>
+<li><strong>joi</strong> <code>^17.13.3</code></li>
+<li><strong>jsonwebtoken</strong> <code>^9.0.2</code></li>
+<li><strong>jwks-rsa</strong> <code>^3.2.0</code></li>
+<li><strong>multer</strong> <code>^2.0.0</code></li>
+<li><strong>nanoid</strong> <code>^5.1.5</code></li>
+<li><strong>nestjs-pino</strong> <code>^4.4.0</code></li>
+<li><strong>nodemailer</strong> <code>^7.0.6</code></li>
+<li><strong>passport</strong> <code>^0.7.0</code></li>
+<li><strong>passport-jwt</strong> <code>^4.0.1</code></li>
+<li><strong>pino-pretty</strong> <code>^13.0.0</code></li>
+<li><strong>read-pkg-up</strong> <code>^11.0.0</code></li>
+<li><strong>reflect-metadata</strong> <code>^0.2.2</code></li>
+<li><strong>rxjs</strong> <code>^7.8.1</code></li>
+<li><strong>uuid</strong> <code>^11.1.0</code></li>
+<li><strong>write-file-atomic</strong> <code>^7.0.0</code><!-- END:dependencies --></li>
+</ul>
+<h2>⚙️ Scripts disponibles</h2>
+<!-- START:scripts -->
+<ul>
+<li><strong>build</strong> → <code>nest build</code></li>
+<li><strong>format</strong> → <code>prettier --write &quot;src/**/*.ts&quot; &quot;test/**/*.ts&quot;</code></li>
+<li><strong>start</strong> → <code>nest start</code></li>
+<li><strong>start:dev</strong> → <code>nest start --watch</code></li>
+<li><strong>start:debug</strong> → <code>nest start --debug --watch</code></li>
+<li><strong>start:prod</strong> → <code>node dist/main</code></li>
+<li><strong>lint</strong> → <code>eslint &quot;{src,apps,libs,test}/**/*.ts&quot; --quiet</code></li>
+<li><strong>check:types</strong> → <code>tsc --noEmit</code></li>
+<li><strong>test</strong> → <code>jest</code></li>
+<li><strong>test:watch</strong> → <code>jest --watch</code></li>
+<li><strong>test:cov</strong> → <code>jest --coverage</code></li>
+<li><strong>test:debug</strong> → <code>node --inspect-brk -r tsconfig-paths/register -r ts-node/register node_modules/.bin/jest --runInBand</code></li>
+<li><strong>test:e2e</strong> → <code>jest --config ./test/jest-e2e.json</code></li>
+<li><strong>prepare</strong> → <code>husky || true</code></li>
+<li><strong>seed</strong> → <code>ts-node prisma/seed.ts</code></li>
+<li><strong>docs:generate</strong> → <code>npx compodoc -p tsconfig.json -d docs</code></li>
+<li><strong>docs:json</strong> → <code>npx compodoc -p tsconfig.json -e json</code></li>
+<li><strong>update:readme</strong> → <code>node scripts/update-readme.js</code></li>
+<li><strong>docs:serve</strong> → <code>npx compodoc -s -d docs</code></li>
+<li><strong>docs:rebuild</strong> → <code>pnpm run docs:generate &amp;&amp; pnpm run docs:serve</code></li>
+<li><strong>docs:update-readme</strong> → <code>pnpm run docs:json &amp;&amp; pnpm run update:readme</code><!-- END:scripts --></li>
+</ul>
+<h2>🏗️ Arquitectura</h2>
+<!-- START:architecture -->
+
+<b>Example :</b><div><pre class="line-numbers"><code class="language-plaintext">src/
+├── api/                # Puntos de entrada (rutas, controladores, dtos, validaciones)
+│   ├── auth/           # Autenticación, login, refresh, guards, etc.
+│   ├── users/          # Gestión de usuarios
+│   ├── onboarding/     # Registro o flujo de alta
+│   └── permissions/    # Roles y permisos del sistema
+│   └── ...             # Otras funcionalidades
+│
+├── modules/            # Casos de uso genéricos y reutilizables
+│   ├── email/          # Envío de correos (mailer)
+│   ├── auth/           # Módulo de autenticación compartido
+│   ├── db/             # Conexiones o repositorios a base de datos
+│   └── ...             # Otros módulos reutilizables
+│
+├── common/             # Decoradores, pipes, filtros, interceptores, utilidades
+├── core/               # Configuración principal, constantes globales
+├── prisma/             # Client de base de datos, migraciones
+└── main.ts             # Archivo main que define setup global del proyecto
+└── ...                 # Otros archivos de configuracion de typescript, nest, git, docker, etc</code></pre></div><p><strong>Arquitectura general</strong></p>
+<ul>
+<li>@api: expone las rutas y orquesta los módulos.</li>
+<li>@modules: contiene la lógica de negocio y recursos compartidos.</li>
+<li>@common: utilidades, validadores y middlewares genéricos.</li>
+<li>@core: punto central de configuración e inicialización.</li>
+<li>Enfoque <strong>Clean Architecture</strong>: separación clara entre capas, alta cohesión, bajo acoplamiento, facilidad de testing y escalabilidad.</li>
+</ul>
+<!-- END:architecture -->
+
+<h2>🧩 Funcionalidades documentadas</h2>
+<!-- START:functionalities -->
+<p><em>Sin funcionalidades documentadas.</em></p>
+<!-- END:functionalities -->
+
+<h2>📦 Api Controllers</h2>
+<!-- START:api-controllers -->
+<ul>
+<li><strong>auth-api.controller</strong></li>
+<li><strong>email-api.controller</strong></li>
+<li><strong>example-api.controller</strong></li>
+<li><strong>onboarding.controller</strong></li>
+<li><strong>permissions-assignment.controller</strong></li>
+<li><strong>permissions.controller</strong></li>
+<li><strong>roles.controller</strong></li>
+<li><strong>users.controller</strong><!-- END:api-controllers --></li>
+</ul>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                   </div><div class="search-results">
+    <div class="has-results">
+        <h1 class="search-results-title"><span class='search-results-count'></span> results matching "<span class='search-query'></span>"</h1>
+        <ul class="search-results-list"></ul>
+    </div>
+    <div class="no-results">
+        <h1 class="search-results-title">No results matching "<span class='search-query'></span>"</h1>
+    </div>
+</div>
+</div>
+               <!-- END CONTENT -->
+           </div>
+       </div>
+
+          <label class="dark-mode-switch">
+               <input type="checkbox">
+               <span class="slider">
+                    <svg class="slider-icon" viewBox="0 0 24 24" fill="none" height="20" stroke="#000" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" width="20" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M21 12.79A9 9 0 1111.21 3 7 7 0 0021 12.79z"></path>
+                    </svg>
+               </span>
+          </label>
+
+       <script>
+            var COMPODOC_CURRENT_PAGE_DEPTH = 0;
+            var COMPODOC_CURRENT_PAGE_CONTEXT = 'readme';
+            var COMPODOC_CURRENT_PAGE_URL = 'index.html';
+            var MAX_SEARCH_RESULTS = 15;
+       </script>
+
+       <script>
+               $darkModeToggleSwitchers = document.querySelectorAll('.dark-mode-switch input');
+               checkToggle(darkModeState);
+               if ($darkModeToggleSwitchers.length > 0) {
+                    for (var i = 0; i < $darkModeToggleSwitchers.length; i++) {
+                         $darkModeToggleSwitchers[i].addEventListener('change', function (event) {
+                              darkModeState = !darkModeState;
+                              toggleDarkMode(darkModeState);
+                         });
+                    }
+               }
+          </script>
+
+       <script src="./js/libs/custom-elements.min.js"></script>
+       <script src="./js/libs/lit-html.js"></script>
+
+       <script src="./js/menu-wc.js" defer></script>
+       <script nomodule src="./js/menu-wc_es5.js" defer></script>
+
+       <script src="./js/libs/bootstrap-native.js"></script>
+
+       <script src="./js/libs/es6-shim.min.js"></script>
+       <script src="./js/libs/EventDispatcher.js"></script>
+       <script src="./js/libs/promise.min.js"></script>
+
+       <script src="./js/compodoc.js"></script>
+
+       <script src="./js/tabs.js"></script>
+       <script src="./js/menu.js"></script>
+       <script src="./js/libs/clipboard.min.js"></script>
+       <script src="./js/libs/prism.js"></script>
+       <script src="./js/sourceCode.js"></script>
+          <script src="./js/search/search.js"></script>
+          <script src="./js/search/lunr.min.js"></script>
+          <script src="./js/search/search-lunr.js"></script>
+          <script src="./js/search/search_index.js"></script>
+       <script src="./js/lazy-load-graphs.js"></script>
+
+
+    </body>
+</html>

@@ -72,7 +72,7 @@ export class UserResponseDto {
   @ApiProperty({
     example: 'user+alt@example.com',
     required: false,
-    description: 'Un correo electrónico secundario no verificado.',
+    description: 'El correo electrónico verificado.',
   })
   verifiedEmail?: string;
 

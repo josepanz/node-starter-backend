@@ -1,4 +1,4 @@
-import { UserResponseDto } from '@modules/users/dto/user.response.dto';
+import { UserResponseDto } from '@api/users/dtos/response/user.response.dto';
 import { ApiProperty } from '@nestjs/swagger';
 import { Roles, Users } from '@prisma/client';
 import { IsArray, IsObject, IsOptional } from 'class-validator';

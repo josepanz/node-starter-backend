@@ -1,0 +1,381 @@
+<!doctype html>
+<html class="no-js" lang="">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="x-ua-compatible" content="ie=edge">
+        <title>node-started-backend documentation</title>
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+
+        <link rel="icon" type="image/x-icon" href="../images/favicon.ico">
+	   <link rel="stylesheet" href="../styles/style.css">
+        <link rel="stylesheet" href="../styles/dark.css">
+    </head>
+    <body>
+          <script>
+               // Blocking script to avoid flickering dark mode
+               // Dark mode toggle button
+               var useDark = window.matchMedia('(prefers-color-scheme: dark)');
+               var darkModeState = useDark.matches;
+               var $darkModeToggleSwitchers = document.querySelectorAll('.dark-mode-switch input');
+               var $darkModeToggles = document.querySelectorAll('.dark-mode-switch');
+               var darkModeStateLocal = localStorage.getItem('compodoc_darkmode-state');
+
+               function checkToggle(check) {
+                    for (var i = 0; i < $darkModeToggleSwitchers.length; i++) {
+                         $darkModeToggleSwitchers[i].checked = check;
+                    }
+               }
+
+               function toggleDarkMode(state) {
+                    if (window.localStorage) {
+                         localStorage.setItem('compodoc_darkmode-state', state);
+                    }
+
+                    checkToggle(state);
+
+                    const hasClass = document.body.classList.contains('dark');
+
+                    if (state) {
+                         for (var i = 0; i < $darkModeToggles.length; i++) {
+                              $darkModeToggles[i].classList.add('dark');
+                         }
+                         if (!hasClass) {
+                              document.body.classList.add('dark');
+                         }
+                    } else {
+                         for (var i = 0; i < $darkModeToggles.length; i++) {
+                              $darkModeToggles[i].classList.remove('dark');
+                         }
+                         if (hasClass) {
+                              document.body.classList.remove('dark');
+                         }
+                    }
+               }
+
+               useDark.addEventListener('change', function (evt) {
+                    toggleDarkMode(evt.matches);
+               });
+               if (darkModeStateLocal) {
+                    darkModeState = darkModeStateLocal === 'true';
+               }
+               toggleDarkMode(darkModeState);
+          </script>
+          <script>
+              // --- Iframe navigation tracking for Template Playground ---
+              function sendCurrentUrlToParent() {
+                  if (window.parent && window.parent !== window) {
+                      window.parent.postMessage({
+                          type: 'compodoc-iframe-navigate',
+                          url: window.location.pathname + window.location.hash
+                      }, '*');
+                  }
+              }
+              window.addEventListener('hashchange', sendCurrentUrlToParent, false);
+              window.addEventListener('popstate', sendCurrentUrlToParent, false);
+              window.addEventListener('DOMContentLoaded', sendCurrentUrlToParent, false);
+          </script>
+
+        <div class="navbar navbar-default navbar-fixed-top d-md-none p-0">
+               <div class="d-flex">
+                    <a href="../" class="navbar-brand">node-started-backend documentation</a>
+                    <button type="button" class="btn btn-default btn-menu ion-ios-menu" id="btn-menu"></button>
+               </div>
+        </div>
+
+        <div class="xs-menu menu" id="mobile-menu">
+                <div id="book-search-input" role="search"><input type="text" placeholder="Type to search"></div>            <compodoc-menu></compodoc-menu>
+        </div>
+
+        <div class="container-fluid main">
+           <div class="row main">
+               <div class="d-none d-md-block menu">
+                   <compodoc-menu mode="normal"></compodoc-menu>
+               </div>
+               <!-- START CONTENT -->
+               <div class="content module">
+                   <div class="content-data">
+
+
+
+
+
+
+
+<ol class="breadcrumb">
+    <li class="breadcrumb-item">Modules</li>
+    <li class="breadcrumb-item" >ObservabilityModule</li>
+</ol>
+
+
+<ul class="nav nav-tabs" role="tablist">
+    <li class="nav-item">
+        <a href="#info" 
+            class="nav-link"
+            class="nav-link active"
+            role="tab" id="info-tab" data-bs-toggle="tab" data-link="info">Info</a>
+    </li>
+    <li class="nav-item">
+        <a href="#source" 
+            class="nav-link"
+            
+            role="tab" id="source-tab" data-bs-toggle="tab" data-link="source">Source</a>
+    </li>
+</ul>
+
+<div class="tab-content">
+    <div class="tab-pane fade active in" id="info">
+
+        <p class="comment">
+            <h3>File</h3>
+        </p>
+        <p class="comment">
+            <code>src/core/observability/observability.module.ts</code>
+        </p>
+
+
+
+
+
+        <div class="container-fluid module">
+            <div class="row">
+            </div>
+        </div>
+
+
+    </div>
+
+
+    <div class="tab-pane fade  tab-source-code" id="source">
+        <pre class="line-numbers compodoc-sourcecode"><code class="language-typescript">/* eslint-disable @typescript-eslint/no-unsafe-assignment */
+/* eslint-disable @typescript-eslint/no-unsafe-member-access */
+/* eslint-disable @typescript-eslint/no-explicit-any */
+import { Module } from &#x27;@nestjs/common&#x27;;
+import { ConfigType } from &#x27;@nestjs/config&#x27;;
+import { LoggerModule } from &#x27;nestjs-pino&#x27;;
+import { AppConfigType, APP_CONFIG } from &#x27;../config/config-loader&#x27;;
+import { TRACE_ID_HEADER } from &#x27;../middlewares/trace-id.middleware&#x27;;
+import { IncomingMessage } from &#x27;http&#x27;;
+import { Request } from &#x27;express&#x27;;
+import { format } from &#x27;date-fns&#x27;;
+
+const MAX_PAYLOAD_SIZE_BYTES &#x3D; 1024 * 1024;
+
+const sanitizePayload &#x3D; (payload: any): any &#x3D;&gt; {
+  if (!payload) return null;
+  if (typeof payload &#x3D;&#x3D;&#x3D; &#x27;object&#x27;) {
+    const sanitized &#x3D; { ...payload };
+    if (sanitized.password) sanitized.password &#x3D; &#x27;***SANITIZED***&#x27;;
+    return sanitized;
+  }
+  return payload;
+};
+
+const METADATA_PAYLOAD &#x3D; (
+  contentLength: number,
+  contentType &#x3D; &#x27;application/json&#x27;,
+) &#x3D;&gt; ({
+  contentType,
+  contentLength,
+  bodyLogged: false,
+});
+
+export function formatPayload(payload: unknown): any {
+  if (!payload) return null;
+  const jsonString &#x3D; JSON.stringify(payload);
+  const contentLength &#x3D; Buffer.byteLength(jsonString, &#x27;utf8&#x27;);
+  if (contentLength &gt; MAX_PAYLOAD_SIZE_BYTES) {
+    return METADATA_PAYLOAD(contentLength);
+  }
+  return sanitizePayload(payload);
+}
+
+@Module({
+  imports: [
+    LoggerModule.forRootAsync({
+      useFactory: (configService: ConfigType&lt;AppConfigType&gt;) &#x3D;&gt; {
+        const targets: any[] &#x3D; [
+          {
+            target: &#x27;pino-pretty&#x27;,
+            options: { destination: 1 },
+          },
+        ];
+
+        if (configService.logger.seqEnabled &amp;&amp; configService.env !&#x3D;&#x3D; &#x27;local&#x27;) {
+          targets.push({
+            target: &#x27;@autotelic/pino-seq-transport&#x27;,
+            options: {
+              loggerOpts: { serverUrl: configService.logger.seqUrl },
+            },
+          });
+        }
+
+        return {
+          pinoHttp: {
+            base: {
+              name: configService.project.name,
+              version: configService.project.version,
+              environment: configService.env,
+              service: configService.project.name,
+              timestamp: &#x60;${format(new Date().toISOString(), &#x27;yyyy-MM-dd HH:ss.sss&#x27;)}&#x60;,
+            },
+            levelKey: &#x27;level&#x27;,
+            messageKey: &#x27;message&#x27;,
+            wrapSerializers: true,
+
+            autoLogging: {
+              ignore: (req: IncomingMessage) &#x3D;&gt;
+                req.url?.startsWith(&#x27;/client&#x27;) ?? false,
+            },
+
+            transport: {
+              targets,
+            },
+
+            customReceivedMessage: (req) &#x3D;&gt;
+              &#x60;Start request | ${req.method} ${req.url} - Trace ID: ${req[TRACE_ID_HEADER]}&#x60;,
+            customSuccessMessage: (req, res) &#x3D;&gt;
+              &#x60;End request | ${req.method} ${req.url} - (${res.statusCode} - ${res.statusMessage}) | Trace ID: ${req[TRACE_ID_HEADER]}&#x60;,
+            customErrorMessage: (req, res) &#x3D;&gt;
+              &#x60;Error request | ${req.method} ${req.url} - (${res.statusCode} - ${res.statusMessage}) | Trace ID: ${req[TRACE_ID_HEADER]}&#x60;,
+
+            customProps: (req: Request, res) &#x3D;&gt; {
+              const startTime &#x3D; (req as any)._startTime || Date.now();
+              const latencyMs &#x3D; Date.now() - startTime;
+
+              return {
+                type:
+                  res.statusCode &gt;&#x3D; 200 &amp;&amp; res.statusCode &lt; 300
+                    ? &#x27;Audit&#x27;
+                    : &#x27;Warn&#x27;,
+                sessionId: req.headers[&#x27;x-session-id&#x27;] ?? undefined,
+                entityId: req.headers[&#x27;x-entity-id&#x27;] ?? undefined,
+                traceId:
+                  req[TRACE_ID_HEADER] ??
+                  req.headers[TRACE_ID_HEADER.toLowerCase()],
+                correlationId: req.headers[&#x27;x-correlation-id&#x27;] ?? undefined,
+                event: &#x60;${req.method} ${req.url}&#x60;,
+                status: res?.statusCode,
+                statusMessage: res?.statusMessage,
+                latencyMs,
+                sourceIp: req.ip || req.headers[&#x27;x-forwarded-for&#x27;],
+                userAgent: req.headers[&#x27;user-agent&#x27;],
+              };
+            },
+
+            serializers: {
+              req: (req: any) &#x3D;&gt; ({
+                method: req.method,
+                url: req.url,
+                headers: req.headers,
+                request: req?.body ? formatPayload(req.body) : undefined,
+              }),
+              res: (res) &#x3D;&gt; ({
+                statusCode: res.statusCode,
+                response: res?.body ? formatPayload(res.body) : undefined,
+              }),
+              err: (err: any) &#x3D;&gt; ({
+                errorMessage: err.message,
+                level: &#x27;error&#x27;,
+                stack: configService.env &#x3D;&#x3D;&#x3D; &#x27;local&#x27; ? err.stack : undefined,
+              }),
+            },
+          },
+        };
+      },
+      inject: [APP_CONFIG.KEY],
+    }),
+  ],
+})
+export class ObservabilityModule {}
+</code></pre>
+    </div>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                   </div><div class="search-results">
+    <div class="has-results">
+        <h1 class="search-results-title"><span class='search-results-count'></span> results matching "<span class='search-query'></span>"</h1>
+        <ul class="search-results-list"></ul>
+    </div>
+    <div class="no-results">
+        <h1 class="search-results-title">No results matching "<span class='search-query'></span>"</h1>
+    </div>
+</div>
+</div>
+               <!-- END CONTENT -->
+           </div>
+       </div>
+
+          <label class="dark-mode-switch">
+               <input type="checkbox">
+               <span class="slider">
+                    <svg class="slider-icon" viewBox="0 0 24 24" fill="none" height="20" stroke="#000" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" width="20" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M21 12.79A9 9 0 1111.21 3 7 7 0 0021 12.79z"></path>
+                    </svg>
+               </span>
+          </label>
+
+       <script>
+            var COMPODOC_CURRENT_PAGE_DEPTH = 1;
+            var COMPODOC_CURRENT_PAGE_CONTEXT = 'module';
+            var COMPODOC_CURRENT_PAGE_URL = 'ObservabilityModule.html';
+            var MAX_SEARCH_RESULTS = 15;
+       </script>
+
+       <script>
+               $darkModeToggleSwitchers = document.querySelectorAll('.dark-mode-switch input');
+               checkToggle(darkModeState);
+               if ($darkModeToggleSwitchers.length > 0) {
+                    for (var i = 0; i < $darkModeToggleSwitchers.length; i++) {
+                         $darkModeToggleSwitchers[i].addEventListener('change', function (event) {
+                              darkModeState = !darkModeState;
+                              toggleDarkMode(darkModeState);
+                         });
+                    }
+               }
+          </script>
+
+       <script src="../js/libs/custom-elements.min.js"></script>
+       <script src="../js/libs/lit-html.js"></script>
+
+       <script src="../js/menu-wc.js" defer></script>
+       <script nomodule src="../js/menu-wc_es5.js" defer></script>
+
+       <script src="../js/libs/bootstrap-native.js"></script>
+
+       <script src="../js/libs/es6-shim.min.js"></script>
+       <script src="../js/libs/EventDispatcher.js"></script>
+       <script src="../js/libs/promise.min.js"></script>
+
+       <script src="../js/compodoc.js"></script>
+
+       <script src="../js/tabs.js"></script>
+       <script src="../js/menu.js"></script>
+       <script src="../js/libs/clipboard.min.js"></script>
+       <script src="../js/libs/prism.js"></script>
+       <script src="../js/sourceCode.js"></script>
+          <script src="../js/search/search.js"></script>
+          <script src="../js/search/lunr.min.js"></script>
+          <script src="../js/search/search-lunr.js"></script>
+          <script src="../js/search/search_index.js"></script>
+       <script src="../js/lazy-load-graphs.js"></script>
+
+
+    </body>
+</html>

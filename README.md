@@ -1,98 +1,221 @@
-<p align="center">
-  <a href="http://nestjs.com/" target="blank"><img src="https://nestjs.com/img/logo-small.svg" width="120" alt="Nest Logo" /></a>
-</p>
+# node-started-backend
 
-[circleci-image]: https://img.shields.io/circleci/build/github/nestjs/nest/master?token=abc123def456
-[circleci-url]: https://circleci.com/gh/nestjs/nest
+[![npm](https://badge.fury.io/js/node-started-backend.svg)](https://www.npmjs.com/package/node-started-backend)
 
-  <p align="center">A progressive <a href="http://nodejs.org" target="_blank">Node.js</a> framework for building efficient and scalable server-side applications.</p>
-    <p align="center">
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/v/@nestjs/core.svg" alt="NPM Version" /></a>
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/l/@nestjs/core.svg" alt="Package License" /></a>
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/dm/@nestjs/common.svg" alt="NPM Downloads" /></a>
-<a href="https://circleci.com/gh/nestjs/nest" target="_blank"><img src="https://img.shields.io/circleci/build/github/nestjs/nest/master" alt="CircleCI" /></a>
-<a href="https://discord.gg/G7Qnnhy" target="_blank"><img src="https://img.shields.io/badge/discord-online-brightgreen.svg" alt="Discord"/></a>
-<a href="https://opencollective.com/nest#backer" target="_blank"><img src="https://opencollective.com/nest/backers/badge.svg" alt="Backers on Open Collective" /></a>
-<a href="https://opencollective.com/nest#sponsor" target="_blank"><img src="https://opencollective.com/nest/sponsors/badge.svg" alt="Sponsors on Open Collective" /></a>
-  <a href="https://paypal.me/kamilmysliwiec" target="_blank"><img src="https://img.shields.io/badge/Donate-PayPal-ff3f59.svg" alt="Donate us"/></a>
-    <a href="https://opencollective.com/nest#sponsor"  target="_blank"><img src="https://img.shields.io/badge/Support%20us-Open%20Collective-41B883.svg" alt="Support us"></a>
-  <a href="https://twitter.com/nestframework" target="_blank"><img src="https://img.shields.io/twitter/follow/nestframework.svg?style=social&label=Follow" alt="Follow us on Twitter"></a>
-</p>
-  <!--[![Backers on Open Collective](https://opencollective.com/nest/backers/badge.svg)](https://opencollective.com/nest#backer)
-  [![Sponsors on Open Collective](https://opencollective.com/nest/sponsors/badge.svg)](https://opencollective.com/nest#sponsor)-->
+Proyecto inicial para backend con NestJS y TypeScript
 
-## Description
+Última actualización: <!-- LAST_UPDATE --> 04 de noviembre de 2025, 04:50 p. m.
 
-[Nest](https://github.com/nestjs/nest) framework TypeScript starter repository.
+## 🗎 Documentación disponible en
+<!-- START:documentation -->
 
-## Project setup
+El proyecto expone dos tipos principales de documentación:
 
-```bash
-$ pnpm install
+1.  **Swagger (API):** Documentación interactiva de todos los *endpoints*.
+    * **Ruta de acceso:** `/node-starter-backend/api/swagger`
+    * **Ejemplo Local:** `http://localhost:3000/node-starter-backend/api/swagger`
+
+2.  **Compodoc (Código):** Documentación estática de módulos, controladores, *providers*, etc.
+    * **Ruta de acceso:** `/node-starter-backend/api/docs`
+    * **Ejemplo Local:** `http://localhost:3000/node-starter-backend/api/docs`
+
+> Reemplaza `http://localhost:3000` con el dominio y puerto de tu entorno (DEV, QA, PROD) para acceder a la documentación remota.
+
+<!-- END:documentation -->
+
+<!-- anything below this line will be safe from template removal -->
+
+<!-- START:initial-setup -->
+
+## 🛠️ Instalación y Dependencias
+
+Esta aplicación utiliza **pnpm** como gestor de paquetes para una gestión eficiente de dependencias.
+
+1.  **Instalar pnpm globalmente (si aún no lo tienes):**
+
+    ```bash
+    npm install -g pnpm
+    ```
+
+2.  **Instalar todas las dependencias del proyecto:**
+
+    ```bash
+    pnpm install
+    ```
+
+3.  **Configuración del Entorno:**
+    Crea un archivo `.env` en la raíz del proyecto y define las variables de entorno necesarias (ej: `DATABASE_URL`, `JWT_SECRET`, etc.).
+
+4. **Opcionales:**
+    - Si se quiere generar documentación de compodocs (docs/documentation.json) y actualizar archivo readme en base a este `pnpm docs:update-readme`
+    - Si se quiere generar documentación de compodocs con htmls (docs/*) `pnpm docs:generate`
+
+5. **Compilar y ejecutar:**
+    - Desarrollo (watch):
+
+    ```bash
+    pnpm run start:dev
+    ```
+
+    - Producción:
+
+    ```bash
+    pnpm run build
+    ```
+
+    ```bash
+    pnpm run start:prod
+    ```
+
+<!-- END:initial-setup -->
+## 📦 Prisma
+<!-- START:prisma-setup -->
+
+### 💾 Configuración de Prisma (Base de Datos)
+
+Para interactuar con la base de datos a través de **Prisma**, sigue estos pasos:
+
+1.  **Instalar dependencias de desarrollo y el cliente (ya incluido en `pnpm install`, pero listado para referencia):**
+
+    ```bash
+    pnpm install prisma @prisma/client
+    ```
+
+2.  **Inicializar Prisma (crea `prisma/schema.prisma` y `.env`):**
+
+    ```bash
+    pnpm prisma init
+    ```
+
+3.  **Configurar tu base de datos en `.env`** (con `DATABASE_URL`) **y definir tus modelos en `prisma/schema.prisma`**.
+
+4.  **Generar el Cliente de Prisma:**
+    Siempre que modifiques el esquema, debes regenerar el cliente:
+
+    ```bash
+    pnpm prisma generate
+    ```
+
+5.  **Crear y Aplicar una Migración:**
+    Para sincronizar el esquema con la base de datos:
+
+    ```bash
+    pnpm prisma migrate dev --name <nombre-descriptivo-de-la-migracion>
+    ```
+
+<!-- END:prisma-setup -->
+
+## 📦 Dependencias
+<!-- START:dependencies -->
+- **@autotelic/pino-seq-transport** `^0.1.0`
+- **@nestjs/axios** `^4.0.0`
+- **@nestjs/common** `^11.0.1`
+- **@nestjs/config** `^4.0.1`
+- **@nestjs/core** `^11.0.1`
+- **@nestjs/jwt** `^11.0.0`
+- **@nestjs/mapped-types** `^2.1.0`
+- **@nestjs/passport** `^11.0.5`
+- **@nestjs/platform-express** `^11.0.1`
+- **@nestjs/swagger** `^11.0.7`
+- **@nestjs/terminus** `^11.0.0`
+- **@prisma/client** `6.18.0`
+- **axios** `^1.9.0`
+- **bcrypt** `^6.0.0`
+- **class-transformer** `^0.5.1`
+- **class-validator** `^0.14.1`
+- **cookie-parser** `^1.4.7`
+- **date-fns** `^4.1.0`
+- **date-fns-tz** `^3.2.0`
+- **express** `^5.1.0`
+- **joi** `^17.13.3`
+- **jsonwebtoken** `^9.0.2`
+- **jwks-rsa** `^3.2.0`
+- **multer** `^2.0.0`
+- **nanoid** `^5.1.5`
+- **nestjs-pino** `^4.4.0`
+- **nodemailer** `^7.0.6`
+- **passport** `^0.7.0`
+- **passport-jwt** `^4.0.1`
+- **pino-pretty** `^13.0.0`
+- **read-pkg-up** `^11.0.0`
+- **reflect-metadata** `^0.2.2`
+- **rxjs** `^7.8.1`
+- **uuid** `^11.1.0`
+- **write-file-atomic** `^7.0.0`
+<!-- END:dependencies -->
+
+## ⚙️ Scripts disponibles
+<!-- START:scripts -->
+- **build** → `nest build`
+- **format** → `prettier --write "src/**/*.ts" "test/**/*.ts"`
+- **start** → `nest start`
+- **start:dev** → `nest start --watch`
+- **start:debug** → `nest start --debug --watch`
+- **start:prod** → `node dist/main`
+- **lint** → `eslint "{src,apps,libs,test}/**/*.ts" --quiet`
+- **check:types** → `tsc --noEmit`
+- **test** → `jest`
+- **test:watch** → `jest --watch`
+- **test:cov** → `jest --coverage`
+- **test:debug** → `node --inspect-brk -r tsconfig-paths/register -r ts-node/register node_modules/.bin/jest --runInBand`
+- **test:e2e** → `jest --config ./test/jest-e2e.json`
+- **prepare** → `husky || true`
+- **seed** → `ts-node prisma/seed.ts`
+- **docs:generate** → `npx compodoc -p tsconfig.json -d docs`
+- **docs:json** → `npx compodoc -p tsconfig.json -e json`
+- **update:readme** → `node scripts/update-readme.js`
+- **docs:serve** → `npx compodoc -s -d docs`
+- **docs:rebuild** → `pnpm run docs:generate && pnpm run docs:serve`
+- **docs:update-readme** → `pnpm run docs:json && pnpm run update:readme`
+<!-- END:scripts -->
+
+## 🏗️ Arquitectura
+<!-- START:architecture -->
+
+```plaintext
+src/
+├── api/                # Puntos de entrada (rutas, controladores, dtos, validaciones)
+│   ├── auth/           # Autenticación, login, refresh, guards, etc.
+│   ├── users/          # Gestión de usuarios
+│   ├── onboarding/     # Registro o flujo de alta
+│   └── permissions/    # Roles y permisos del sistema
+│   └── ...             # Otras funcionalidades
+│
+├── modules/            # Casos de uso genéricos y reutilizables
+│   ├── email/          # Envío de correos (mailer)
+│   ├── auth/           # Módulo de autenticación compartido
+│   ├── db/             # Conexiones o repositorios a base de datos
+│   └── ...             # Otros módulos reutilizables
+│
+├── common/             # Decoradores, pipes, filtros, interceptores, utilidades
+├── core/               # Configuración principal, constantes globales
+├── prisma/             # Client de base de datos, migraciones
+└── main.ts             # Archivo main que define setup global del proyecto
+└── ...                 # Otros archivos de configuracion de typescript, nest, git, docker, etc
 ```
 
-## Compile and run the project
+**Arquitectura general**
+- @api: expone las rutas y orquesta los módulos.
+- @modules: contiene la lógica de negocio y recursos compartidos.
+- @common: utilidades, validadores y middlewares genéricos.
+- @core: punto central de configuración e inicialización.
+- Enfoque **Clean Architecture**: separación clara entre capas, alta cohesión, bajo acoplamiento, facilidad de testing y escalabilidad.
 
-```bash
-# development
-$ pnpm run start
+<!-- END:architecture -->
 
-# watch mode
-$ pnpm run start:dev
+## 🧩 Funcionalidades documentadas
+<!-- START:functionalities -->
+_Sin funcionalidades documentadas._
+<!-- END:functionalities -->
 
-# production mode
-$ pnpm run start:prod
-```
-
-## Run tests
-
-```bash
-# unit tests
-$ pnpm run test
-
-# e2e tests
-$ pnpm run test:e2e
-
-# test coverage
-$ pnpm run test:cov
-```
-
-## Deployment
-
-When you're ready to deploy your NestJS application to production, there are some key steps you can take to ensure it runs as efficiently as possible. Check out the [deployment documentation](https://docs.nestjs.com/deployment) for more information.
-
-If you are looking for a cloud-based platform to deploy your NestJS application, check out [Mau](https://mau.nestjs.com), our official platform for deploying NestJS applications on AWS. Mau makes deployment straightforward and fast, requiring just a few simple steps:
-
-```bash
-$ pnpm install -g mau
-$ mau deploy
-```
-
-With Mau, you can deploy your application in just a few clicks, allowing you to focus on building features rather than managing infrastructure.
-
-## Resources
-
-Check out a few resources that may come in handy when working with NestJS:
-
-- Visit the [NestJS Documentation](https://docs.nestjs.com) to learn more about the framework.
-- For questions and support, please visit our [Discord channel](https://discord.gg/G7Qnnhy).
-- To dive deeper and get more hands-on experience, check out our official video [courses](https://courses.nestjs.com/).
-- Deploy your application to AWS with the help of [NestJS Mau](https://mau.nestjs.com) in just a few clicks.
-- Visualize your application graph and interact with the NestJS application in real-time using [NestJS Devtools](https://devtools.nestjs.com).
-- Need help with your project (part-time to full-time)? Check out our official [enterprise support](https://enterprise.nestjs.com).
-- To stay in the loop and get updates, follow us on [X](https://x.com/nestframework) and [LinkedIn](https://linkedin.com/company/nestjs).
-- Looking for a job, or have a job to offer? Check out our official [Jobs board](https://jobs.nestjs.com).
-
-## Support
-
-Nest is an MIT-licensed open source project. It can grow thanks to the sponsors and support by the amazing backers. If you'd like to join them, please [read more here](https://docs.nestjs.com/support).
-
-## Stay in touch
-
-- Author - [Kamil Myśliwiec](https://twitter.com/kammysliwiec)
-- Website - [https://nestjs.com](https://nestjs.com/)
-- Twitter - [@nestframework](https://twitter.com/nestframework)
-
-## License
-
-Nest is [MIT licensed](https://github.com/nestjs/nest/blob/master/LICENSE).
+## 📦 Api Controllers
+<!-- START:api-controllers -->
+- **auth-api.controller**
+- **email-api.controller**
+- **example-api.controller**
+- **onboarding.controller**
+- **permissions-assignment.controller**
+- **permissions.controller**
+- **roles.controller**
+- **users.controller**
+<!-- END:api-controllers -->

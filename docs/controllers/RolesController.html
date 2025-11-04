@@ -1,0 +1,1105 @@
+<!doctype html>
+<html class="no-js" lang="">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="x-ua-compatible" content="ie=edge">
+        <title>node-started-backend documentation</title>
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+
+        <link rel="icon" type="image/x-icon" href="../images/favicon.ico">
+	   <link rel="stylesheet" href="../styles/style.css">
+        <link rel="stylesheet" href="../styles/dark.css">
+    </head>
+    <body>
+          <script>
+               // Blocking script to avoid flickering dark mode
+               // Dark mode toggle button
+               var useDark = window.matchMedia('(prefers-color-scheme: dark)');
+               var darkModeState = useDark.matches;
+               var $darkModeToggleSwitchers = document.querySelectorAll('.dark-mode-switch input');
+               var $darkModeToggles = document.querySelectorAll('.dark-mode-switch');
+               var darkModeStateLocal = localStorage.getItem('compodoc_darkmode-state');
+
+               function checkToggle(check) {
+                    for (var i = 0; i < $darkModeToggleSwitchers.length; i++) {
+                         $darkModeToggleSwitchers[i].checked = check;
+                    }
+               }
+
+               function toggleDarkMode(state) {
+                    if (window.localStorage) {
+                         localStorage.setItem('compodoc_darkmode-state', state);
+                    }
+
+                    checkToggle(state);
+
+                    const hasClass = document.body.classList.contains('dark');
+
+                    if (state) {
+                         for (var i = 0; i < $darkModeToggles.length; i++) {
+                              $darkModeToggles[i].classList.add('dark');
+                         }
+                         if (!hasClass) {
+                              document.body.classList.add('dark');
+                         }
+                    } else {
+                         for (var i = 0; i < $darkModeToggles.length; i++) {
+                              $darkModeToggles[i].classList.remove('dark');
+                         }
+                         if (hasClass) {
+                              document.body.classList.remove('dark');
+                         }
+                    }
+               }
+
+               useDark.addEventListener('change', function (evt) {
+                    toggleDarkMode(evt.matches);
+               });
+               if (darkModeStateLocal) {
+                    darkModeState = darkModeStateLocal === 'true';
+               }
+               toggleDarkMode(darkModeState);
+          </script>
+          <script>
+              // --- Iframe navigation tracking for Template Playground ---
+              function sendCurrentUrlToParent() {
+                  if (window.parent && window.parent !== window) {
+                      window.parent.postMessage({
+                          type: 'compodoc-iframe-navigate',
+                          url: window.location.pathname + window.location.hash
+                      }, '*');
+                  }
+              }
+              window.addEventListener('hashchange', sendCurrentUrlToParent, false);
+              window.addEventListener('popstate', sendCurrentUrlToParent, false);
+              window.addEventListener('DOMContentLoaded', sendCurrentUrlToParent, false);
+          </script>
+
+        <div class="navbar navbar-default navbar-fixed-top d-md-none p-0">
+               <div class="d-flex">
+                    <a href="../" class="navbar-brand">node-started-backend documentation</a>
+                    <button type="button" class="btn btn-default btn-menu ion-ios-menu" id="btn-menu"></button>
+               </div>
+        </div>
+
+        <div class="xs-menu menu" id="mobile-menu">
+                <div id="book-search-input" role="search"><input type="text" placeholder="Type to search"></div>            <compodoc-menu></compodoc-menu>
+        </div>
+
+        <div class="container-fluid main">
+           <div class="row main">
+               <div class="d-none d-md-block menu">
+                   <compodoc-menu mode="normal"></compodoc-menu>
+               </div>
+               <!-- START CONTENT -->
+               <div class="content controller">
+                   <div class="content-data">
+
+
+
+
+
+
+
+
+
+<ol class="breadcrumb">
+  <li class="breadcrumb-item">Controllers</li>
+  <li class="breadcrumb-item" >RolesController</li>
+</ol>
+
+<ul class="nav nav-tabs" role="tablist">
+        <li class="nav-item">
+            <a href="#info" 
+                class="nav-link"
+                class="nav-link active"
+                role="tab" id="info-tab" data-bs-toggle="tab" data-link="info">Info</a>
+        </li>
+        <li class="nav-item">
+            <a href="#source" 
+                class="nav-link"
+                
+                role="tab" id="source-tab" data-bs-toggle="tab" data-link="source">Source</a>
+        </li>
+</ul>
+
+<div class="tab-content">
+    <div class="tab-pane fade active in" id="info">
+        <p class="comment">
+            <h3>File</h3>
+        </p>
+        <p class="comment">
+            <code>src/api/roles/controllers/roles.controller.ts</code>
+        </p>
+            <p class="comment">
+                <h3>Prefix</h3>
+            </p>
+            <p class="comment">
+                <code>roles</code>
+            </p>
+
+
+
+
+
+
+            <section data-compodoc="block-index">
+    <h3 id="index">Index</h3>
+    <table class="table table-sm table-bordered index-table">
+        <tbody>
+
+                <tr>
+                    <td class="col-md-4">
+                        <h6><b>Methods</b></h6>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <ul class="index-list">
+                            <li>
+                                    <span class="modifier"></span>
+                                    <span class="modifier"></span>
+                                    <span class="modifier"></span>
+                                    <span class="modifier"></span>
+                                    <span class="modifier"></span>
+                                    <span class="modifier"></span>
+                                    <span class="modifier"></span>
+                                    <span class="modifier"></span>
+                                    <span class="modifier"></span>
+                                    <span class="modifier"></span>
+                                    <span class="modifier">Async</span>
+                                <a href="#create" >create</a>
+                            </li>
+                            <li>
+                                    <span class="modifier"></span>
+                                    <span class="modifier"></span>
+                                    <span class="modifier"></span>
+                                    <span class="modifier"></span>
+                                    <span class="modifier"></span>
+                                    <span class="modifier"></span>
+                                    <span class="modifier"></span>
+                                    <span class="modifier"></span>
+                                    <span class="modifier"></span>
+                                    <span class="modifier"></span>
+                                    <span class="modifier"></span>
+                                    <span class="modifier">Async</span>
+                                <a href="#findAll" >findAll</a>
+                            </li>
+                            <li>
+                                    <span class="modifier"></span>
+                                    <span class="modifier"></span>
+                                    <span class="modifier"></span>
+                                    <span class="modifier"></span>
+                                    <span class="modifier"></span>
+                                    <span class="modifier"></span>
+                                    <span class="modifier"></span>
+                                    <span class="modifier"></span>
+                                    <span class="modifier"></span>
+                                    <span class="modifier"></span>
+                                    <span class="modifier"></span>
+                                    <span class="modifier">Async</span>
+                                <a href="#findOne" >findOne</a>
+                            </li>
+                            <li>
+                                    <span class="modifier"></span>
+                                    <span class="modifier"></span>
+                                    <span class="modifier"></span>
+                                    <span class="modifier"></span>
+                                    <span class="modifier"></span>
+                                    <span class="modifier"></span>
+                                    <span class="modifier"></span>
+                                    <span class="modifier"></span>
+                                    <span class="modifier"></span>
+                                    <span class="modifier"></span>
+                                    <span class="modifier"></span>
+                                    <span class="modifier">Async</span>
+                                <a href="#remove" >remove</a>
+                            </li>
+                            <li>
+                                    <span class="modifier"></span>
+                                    <span class="modifier"></span>
+                                    <span class="modifier"></span>
+                                    <span class="modifier"></span>
+                                    <span class="modifier"></span>
+                                    <span class="modifier"></span>
+                                    <span class="modifier"></span>
+                                    <span class="modifier"></span>
+                                    <span class="modifier"></span>
+                                    <span class="modifier"></span>
+                                    <span class="modifier"></span>
+                                    <span class="modifier">Async</span>
+                                <a href="#update" >update</a>
+                            </li>
+                        </ul>
+                    </td>
+                </tr>
+
+
+
+
+
+        </tbody>
+    </table>
+</section>
+
+            <section data-compodoc="block-methods">
+    
+    <h3 id="methods">
+        Methods
+    </h3>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="create"></a>
+                    <span class="name">
+                            <span class="modifier"></span>
+                            <span class="modifier"></span>
+                            <span class="modifier"></span>
+                            <span class="modifier"></span>
+                            <span class="modifier"></span>
+                            <span class="modifier"></span>
+                            <span class="modifier"></span>
+                            <span class="modifier"></span>
+                            <span class="modifier"></span>
+                            <span class="modifier"></span>
+                            <span class="modifier">Async</span>
+                        <span ><b>create</b></span>
+                        <a href="#create"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                        <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>create(dto: <a href="../classes/CreateRoleRequestDto.html" target="_self">CreateRoleRequestDto</a>, user: <a href="../unknowns/User.html" target="_self">Users</a>)</code>
+                </td>
+            </tr>
+
+            <tr>
+                <td class="col-md-4">
+                    <b>Decorators : </b>
+                    <br />
+                    <code>@Post()<br />@Version(&#x27;1&#x27;)<br />@HttpCode(201)<br />@ApiOperation({summary: &#x27;Crear un nuevo rol&#x27;, description: &#x27;Crea un nuevo rol en el sistema. Solo para administradores.&#x27;})<br />@ApiResponse({status: 201, description: &#x27;El rol ha sido creado exitosamente.&#x27;, type: RoleResponseDto})<br />@ApiBadRequestResponse({description: &#x27;Solicitud mal formada, verifique los datos y/o parametros enviados.&#x27;, example: undefined})<br />@ApiUnauthorizedResponse({description: &#x27;Credenciales inválidas.&#x27;, type: UnauthorizedException, example: undefined})<br />@ApiForbiddenResponse({description: &#x27;Usuario bloqueado.&#x27;, example: undefined})<br />@ApiInternalServerErrorResponse({description: &#x27;Error interno del servidor al procesar la solicitud.&#x27;, example: undefined})<br />@Permissions(PermissionsEnum.ROLE_CREATE, PermissionsEnum.ADMIN_ALL)<br /></code>
+                </td>
+            </tr>
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="88"
+                                    class="link-to-prism">src/api/roles/controllers/roles.controller.ts:88</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                            <div class="io-description">
+                                <b>Parameters :</b>
+                                
+                                <table class="params">
+                                    <thead>
+                                        <tr>
+                                            <td>Name</td>
+                                                <td>Type</td>
+                                            <td>Optional</td>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                                <td>dto</td>
+                                            <td>
+                                                            <code><a href="../classes/CreateRoleRequestDto.html" target="_self" >CreateRoleRequestDto</a></code>
+                                            </td>
+
+                                            <td>
+                                                    No
+                                            </td>
+
+
+                                        </tr>
+                                        <tr>
+                                                <td>user</td>
+                                            <td>
+                                                            <code><a href="../miscellaneous/variables.html#User" target="_self" >Users</a></code>
+                                            </td>
+
+                                            <td>
+                                                    No
+                                            </td>
+
+
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        <div class="io-description">
+                            <b>Returns : </b>        <code><a href="../classes/RoleResponseDto.html" target="_self" >Promise&lt;RoleResponseDto&gt;</a></code>
+
+                        </div>
+                            <div class="io-description">
+                                
+                            </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="findAll"></a>
+                    <span class="name">
+                            <span class="modifier"></span>
+                            <span class="modifier"></span>
+                            <span class="modifier"></span>
+                            <span class="modifier"></span>
+                            <span class="modifier"></span>
+                            <span class="modifier"></span>
+                            <span class="modifier"></span>
+                            <span class="modifier"></span>
+                            <span class="modifier"></span>
+                            <span class="modifier"></span>
+                            <span class="modifier"></span>
+                            <span class="modifier">Async</span>
+                        <span ><b>findAll</b></span>
+                        <a href="#findAll"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                        <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>findAll()</code>
+                </td>
+            </tr>
+
+            <tr>
+                <td class="col-md-4">
+                    <b>Decorators : </b>
+                    <br />
+                    <code>@Get()<br />@Version(&#x27;1&#x27;)<br />@HttpCode(200)<br />@ApiOperation({summary: &#x27;Obtener todos los roles&#x27;, description: &#x27;Obtiene una lista de todos los roles disponibles. Solo para administradores.&#x27;})<br />@ApiResponse({status: 200, description: &#x27;Lista de roles obtenida exitosamente.&#x27;, type: undefined})<br />@ApiBadRequestResponse({description: &#x27;Solicitud mal formada, verifique los datos y/o parametros enviados.&#x27;, example: undefined})<br />@ApiUnauthorizedResponse({description: &#x27;Credenciales inválidas.&#x27;, type: UnauthorizedException, example: undefined})<br />@ApiForbiddenResponse({description: &#x27;Usuario bloqueado.&#x27;, example: undefined})<br />@ApiNotFoundResponse({description: &#x27;Rol no encontrado.&#x27;, example: undefined})<br />@ApiInternalServerErrorResponse({description: &#x27;Error interno del servidor al procesar la solicitud.&#x27;, example: undefined})<br />@Permissions(PermissionsEnum.ROLE_READ, PermissionsEnum.ADMIN_ALL)<br /></code>
+                </td>
+            </tr>
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="205"
+                                    class="link-to-prism">src/api/roles/controllers/roles.controller.ts:205</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                        <div class="io-description">
+                            <b>Returns : </b>        <code><a href="../classes/RoleResponseDto.html" target="_self" >Promise&lt;RoleResponseDto[]&gt;</a></code>
+
+                        </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="findOne"></a>
+                    <span class="name">
+                            <span class="modifier"></span>
+                            <span class="modifier"></span>
+                            <span class="modifier"></span>
+                            <span class="modifier"></span>
+                            <span class="modifier"></span>
+                            <span class="modifier"></span>
+                            <span class="modifier"></span>
+                            <span class="modifier"></span>
+                            <span class="modifier"></span>
+                            <span class="modifier"></span>
+                            <span class="modifier"></span>
+                            <span class="modifier">Async</span>
+                        <span ><b>findOne</b></span>
+                        <a href="#findOne"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                        <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>findOne(id: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/number" target="_blank">number</a>)</code>
+                </td>
+            </tr>
+
+            <tr>
+                <td class="col-md-4">
+                    <b>Decorators : </b>
+                    <br />
+                    <code>@Get(&#x27;:id&#x27;)<br />@Version(&#x27;1&#x27;)<br />@HttpCode(200)<br />@ApiOperation({summary: &#x27;Obtener un rol por ID&#x27;, description: &#x27;Obtiene los detalles de un rol específico por su ID. Solo para administradores.&#x27;})<br />@ApiResponse({status: 200, description: &#x27;Rol obtenido exitosamente.&#x27;, type: RoleResponseDto})<br />@ApiBadRequestResponse({description: &#x27;Solicitud mal formada, verifique los datos y/o parametros enviados.&#x27;, example: undefined})<br />@ApiUnauthorizedResponse({description: &#x27;Credenciales inválidas.&#x27;, type: UnauthorizedException, example: undefined})<br />@ApiForbiddenResponse({description: &#x27;Usuario bloqueado.&#x27;, example: undefined})<br />@ApiNotFoundResponse({description: &#x27;Rol no encontrado.&#x27;, example: undefined})<br />@ApiInternalServerErrorResponse({description: &#x27;Error interno del servidor al procesar la solicitud.&#x27;, example: undefined})<br />@Permissions(PermissionsEnum.ROLE_READ, PermissionsEnum.ADMIN_ALL)<br /></code>
+                </td>
+            </tr>
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="261"
+                                    class="link-to-prism">src/api/roles/controllers/roles.controller.ts:261</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                            <div class="io-description">
+                                <b>Parameters :</b>
+                                
+                                <table class="params">
+                                    <thead>
+                                        <tr>
+                                            <td>Name</td>
+                                                <td>Type</td>
+                                            <td>Optional</td>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                                <td>id</td>
+                                            <td>
+                                                            <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/number" target="_blank" >number</a></code>
+                                            </td>
+
+                                            <td>
+                                                    No
+                                            </td>
+
+
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        <div class="io-description">
+                            <b>Returns : </b>        <code><a href="../classes/RoleResponseDto.html" target="_self" >Promise&lt;RoleResponseDto&gt;</a></code>
+
+                        </div>
+                            <div class="io-description">
+                                
+                            </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="remove"></a>
+                    <span class="name">
+                            <span class="modifier"></span>
+                            <span class="modifier"></span>
+                            <span class="modifier"></span>
+                            <span class="modifier"></span>
+                            <span class="modifier"></span>
+                            <span class="modifier"></span>
+                            <span class="modifier"></span>
+                            <span class="modifier"></span>
+                            <span class="modifier"></span>
+                            <span class="modifier"></span>
+                            <span class="modifier"></span>
+                            <span class="modifier">Async</span>
+                        <span ><b>remove</b></span>
+                        <a href="#remove"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                        <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>remove(id: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/number" target="_blank">number</a>, user: <a href="../unknowns/User.html" target="_self">Users</a>)</code>
+                </td>
+            </tr>
+
+            <tr>
+                <td class="col-md-4">
+                    <b>Decorators : </b>
+                    <br />
+                    <code>@Delete(&#x27;:id&#x27;)<br />@Version(&#x27;1&#x27;)<br />@HttpCode(204)<br />@ApiOperation({summary: &#x27;Eliminar un rol por ID&#x27;, description: &#x27;Elimina un rol específico por su ID. Solo para administradores.&#x27;})<br />@ApiResponse({status: 204, description: &#x27;Rol eliminado exitosamente.&#x27;})<br />@ApiBadRequestResponse({description: &#x27;Solicitud mal formada, verifique los datos y/o parametros enviados.&#x27;, example: undefined})<br />@ApiUnauthorizedResponse({description: &#x27;Credenciales inválidas.&#x27;, type: UnauthorizedException, example: undefined})<br />@ApiForbiddenResponse({description: &#x27;Usuario bloqueado.&#x27;, example: undefined})<br />@ApiNotFoundResponse({description: &#x27;Rol no encontrado.&#x27;, example: undefined})<br />@ApiInternalServerErrorResponse({description: &#x27;Error interno del servidor al procesar la solicitud.&#x27;, example: undefined})<br />@Permissions(PermissionsEnum.ROLE_DELETE, PermissionsEnum.ADMIN_ALL)<br /></code>
+                </td>
+            </tr>
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="315"
+                                    class="link-to-prism">src/api/roles/controllers/roles.controller.ts:315</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                            <div class="io-description">
+                                <b>Parameters :</b>
+                                
+                                <table class="params">
+                                    <thead>
+                                        <tr>
+                                            <td>Name</td>
+                                                <td>Type</td>
+                                            <td>Optional</td>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                                <td>id</td>
+                                            <td>
+                                                            <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/number" target="_blank" >number</a></code>
+                                            </td>
+
+                                            <td>
+                                                    No
+                                            </td>
+
+
+                                        </tr>
+                                        <tr>
+                                                <td>user</td>
+                                            <td>
+                                                            <code><a href="../miscellaneous/variables.html#User" target="_self" >Users</a></code>
+                                            </td>
+
+                                            <td>
+                                                    No
+                                            </td>
+
+
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        <div class="io-description">
+                            <b>Returns : </b>    <code>Promise&lt;void&gt;</code>
+
+                        </div>
+                            <div class="io-description">
+                                
+                            </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="update"></a>
+                    <span class="name">
+                            <span class="modifier"></span>
+                            <span class="modifier"></span>
+                            <span class="modifier"></span>
+                            <span class="modifier"></span>
+                            <span class="modifier"></span>
+                            <span class="modifier"></span>
+                            <span class="modifier"></span>
+                            <span class="modifier"></span>
+                            <span class="modifier"></span>
+                            <span class="modifier"></span>
+                            <span class="modifier"></span>
+                            <span class="modifier">Async</span>
+                        <span ><b>update</b></span>
+                        <a href="#update"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                        <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>update(dto: <a href="../classes/UpdateRoleRequestDto.html" target="_self">UpdateRoleRequestDto</a>, user: <a href="../unknowns/User.html" target="_self">Users</a>)</code>
+                </td>
+            </tr>
+
+            <tr>
+                <td class="col-md-4">
+                    <b>Decorators : </b>
+                    <br />
+                    <code>@Put()<br />@Version(&#x27;1&#x27;)<br />@HttpCode(200)<br />@ApiOperation({summary: &#x27;Actualza un rol&#x27;, description: &#x27;Actualiza un rol en el sistema. Solo para administradores.&#x27;})<br />@ApiResponse({status: 201, description: &#x27;El rol ha sido actualizado exitosamente.&#x27;, type: RoleResponseDto})<br />@ApiBadRequestResponse({description: &#x27;Solicitud mal formada, verifique los datos y/o parametros enviados.&#x27;, example: undefined})<br />@ApiUnauthorizedResponse({description: &#x27;Credenciales inválidas.&#x27;, type: UnauthorizedException, example: undefined})<br />@ApiForbiddenResponse({description: &#x27;Usuario bloqueado.&#x27;, example: undefined})<br />@ApiNotFoundResponse({description: &#x27;Rol no encontrado.&#x27;, example: undefined})<br />@ApiInternalServerErrorResponse({description: &#x27;Error interno del servidor al procesar la solicitud.&#x27;, example: undefined})<br />@Permissions(PermissionsEnum.ROLE_UPDATE, PermissionsEnum.ADMIN_ALL)<br /></code>
+                </td>
+            </tr>
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="146"
+                                    class="link-to-prism">src/api/roles/controllers/roles.controller.ts:146</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                            <div class="io-description">
+                                <b>Parameters :</b>
+                                
+                                <table class="params">
+                                    <thead>
+                                        <tr>
+                                            <td>Name</td>
+                                                <td>Type</td>
+                                            <td>Optional</td>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                                <td>dto</td>
+                                            <td>
+                                                            <code><a href="../classes/UpdateRoleRequestDto.html" target="_self" >UpdateRoleRequestDto</a></code>
+                                            </td>
+
+                                            <td>
+                                                    No
+                                            </td>
+
+
+                                        </tr>
+                                        <tr>
+                                                <td>user</td>
+                                            <td>
+                                                            <code><a href="../miscellaneous/variables.html#User" target="_self" >Users</a></code>
+                                            </td>
+
+                                            <td>
+                                                    No
+                                            </td>
+
+
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        <div class="io-description">
+                            <b>Returns : </b>        <code><a href="../classes/RoleResponseDto.html" target="_self" >Promise&lt;RoleResponseDto&gt;</a></code>
+
+                        </div>
+                            <div class="io-description">
+                                
+                            </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</section>    </div>
+
+
+    <div class="tab-pane fade  tab-source-code" id="source">
+        <pre class="line-numbers compodoc-sourcecode"><code class="language-typescript">import {
+  Controller,
+  Post,
+  Get,
+  Body,
+  Param,
+  Delete,
+  HttpCode,
+  Version,
+  UseGuards,
+  ParseIntPipe,
+  Put,
+  UnauthorizedException,
+} from &#x27;@nestjs/common&#x27;;
+import {
+  ApiTags,
+  ApiOperation,
+  ApiBearerAuth,
+  ApiResponse,
+  ApiBadRequestResponse,
+  ApiForbiddenResponse,
+  ApiInternalServerErrorResponse,
+  ApiNotFoundResponse,
+  ApiUnauthorizedResponse,
+} from &#x27;@nestjs/swagger&#x27;;
+import { RolesService } from &#x27;../services/roles.service&#x27;;
+import { JwtAuthGuard } from &#x27;@modules/auth/guards/jwt-auth.guard&#x27;;
+import { PermissionsGuard } from &#x27;@modules/auth/guards/permissions.guard&#x27;;
+import { Permissions } from &#x27;@common/decorators/permissions.decorator&#x27;;
+import { RoleResponseDto } from &#x27;@api/roles/dtos/response/role.response.dto&#x27;;
+import { CreateRoleRequestDto } from &#x27;@api/roles/dtos/request/create-role.request.dto&#x27;;
+import { UpdateRoleRequestDto } from &#x27;@api/roles/dtos/request/update-role.request.dto&#x27;;
+import { Users } from &#x27;@prisma/client&#x27;;
+import { User } from &#x27;@common/decorators/user.decorator&#x27;;
+import { PermissionsEnum } from &#x27;@common/enum/permissions.enum&#x27;;
+
+@ApiTags(&#x27;Roles&#x27;)
+@Controller(&#x27;roles&#x27;)
+@UseGuards(JwtAuthGuard, PermissionsGuard)
+@ApiBearerAuth()
+export class RolesController {
+  constructor(private readonly rolesService: RolesService) {}
+
+  @Post()
+  @Version(&#x27;1&#x27;)
+  @HttpCode(201)
+  @ApiOperation({
+    summary: &#x27;Crear un nuevo rol&#x27;,
+    description: &#x27;Crea un nuevo rol en el sistema. Solo para administradores.&#x27;,
+  })
+  @ApiResponse({
+    status: 201,
+    description: &#x27;El rol ha sido creado exitosamente.&#x27;,
+    type: RoleResponseDto,
+  })
+  @ApiBadRequestResponse({
+    description:
+      &#x27;Solicitud mal formada, verifique los datos y/o parametros enviados.&#x27;,
+    example: {
+      statusCode: 400,
+      message:
+        &#x27;Solicitud mal formada, verifique los datos y/o parametros enviados.&#x27;,
+    },
+  })
+  @ApiUnauthorizedResponse({
+    description: &#x27;Credenciales inválidas.&#x27;,
+    type: UnauthorizedException,
+    example: {
+      statusCode: 401,
+      message: &#x27;Credenciales inválidas.&#x27;,
+    },
+  })
+  @ApiForbiddenResponse({
+    description: &#x27;Usuario bloqueado.&#x27;,
+    example: {
+      statusCode: 403,
+      message: &#x27;Usuario bloqueado.&#x27;,
+    },
+  })
+  @ApiInternalServerErrorResponse({
+    description: &#x27;Error interno del servidor al procesar la solicitud.&#x27;,
+    example: {
+      statusCode: 500,
+      message: &#x27;Error interno del servidor al procesar la solicitud.&#x27;,
+    },
+  })
+  @Permissions(PermissionsEnum.ROLE_CREATE, PermissionsEnum.ADMIN_ALL)
+  async create(
+    @Body() dto: CreateRoleRequestDto,
+    @User() user: Users,
+  ): Promise&lt;RoleResponseDto&gt; {
+    return await this.rolesService.create(dto, user.email);
+  }
+
+  @Put()
+  @Version(&#x27;1&#x27;)
+  @HttpCode(200)
+  @ApiOperation({
+    summary: &#x27;Actualza un rol&#x27;,
+    description: &#x27;Actualiza un rol en el sistema. Solo para administradores.&#x27;,
+  })
+  @ApiResponse({
+    status: 201,
+    description: &#x27;El rol ha sido actualizado exitosamente.&#x27;,
+    type: RoleResponseDto,
+  })
+  @ApiBadRequestResponse({
+    description:
+      &#x27;Solicitud mal formada, verifique los datos y/o parametros enviados.&#x27;,
+    example: {
+      statusCode: 400,
+      message:
+        &#x27;Solicitud mal formada, verifique los datos y/o parametros enviados.&#x27;,
+    },
+  })
+  @ApiUnauthorizedResponse({
+    description: &#x27;Credenciales inválidas.&#x27;,
+    type: UnauthorizedException,
+    example: {
+      statusCode: 401,
+      message: &#x27;Credenciales inválidas.&#x27;,
+    },
+  })
+  @ApiForbiddenResponse({
+    description: &#x27;Usuario bloqueado.&#x27;,
+    example: {
+      statusCode: 403,
+      message: &#x27;Usuario bloqueado.&#x27;,
+    },
+  })
+  @ApiNotFoundResponse({
+    description: &#x27;Rol no encontrado.&#x27;,
+    example: {
+      statusCode: 404,
+      message: &#x27;Rol no encontrado.&#x27;,
+    },
+  })
+  @ApiInternalServerErrorResponse({
+    description: &#x27;Error interno del servidor al procesar la solicitud.&#x27;,
+    example: {
+      statusCode: 500,
+      message: &#x27;Error interno del servidor al procesar la solicitud.&#x27;,
+    },
+  })
+  @Permissions(PermissionsEnum.ROLE_UPDATE, PermissionsEnum.ADMIN_ALL)
+  async update(
+    @Body() dto: UpdateRoleRequestDto,
+    @User() user: Users,
+  ): Promise&lt;RoleResponseDto&gt; {
+    return await this.rolesService.update(dto, user.email);
+  }
+
+  @Get()
+  @Version(&#x27;1&#x27;)
+  @HttpCode(200)
+  @ApiOperation({
+    summary: &#x27;Obtener todos los roles&#x27;,
+    description:
+      &#x27;Obtiene una lista de todos los roles disponibles. Solo para administradores.&#x27;,
+  })
+  @ApiResponse({
+    status: 200,
+    description: &#x27;Lista de roles obtenida exitosamente.&#x27;,
+    type: [RoleResponseDto],
+  })
+  @ApiBadRequestResponse({
+    description:
+      &#x27;Solicitud mal formada, verifique los datos y/o parametros enviados.&#x27;,
+    example: {
+      statusCode: 400,
+      message:
+        &#x27;Solicitud mal formada, verifique los datos y/o parametros enviados.&#x27;,
+    },
+  })
+  @ApiUnauthorizedResponse({
+    description: &#x27;Credenciales inválidas.&#x27;,
+    type: UnauthorizedException,
+    example: {
+      statusCode: 401,
+      message: &#x27;Credenciales inválidas.&#x27;,
+    },
+  })
+  @ApiForbiddenResponse({
+    description: &#x27;Usuario bloqueado.&#x27;,
+    example: {
+      statusCode: 403,
+      message: &#x27;Usuario bloqueado.&#x27;,
+    },
+  })
+  @ApiNotFoundResponse({
+    description: &#x27;Rol no encontrado.&#x27;,
+    example: {
+      statusCode: 404,
+      message: &#x27;Rol no encontrado.&#x27;,
+    },
+  })
+  @ApiInternalServerErrorResponse({
+    description: &#x27;Error interno del servidor al procesar la solicitud.&#x27;,
+    example: {
+      statusCode: 500,
+      message: &#x27;Error interno del servidor al procesar la solicitud.&#x27;,
+    },
+  })
+  @Permissions(PermissionsEnum.ROLE_READ, PermissionsEnum.ADMIN_ALL)
+  async findAll(): Promise&lt;RoleResponseDto[]&gt; {
+    return await this.rolesService.findAll();
+  }
+
+  @Get(&#x27;:id&#x27;)
+  @Version(&#x27;1&#x27;)
+  @HttpCode(200)
+  @ApiOperation({
+    summary: &#x27;Obtener un rol por ID&#x27;,
+    description:
+      &#x27;Obtiene los detalles de un rol específico por su ID. Solo para administradores.&#x27;,
+  })
+  @ApiResponse({
+    status: 200,
+    description: &#x27;Rol obtenido exitosamente.&#x27;,
+    type: RoleResponseDto,
+  })
+  @ApiBadRequestResponse({
+    description:
+      &#x27;Solicitud mal formada, verifique los datos y/o parametros enviados.&#x27;,
+    example: {
+      statusCode: 400,
+      message:
+        &#x27;Solicitud mal formada, verifique los datos y/o parametros enviados.&#x27;,
+    },
+  })
+  @ApiUnauthorizedResponse({
+    description: &#x27;Credenciales inválidas.&#x27;,
+    type: UnauthorizedException,
+    example: {
+      statusCode: 401,
+      message: &#x27;Credenciales inválidas.&#x27;,
+    },
+  })
+  @ApiForbiddenResponse({
+    description: &#x27;Usuario bloqueado.&#x27;,
+    example: {
+      statusCode: 403,
+      message: &#x27;Usuario bloqueado.&#x27;,
+    },
+  })
+  @ApiNotFoundResponse({
+    description: &#x27;Rol no encontrado.&#x27;,
+    example: {
+      statusCode: 404,
+      message: &#x27;Rol no encontrado.&#x27;,
+    },
+  })
+  @ApiInternalServerErrorResponse({
+    description: &#x27;Error interno del servidor al procesar la solicitud.&#x27;,
+    example: {
+      statusCode: 500,
+      message: &#x27;Error interno del servidor al procesar la solicitud.&#x27;,
+    },
+  })
+  @Permissions(PermissionsEnum.ROLE_READ, PermissionsEnum.ADMIN_ALL)
+  async findOne(
+    @Param(&#x27;id&#x27;, ParseIntPipe) id: number,
+  ): Promise&lt;RoleResponseDto&gt; {
+    return await this.rolesService.findOne(id);
+  }
+
+  @Delete(&#x27;:id&#x27;)
+  @Version(&#x27;1&#x27;)
+  @HttpCode(204)
+  @ApiOperation({
+    summary: &#x27;Eliminar un rol por ID&#x27;,
+    description:
+      &#x27;Elimina un rol específico por su ID. Solo para administradores.&#x27;,
+  })
+  @ApiResponse({ status: 204, description: &#x27;Rol eliminado exitosamente.&#x27; })
+  @ApiBadRequestResponse({
+    description:
+      &#x27;Solicitud mal formada, verifique los datos y/o parametros enviados.&#x27;,
+    example: {
+      statusCode: 400,
+      message:
+        &#x27;Solicitud mal formada, verifique los datos y/o parametros enviados.&#x27;,
+    },
+  })
+  @ApiUnauthorizedResponse({
+    description: &#x27;Credenciales inválidas.&#x27;,
+    type: UnauthorizedException,
+    example: {
+      statusCode: 401,
+      message: &#x27;Credenciales inválidas.&#x27;,
+    },
+  })
+  @ApiForbiddenResponse({
+    description: &#x27;Usuario bloqueado.&#x27;,
+    example: {
+      statusCode: 403,
+      message: &#x27;Usuario bloqueado.&#x27;,
+    },
+  })
+  @ApiNotFoundResponse({
+    description: &#x27;Rol no encontrado.&#x27;,
+    example: {
+      statusCode: 404,
+      message: &#x27;Rol no encontrado.&#x27;,
+    },
+  })
+  @ApiInternalServerErrorResponse({
+    description: &#x27;Error interno del servidor al procesar la solicitud.&#x27;,
+    example: {
+      statusCode: 500,
+      message: &#x27;Error interno del servidor al procesar la solicitud.&#x27;,
+    },
+  })
+  @Permissions(PermissionsEnum.ROLE_DELETE, PermissionsEnum.ADMIN_ALL)
+  async remove(
+    @Param(&#x27;id&#x27;, ParseIntPipe) id: number,
+    @User() user: Users,
+  ): Promise&lt;void&gt; {
+    await this.rolesService.remove(id, user.email);
+  }
+}
+</code></pre>
+    </div>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                   </div><div class="search-results">
+    <div class="has-results">
+        <h1 class="search-results-title"><span class='search-results-count'></span> results matching "<span class='search-query'></span>"</h1>
+        <ul class="search-results-list"></ul>
+    </div>
+    <div class="no-results">
+        <h1 class="search-results-title">No results matching "<span class='search-query'></span>"</h1>
+    </div>
+</div>
+</div>
+               <!-- END CONTENT -->
+           </div>
+       </div>
+
+          <label class="dark-mode-switch">
+               <input type="checkbox">
+               <span class="slider">
+                    <svg class="slider-icon" viewBox="0 0 24 24" fill="none" height="20" stroke="#000" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" width="20" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M21 12.79A9 9 0 1111.21 3 7 7 0 0021 12.79z"></path>
+                    </svg>
+               </span>
+          </label>
+
+       <script>
+            var COMPODOC_CURRENT_PAGE_DEPTH = 1;
+            var COMPODOC_CURRENT_PAGE_CONTEXT = 'controller';
+            var COMPODOC_CURRENT_PAGE_URL = 'RolesController.html';
+            var MAX_SEARCH_RESULTS = 15;
+       </script>
+
+       <script>
+               $darkModeToggleSwitchers = document.querySelectorAll('.dark-mode-switch input');
+               checkToggle(darkModeState);
+               if ($darkModeToggleSwitchers.length > 0) {
+                    for (var i = 0; i < $darkModeToggleSwitchers.length; i++) {
+                         $darkModeToggleSwitchers[i].addEventListener('change', function (event) {
+                              darkModeState = !darkModeState;
+                              toggleDarkMode(darkModeState);
+                         });
+                    }
+               }
+          </script>
+
+       <script src="../js/libs/custom-elements.min.js"></script>
+       <script src="../js/libs/lit-html.js"></script>
+
+       <script src="../js/menu-wc.js" defer></script>
+       <script nomodule src="../js/menu-wc_es5.js" defer></script>
+
+       <script src="../js/libs/bootstrap-native.js"></script>
+
+       <script src="../js/libs/es6-shim.min.js"></script>
+       <script src="../js/libs/EventDispatcher.js"></script>
+       <script src="../js/libs/promise.min.js"></script>
+
+       <script src="../js/compodoc.js"></script>
+
+       <script src="../js/tabs.js"></script>
+       <script src="../js/menu.js"></script>
+       <script src="../js/libs/clipboard.min.js"></script>
+       <script src="../js/libs/prism.js"></script>
+       <script src="../js/sourceCode.js"></script>
+          <script src="../js/search/search.js"></script>
+          <script src="../js/search/lunr.min.js"></script>
+          <script src="../js/search/search-lunr.js"></script>
+          <script src="../js/search/search_index.js"></script>
+       <script src="../js/lazy-load-graphs.js"></script>
+
+
+    </body>
+</html>

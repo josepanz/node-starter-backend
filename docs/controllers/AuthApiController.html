@@ -1,0 +1,1752 @@
+<!doctype html>
+<html class="no-js" lang="">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="x-ua-compatible" content="ie=edge">
+        <title>node-started-backend documentation</title>
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+
+        <link rel="icon" type="image/x-icon" href="../images/favicon.ico">
+	   <link rel="stylesheet" href="../styles/style.css">
+        <link rel="stylesheet" href="../styles/dark.css">
+    </head>
+    <body>
+          <script>
+               // Blocking script to avoid flickering dark mode
+               // Dark mode toggle button
+               var useDark = window.matchMedia('(prefers-color-scheme: dark)');
+               var darkModeState = useDark.matches;
+               var $darkModeToggleSwitchers = document.querySelectorAll('.dark-mode-switch input');
+               var $darkModeToggles = document.querySelectorAll('.dark-mode-switch');
+               var darkModeStateLocal = localStorage.getItem('compodoc_darkmode-state');
+
+               function checkToggle(check) {
+                    for (var i = 0; i < $darkModeToggleSwitchers.length; i++) {
+                         $darkModeToggleSwitchers[i].checked = check;
+                    }
+               }
+
+               function toggleDarkMode(state) {
+                    if (window.localStorage) {
+                         localStorage.setItem('compodoc_darkmode-state', state);
+                    }
+
+                    checkToggle(state);
+
+                    const hasClass = document.body.classList.contains('dark');
+
+                    if (state) {
+                         for (var i = 0; i < $darkModeToggles.length; i++) {
+                              $darkModeToggles[i].classList.add('dark');
+                         }
+                         if (!hasClass) {
+                              document.body.classList.add('dark');
+                         }
+                    } else {
+                         for (var i = 0; i < $darkModeToggles.length; i++) {
+                              $darkModeToggles[i].classList.remove('dark');
+                         }
+                         if (hasClass) {
+                              document.body.classList.remove('dark');
+                         }
+                    }
+               }
+
+               useDark.addEventListener('change', function (evt) {
+                    toggleDarkMode(evt.matches);
+               });
+               if (darkModeStateLocal) {
+                    darkModeState = darkModeStateLocal === 'true';
+               }
+               toggleDarkMode(darkModeState);
+          </script>
+          <script>
+              // --- Iframe navigation tracking for Template Playground ---
+              function sendCurrentUrlToParent() {
+                  if (window.parent && window.parent !== window) {
+                      window.parent.postMessage({
+                          type: 'compodoc-iframe-navigate',
+                          url: window.location.pathname + window.location.hash
+                      }, '*');
+                  }
+              }
+              window.addEventListener('hashchange', sendCurrentUrlToParent, false);
+              window.addEventListener('popstate', sendCurrentUrlToParent, false);
+              window.addEventListener('DOMContentLoaded', sendCurrentUrlToParent, false);
+          </script>
+
+        <div class="navbar navbar-default navbar-fixed-top d-md-none p-0">
+               <div class="d-flex">
+                    <a href="../" class="navbar-brand">node-started-backend documentation</a>
+                    <button type="button" class="btn btn-default btn-menu ion-ios-menu" id="btn-menu"></button>
+               </div>
+        </div>
+
+        <div class="xs-menu menu" id="mobile-menu">
+                <div id="book-search-input" role="search"><input type="text" placeholder="Type to search"></div>            <compodoc-menu></compodoc-menu>
+        </div>
+
+        <div class="container-fluid main">
+           <div class="row main">
+               <div class="d-none d-md-block menu">
+                   <compodoc-menu mode="normal"></compodoc-menu>
+               </div>
+               <!-- START CONTENT -->
+               <div class="content controller">
+                   <div class="content-data">
+
+
+
+
+
+
+
+
+
+<ol class="breadcrumb">
+  <li class="breadcrumb-item">Controllers</li>
+  <li class="breadcrumb-item" >AuthApiController</li>
+</ol>
+
+<ul class="nav nav-tabs" role="tablist">
+        <li class="nav-item">
+            <a href="#info" 
+                class="nav-link"
+                class="nav-link active"
+                role="tab" id="info-tab" data-bs-toggle="tab" data-link="info">Info</a>
+        </li>
+        <li class="nav-item">
+            <a href="#source" 
+                class="nav-link"
+                
+                role="tab" id="source-tab" data-bs-toggle="tab" data-link="source">Source</a>
+        </li>
+</ul>
+
+<div class="tab-content">
+    <div class="tab-pane fade active in" id="info">
+        <p class="comment">
+            <h3>File</h3>
+        </p>
+        <p class="comment">
+            <code>src/api/auth/controllers/auth-api.controller.ts</code>
+        </p>
+            <p class="comment">
+                <h3>Prefix</h3>
+            </p>
+            <p class="comment">
+                <code>auth</code>
+            </p>
+
+
+
+
+
+
+            <section data-compodoc="block-index">
+    <h3 id="index">Index</h3>
+    <table class="table table-sm table-bordered index-table">
+        <tbody>
+
+                <tr>
+                    <td class="col-md-4">
+                        <h6><b>Methods</b></h6>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <ul class="index-list">
+                            <li>
+                                    <span class="modifier"></span>
+                                    <span class="modifier"></span>
+                                    <span class="modifier"></span>
+                                    <span class="modifier"></span>
+                                    <span class="modifier"></span>
+                                    <span class="modifier"></span>
+                                    <span class="modifier"></span>
+                                    <span class="modifier"></span>
+                                    <span class="modifier"></span>
+                                    <span class="modifier"></span>
+                                    <span class="modifier"></span>
+                                    <span class="modifier"></span>
+                                    <span class="modifier"></span>
+                                    <span class="modifier">Async</span>
+                                <a href="#changePassword" >changePassword</a>
+                            </li>
+                            <li>
+                                    <span class="modifier"></span>
+                                    <span class="modifier"></span>
+                                    <span class="modifier"></span>
+                                    <span class="modifier"></span>
+                                    <span class="modifier"></span>
+                                    <span class="modifier"></span>
+                                    <span class="modifier"></span>
+                                    <span class="modifier"></span>
+                                    <span class="modifier"></span>
+                                    <span class="modifier"></span>
+                                    <span class="modifier"></span>
+                                    <span class="modifier"></span>
+                                    <span class="modifier">Async</span>
+                                <a href="#createPassword" >createPassword</a>
+                            </li>
+                            <li>
+                                    <span class="modifier"></span>
+                                    <span class="modifier"></span>
+                                    <span class="modifier"></span>
+                                    <span class="modifier"></span>
+                                    <span class="modifier"></span>
+                                    <span class="modifier"></span>
+                                    <span class="modifier"></span>
+                                    <span class="modifier"></span>
+                                    <span class="modifier"></span>
+                                    <span class="modifier"></span>
+                                    <span class="modifier"></span>
+                                    <span class="modifier"></span>
+                                    <span class="modifier">Async</span>
+                                <a href="#forgotPassword" >forgotPassword</a>
+                            </li>
+                            <li>
+                                    <span class="modifier"></span>
+                                    <span class="modifier"></span>
+                                    <span class="modifier"></span>
+                                    <span class="modifier"></span>
+                                    <span class="modifier"></span>
+                                    <span class="modifier"></span>
+                                    <span class="modifier"></span>
+                                    <span class="modifier"></span>
+                                    <span class="modifier"></span>
+                                    <span class="modifier"></span>
+                                    <span class="modifier"></span>
+                                    <span class="modifier"></span>
+                                    <span class="modifier">Async</span>
+                                <a href="#login" >login</a>
+                            </li>
+                            <li>
+                                    <span class="modifier"></span>
+                                    <span class="modifier"></span>
+                                    <span class="modifier"></span>
+                                    <span class="modifier"></span>
+                                    <span class="modifier"></span>
+                                    <span class="modifier"></span>
+                                    <span class="modifier"></span>
+                                    <span class="modifier"></span>
+                                    <span class="modifier">Async</span>
+                                <a href="#logout" >logout</a>
+                            </li>
+                            <li>
+                                    <span class="modifier"></span>
+                                    <span class="modifier"></span>
+                                    <span class="modifier"></span>
+                                    <span class="modifier"></span>
+                                    <span class="modifier"></span>
+                                    <span class="modifier"></span>
+                                    <span class="modifier"></span>
+                                    <span class="modifier"></span>
+                                    <span class="modifier">Async</span>
+                                <a href="#refreshToken" >refreshToken</a>
+                            </li>
+                            <li>
+                                    <span class="modifier"></span>
+                                    <span class="modifier"></span>
+                                    <span class="modifier"></span>
+                                    <span class="modifier"></span>
+                                    <span class="modifier"></span>
+                                    <span class="modifier"></span>
+                                    <span class="modifier"></span>
+                                    <span class="modifier"></span>
+                                    <span class="modifier"></span>
+                                    <span class="modifier"></span>
+                                    <span class="modifier">Async</span>
+                                <a href="#scope" >scope</a>
+                            </li>
+                            <li>
+                                    <span class="modifier"></span>
+                                    <span class="modifier"></span>
+                                    <span class="modifier"></span>
+                                    <span class="modifier"></span>
+                                    <span class="modifier"></span>
+                                    <span class="modifier"></span>
+                                    <span class="modifier"></span>
+                                    <span class="modifier"></span>
+                                    <span class="modifier"></span>
+                                    <span class="modifier"></span>
+                                <a href="#userVerificationStatus" >userVerificationStatus</a>
+                            </li>
+                            <li>
+                                    <span class="modifier"></span>
+                                    <span class="modifier"></span>
+                                    <span class="modifier"></span>
+                                    <span class="modifier"></span>
+                                    <span class="modifier"></span>
+                                    <span class="modifier"></span>
+                                    <span class="modifier"></span>
+                                    <span class="modifier"></span>
+                                    <span class="modifier"></span>
+                                    <span class="modifier"></span>
+                                    <span class="modifier">Async</span>
+                                <a href="#userVerify" >userVerify</a>
+                            </li>
+                        </ul>
+                    </td>
+                </tr>
+
+
+
+
+
+        </tbody>
+    </table>
+</section>
+
+            <section data-compodoc="block-methods">
+    
+    <h3 id="methods">
+        Methods
+    </h3>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="changePassword"></a>
+                    <span class="name">
+                            <span class="modifier"></span>
+                            <span class="modifier"></span>
+                            <span class="modifier"></span>
+                            <span class="modifier"></span>
+                            <span class="modifier"></span>
+                            <span class="modifier"></span>
+                            <span class="modifier"></span>
+                            <span class="modifier"></span>
+                            <span class="modifier"></span>
+                            <span class="modifier"></span>
+                            <span class="modifier"></span>
+                            <span class="modifier"></span>
+                            <span class="modifier"></span>
+                            <span class="modifier">Async</span>
+                        <span ><b>changePassword</b></span>
+                        <a href="#changePassword"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                        <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>changePassword(dto: <a href="../classes/UpdateUserPasswordDto.html" target="_self">UpdateUserPasswordDto</a>)</code>
+                </td>
+            </tr>
+
+            <tr>
+                <td class="col-md-4">
+                    <b>Decorators : </b>
+                    <br />
+                    <code>@Put(&#x27;change-password&#x27;)<br />@ApiBearerAuth()<br />@Version(&#x27;1&#x27;)<br />@HttpCode(200)<br />@ApiOperation({summary: &#x27;Cambio de credenciales y password del usuario.&#x27;, description: &#x27;Cambio de credenciales y password del usuario.&#x27;})<br />@ApiOkResponse({description: &#x27;Credenciales actualizadas correctamente.&#x27;, example: undefined})<br />@ApiUnauthorizedResponse({description: &#x27;Credenciales inválidas.&#x27;, type: UnauthorizedException, example: undefined})<br />@ApiForbiddenResponse({description: &#x27;Usuario bloqueado.&#x27;, example: undefined})<br />@ApiNotFoundResponse({description: &#x27;Usuario no encontrado.&#x27;, example: undefined})<br />@ApiBadRequestResponse({description: &#x27;Solicitud mal formada, verifique los datos y/o parametros enviados.&#x27;, example: undefined})<br />@ApiInternalServerErrorResponse({description: &#x27;Error interno del servidor al procesar la solicitud.&#x27;, example: undefined})<br />@UseGuards(JwtAuthGuard, PermissionsGuard)<br />@Permissions(PermissionsEnum.USER_PASSWORD_UPDATE, PermissionsEnum.ADMIN_ALL)<br /></code>
+                </td>
+            </tr>
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="259"
+                                    class="link-to-prism">src/api/auth/controllers/auth-api.controller.ts:259</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                            <div class="io-description">
+                                <b>Parameters :</b>
+                                
+                                <table class="params">
+                                    <thead>
+                                        <tr>
+                                            <td>Name</td>
+                                                <td>Type</td>
+                                            <td>Optional</td>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                                <td>dto</td>
+                                            <td>
+                                                            <code><a href="../classes/UpdateUserPasswordDto.html" target="_self" >UpdateUserPasswordDto</a></code>
+                                            </td>
+
+                                            <td>
+                                                    No
+                                            </td>
+
+
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        <div class="io-description">
+                            <b>Returns : </b>    <code>Promise&lt;literal type&gt;</code>
+
+                        </div>
+                            <div class="io-description">
+                                
+                            </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="createPassword"></a>
+                    <span class="name">
+                            <span class="modifier"></span>
+                            <span class="modifier"></span>
+                            <span class="modifier"></span>
+                            <span class="modifier"></span>
+                            <span class="modifier"></span>
+                            <span class="modifier"></span>
+                            <span class="modifier"></span>
+                            <span class="modifier"></span>
+                            <span class="modifier"></span>
+                            <span class="modifier"></span>
+                            <span class="modifier"></span>
+                            <span class="modifier"></span>
+                            <span class="modifier">Async</span>
+                        <span ><b>createPassword</b></span>
+                        <a href="#createPassword"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                        <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>createPassword(dto: <a href="../classes/LoginUserDto.html" target="_self">LoginUserDto</a>)</code>
+                </td>
+            </tr>
+
+            <tr>
+                <td class="col-md-4">
+                    <b>Decorators : </b>
+                    <br />
+                    <code>@Post(&#x27;create-password&#x27;)<br />@Version(&#x27;1&#x27;)<br />@ApiBasicAuth()<br />@UseGuards(BasicAuthGuard)<br />@HttpCode(201)<br />@ApiOperation({summary: &#x27;Creación de credenciales y password del usuario.&#x27;, description: &#x27;Creación de credenciales y password del usuario.&#x27;})<br />@ApiOkResponse({description: &#x27;Credenciales creadas correctamente.&#x27;, example: undefined})<br />@ApiUnauthorizedResponse({description: &#x27;Credenciales inválidas.&#x27;, type: UnauthorizedException, example: undefined})<br />@ApiForbiddenResponse({description: &#x27;Usuario bloqueado.&#x27;, example: undefined})<br />@ApiNotFoundResponse({description: &#x27;Usuario no encontrado.&#x27;, example: undefined})<br />@ApiBadRequestResponse({description: &#x27;Solicitud mal formada, verifique los datos y/o parametros enviados.&#x27;, example: undefined})<br />@ApiInternalServerErrorResponse({description: &#x27;Error interno del servidor al procesar la solicitud.&#x27;, example: undefined})<br /></code>
+                </td>
+            </tr>
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="195"
+                                    class="link-to-prism">src/api/auth/controllers/auth-api.controller.ts:195</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                            <div class="io-description">
+                                <b>Parameters :</b>
+                                
+                                <table class="params">
+                                    <thead>
+                                        <tr>
+                                            <td>Name</td>
+                                                <td>Type</td>
+                                            <td>Optional</td>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                                <td>dto</td>
+                                            <td>
+                                                            <code><a href="../classes/LoginUserDto.html" target="_self" >LoginUserDto</a></code>
+                                            </td>
+
+                                            <td>
+                                                    No
+                                            </td>
+
+
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        <div class="io-description">
+                            <b>Returns : </b>    <code>Promise&lt;literal type&gt;</code>
+
+                        </div>
+                            <div class="io-description">
+                                
+                            </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="forgotPassword"></a>
+                    <span class="name">
+                            <span class="modifier"></span>
+                            <span class="modifier"></span>
+                            <span class="modifier"></span>
+                            <span class="modifier"></span>
+                            <span class="modifier"></span>
+                            <span class="modifier"></span>
+                            <span class="modifier"></span>
+                            <span class="modifier"></span>
+                            <span class="modifier"></span>
+                            <span class="modifier"></span>
+                            <span class="modifier"></span>
+                            <span class="modifier"></span>
+                            <span class="modifier">Async</span>
+                        <span ><b>forgotPassword</b></span>
+                        <a href="#forgotPassword"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                        <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>forgotPassword(dto: <a href="../classes/ForgotUserPasswordDto.html" target="_self">ForgotUserPasswordDto</a>)</code>
+                </td>
+            </tr>
+
+            <tr>
+                <td class="col-md-4">
+                    <b>Decorators : </b>
+                    <br />
+                    <code>@Put(&#x27;forgot-password&#x27;)<br />@ApiBearerAuth()<br />@Version(&#x27;1&#x27;)<br />@HttpCode(200)<br />@ApiOperation({summary: &#x27;Olvide mi contraseña. Cambio de credenciales y password del usuario.&#x27;, description: &#x27;Olvide mi contraseña. Cambio de credenciales y password del usuario.&#x27;})<br />@ApiOkResponse({description: &#x27;Credenciales actualizadas correctamente.&#x27;, example: undefined})<br />@ApiUnauthorizedResponse({description: &#x27;Credenciales inválidas.&#x27;, type: UnauthorizedException, example: undefined})<br />@ApiForbiddenResponse({description: &#x27;Usuario bloqueado.&#x27;, example: undefined})<br />@ApiNotFoundResponse({description: &#x27;Usuario no encontrado.&#x27;, example: undefined})<br />@ApiBadRequestResponse({description: &#x27;Solicitud mal formada, verifique los datos y/o parametros enviados.&#x27;, example: undefined})<br />@ApiInternalServerErrorResponse({description: &#x27;Error interno del servidor al procesar la solicitud.&#x27;, example: undefined})<br />@UseGuards(JwtAuthGuard)<br /></code>
+                </td>
+            </tr>
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="325"
+                                    class="link-to-prism">src/api/auth/controllers/auth-api.controller.ts:325</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                            <div class="io-description">
+                                <b>Parameters :</b>
+                                
+                                <table class="params">
+                                    <thead>
+                                        <tr>
+                                            <td>Name</td>
+                                                <td>Type</td>
+                                            <td>Optional</td>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                                <td>dto</td>
+                                            <td>
+                                                            <code><a href="../classes/ForgotUserPasswordDto.html" target="_self" >ForgotUserPasswordDto</a></code>
+                                            </td>
+
+                                            <td>
+                                                    No
+                                            </td>
+
+
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        <div class="io-description">
+                            <b>Returns : </b>    <code>Promise&lt;literal type&gt;</code>
+
+                        </div>
+                            <div class="io-description">
+                                
+                            </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="login"></a>
+                    <span class="name">
+                            <span class="modifier"></span>
+                            <span class="modifier"></span>
+                            <span class="modifier"></span>
+                            <span class="modifier"></span>
+                            <span class="modifier"></span>
+                            <span class="modifier"></span>
+                            <span class="modifier"></span>
+                            <span class="modifier"></span>
+                            <span class="modifier"></span>
+                            <span class="modifier"></span>
+                            <span class="modifier"></span>
+                            <span class="modifier"></span>
+                            <span class="modifier">Async</span>
+                        <span ><b>login</b></span>
+                        <a href="#login"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                        <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>login(dto: <a href="../classes/LoginUserDto.html" target="_self">LoginUserDto</a>, req: Request, res: Response)</code>
+                </td>
+            </tr>
+
+            <tr>
+                <td class="col-md-4">
+                    <b>Decorators : </b>
+                    <br />
+                    <code>@Post(&#x27;login&#x27;)<br />@Version(&#x27;1&#x27;)<br />@ApiBasicAuth()<br />@UseGuards(BasicAuthGuard)<br />@HttpCode(200)<br />@ApiOperation({summary: &#x27;Login del usuario con hash dinámico y nonce.&#x27;, description: &#x27;Login del usuario, si es primer login se importan sus datos y configuraciones.&#x27;})<br />@ApiOkResponse({description: &#x27;Usuario logueado exitosamente.&#x27;, type: LoginUserResponseDto, headers: undefined})<br />@ApiUnauthorizedResponse({description: &#x27;Credenciales inválidas.&#x27;, type: UnauthorizedException, example: undefined})<br />@ApiForbiddenResponse({description: &#x27;Usuario bloqueado.&#x27;, example: undefined})<br />@ApiNotFoundResponse({description: &#x27;Usuario no encontrado.&#x27;, example: undefined})<br />@ApiBadRequestResponse({description: &#x27;Solicitud mal formada, verifique los datos y/o parametros enviados.&#x27;, example: undefined})<br />@ApiInternalServerErrorResponse({description: &#x27;Error interno del servidor al procesar la solicitud.&#x27;, example: undefined})<br /></code>
+                </td>
+            </tr>
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="120"
+                                    class="link-to-prism">src/api/auth/controllers/auth-api.controller.ts:120</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                            <div class="io-description">
+                                <b>Parameters :</b>
+                                
+                                <table class="params">
+                                    <thead>
+                                        <tr>
+                                            <td>Name</td>
+                                                <td>Type</td>
+                                            <td>Optional</td>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                                <td>dto</td>
+                                            <td>
+                                                            <code><a href="../classes/LoginUserDto.html" target="_self" >LoginUserDto</a></code>
+                                            </td>
+
+                                            <td>
+                                                    No
+                                            </td>
+
+
+                                        </tr>
+                                        <tr>
+                                                <td>req</td>
+                                            <td>
+                                                        <code>Request</code>
+                                            </td>
+
+                                            <td>
+                                                    No
+                                            </td>
+
+
+                                        </tr>
+                                        <tr>
+                                                <td>res</td>
+                                            <td>
+                                                        <code>Response</code>
+                                            </td>
+
+                                            <td>
+                                                    No
+                                            </td>
+
+
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        <div class="io-description">
+                            <b>Returns : </b>        <code><a href="../miscellaneous/variables.html#User" target="_self" >Promise&lt;LoginUserResponseDto&gt;</a></code>
+
+                        </div>
+                            <div class="io-description">
+                                
+                            </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="logout"></a>
+                    <span class="name">
+                            <span class="modifier"></span>
+                            <span class="modifier"></span>
+                            <span class="modifier"></span>
+                            <span class="modifier"></span>
+                            <span class="modifier"></span>
+                            <span class="modifier"></span>
+                            <span class="modifier"></span>
+                            <span class="modifier"></span>
+                            <span class="modifier">Async</span>
+                        <span ><b>logout</b></span>
+                        <a href="#logout"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                        <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>logout(req: <a href="../interfaces/IAuthenticatedRequest.html" target="_self">IAuthenticatedRequest</a>)</code>
+                </td>
+            </tr>
+
+            <tr>
+                <td class="col-md-4">
+                    <b>Decorators : </b>
+                    <br />
+                    <code>@Post(&#x27;logout&#x27;)<br />@UseGuards(JwtAuthGuard, undefined)<br />@ApiBearerAuth()<br />@Version(&#x27;1&#x27;)<br />@HttpCode(200)<br />@ApiOperation({summary: &#x27;Cierra la sesión del usuario.&#x27;, description: &#x27;Revoca el token de refresco, invalidando la sesión en el dispositivo actual. El token de refresco debe ser enviado en una cookie.&#x27;})<br />@ApiResponse({status: 200, description: &#x27;Sesión cerrada con éxito.&#x27;, example: undefined})<br />@ApiUnauthorizedResponse({description: &#x27;Token de refresco inválido o expirado.&#x27;, type: UnauthorizedException, example: undefined})<br /></code>
+                </td>
+            </tr>
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="396"
+                                    class="link-to-prism">src/api/auth/controllers/auth-api.controller.ts:396</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                            <div class="io-description">
+                                <b>Parameters :</b>
+                                
+                                <table class="params">
+                                    <thead>
+                                        <tr>
+                                            <td>Name</td>
+                                                <td>Type</td>
+                                            <td>Optional</td>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                                <td>req</td>
+                                            <td>
+                                                            <code><a href="../interfaces/IAuthenticatedRequest.html" target="_self" >IAuthenticatedRequest</a></code>
+                                            </td>
+
+                                            <td>
+                                                    No
+                                            </td>
+
+
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        <div class="io-description">
+                            <b>Returns : </b>    <code>unknown</code>
+
+                        </div>
+                            <div class="io-description">
+                                
+                            </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="refreshToken"></a>
+                    <span class="name">
+                            <span class="modifier"></span>
+                            <span class="modifier"></span>
+                            <span class="modifier"></span>
+                            <span class="modifier"></span>
+                            <span class="modifier"></span>
+                            <span class="modifier"></span>
+                            <span class="modifier"></span>
+                            <span class="modifier"></span>
+                            <span class="modifier">Async</span>
+                        <span ><b>refreshToken</b></span>
+                        <a href="#refreshToken"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                        <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>refreshToken(req: <a href="../interfaces/IAuthenticatedRequest.html" target="_self">IAuthenticatedRequest</a>, user: <a href="../unknowns/User.html" target="_self">Users</a>)</code>
+                </td>
+            </tr>
+
+            <tr>
+                <td class="col-md-4">
+                    <b>Decorators : </b>
+                    <br />
+                    <code>@Post(&#x27;refresh-token&#x27;)<br />@UseGuards(JwtAuthGuard, undefined, BasicAuthGuard)<br />@ApiBearerAuth()<br />@Version(&#x27;1&#x27;)<br />@HttpCode(200)<br />@ApiOperation({summary: &#x27;Refresca el token de acceso usando el token de refresco.&#x27;, description: &#x27;Endpoint para obtener un nuevo token de acceso a partir de un token de refresco válido. El token de refresco debe ser enviado en una cookie.&#x27;})<br />@ApiResponse({status: 200, description: &#x27;Tokens de acceso y refresco renovados con éxito.&#x27;, example: undefined})<br />@ApiUnauthorizedResponse({description: &#x27;Token de refresco inválido o expirado.&#x27;, type: UnauthorizedException, example: undefined})<br /></code>
+                </td>
+            </tr>
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="361"
+                                    class="link-to-prism">src/api/auth/controllers/auth-api.controller.ts:361</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                            <div class="io-description">
+                                <b>Parameters :</b>
+                                
+                                <table class="params">
+                                    <thead>
+                                        <tr>
+                                            <td>Name</td>
+                                                <td>Type</td>
+                                            <td>Optional</td>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                                <td>req</td>
+                                            <td>
+                                                            <code><a href="../interfaces/IAuthenticatedRequest.html" target="_self" >IAuthenticatedRequest</a></code>
+                                            </td>
+
+                                            <td>
+                                                    No
+                                            </td>
+
+
+                                        </tr>
+                                        <tr>
+                                                <td>user</td>
+                                            <td>
+                                                            <code><a href="../miscellaneous/variables.html#User" target="_self" >Users</a></code>
+                                            </td>
+
+                                            <td>
+                                                    No
+                                            </td>
+
+
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        <div class="io-description">
+                            <b>Returns : </b>    <code>unknown</code>
+
+                        </div>
+                            <div class="io-description">
+                                
+                            </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="scope"></a>
+                    <span class="name">
+                            <span class="modifier"></span>
+                            <span class="modifier"></span>
+                            <span class="modifier"></span>
+                            <span class="modifier"></span>
+                            <span class="modifier"></span>
+                            <span class="modifier"></span>
+                            <span class="modifier"></span>
+                            <span class="modifier"></span>
+                            <span class="modifier"></span>
+                            <span class="modifier"></span>
+                            <span class="modifier">Async</span>
+                        <span ><b>scope</b></span>
+                        <a href="#scope"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                        <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>scope(user: <a href="../unknowns/User.html" target="_self">Users</a>)</code>
+                </td>
+            </tr>
+
+            <tr>
+                <td class="col-md-4">
+                    <b>Decorators : </b>
+                    <br />
+                    <code>@Get(&#x27;scope&#x27;)<br />@UseGuards(JwtAuthGuard)<br />@ApiBearerAuth()<br />@Version(&#x27;1&#x27;)<br />@HttpCode(200)<br />@ApiOperation({summary: &#x27;Obtiene el scope del usuario.&#x27;, description: &#x27;Obtiene el scope del usuario, sus role, rolePermissions y userPermissions asignados.&#x27;})<br />@ApiOkResponse({description: &#x27;Scope del usuario obtenido con éxito.&#x27;, type: UserScopeResponseDto})<br />@ApiUnauthorizedResponse({description: &#x27;Token de acceso inválido o expirado.&#x27;, example: undefined})<br />@ApiNotFoundResponse({description: &#x27;El usuario no tiene roles ni permisos asignados.&#x27;, example: undefined})<br />@ApiInternalServerErrorResponse({description: &#x27;Error interno del servidor al procesar la solicitud.&#x27;, example: undefined})<br /></code>
+                </td>
+            </tr>
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="438"
+                                    class="link-to-prism">src/api/auth/controllers/auth-api.controller.ts:438</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                            <div class="io-description">
+                                <b>Parameters :</b>
+                                
+                                <table class="params">
+                                    <thead>
+                                        <tr>
+                                            <td>Name</td>
+                                                <td>Type</td>
+                                            <td>Optional</td>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                                <td>user</td>
+                                            <td>
+                                                            <code><a href="../miscellaneous/variables.html#User" target="_self" >Users</a></code>
+                                            </td>
+
+                                            <td>
+                                                    No
+                                            </td>
+
+
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        <div class="io-description">
+                            <b>Returns : </b>    <code>unknown</code>
+
+                        </div>
+                            <div class="io-description">
+                                
+                            </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="userVerificationStatus"></a>
+                    <span class="name">
+                            <span class="modifier"></span>
+                            <span class="modifier"></span>
+                            <span class="modifier"></span>
+                            <span class="modifier"></span>
+                            <span class="modifier"></span>
+                            <span class="modifier"></span>
+                            <span class="modifier"></span>
+                            <span class="modifier"></span>
+                            <span class="modifier"></span>
+                            <span class="modifier"></span>
+                        <span ><b>userVerificationStatus</b></span>
+                        <a href="#userVerificationStatus"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                        <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>userVerificationStatus(email: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank">string</a>, user: <a href="../unknowns/User.html" target="_self">Users</a>)</code>
+                </td>
+            </tr>
+
+            <tr>
+                <td class="col-md-4">
+                    <b>Decorators : </b>
+                    <br />
+                    <code>@Get(&#x27;verification-status&#x27;)<br />@Version(&#x27;1&#x27;)<br />@ApiBasicAuth()<br />@UseGuards(BasicAuthGuard, UserByEmailLoaderGuard)<br />@HttpCode(200)<br />@ApiOperation({summary: &#x27;Consulta el estado de verificación del email del usuario.&#x27;, description: &#x27;Endpoint para consultar si un email ya ha sido verificado. Usado para polling en flujos de verificación cross-device.&#x27;})<br />@ApiOkResponse({description: &#x27;Estado de verificación consultado exitosamente.&#x27;, example: undefined})<br />@ApiBadRequestResponse({description: &#x27;Email requerido.&#x27;, example: undefined})<br />@ApiNotFoundResponse({description: &#x27;Usuario no encontrado.&#x27;, example: undefined})<br />@ApiInternalServerErrorResponse({description: &#x27;Error interno del servidor al procesar la solicitud.&#x27;, example: undefined})<br /></code>
+                </td>
+            </tr>
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="519"
+                                    class="link-to-prism">src/api/auth/controllers/auth-api.controller.ts:519</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                            <div class="io-description">
+                                <b>Parameters :</b>
+                                
+                                <table class="params">
+                                    <thead>
+                                        <tr>
+                                            <td>Name</td>
+                                                <td>Type</td>
+                                            <td>Optional</td>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                                <td>email</td>
+                                            <td>
+                                                            <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
+                                            </td>
+
+                                            <td>
+                                                    No
+                                            </td>
+
+
+                                        </tr>
+                                        <tr>
+                                                <td>user</td>
+                                            <td>
+                                                            <code><a href="../miscellaneous/variables.html#User" target="_self" >Users</a></code>
+                                            </td>
+
+                                            <td>
+                                                    No
+                                            </td>
+
+
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        <div class="io-description">
+                            <b>Returns : </b>    <code>literal type</code>
+
+                        </div>
+                            <div class="io-description">
+                                
+                            </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="userVerify"></a>
+                    <span class="name">
+                            <span class="modifier"></span>
+                            <span class="modifier"></span>
+                            <span class="modifier"></span>
+                            <span class="modifier"></span>
+                            <span class="modifier"></span>
+                            <span class="modifier"></span>
+                            <span class="modifier"></span>
+                            <span class="modifier"></span>
+                            <span class="modifier"></span>
+                            <span class="modifier"></span>
+                            <span class="modifier">Async</span>
+                        <span ><b>userVerify</b></span>
+                        <a href="#userVerify"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                        <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>userVerify(user: <a href="../unknowns/User.html" target="_self">Users</a>)</code>
+                </td>
+            </tr>
+
+            <tr>
+                <td class="col-md-4">
+                    <b>Decorators : </b>
+                    <br />
+                    <code>@Get(&#x27;user-verify&#x27;)<br />@UseGuards(JwtAuthGuard)<br />@ApiBearerAuth()<br />@Version(&#x27;1&#x27;)<br />@HttpCode(200)<br />@ApiOperation({summary: &#x27;Verifica el email del usuario.&#x27;, description: &#x27;Verifica el email del usuario y lo activa para que asi tenga acceso a las acciones del sistema.&#x27;})<br />@ApiResponse({status: 204, description: &#x27;Usuario verificado con exito.&#x27;})<br />@ApiUnauthorizedResponse({description: &#x27;Token temporal inválido o expirado.&#x27;, example: undefined})<br />@ApiNotFoundResponse({description: &#x27;Usuario no encontrado.&#x27;, example: undefined})<br />@ApiInternalServerErrorResponse({description: &#x27;Error interno del servidor al procesar la solicitud.&#x27;, example: undefined})<br /></code>
+                </td>
+            </tr>
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="477"
+                                    class="link-to-prism">src/api/auth/controllers/auth-api.controller.ts:477</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                            <div class="io-description">
+                                <b>Parameters :</b>
+                                
+                                <table class="params">
+                                    <thead>
+                                        <tr>
+                                            <td>Name</td>
+                                                <td>Type</td>
+                                            <td>Optional</td>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                                <td>user</td>
+                                            <td>
+                                                            <code><a href="../miscellaneous/variables.html#User" target="_self" >Users</a></code>
+                                            </td>
+
+                                            <td>
+                                                    No
+                                            </td>
+
+
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        <div class="io-description">
+                            <b>Returns : </b>    <code>unknown</code>
+
+                        </div>
+                            <div class="io-description">
+                                
+                            </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</section>    </div>
+
+
+    <div class="tab-pane fade  tab-source-code" id="source">
+        <pre class="line-numbers compodoc-sourcecode"><code class="language-typescript">import {
+  Controller,
+  Get,
+  Post,
+  Body,
+  UnauthorizedException,
+  Version,
+  Put,
+  Res,
+  UseGuards,
+  Req,
+  HttpCode,
+  Query,
+  Logger,
+} from &#x27;@nestjs/common&#x27;;
+import {
+  ApiBadRequestResponse,
+  ApiBasicAuth,
+  ApiBearerAuth,
+  ApiForbiddenResponse,
+  ApiInternalServerErrorResponse,
+  ApiNotFoundResponse,
+  ApiOkResponse,
+  ApiOperation,
+  ApiResponse,
+  ApiTags,
+  ApiUnauthorizedResponse,
+} from &#x27;@nestjs/swagger&#x27;;
+import { AuthApiService } from &#x27;@api/auth/services/auth-api.service&#x27;;
+import { LoginUserDto } from &#x27;@api/auth/dtos/request/login-user.request.dto&#x27;;
+import { LoginUserResponseDto } from &#x27;@api/auth/dtos/response/login-user.response.dto&#x27;;
+import {
+  IChangePasswordPayload,
+  IForgotPasswordPayload,
+  IPasswordPayload,
+} from &#x27;@modules/auth/interfaces/jwt-payload.interface&#x27;;
+import { Response } from &#x27;express&#x27;;
+import { UpdateUserPasswordDto } from &#x27;@api/auth/dtos/request/update-user-password.dto&#x27;;
+import { ForgotUserPasswordDto } from &#x27;@api/auth/dtos/request/forgot-user-password.dto&#x27;;
+import { AuthGuard } from &#x27;@nestjs/passport&#x27;;
+import { JwtAuthGuard } from &#x27;@modules/auth/guards/jwt-auth.guard&#x27;;
+import { IAuthenticatedRequest } from &#x27;@modules/auth/interfaces/authenticated-request.interface&#x27;;
+import { PermissionsGuard } from &#x27;@modules/auth/guards/permissions.guard&#x27;;
+import { Permissions } from &#x27;@common/decorators/permissions.decorator&#x27;;
+import { Users } from &#x27;@prisma/client&#x27;;
+import { User } from &#x27;@common/decorators/user.decorator&#x27;;
+import { UserScopeResponseDto } from &#x27;@api/auth/dtos/response/user-scope.response.dto&#x27;;
+import { PermissionsEnum } from &#x27;@common/enum/permissions.enum&#x27;;
+import { BasicAuthGuard } from &#x27;@modules/auth/guards/basic-auth.guard&#x27;;
+import { UserByEmailLoaderGuard } from &#x27;@modules/auth/guards/user-by-email-loader.guard&#x27;;
+
+@ApiTags(&#x27;Auth&#x27;)
+@Controller(&#x27;auth&#x27;)
+export class AuthApiController {
+  private readonly logger &#x3D; new Logger(AuthApiController.name);
+  constructor(private readonly authApiService: AuthApiService) {}
+
+  @Post(&#x27;login&#x27;)
+  @Version(&#x27;1&#x27;)
+  @ApiBasicAuth()
+  @UseGuards(BasicAuthGuard)
+  @HttpCode(200)
+  @ApiOperation({
+    summary: &#x27;Login del usuario con hash dinámico y nonce.&#x27;,
+    description:
+      &#x27;Login del usuario, si es primer login se importan sus datos y configuraciones.&#x27;,
+  })
+  @ApiOkResponse({
+    description: &#x27;Usuario logueado exitosamente.&#x27;,
+    type: LoginUserResponseDto,
+    headers: {
+      &#x27;Set-Cookie&#x27;: {
+        description: &#x27;Contiene el refreshToken&#x27;,
+        schema: {
+          type: &#x27;string&#x27;,
+          example:
+            &#x27;refreshToken&#x3D;eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIiLCJlbWFpbCI6Impvc2VwYW56YTFAZ21haWwuY29tIiwidG9rZW5UeXBlIjoicmVmcmVzaFRva2Vu; Max-Age&#x3D;604800; Path&#x3D;/; Expires&#x3D;Wed, 17 Sep 2025 13:39:05 GMT; HttpOnly; Secure; SameSite&#x3D;Strict&#x27;,
+        },
+      },
+    },
+  })
+  @ApiUnauthorizedResponse({
+    description: &#x27;Credenciales inválidas.&#x27;,
+    type: UnauthorizedException,
+    example: {
+      statusCode: 401,
+      message: &#x27;Credenciales inválidas.&#x27;,
+    },
+  })
+  @ApiForbiddenResponse({
+    description: &#x27;Usuario bloqueado.&#x27;,
+    example: {
+      statusCode: 403,
+      message: &#x27;Usuario bloqueado.&#x27;,
+    },
+  })
+  @ApiNotFoundResponse({
+    description: &#x27;Usuario no encontrado.&#x27;,
+    example: {
+      statusCode: 404,
+      message: &#x27;Usuario no encontrado.&#x27;,
+    },
+  })
+  @ApiBadRequestResponse({
+    description:
+      &#x27;Solicitud mal formada, verifique los datos y/o parametros enviados.&#x27;,
+    example: {
+      statusCode: 400,
+      message:
+        &#x27;Solicitud mal formada, verifique los datos y/o parametros enviados.&#x27;,
+    },
+  })
+  @ApiInternalServerErrorResponse({
+    description: &#x27;Error interno del servidor al procesar la solicitud.&#x27;,
+    example: {
+      statusCode: 500,
+      message: &#x27;Error interno del servidor al procesar la solicitud.&#x27;,
+    },
+  })
+  async login(
+    @Body() dto: LoginUserDto,
+    @Req() req: Request,
+    @Res({ passthrough: true }) res: Response,
+  ): Promise&lt;LoginUserResponseDto&gt; {
+    const userAgent &#x3D; req?.headers[&#x27;user-agent&#x27;] as string;
+    const data &#x3D; await this.authApiService.handleLogin(dto, userAgent);
+
+    // guardar refreshToken en cookie segura
+    if (data.refreshToken) {
+      res.cookie(&#x27;refreshToken&#x27;, data.refreshToken, {
+        httpOnly: true,
+        secure: true, // true ya que se usa HTTPS
+        sameSite: &#x27;strict&#x27;, // o &#x27;lax&#x27;
+        maxAge: 7 * 24 * 60 * 60 * 1000, // 7 días
+      });
+    }
+    return {
+      login: data.login,
+      accessToken: data.accessToken,
+      requiredNewPassword: data.requiredNewPassword,
+    };
+  }
+
+  @Post(&#x27;create-password&#x27;)
+  @Version(&#x27;1&#x27;)
+  @ApiBasicAuth()
+  @UseGuards(BasicAuthGuard)
+  @HttpCode(201)
+  @ApiOperation({
+    summary: &#x27;Creación de credenciales y password del usuario.&#x27;,
+    description: &#x27;Creación de credenciales y password del usuario.&#x27;,
+  })
+  @ApiOkResponse({
+    description: &#x27;Credenciales creadas correctamente.&#x27;,
+    example: { success: true, message: &#x27;Contraseña creada correctamente.&#x27; },
+  })
+  @ApiUnauthorizedResponse({
+    description: &#x27;Credenciales inválidas.&#x27;,
+    type: UnauthorizedException,
+    example: {
+      statusCode: 401,
+      message: &#x27;Credenciales inválidas.&#x27;,
+    },
+  })
+  @ApiForbiddenResponse({
+    description: &#x27;Usuario bloqueado.&#x27;,
+    example: {
+      statusCode: 403,
+      message: &#x27;Usuario bloqueado.&#x27;,
+    },
+  })
+  @ApiNotFoundResponse({
+    description: &#x27;Usuario no encontrado.&#x27;,
+    example: {
+      statusCode: 404,
+      message: &#x27;Usuario no encontrado.&#x27;,
+    },
+  })
+  @ApiBadRequestResponse({
+    description:
+      &#x27;Solicitud mal formada, verifique los datos y/o parametros enviados.&#x27;,
+    example: {
+      statusCode: 400,
+      message:
+        &#x27;Solicitud mal formada, verifique los datos y/o parametros enviados.&#x27;,
+    },
+  })
+  @ApiInternalServerErrorResponse({
+    description: &#x27;Error interno del servidor al procesar la solicitud.&#x27;,
+    example: {
+      statusCode: 500,
+      message: &#x27;Error interno del servidor al procesar la solicitud.&#x27;,
+    },
+  })
+  async createPassword(
+    @Body() dto: LoginUserDto,
+  ): Promise&lt;{ success: boolean; message: string }&gt; {
+    return await this.authApiService.createPassword({
+      email: dto.email,
+      password: dto.password,
+    } as IPasswordPayload);
+  }
+
+  @Put(&#x27;change-password&#x27;)
+  @ApiBearerAuth()
+  @Version(&#x27;1&#x27;)
+  @HttpCode(200)
+  @ApiOperation({
+    summary: &#x27;Cambio de credenciales y password del usuario.&#x27;,
+    description: &#x27;Cambio de credenciales y password del usuario.&#x27;,
+  })
+  @ApiOkResponse({
+    description: &#x27;Credenciales actualizadas correctamente.&#x27;,
+    example: {
+      success: true,
+      message: &#x27;Contraseña actualizada correctamente.&#x27;,
+    },
+  })
+  @ApiUnauthorizedResponse({
+    description: &#x27;Credenciales inválidas.&#x27;,
+    type: UnauthorizedException,
+    example: {
+      statusCode: 401,
+      message: &#x27;Credenciales inválidas.&#x27;,
+    },
+  })
+  @ApiForbiddenResponse({
+    description: &#x27;Usuario bloqueado.&#x27;,
+    example: {
+      statusCode: 403,
+      message: &#x27;Usuario bloqueado.&#x27;,
+    },
+  })
+  @ApiNotFoundResponse({
+    description: &#x27;Usuario no encontrado.&#x27;,
+    example: {
+      statusCode: 404,
+      message: &#x27;Usuario no encontrado.&#x27;,
+    },
+  })
+  @ApiBadRequestResponse({
+    description:
+      &#x27;Solicitud mal formada, verifique los datos y/o parametros enviados.&#x27;,
+    example: {
+      statusCode: 400,
+      message:
+        &#x27;Solicitud mal formada, verifique los datos y/o parametros enviados.&#x27;,
+    },
+  })
+  @ApiInternalServerErrorResponse({
+    description: &#x27;Error interno del servidor al procesar la solicitud.&#x27;,
+    example: {
+      statusCode: 500,
+      message: &#x27;Error interno del servidor al procesar la solicitud.&#x27;,
+    },
+  })
+  @UseGuards(JwtAuthGuard, PermissionsGuard)
+  @Permissions(PermissionsEnum.USER_PASSWORD_UPDATE, PermissionsEnum.ADMIN_ALL)
+  async changePassword(
+    @Body() dto: UpdateUserPasswordDto,
+  ): Promise&lt;{ success: boolean; message: string }&gt; {
+    return await this.authApiService.updatePassword({
+      email: dto.email,
+      oldPassword: dto.oldPassword,
+      newPassword: dto.newPassword,
+    } as IChangePasswordPayload);
+  }
+
+  @Put(&#x27;forgot-password&#x27;)
+  @ApiBearerAuth()
+  @Version(&#x27;1&#x27;)
+  @HttpCode(200)
+  @ApiOperation({
+    summary:
+      &#x27;Olvide mi contraseña. Cambio de credenciales y password del usuario.&#x27;,
+    description:
+      &#x27;Olvide mi contraseña. Cambio de credenciales y password del usuario.&#x27;,
+  })
+  @ApiOkResponse({
+    description: &#x27;Credenciales actualizadas correctamente.&#x27;,
+    example: {
+      success: true,
+      message: &#x27;Contraseña actualizada correctamente.&#x27;,
+    },
+  })
+  @ApiUnauthorizedResponse({
+    description: &#x27;Credenciales inválidas.&#x27;,
+    type: UnauthorizedException,
+    example: {
+      statusCode: 401,
+      message: &#x27;Credenciales inválidas.&#x27;,
+    },
+  })
+  @ApiForbiddenResponse({
+    description: &#x27;Usuario bloqueado.&#x27;,
+    example: {
+      statusCode: 403,
+      message: &#x27;Usuario bloqueado.&#x27;,
+    },
+  })
+  @ApiNotFoundResponse({
+    description: &#x27;Usuario no encontrado.&#x27;,
+    example: {
+      statusCode: 404,
+      message: &#x27;Usuario no encontrado.&#x27;,
+    },
+  })
+  @ApiBadRequestResponse({
+    description:
+      &#x27;Solicitud mal formada, verifique los datos y/o parametros enviados.&#x27;,
+    example: {
+      statusCode: 400,
+      message:
+        &#x27;Solicitud mal formada, verifique los datos y/o parametros enviados.&#x27;,
+    },
+  })
+  @ApiInternalServerErrorResponse({
+    description: &#x27;Error interno del servidor al procesar la solicitud.&#x27;,
+    example: {
+      statusCode: 500,
+      message: &#x27;Error interno del servidor al procesar la solicitud.&#x27;,
+    },
+  })
+  @UseGuards(JwtAuthGuard)
+  async forgotPassword(
+    @Body() dto: ForgotUserPasswordDto,
+  ): Promise&lt;{ success: boolean; message: string }&gt; {
+    return await this.authApiService.forgotPassword({
+      email: dto.email,
+      newPassword: dto.newPassword,
+      confirmPassword: dto.confirmPassword,
+    } as IForgotPasswordPayload);
+  }
+
+  @Post(&#x27;refresh-token&#x27;)
+  @UseGuards(JwtAuthGuard, AuthGuard(&#x27;jwt-refresh&#x27;), BasicAuthGuard)
+  @ApiBearerAuth()
+  @Version(&#x27;1&#x27;)
+  @HttpCode(200)
+  @ApiOperation({
+    summary: &#x27;Refresca el token de acceso usando el token de refresco.&#x27;,
+    description:
+      &#x27;Endpoint para obtener un nuevo token de acceso a partir de un token de refresco válido. El token de refresco debe ser enviado en una cookie.&#x27;,
+  })
+  @ApiResponse({
+    status: 200,
+    description: &#x27;Tokens de acceso y refresco renovados con éxito.&#x27;,
+    example: {
+      accessToken:
+        &#x27;eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6ImRlbW8iLCJpYXQiOjE1MTYyMzkwMjJ9.SflKxwRJSMeKKF2gY-l-E0B1eEw-1rT1-a1Xz&#x27;,
+    },
+  })
+  @ApiUnauthorizedResponse({
+    description: &#x27;Token de refresco inválido o expirado.&#x27;,
+    type: UnauthorizedException,
+    example: {
+      statusCode: 401,
+      message: &#x27;Credenciales inválidas.&#x27;,
+    },
+  })
+  async refreshToken(@Req() req: IAuthenticatedRequest, @User() user: Users) {
+    const refreshToken &#x3D; req?.cookies?.refreshToken as string;
+    const userAgent &#x3D; req?.headers[&#x27;user-agent&#x27;] as string;
+    const { accessToken } &#x3D; await this.authApiService.refreshAccessToken({
+      email: user.email,
+      refreshToken,
+      userAgent,
+    });
+
+    return { accessToken };
+  }
+
+  @Post(&#x27;logout&#x27;)
+  @UseGuards(JwtAuthGuard, AuthGuard(&#x27;jwt-refresh&#x27;))
+  @ApiBearerAuth()
+  @Version(&#x27;1&#x27;)
+  @HttpCode(200)
+  @ApiOperation({
+    summary: &#x27;Cierra la sesión del usuario.&#x27;,
+    description:
+      &#x27;Revoca el token de refresco, invalidando la sesión en el dispositivo actual. El token de refresco debe ser enviado en una cookie.&#x27;,
+  })
+  @ApiResponse({
+    status: 200,
+    description: &#x27;Sesión cerrada con éxito.&#x27;,
+    example: { message: &#x27;Sesión cerrada con éxito.&#x27; },
+  })
+  @ApiUnauthorizedResponse({
+    description: &#x27;Token de refresco inválido o expirado.&#x27;,
+    type: UnauthorizedException,
+    example: {
+      statusCode: 401,
+      message: &#x27;Credenciales inválidas.&#x27;,
+    },
+  })
+  async logout(@Req() req: IAuthenticatedRequest) {
+    const refreshToken &#x3D; req.cookies.refreshToken as string;
+    await this.authApiService.logout(refreshToken);
+
+    return { message: &#x27;Sesión cerrada con éxito.&#x27; };
+  }
+
+  @Get(&#x27;scope&#x27;)
+  @UseGuards(JwtAuthGuard)
+  @ApiBearerAuth()
+  @Version(&#x27;1&#x27;)
+  @HttpCode(200)
+  @ApiOperation({
+    summary: &#x27;Obtiene el scope del usuario.&#x27;,
+    description:
+      &#x27;Obtiene el scope del usuario, sus role, rolePermissions y userPermissions asignados.&#x27;,
+  })
+  @ApiOkResponse({
+    description: &#x27;Scope del usuario obtenido con éxito.&#x27;,
+    type: UserScopeResponseDto,
+  })
+  @ApiUnauthorizedResponse({
+    description: &#x27;Token de acceso inválido o expirado.&#x27;,
+    example: {
+      statusCode: 401,
+      message: &#x27;Token de acceso inválido o expirado.&#x27;,
+    },
+  })
+  @ApiNotFoundResponse({
+    description: &#x27;El usuario no tiene roles ni permisos asignados.&#x27;,
+    example: {
+      statusCode: 404,
+      message: &#x27;El usuario no tiene roles ni permisos asignados.&#x27;,
+    },
+  })
+  @ApiInternalServerErrorResponse({
+    description: &#x27;Error interno del servidor al procesar la solicitud.&#x27;,
+    example: {
+      statusCode: 500,
+      message: &#x27;Error interno del servidor al procesar la solicitud.&#x27;,
+    },
+  })
+  async scope(@User() user: Users) {
+    return await this.authApiService.scope(user);
+  }
+
+  @Get(&#x27;user-verify&#x27;)
+  @UseGuards(JwtAuthGuard)
+  @ApiBearerAuth()
+  @Version(&#x27;1&#x27;)
+  @HttpCode(200)
+  @ApiOperation({
+    summary: &#x27;Verifica el email del usuario.&#x27;,
+    description:
+      &#x27;Verifica el email del usuario y lo activa para que asi tenga acceso a las acciones del sistema.&#x27;,
+  })
+  @ApiResponse({
+    status: 204,
+    description: &#x27;Usuario verificado con exito.&#x27;,
+  })
+  @ApiUnauthorizedResponse({
+    description: &#x27;Token temporal inválido o expirado.&#x27;,
+    example: {
+      statusCode: 401,
+      message: &#x27;Token temporal inválido o expirado.&#x27;,
+    },
+  })
+  @ApiNotFoundResponse({
+    description: &#x27;Usuario no encontrado.&#x27;,
+    example: {
+      statusCode: 404,
+      message: &#x27;Usuario no encontrado.&#x27;,
+    },
+  })
+  @ApiInternalServerErrorResponse({
+    description: &#x27;Error interno del servidor al procesar la solicitud.&#x27;,
+    example: {
+      statusCode: 500,
+      message: &#x27;Error interno del servidor al procesar la solicitud.&#x27;,
+    },
+  })
+  async userVerify(@User() user: Users) {
+    return await this.authApiService.userVerify(user);
+  }
+
+  @Get(&#x27;verification-status&#x27;)
+  @Version(&#x27;1&#x27;)
+  @ApiBasicAuth()
+  @UseGuards(BasicAuthGuard, UserByEmailLoaderGuard)
+  @HttpCode(200)
+  @ApiOperation({
+    summary: &#x27;Consulta el estado de verificación del email del usuario.&#x27;,
+    description:
+      &#x27;Endpoint para consultar si un email ya ha sido verificado. Usado para polling en flujos de verificación cross-device.&#x27;,
+  })
+  @ApiOkResponse({
+    description: &#x27;Estado de verificación consultado exitosamente.&#x27;,
+    example: {
+      verified: true,
+      email: &#x27;user@example.com&#x27;,
+    },
+  })
+  @ApiBadRequestResponse({
+    description: &#x27;Email requerido.&#x27;,
+    example: {
+      statusCode: 400,
+      message: &#x27;Email es requerido.&#x27;,
+    },
+  })
+  @ApiNotFoundResponse({
+    description: &#x27;Usuario no encontrado.&#x27;,
+    example: {
+      statusCode: 404,
+      message: &#x27;Usuario no encontrado.&#x27;,
+    },
+  })
+  @ApiInternalServerErrorResponse({
+    description: &#x27;Error interno del servidor al procesar la solicitud.&#x27;,
+    example: {
+      statusCode: 500,
+      message: &#x27;Error interno del servidor al procesar la solicitud.&#x27;,
+    },
+  })
+  userVerificationStatus(
+    @Query(&#x27;email&#x27;) email: string,
+    @User() user: Users,
+  ): { verified: boolean; email: string } {
+    this.logger.log(&#x60;Validación de usuario ${email}&#x60;);
+    return this.authApiService.userVerificationStatus(user);
+  }
+}
+</code></pre>
+    </div>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                   </div><div class="search-results">
+    <div class="has-results">
+        <h1 class="search-results-title"><span class='search-results-count'></span> results matching "<span class='search-query'></span>"</h1>
+        <ul class="search-results-list"></ul>
+    </div>
+    <div class="no-results">
+        <h1 class="search-results-title">No results matching "<span class='search-query'></span>"</h1>
+    </div>
+</div>
+</div>
+               <!-- END CONTENT -->
+           </div>
+       </div>
+
+          <label class="dark-mode-switch">
+               <input type="checkbox">
+               <span class="slider">
+                    <svg class="slider-icon" viewBox="0 0 24 24" fill="none" height="20" stroke="#000" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" width="20" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M21 12.79A9 9 0 1111.21 3 7 7 0 0021 12.79z"></path>
+                    </svg>
+               </span>
+          </label>
+
+       <script>
+            var COMPODOC_CURRENT_PAGE_DEPTH = 1;
+            var COMPODOC_CURRENT_PAGE_CONTEXT = 'controller';
+            var COMPODOC_CURRENT_PAGE_URL = 'AuthApiController.html';
+            var MAX_SEARCH_RESULTS = 15;
+       </script>
+
+       <script>
+               $darkModeToggleSwitchers = document.querySelectorAll('.dark-mode-switch input');
+               checkToggle(darkModeState);
+               if ($darkModeToggleSwitchers.length > 0) {
+                    for (var i = 0; i < $darkModeToggleSwitchers.length; i++) {
+                         $darkModeToggleSwitchers[i].addEventListener('change', function (event) {
+                              darkModeState = !darkModeState;
+                              toggleDarkMode(darkModeState);
+                         });
+                    }
+               }
+          </script>
+
+       <script src="../js/libs/custom-elements.min.js"></script>
+       <script src="../js/libs/lit-html.js"></script>
+
+       <script src="../js/menu-wc.js" defer></script>
+       <script nomodule src="../js/menu-wc_es5.js" defer></script>
+
+       <script src="../js/libs/bootstrap-native.js"></script>
+
+       <script src="../js/libs/es6-shim.min.js"></script>
+       <script src="../js/libs/EventDispatcher.js"></script>
+       <script src="../js/libs/promise.min.js"></script>
+
+       <script src="../js/compodoc.js"></script>
+
+       <script src="../js/tabs.js"></script>
+       <script src="../js/menu.js"></script>
+       <script src="../js/libs/clipboard.min.js"></script>
+       <script src="../js/libs/prism.js"></script>
+       <script src="../js/sourceCode.js"></script>
+          <script src="../js/search/search.js"></script>
+          <script src="../js/search/lunr.min.js"></script>
+          <script src="../js/search/search-lunr.js"></script>
+          <script src="../js/search/search_index.js"></script>
+       <script src="../js/lazy-load-graphs.js"></script>
+
+
+    </body>
+</html>

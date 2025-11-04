@@ -18,14 +18,20 @@
     "start:debug": "nest start --debug --watch",
     "start:prod": "node dist/main",
     "lint": "eslint \"{src,apps,libs,test}/**/*.ts\" --quiet",
-    "check:types": "tsc --noEmit",
+    "check:types": "tsc --noEmit -p tsconfig.build.json",
     "test": "jest",
     "test:watch": "jest --watch",
     "test:cov": "jest --coverage",
     "test:debug": "node --inspect-brk -r tsconfig-paths/register -r ts-node/register node_modules/.bin/jest --runInBand",
     "test:e2e": "jest --config ./test/jest-e2e.json",
     "prepare": "husky || true",
-    "seed": "ts-node prisma/seed.ts"
+    "seed": "ts-node prisma/seed.ts",
+    "docs:generate": "npx compodoc -p tsconfig.json -d docs",
+    "docs:json": "npx compodoc -p tsconfig.json -e json",
+    "update:readme": "node scripts/update-readme.js",
+    "docs:serve": "npx compodoc -s -d docs",
+    "docs:rebuild": "pnpm run docs:generate && pnpm run docs:serve",
+    "docs:update-readme": "pnpm run docs:json && pnpm run update:readme"
   },
   "dependencies": {
     "@autotelic/pino-seq-transport": "^0.1.0",
@@ -47,6 +53,7 @@
     "cookie-parser": "^1.4.7",
     "date-fns": "^4.1.0",
     "date-fns-tz": "^3.2.0",
+    "express": "^5.1.0",
     "joi": "^17.13.3",
     "jsonwebtoken": "^9.0.2",
     "jwks-rsa": "^3.2.0",
@@ -57,13 +64,16 @@
     "passport": "^0.7.0",
     "passport-jwt": "^4.0.1",
     "pino-pretty": "^13.0.0",
+    "read-pkg-up": "^11.0.0",
     "reflect-metadata": "^0.2.2",
     "rxjs": "^7.8.1",
-    "uuid": "^11.1.0"
+    "uuid": "^11.1.0",
+    "write-file-atomic": "^7.0.0"
   },
   "devDependencies": {
     "@commitlint/cli": "^19.8.0",
     "@commitlint/config-conventional": "^19.8.0",
+    "@compodoc/compodoc": "^1.1.32",
     "@eslint/eslintrc": "^3.2.0",
     "@eslint/js": "^9.18.0",
     "@nestjs/cli": "^11.0.0",
@@ -98,7 +108,8 @@
     "ts-node": "^10.9.2",
     "tsconfig-paths": "^4.2.0",
     "typescript": "^5.7.3",
-    "typescript-eslint": "^8.20.0"
+    "typescript-eslint": "^8.20.0",
+    "update-readme": "^1.0.4"
   },
   "jest": {
     "moduleFileExtensions": [

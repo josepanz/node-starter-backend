@@ -1,0 +1,699 @@
+<!doctype html>
+<html class="no-js" lang="">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="x-ua-compatible" content="ie=edge">
+        <title>node-started-backend documentation</title>
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+
+        <link rel="icon" type="image/x-icon" href="../images/favicon.ico">
+	   <link rel="stylesheet" href="../styles/style.css">
+        <link rel="stylesheet" href="../styles/dark.css">
+    </head>
+    <body>
+          <script>
+               // Blocking script to avoid flickering dark mode
+               // Dark mode toggle button
+               var useDark = window.matchMedia('(prefers-color-scheme: dark)');
+               var darkModeState = useDark.matches;
+               var $darkModeToggleSwitchers = document.querySelectorAll('.dark-mode-switch input');
+               var $darkModeToggles = document.querySelectorAll('.dark-mode-switch');
+               var darkModeStateLocal = localStorage.getItem('compodoc_darkmode-state');
+
+               function checkToggle(check) {
+                    for (var i = 0; i < $darkModeToggleSwitchers.length; i++) {
+                         $darkModeToggleSwitchers[i].checked = check;
+                    }
+               }
+
+               function toggleDarkMode(state) {
+                    if (window.localStorage) {
+                         localStorage.setItem('compodoc_darkmode-state', state);
+                    }
+
+                    checkToggle(state);
+
+                    const hasClass = document.body.classList.contains('dark');
+
+                    if (state) {
+                         for (var i = 0; i < $darkModeToggles.length; i++) {
+                              $darkModeToggles[i].classList.add('dark');
+                         }
+                         if (!hasClass) {
+                              document.body.classList.add('dark');
+                         }
+                    } else {
+                         for (var i = 0; i < $darkModeToggles.length; i++) {
+                              $darkModeToggles[i].classList.remove('dark');
+                         }
+                         if (hasClass) {
+                              document.body.classList.remove('dark');
+                         }
+                    }
+               }
+
+               useDark.addEventListener('change', function (evt) {
+                    toggleDarkMode(evt.matches);
+               });
+               if (darkModeStateLocal) {
+                    darkModeState = darkModeStateLocal === 'true';
+               }
+               toggleDarkMode(darkModeState);
+          </script>
+          <script>
+              // --- Iframe navigation tracking for Template Playground ---
+              function sendCurrentUrlToParent() {
+                  if (window.parent && window.parent !== window) {
+                      window.parent.postMessage({
+                          type: 'compodoc-iframe-navigate',
+                          url: window.location.pathname + window.location.hash
+                      }, '*');
+                  }
+              }
+              window.addEventListener('hashchange', sendCurrentUrlToParent, false);
+              window.addEventListener('popstate', sendCurrentUrlToParent, false);
+              window.addEventListener('DOMContentLoaded', sendCurrentUrlToParent, false);
+          </script>
+
+        <div class="navbar navbar-default navbar-fixed-top d-md-none p-0">
+               <div class="d-flex">
+                    <a href="../" class="navbar-brand">node-started-backend documentation</a>
+                    <button type="button" class="btn btn-default btn-menu ion-ios-menu" id="btn-menu"></button>
+               </div>
+        </div>
+
+        <div class="xs-menu menu" id="mobile-menu">
+                <div id="book-search-input" role="search"><input type="text" placeholder="Type to search"></div>            <compodoc-menu></compodoc-menu>
+        </div>
+
+        <div class="container-fluid main">
+           <div class="row main">
+               <div class="d-none d-md-block menu">
+                   <compodoc-menu mode="normal"></compodoc-menu>
+               </div>
+               <!-- START CONTENT -->
+               <div class="content class">
+                   <div class="content-data">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<ol class="breadcrumb">
+  <li class="breadcrumb-item">Classes</li>
+  <li class="breadcrumb-item" >EmailHelper</li>
+</ol>
+
+<ul class="nav nav-tabs" role="tablist">
+        <li class="nav-item">
+            <a href="#info" 
+                class="nav-link"
+                class="nav-link active"
+                role="tab" id="info-tab" data-bs-toggle="tab" data-link="info">Info</a>
+        </li>
+        <li class="nav-item">
+            <a href="#source" 
+                class="nav-link"
+                
+                role="tab" id="source-tab" data-bs-toggle="tab" data-link="source">Source</a>
+        </li>
+</ul>
+
+<div class="tab-content">
+    <div class="tab-pane fade active in" id="info">
+        <p class="comment">
+            <h3>File</h3>
+        </p>
+        <p class="comment">
+            <code>src/modules/email/helpers/email.helper.ts</code>
+        </p>
+
+
+
+
+
+
+            <section data-compodoc="block-index">
+    <h3 id="index">Index</h3>
+    <table class="table table-sm table-bordered index-table">
+        <tbody>
+
+                <tr>
+                    <td class="col-md-4">
+                        <h6><b>Methods</b></h6>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <ul class="index-list">
+                            <li>
+                                    <span class="modifier">Static</span>
+                                <a href="#createUserForgotPasswordTemplate" >createUserForgotPasswordTemplate</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Static</span>
+                                <a href="#createUserVerificationTemplate" >createUserVerificationTemplate</a>
+                            </li>
+                        </ul>
+                    </td>
+                </tr>
+
+
+
+
+
+        </tbody>
+    </table>
+</section>
+
+
+
+            <section data-compodoc="block-methods">
+    
+    <h3 id="methods">
+        Methods
+    </h3>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="createUserForgotPasswordTemplate"></a>
+                    <span class="name">
+                            <span class="modifier">Static</span>
+                        <span ><b>createUserForgotPasswordTemplate</b></span>
+                        <a href="#createUserForgotPasswordTemplate"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                        <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>createUserForgotPasswordTemplate(firstName: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank">string</a>, link: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank">string</a>)</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="131"
+                                    class="link-to-prism">src/modules/email/helpers/email.helper.ts:131</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                        <div class="io-description"><p>Genera el contenido HTML para el correo de olvide mi contraseña.
+Este método crea una plantilla HTML simple para el correo electrónico de olvide mi contraseña.</p>
+</div>
+
+                            <div class="io-description">
+                                <b>Parameters :</b>
+                                
+                                <table class="params">
+                                    <thead>
+                                        <tr>
+                                            <td>Name</td>
+                                                <td>Type</td>
+                                            <td>Optional</td>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                                <td>firstName</td>
+                                            <td>
+                                                            <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
+                                            </td>
+
+                                            <td>
+                                                    No
+                                            </td>
+
+
+                                        </tr>
+                                        <tr>
+                                                <td>link</td>
+                                            <td>
+                                                            <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
+                                            </td>
+
+                                            <td>
+                                                    No
+                                            </td>
+
+
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        <div class="io-description">
+                            <b>Returns : </b>        <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
+
+                        </div>
+                            <div class="io-description">
+                                
+                            </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="createUserVerificationTemplate"></a>
+                    <span class="name">
+                            <span class="modifier">Static</span>
+                        <span ><b>createUserVerificationTemplate</b></span>
+                        <a href="#createUserVerificationTemplate"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                        <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>createUserVerificationTemplate(firstName: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank">string</a>, link: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank">string</a>)</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="10"
+                                    class="link-to-prism">src/modules/email/helpers/email.helper.ts:10</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                        <div class="io-description"><p>Genera el contenido HTML para el correo de verificación de usuario.
+Este método crea una plantilla HTML simple para el correo electrónico de verificación de usuario.</p>
+</div>
+
+                            <div class="io-description">
+                                <b>Parameters :</b>
+                                
+                                <table class="params">
+                                    <thead>
+                                        <tr>
+                                            <td>Name</td>
+                                                <td>Type</td>
+                                            <td>Optional</td>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                                <td>firstName</td>
+                                            <td>
+                                                            <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
+                                            </td>
+
+                                            <td>
+                                                    No
+                                            </td>
+
+
+                                        </tr>
+                                        <tr>
+                                                <td>link</td>
+                                            <td>
+                                                            <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
+                                            </td>
+
+                                            <td>
+                                                    No
+                                            </td>
+
+
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        <div class="io-description">
+                            <b>Returns : </b>        <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
+
+                        </div>
+                            <div class="io-description">
+                                
+                            </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</section>
+
+
+
+
+
+    </div>
+
+
+    <div class="tab-pane fade  tab-source-code" id="source">
+        <pre class="line-numbers compodoc-sourcecode"><code class="language-typescript">export class EmailHelper {
+  /**
+   * Genera el contenido HTML para el correo de verificación de usuario.
+   * @remarks
+   * Este método crea una plantilla HTML simple para el correo electrónico de verificación de usuario.
+   * @param firstName
+   * @param passwordCreationLink
+   * @returns
+   */
+  public static createUserVerificationTemplate(
+    firstName: string,
+    link: string,
+  ): string {
+    return &#x60;
+      &lt;!DOCTYPE html&gt;
+      &lt;html&gt;
+      
+      &lt;head&gt;
+          &lt;meta charset&#x3D;&quot;UTF-8&quot;&gt;
+          &lt;meta name&#x3D;&quot;viewport&quot; content&#x3D;&quot;width&#x3D;device-width, initial-scale&#x3D;1.0&quot;&gt;
+          &lt;style type&#x3D;&quot;text/css&quot;&gt;
+              @font-face {
+                  font-family: &#x27;Gilroy&#x27;;
+                  src: url(&#x27;https://cdn.jsdelivr.net/gh/repalash/gilroy-free-webfont@fonts/Gilroy-Extrabold.eot&#x27;);
+                  src: local(&#x27;Gilroy Extrabold&#x27;), local(&#x27;Gilroy-Extrabold&#x27;),
+                  url(&#x27;https://cdn.jsdelivr.net/gh/repalash/gilroy-free-webfont@fonts/Gilroy-Extrabold.eot?#iefix&#x27;) format(&#x27;embedded-opentype&#x27;),
+                  url(&#x27;https://cdn.jsdelivr.net/gh/repalash/gilroy-free-webfont@fonts/Gilroy-Extrabold.woff&#x27;) format(&#x27;woff&#x27;),
+                  url(&#x27;https://cdn.jsdelivr.net/gh/repalash/gilroy-free-webfont@fonts/Gilroy-Extrabold.ttf&#x27;) format(&#x27;truetype&#x27;);
+                  font-weight: 600;
+                  font-style: normal;
+              }
+      
+              @font-face {
+                  font-family: &#x27;Gilroy&#x27;;
+                  src: url(&#x27;https://cdn.jsdelivr.net/gh/repalash/gilroy-free-webfont@fonts/Gilroy-Light.eot&#x27;);
+                  src: local(&#x27;Gilroy Light&#x27;), local(&#x27;Gilroy-Light&#x27;),
+                  url(&#x27;https://cdn.jsdelivr.net/gh/repalash/gilroy-free-webfont@fonts/Gilroy-Light.eot?#iefix&#x27;) format(&#x27;embedded-opentype&#x27;),
+                  url(&#x27;https://cdn.jsdelivr.net/gh/repalash/gilroy-free-webfont@fonts/Gilroy-Light.woff&#x27;) format(&#x27;woff&#x27;),
+                  url(&#x27;https://cdn.jsdelivr.net/gh/repalash/gilroy-free-webfont@fonts/Gilroy-Light.ttf&#x27;) format(&#x27;truetype&#x27;);
+                  font-weight: 400;
+                  font-style: normal;
+              }
+      
+              body {
+                  font-family: &#x27;Gilroy&#x27;, sans-serif;
+              }
+          &lt;/style&gt;
+      &lt;/head&gt;
+      
+      &lt;body style&#x3D;&quot;margin: 0; padding: 0; width: 100%; -webkit-text-size-adjust: none; -webkit-font-smoothing: antialiased;&quot;&gt;
+          &lt;table width&#x3D;&quot;100%&quot; bgcolor&#x3D;&quot;#FFFFFF&quot; border&#x3D;&quot;0&quot; cellspacing&#x3D;&quot;0&quot; cellpadding&#x3D;&quot;0&quot; id&#x3D;&quot;background&quot; style&#x3D;&quot;height: 100% !important; margin: 0; padding: 0; width: 100% !important; max-width: 700px;&quot;&gt;
+              &lt;tr&gt;
+                  &lt;td align&#x3D;&quot;center&quot; valign&#x3D;&quot;top&quot;&gt;
+                      &lt;table width&#x3D;&quot;100%&quot; border&#x3D;&quot;0&quot; bgcolor&#x3D;&quot;#8056B0&quot; cellspacing&#x3D;&quot;0&quot; cellpadding&#x3D;&quot;20&quot; id&#x3D;&quot;preheader&quot;&gt;
+                          &lt;tr&gt;
+                              &lt;td valign&#x3D;&quot;top&quot;&gt;
+                                  &lt;table width&#x3D;&quot;100%&quot; border&#x3D;&quot;0&quot; cellspacing&#x3D;&quot;0&quot; cellpadding&#x3D;&quot;0&quot;&gt;
+                                      &lt;tr&gt;
+                                          &lt;td valign&#x3D;&quot;top&quot; width&#x3D;&quot;600&quot;&gt;
+                                              &lt;div&gt;
+                                                  &lt;a style&#x3D;&quot;width: 30%; padding: 0;&quot;&gt;
+                                                      &lt;img width&#x3D;&quot;160&quot; src&#x3D;&quot;https://eqwedi-api-auth-bucket.s3.us-east-2.amazonaws.com/auth/correo/img/dinelco.png&quot; alt&#x3D;&quot;Logo de Dinelco&quot;&gt;
+                                                  &lt;/a&gt;
+                                              &lt;/div&gt;
+                                          &lt;/td&gt;
+                                      &lt;/tr&gt;
+                                  &lt;/table&gt;
+                              &lt;/td&gt;
+                          &lt;/tr&gt;
+                      &lt;/table&gt;
+                      &lt;table width&#x3D;&quot;600&quot; border&#x3D;&quot;0&quot; cellspacing&#x3D;&quot;0&quot; cellpadding&#x3D;&quot;20&quot; id&#x3D;&quot;body_container&quot;&gt;
+                          &lt;tr&gt;
+                              &lt;td align&#x3D;&quot;center&quot; valign&#x3D;&quot;top&quot; class&#x3D;&quot;body_content&quot;&gt;
+                                  &lt;table width&#x3D;&quot;100%&quot; border&#x3D;&quot;0&quot; cellspacing&#x3D;&quot;0&quot; cellpadding&#x3D;&quot;20&quot;&gt;
+                                      &lt;tr&gt;
+                                          &lt;td valign&#x3D;&quot;top&quot;&gt;
+                                              &lt;h2 style&#x3D;&quot;color: #5F5D5D; font-size: 22px; text-align: left;&quot;&gt;¡Hola, ${firstName}!&lt;/h2&gt;
+                                              &lt;h3 style&#x3D;&quot;color: #5F5D5D; font-size: 18px; text-align: left;&quot;&gt;Te invitamos a activar tu cuenta.&lt;/h3&gt;
+                                              &lt;p style&#x3D;&quot;color: #5F5D5D; font-size: 14px; line-height: 22px; text-align: left;&quot;&gt;
+                                                  &lt;strong&gt;Haz clic en el botón a continuación para verificar tu correo.&lt;/strong&gt; De esta manera, el proceso de registro se completará y podrás acceder al sistema. Por motivos de seguridad, este enlace tendrá una vigencia de 24hs.
+                                              &lt;/p&gt;
+                                          &lt;/td&gt;
+                                      &lt;/tr&gt;
+                                      &lt;tr&gt;
+                                          &lt;td align&#x3D;&quot;center&quot;&gt;
+                                              &lt;table&gt;
+                                                  &lt;tr&gt;
+                                                      &lt;td align&#x3D;&quot;center&quot; style&#x3D;&quot;border-radius: 25px; background-color: #9B0042;&quot;&gt;
+                                                          &lt;a href&#x3D;&quot;${link}&quot; style&#x3D;&quot;background-color:#9B0042;border-radius:25px;color:#FFFFFF;display:inline-block;font-family:&#x27;Gilroy Black&#x27;;font-size:18px;height:45px;line-height:45px;text-align:center;text-decoration:none;width:200px;-webkit-text-size-adjust:none;&quot;&gt;
+                                                              Verificar correo
+                                                          &lt;/a&gt;
+                                                      &lt;/td&gt;
+                                                  &lt;/tr&gt;
+                                              &lt;/table&gt;
+                                          &lt;/td&gt;
+                                      &lt;/tr&gt;
+                                  &lt;/table&gt;
+                              &lt;/td&gt;
+                          &lt;/tr&gt;
+                      &lt;/table&gt;
+                      &lt;table width&#x3D;&quot;100%&quot; border&#x3D;&quot;0&quot; bgcolor&#x3D;&quot;#F4F3F3&quot; cellspacing&#x3D;&quot;0&quot; cellpadding&#x3D;&quot;20&quot; id&#x3D;&quot;body_info_container&quot;&gt;
+                          &lt;tr&gt;
+                              &lt;td align&#x3D;&quot;center&quot; valign&#x3D;&quot;top&quot; class&#x3D;&quot;body_info_content&quot;&gt;
+                                  &lt;table width&#x3D;&quot;100%&quot; border&#x3D;&quot;0&quot; cellspacing&#x3D;&quot;0&quot; cellpadding&#x3D;&quot;10&quot;&gt;
+                                      &lt;tr&gt;
+                                          &lt;td valign&#x3D;&quot;top&quot;&gt;
+                                              &lt;p style&#x3D;&quot;color: #5F5D5D; font-size: 12px; line-height: 22px;&quot;&gt;Este mensaje ha sido generado de forma automática; favor no respondas el mismo, ya que esta dirección no acepta correos electrónicos, por lo que no recibirás una respuesta. &lt;strong&gt;Si requerís asistencia, comunicate al CAC (Centro de Atención al Cliente) 021 620 6000.&lt;/strong&gt;&lt;/p&gt;
+                                          &lt;/td&gt;
+                                      &lt;/tr&gt;
+                                  &lt;/table&gt;
+                              &lt;/td&gt;
+                          &lt;/tr&gt;
+                      &lt;/table&gt;
+                  &lt;/td&gt;
+              &lt;/tr&gt;
+          &lt;/table&gt;
+      &lt;/body&gt;
+      
+      &lt;/html&gt;
+    &#x60;;
+  }
+
+  /**
+   * Genera el contenido HTML para el correo de olvide mi contraseña.
+   * @remarks
+   * Este método crea una plantilla HTML simple para el correo electrónico de olvide mi contraseña.
+   * @param firstName
+   * @param passwordCreationLink
+   * @returns
+   */
+  public static createUserForgotPasswordTemplate(
+    firstName: string,
+    link: string,
+  ): string {
+    return &#x60;
+      &lt;!DOCTYPE html&gt;
+      &lt;html&gt;
+      
+      &lt;head&gt;
+          &lt;meta charset&#x3D;&quot;UTF-8&quot;&gt;
+          &lt;meta name&#x3D;&quot;viewport&quot; content&#x3D;&quot;width&#x3D;device-width, initial-scale&#x3D;1.0&quot;&gt;
+          &lt;style type&#x3D;&quot;text/css&quot;&gt;
+              @font-face {
+                  font-family: &#x27;Gilroy&#x27;;
+                  src: url(&#x27;https://cdn.jsdelivr.net/gh/repalash/gilroy-free-webfont@fonts/Gilroy-Extrabold.eot&#x27;);
+                  src: local(&#x27;Gilroy Extrabold&#x27;), local(&#x27;Gilroy-Extrabold&#x27;),
+                  url(&#x27;https://cdn.jsdelivr.net/gh/repalash/gilroy-free-webfont@fonts/Gilroy-Extrabold.eot?#iefix&#x27;) format(&#x27;embedded-opentype&#x27;),
+                  url(&#x27;https://cdn.jsdelivr.net/gh/repalash/gilroy-free-webfont@fonts/Gilroy-Extrabold.woff&#x27;) format(&#x27;woff&#x27;),
+                  url(&#x27;https://cdn.jsdelivr.net/gh/repalash/gilroy-free-webfont@fonts/Gilroy-Extrabold.ttf&#x27;) format(&#x27;truetype&#x27;);
+                  font-weight: 600;
+                  font-style: normal;
+              }
+      
+              @font-face {
+                  font-family: &#x27;Gilroy&#x27;;
+                  src: url(&#x27;https://cdn.jsdelivr.net/gh/repalash/gilroy-free-webfont@fonts/Gilroy-Light.eot&#x27;);
+                  src: local(&#x27;Gilroy Light&#x27;), local(&#x27;Gilroy-Light&#x27;),
+                  url(&#x27;https://cdn.jsdelivr.net/gh/repalash/gilroy-free-webfont@fonts/Gilroy-Light.eot?#iefix&#x27;) format(&#x27;embedded-opentype&#x27;),
+                  url(&#x27;https://cdn.jsdelivr.net/gh/repalash/gilroy-free-webfont@fonts/Gilroy-Light.woff&#x27;) format(&#x27;woff&#x27;),
+                  url(&#x27;https://cdn.jsdelivr.net/gh/repalash/gilroy-free-webfont@fonts/Gilroy-Light.ttf&#x27;) format(&#x27;truetype&#x27;);
+                  font-weight: 400;
+                  font-style: normal;
+              }
+      
+              body {
+                  font-family: &#x27;Gilroy&#x27;, sans-serif;
+              }
+          &lt;/style&gt;
+      &lt;/head&gt;
+      
+      &lt;body style&#x3D;&quot;margin: 0; padding: 0; width: 100%; -webkit-text-size-adjust: none; -webkit-font-smoothing: antialiased;&quot;&gt;
+          &lt;table width&#x3D;&quot;100%&quot; bgcolor&#x3D;&quot;#FFFFFF&quot; border&#x3D;&quot;0&quot; cellspacing&#x3D;&quot;0&quot; cellpadding&#x3D;&quot;0&quot; id&#x3D;&quot;background&quot; style&#x3D;&quot;height: 100% !important; margin: 0; padding: 0; width: 100% !important; max-width: 700px;&quot;&gt;
+              &lt;tr&gt;
+                  &lt;td align&#x3D;&quot;center&quot; valign&#x3D;&quot;top&quot;&gt;
+                      &lt;!-- HEADER/PREHEADER --&gt;
+                      &lt;table width&#x3D;&quot;100%&quot; border&#x3D;&quot;0&quot; bgcolor&#x3D;&quot;#8056B0&quot; cellspacing&#x3D;&quot;0&quot; cellpadding&#x3D;&quot;20&quot; id&#x3D;&quot;preheader&quot;&gt;
+                          &lt;tr&gt;
+                              &lt;td valign&#x3D;&quot;top&quot;&gt;
+                                  &lt;table width&#x3D;&quot;100%&quot; border&#x3D;&quot;0&quot; cellspacing&#x3D;&quot;0&quot; cellpadding&#x3D;&quot;0&quot;&gt;
+                                      &lt;tr&gt;
+                                          &lt;td valign&#x3D;&quot;top&quot; width&#x3D;&quot;600&quot;&gt;
+                                              &lt;div&gt;
+                                                  &lt;a style&#x3D;&quot;width: 30%; padding: 0;&quot;&gt;
+                                                      &lt;!-- LOGO - Mantengo tu URL de S3, reemplázala si es necesario --&gt;
+                                                      &lt;img width&#x3D;&quot;160&quot; src&#x3D;&quot;https://eqwedi-api-auth-bucket.s3.us-east-2.amazonaws.com/auth/correo/img/dinelco.png&quot; alt&#x3D;&quot;Logo de Dinelco&quot;&gt;
+                                                  &lt;/a&gt;
+                                              &lt;/div&gt;
+                                          &lt;/td&gt;
+                                      &lt;/tr&gt;
+                                  &lt;/table&gt;
+                              &lt;/td&gt;
+                          &lt;/tr&gt;
+                      &lt;/table&gt;
+                      
+                      &lt;!-- CUERPO DEL CORREO --&gt;
+                      &lt;table width&#x3D;&quot;600&quot; border&#x3D;&quot;0&quot; cellspacing&#x3D;&quot;0&quot; cellpadding&#x3D;&quot;20&quot; id&#x3D;&quot;body_container&quot;&gt;
+                          &lt;tr&gt;
+                              &lt;td align&#x3D;&quot;center&quot; valign&#x3D;&quot;top&quot; class&#x3D;&quot;body_content&quot;&gt;
+                                  &lt;table width&#x3D;&quot;100%&quot; border&#x3D;&quot;0&quot; cellspacing&#x3D;&quot;0&quot; cellpadding&#x3D;&quot;20&quot;&gt;
+                                      &lt;tr&gt;
+                                          &lt;td valign&#x3D;&quot;top&quot;&gt;
+                                              &lt;h2 style&#x3D;&quot;color: #5F5D5D; font-size: 22px; text-align: left;&quot;&gt;¡Hola, ${firstName}!&lt;/h2&gt;
+                                              &lt;h3 style&#x3D;&quot;color: #5F5D5D; font-size: 18px; text-align: left;&quot;&gt;Solicitaste restablecer tu contraseña.&lt;/h3&gt;
+                                              &lt;p style&#x3D;&quot;color: #5F5D5D; font-size: 14px; line-height: 22px; text-align: left;&quot;&gt;
+                                                  Recibimos una solicitud para &lt;strong&gt;restablecer la contraseña&lt;/strong&gt; de tu cuenta. Si no hiciste esta solicitud, puedes ignorar este correo.
+                                                  &lt;br&gt;&lt;br&gt;
+                                                  Para crear una nueva contraseña, &lt;strong&gt;haz clic en el botón a continuación.&lt;/strong&gt; Por motivos de seguridad, este enlace es temporal y tendrá una vigencia de 24 horas.
+                                              &lt;/p&gt;
+                                          &lt;/td&gt;
+                                      &lt;/tr&gt;
+                                      &lt;tr&gt;
+                                          &lt;td align&#x3D;&quot;center&quot;&gt;
+                                              &lt;table&gt;
+                                                  &lt;tr&gt;
+                                                      &lt;td align&#x3D;&quot;center&quot; style&#x3D;&quot;border-radius: 25px; background-color: #9B0042;&quot;&gt;
+                                                          &lt;a href&#x3D;&quot;${link}&quot; style&#x3D;&quot;background-color:#9B0042;border-radius:25px;color:#FFFFFF;display:inline-block;font-family:&#x27;Gilroy Black&#x27;;font-size:18px;height:45px;line-height:45px;text-align:center;text-decoration:none;width:250px;-webkit-text-size-adjust:none;&quot;&gt;
+                                                              Restablecer Contraseña
+                                                          &lt;/a&gt;
+                                                      &lt;/td&gt;
+                                                  &lt;/tr&gt;
+                                              &lt;/table&gt;
+                                          &lt;/td&gt;
+                                      &lt;/tr&gt;
+                                  &lt;/table&gt;
+                              &lt;/td&gt;
+                          &lt;/tr&gt;
+                      &lt;/table&gt;
+
+                      &lt;!-- FOOTER / INFORMACIÓN LEGAL --&gt;
+                      &lt;table width&#x3D;&quot;100%&quot; border&#x3D;&quot;0&quot; bgcolor&#x3D;&quot;#F4F3F3&quot; cellspacing&#x3D;&quot;0&quot; cellpadding&#x3D;&quot;20&quot; id&#x3D;&quot;body_info_container&quot;&gt;
+                          &lt;tr&gt;
+                              &lt;td align&#x3D;&quot;center&quot; valign&#x3D;&quot;top&quot; class&#x3D;&quot;body_info_content&quot;&gt;
+                                  &lt;table width&#x3D;&quot;100%&quot; border&#x3D;&quot;0&quot; cellspacing&#x3D;&quot;0&quot; cellpadding&#x3D;&quot;10&quot;&gt;
+                                      &lt;tr&gt;
+                                          &lt;td valign&#x3D;&quot;top&quot;&gt;
+                                              &lt;p style&#x3D;&quot;color: #5F5D5D; font-size: 12px; line-height: 22px;&quot;&gt;Este mensaje ha sido generado de forma automática; favor no respondas el mismo, ya que esta dirección no acepta correos electrónicos, por lo que no recibirás una respuesta. &lt;strong&gt;Si requerís asistencia, comunicate al CAC (Centro de Atención al Cliente) 021 620 6000.&lt;/strong&gt;&lt;/p&gt;
+                                          &lt;/td&gt;
+                                      &lt;/tr&gt;
+                                  &lt;/table&gt;
+                              &lt;/td&gt;
+                          &lt;/tr&gt;
+                      &lt;/table&gt;
+                  &lt;/td&gt;
+              &lt;/tr&gt;
+          &lt;/table&gt;
+      &lt;/body&gt;
+      
+      &lt;/html&gt;
+    &#x60;;
+  }
+}
+</code></pre>
+    </div>
+</div>
+
+
+
+
+
+
+
+
+
+                   </div><div class="search-results">
+    <div class="has-results">
+        <h1 class="search-results-title"><span class='search-results-count'></span> results matching "<span class='search-query'></span>"</h1>
+        <ul class="search-results-list"></ul>
+    </div>
+    <div class="no-results">
+        <h1 class="search-results-title">No results matching "<span class='search-query'></span>"</h1>
+    </div>
+</div>
+</div>
+               <!-- END CONTENT -->
+           </div>
+       </div>
+
+          <label class="dark-mode-switch">
+               <input type="checkbox">
+               <span class="slider">
+                    <svg class="slider-icon" viewBox="0 0 24 24" fill="none" height="20" stroke="#000" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" width="20" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M21 12.79A9 9 0 1111.21 3 7 7 0 0021 12.79z"></path>
+                    </svg>
+               </span>
+          </label>
+
+       <script>
+            var COMPODOC_CURRENT_PAGE_DEPTH = 1;
+            var COMPODOC_CURRENT_PAGE_CONTEXT = 'class';
+            var COMPODOC_CURRENT_PAGE_URL = 'EmailHelper.html';
+            var MAX_SEARCH_RESULTS = 15;
+       </script>
+
+       <script>
+               $darkModeToggleSwitchers = document.querySelectorAll('.dark-mode-switch input');
+               checkToggle(darkModeState);
+               if ($darkModeToggleSwitchers.length > 0) {
+                    for (var i = 0; i < $darkModeToggleSwitchers.length; i++) {
+                         $darkModeToggleSwitchers[i].addEventListener('change', function (event) {
+                              darkModeState = !darkModeState;
+                              toggleDarkMode(darkModeState);
+                         });
+                    }
+               }
+          </script>
+
+       <script src="../js/libs/custom-elements.min.js"></script>
+       <script src="../js/libs/lit-html.js"></script>
+
+       <script src="../js/menu-wc.js" defer></script>
+       <script nomodule src="../js/menu-wc_es5.js" defer></script>
+
+       <script src="../js/libs/bootstrap-native.js"></script>
+
+       <script src="../js/libs/es6-shim.min.js"></script>
+       <script src="../js/libs/EventDispatcher.js"></script>
+       <script src="../js/libs/promise.min.js"></script>
+
+       <script src="../js/compodoc.js"></script>
+
+       <script src="../js/tabs.js"></script>
+       <script src="../js/menu.js"></script>
+       <script src="../js/libs/clipboard.min.js"></script>
+       <script src="../js/libs/prism.js"></script>
+       <script src="../js/sourceCode.js"></script>
+          <script src="../js/search/search.js"></script>
+          <script src="../js/search/lunr.min.js"></script>
+          <script src="../js/search/search-lunr.js"></script>
+          <script src="../js/search/search_index.js"></script>
+       <script src="../js/lazy-load-graphs.js"></script>
+
+
+    </body>
+</html>
