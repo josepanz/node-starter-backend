@@ -27,7 +27,7 @@
     "prepare": "husky || true",
     "seed": "ts-node prisma/seed.ts",
     "docs:generate": "npx compodoc -p tsconfig.json -d docs",
-    "docs:json": "npx compodoc -p tsconfig.json -e json",
+    "docs:json": "npx compodoc -p tsconfig.json -d docs -e json",
     "update:readme": "node scripts/update-readme.js",
     "docs:serve": "npx compodoc -s -d docs",
     "docs:rebuild": "pnpm run docs:generate && pnpm run docs:serve",
