@@ -1,6 +1,6 @@
 import { Injectable } from '@nestjs/common';
 import { Model, ModelStatic } from '@sequelize/core';
-import * as fg from 'fast-glob';
+import fg from 'fast-glob';
 
 @Injectable()
 export class DatabaseHelper {
