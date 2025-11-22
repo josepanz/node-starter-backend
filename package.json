@@ -31,7 +31,8 @@
     "update:readme": "node scripts/update-readme.js",
     "docs:serve": "npx compodoc -s -d docs",
     "docs:rebuild": "pnpm run docs:generate && pnpm run docs:serve",
-    "docs:update-readme": "pnpm run docs:json && pnpm run update:readme"
+    "docs:update-readme": "pnpm run docs:json && pnpm run update:readme",
+    "bm": "ts-node -r tsconfig-paths/register console/bm/index.ts"
   },
   "dependencies": {
     "@autotelic/pino-seq-transport": "^0.1.0",

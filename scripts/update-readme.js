@@ -105,7 +105,10 @@ if (fs.existsSync(compodocJson)) {
       });
     }
 
-    if (lines.length > 0) functionalities = lines.join('\n');
+    if (lines.length > 0) {
+      functionalities = "## 🧩 **Funcionalidades** documentadas\n\n"
+      functionalities += lines.join('\n');
+    } 
   } catch (err) {
     console.error('⚠️ No se pudo leer documentation.json:', err.message);
   }
@@ -130,7 +133,8 @@ if (fs.existsSync(apiDir)) {
 
   const controllers = walkControllers(apiDir);
   if (controllers.length > 0) {
-    apiControllersSection = controllers.map((c) => `- **${c}**`).join('\n');
+    apiControllersSection = '## 📦 **Controllers** en @api\n\n';
+    apiControllersSection += controllers.map((c) => `- **${c}**`).join('\n');
   }
 }
 
@@ -274,10 +278,10 @@ readme = replaceSection(readme, 'documentation', documentationSection);
 readme = replaceSection(readme, 'initial-setup', initialSetup);
 readme = replaceSection(readme, 'dependencies', deps);
 readme = replaceSection(readme, 'scripts', scripts);
-readme = replaceSection(readme, 'functionalities', functionalities);
 readme = replaceSection(readme, 'architecture', architecture);
-readme = replaceSection(readme, 'api-controllers', apiControllersSection);
 readme = replaceSection(readme, 'prisma-setup', prismaSetup);
+readme = replaceSection(readme, 'functionalities', ''); // functionalities); // se comenta funcionalidades por ahora, demasiado texto
+readme = replaceSection(readme, 'api-controllers', ''); // apiControllersSection); // se comenta api-controllers por ahora, demasiado texto
 
 fs.writeFileSync(readmePath, readme);
 console.log(`✅ README actualizado (${formattedDate})`);

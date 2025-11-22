@@ -4,7 +4,7 @@
 
 Proyecto inicial para backend con NestJS y TypeScript
 
-Última actualización: <!-- LAST_UPDATE --> 04 de noviembre de 2025, 05:16 p. m.
+Última actualización: <!-- LAST_UPDATE --> 21 de noviembre de 2025, 10:12 p. m.
 
 ## 🗎 Documentación disponible en
 <!-- START:documentation -->
@@ -167,6 +167,7 @@ Para interactuar con la base de datos a través de **Prisma**, sigue estos pasos
 - **docs:serve** → `npx compodoc -s -d docs`
 - **docs:rebuild** → `pnpm run docs:generate && pnpm run docs:serve`
 - **docs:update-readme** → `pnpm run docs:json && pnpm run update:readme`
+- **bm** → `ts-node -r tsconfig-paths/register console/bm/index.ts`
 <!-- END:scripts -->
 
 ## 🏗️ Arquitectura
@@ -203,135 +204,10 @@ src/
 
 <!-- END:architecture -->
 
-## 🧩 Funcionalidades documentadas
 <!-- START:functionalities -->
-### 🧩 Módulo **ApiModule**
-
-#### - Controller: **AuthApiController**
-
-#### - Controller: **EmailApiController**
-
-#### - Controller: **ExampleApiController**
-
-#### - Controller: **OnboardingController**
-
-#### - Controller: **PermissionsAssignmentController**
-
-#### - Controller: **PermissionsController**
-
-#### - Controller: **RolesController**
-
-#### - Controller: **UsersController**
-
-
-### 🧩 Módulo **AppModule**
-
-#### - Controller: **AuthApiController**
-
-#### - Controller: **EmailApiController**
-
-#### - Controller: **ExampleApiController**
-
-#### - Controller: **OnboardingController**
-
-#### - Controller: **PermissionsAssignmentController**
-
-#### - Controller: **PermissionsController**
-
-#### - Controller: **RolesController**
-
-#### - Controller: **UsersController**
-
-#### - Controller: **HealthController**
-
-
-### 🧩 Módulo **AuthApiModule**
-
-#### - Controller: **AuthApiController**
-
-
-### 🧩 Módulo **AuthModule**
-
-_Sin controllers documentados para este módulo._
-
-
-### 🧩 Módulo **DatabaseModule**
-
-_Sin controllers documentados para este módulo._
-
-
-### 🧩 Módulo **EmailApiModule**
-
-#### - Controller: **EmailApiController**
-
-
-### 🧩 Módulo **EmailModule**
-
-_Sin controllers documentados para este módulo._
-
-
-### 🧩 Módulo **ExampleApiModule**
-
-#### - Controller: **ExampleApiController**
-
-
-### 🧩 Módulo **ExampleModule**
-
-_Sin controllers documentados para este módulo._
-
-
-### 🧩 Módulo **HealthModule**
-
-#### - Controller: **HealthController**
-
-
-### 🧩 Módulo **ObservabilityModule**
-
-_Sin controllers documentados para este módulo._
-
-
-### 🧩 Módulo **OnboardingModule**
-
-#### - Controller: **OnboardingController**
-
-
-### 🧩 Módulo **PermissionsModule**
-
-#### - Controller: **PermissionsAssignmentController**
-
-#### - Controller: **PermissionsController**
-
-
-### 🧩 Módulo **RolesModule**
-
-#### - Controller: **RolesController**
-
-
-### 🧩 Módulo **TemplatePlaygroundModule**
-
-_Sin controllers documentados para este módulo._
-
-
-### 🧩 Módulo **UsersModule**
-
-#### - Controller: **UsersController**
-
-
-### 🧩 Módulo **UsersModule**
-
-_Sin controllers documentados para este módulo._
-
 
 <!-- END:functionalities -->
 
-## 📦 Api Controllers
 <!-- START:api-controllers -->
-- **auth-api.controller**
-- **email-api.controller**
-- **example-api.controller**
-- **onboarding.controller**
-- **permissions-assignment.controller**
-- **permissions.controller**
-- **roles.controller**
-- **users.controller**
+
 <!-- END:api-controllers -->
