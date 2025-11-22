@@ -4,7 +4,7 @@
 
 Proyecto inicial para backend con NestJS y TypeScript
 
-Última actualización: <!-- LAST_UPDATE --> 21 de noviembre de 2025, 10:12 p. m.
+Última actualización: <!-- LAST_UPDATE --> 22 de noviembre de 2025, 12:04 a. m.
 
 ## 🗎 Documentación disponible en
 <!-- START:documentation -->
@@ -117,6 +117,7 @@ Para interactuar con la base de datos a través de **Prisma**, sigue estos pasos
 - **@nestjs/passport** `^11.0.5`
 - **@nestjs/platform-express** `^11.0.1`
 - **@nestjs/swagger** `^11.0.7`
+- **@nestjs/sequelize** `^11.0.0`
 - **@nestjs/terminus** `^11.0.0`
 - **@prisma/client** `6.18.0`
 - **axios** `^1.9.0`
@@ -140,6 +141,9 @@ Para interactuar con la base de datos a través de **Prisma**, sigue estos pasos
 - **read-pkg-up** `^11.0.0`
 - **reflect-metadata** `^0.2.2`
 - **rxjs** `^7.8.1`
+- **@sequelize/core** `7.0.0-alpha.43`
+- **@sequelize/db2-ibmi** `7.0.0-alpha.43`
+- **@sequelize/postgres** `7.0.0-alpha.43`
 - **uuid** `^11.1.0`
 - **write-file-atomic** `^7.0.0`
 <!-- END:dependencies -->
