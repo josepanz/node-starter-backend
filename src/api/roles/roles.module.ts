@@ -2,7 +2,7 @@ import { Module } from '@nestjs/common';
 import { RolesService } from '@api/roles/services/roles.service';
 import { RolesController } from '@api/roles/controllers/roles.controller';
 import { DatabaseModule } from '@core/database/database.module';
-import { AuditInterceptor } from '@core/middlewares/interceptors/audit.interceptor';
+import { AuditInterceptor } from '@core/interceptors/audit.interceptor';
 import { APP_INTERCEPTOR } from '@nestjs/core';
 
 @Module({

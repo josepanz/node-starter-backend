@@ -6,7 +6,7 @@ import {
   ForbiddenException,
   Logger,
 } from '@nestjs/common';
-import { PrismaDatasource } from '@core/database/prisma.service';
+import { PrismaDatasource } from '@core/database/services/prisma.service';
 import { ApiClientCredential } from '@prisma/client';
 
 /**

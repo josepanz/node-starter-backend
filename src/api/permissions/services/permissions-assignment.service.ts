@@ -3,7 +3,7 @@ import {
   ConflictException,
   NotFoundException,
 } from '@nestjs/common';
-import { PrismaDatasource } from '@core/database/prisma.service';
+import { PrismaDatasource } from '@core/database/services/prisma.service';
 import { AssignPermissionToRoleRequestDto } from '@api/permissions/dtos/request/assign-permission-to-role-dto.request';
 import { AssignPermissionToUserRequestDto } from '@api/permissions/dtos/request/assign-permission-to-user.request.dto';
 import { PermissionAssignedResponseDto } from '@api/permissions/dtos/response/permission-assignment.response.dto';

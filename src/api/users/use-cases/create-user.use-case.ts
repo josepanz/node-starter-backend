@@ -1,5 +1,5 @@
 import { BadRequestException } from '@nestjs/common';
-import { PrismaDatasource } from '@core/database/prisma.service';
+import { PrismaDatasource } from '@core/database/services/prisma.service';
 import { CreateUserRequestDto } from '../dtos/request/create-user.request.dto';
 import { UserStatus } from '@prisma/client';
 import { Users } from '@prisma/client';

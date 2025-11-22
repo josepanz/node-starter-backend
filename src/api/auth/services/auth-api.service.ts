@@ -18,7 +18,7 @@ import { LoginUserResponseDto } from '@api/auth/dtos/response/login-user.respons
 import { APP_CONFIG, AppConfigType } from '@core/config/config-loader';
 import { ConfigType } from '@nestjs/config';
 import { Users, UserStatus } from '@prisma/client';
-import { PrismaDatasource } from '@core/database/prisma.service';
+import { PrismaDatasource } from '@core/database/services/prisma.service';
 import { UserCredentialsWithUser } from '@modules/auth/types/user-credentials.types';
 import { UserScopeResponseDto } from '@api/auth/dtos/response/user-scope.response.dto';
 import { UserHelper } from '@common/helpers/user.helper';

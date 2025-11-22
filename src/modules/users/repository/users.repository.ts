@@ -1,6 +1,6 @@
 import { AuditUserEnum } from '@common/enum/audit-user.enum';
-import { PrismaBaseRepository } from '@core/database/prisma-base.repository';
-import { PrismaDatasource } from '@core/database/prisma.service';
+import { PrismaBaseRepository } from '@core/database/base/prisma/prisma-base.repository';
+import { PrismaDatasource } from '@core/database/services/prisma.service';
 import { UserCredentialsWithUser } from '@modules/auth/types/user-credentials.types';
 import { UserWithSecurities } from '@modules/auth/types/user.types';
 import { Injectable } from '@nestjs/common';

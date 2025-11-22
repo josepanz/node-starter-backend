@@ -27,7 +27,7 @@ import { UsersService } from '../services/users.service';
 import { CreateUserRequestDto } from '../dtos/request/create-user.request.dto';
 import { UpdateUserRequestDto } from '../dtos/request/update-user.request.dto';
 import { Audit } from '@core/middlewares/decorators/audit.decorator';
-import { AuditInterceptor } from '@core/middlewares/interceptors/audit.interceptor';
+import { AuditInterceptor } from '@core/interceptors/audit.interceptor';
 import { UserResponseDto } from '@api/users/dtos/response/user.response.dto';
 import { PermissionsGuard } from '@modules/auth/guards/permissions.guard';
 import { JwtAuthGuard } from '@modules/auth/guards/jwt-auth.guard';

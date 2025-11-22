@@ -1,5 +1,5 @@
 import { Injectable, NotFoundException } from '@nestjs/common';
-import { PrismaDatasource } from '@core/database/prisma.service';
+import { PrismaDatasource } from '@core/database/services/prisma.service';
 import { UpdateRoleRequestDto } from '@api/roles/dtos/request/update-role.request.dto';
 import { RoleResponseDto } from '@api/roles/dtos/response/role.response.dto';
 import { CreateRoleRequestDto } from '@api/roles/dtos/request/create-role.request.dto';

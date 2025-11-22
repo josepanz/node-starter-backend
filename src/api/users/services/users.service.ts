@@ -1,5 +1,5 @@
 import { Injectable, Logger, NotFoundException } from '@nestjs/common';
-import { PrismaDatasource } from '../../../core/database/prisma.service';
+import { PrismaDatasource } from '../../../core/database/services/prisma.service';
 import { CreateUserRequestDto } from '../dtos/request/create-user.request.dto';
 import { UpdateUserRequestDto } from '../dtos/request/update-user.request.dto';
 import { UserCredentials, Users, UserStatus } from '@prisma/client';

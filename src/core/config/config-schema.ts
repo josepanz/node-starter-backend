@@ -19,6 +19,7 @@ export const configSchema = Joi.object({
   SEQ_URL: Joi.string().uri().required(),
 
   DATABASE_URL: Joi.string().required(),
+  DATABASE_CONNECTION_STRING: Joi.string().required(),
 
   EMAIL_HOST: Joi.string().required(),
   EMAIL_PORT: Joi.number().required(),

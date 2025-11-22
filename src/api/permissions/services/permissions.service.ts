@@ -2,7 +2,7 @@ import { CreatePermissionRequestDto } from '@api/permissions/dtos/request/create
 import { UpdatePermissionRequestDto } from '@api/permissions/dtos/request/update-permission.request.dto';
 import { PermissionResponseDto } from '@api/permissions/dtos/response/permission.response.dto';
 import { AuditUserEnum } from '@common/enum/audit-user.enum';
-import { PrismaDatasource } from '@core/database/prisma.service';
+import { PrismaDatasource } from '@core/database/services/prisma.service';
 import { Injectable, NotFoundException } from '@nestjs/common';
 
 @Injectable()

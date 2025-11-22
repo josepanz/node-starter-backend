@@ -33,6 +33,9 @@ export const APP_CONFIG = registerAs('config', () => {
       password: process.env.EMAIL_PASSWORD,
       dir: process.env.EMAIL_DIR,
     },
+    database: {
+      connectionString: process.env.DATABASE_CONNECTION_STRING,
+    },
   };
 });
 

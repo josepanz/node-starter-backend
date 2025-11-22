@@ -7,7 +7,7 @@ import {
   PrismaHealthIndicator,
 } from '@nestjs/terminus';
 import { toZonedTime } from 'date-fns-tz';
-import { PrismaDatasource } from '@core/database/prisma.service';
+import { PrismaDatasource } from '@core/database/services/prisma.service';
 import * as path from 'path';
 import * as fs from 'fs';
 

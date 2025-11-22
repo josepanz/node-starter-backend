@@ -1,6 +1,6 @@
 import { UserResponseDto } from '@api/users/dtos/response/user.response.dto';
 import { UserHelper } from '@common/helpers/user.helper';
-import { PrismaDatasource } from '@core/database/prisma.service';
+import { PrismaDatasource } from '@core/database/services/prisma.service';
 import { CryptoHelper } from '@common/helpers/crypto-helpers';
 import { OnboardingUserRequestDto } from '@api/onboarding/dto/request/onboarding-user.request.dto';
 import { AuthService } from '@modules/auth/services/auth.service';

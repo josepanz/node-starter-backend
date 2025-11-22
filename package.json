@@ -68,6 +68,9 @@
     "read-pkg-up": "^11.0.0",
     "reflect-metadata": "^0.2.2",
     "rxjs": "^7.8.1",
+    "@sequelize/core": "7.0.0-alpha.43",
+    "@sequelize/db2-ibmi": "7.0.0-alpha.43",
+    "@sequelize/postgres": "7.0.0-alpha.43",
     "uuid": "^11.1.0",
     "write-file-atomic": "^7.0.0"
   },
@@ -110,7 +113,9 @@
     "tsconfig-paths": "^4.2.0",
     "typescript": "^5.7.3",
     "typescript-eslint": "^8.20.0",
-    "update-readme": "^1.0.4"
+    "update-readme": "^1.0.4",
+    "@types/inquirer": "^9.0.9",
+    "inquirer": "^12.10.0"
   },
   "jest": {
     "moduleFileExtensions": [
@@ -138,7 +143,8 @@
       "@swc/core",
       "esbuild",
       "nestjs-pino",
-      "prisma"
+      "prisma",
+      "odbc"
     ]
   },
   "prisma": {

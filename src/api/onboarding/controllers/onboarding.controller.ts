@@ -1,7 +1,7 @@
 import { OnboardingService } from '@api/onboarding/services/onboarding.service';
 import { UserResponseDto } from '@api/users/dtos/response/user.response.dto';
 import { Audit } from '@core/middlewares/decorators/audit.decorator';
-import { AuditInterceptor } from '@core/middlewares/interceptors/audit.interceptor';
+import { AuditInterceptor } from '@core/interceptors/audit.interceptor';
 import {
   Controller,
   Post,
