@@ -4,7 +4,7 @@
 
 Proyecto inicial para backend con NestJS y TypeScript
 
-Última actualización: <!-- LAST_UPDATE --> 06 de junio de 2026, 11:56 p. m.
+Última actualización: <!-- LAST_UPDATE --> 07 de junio de 2026, 12:20 a. m.
 
 ## 🗎 Documentación disponible en
 <!-- START:documentation -->
@@ -178,7 +178,6 @@ Para interactuar con la base de datos a través de **Prisma**, sigue estos pasos
 - **docs:serve** → `npx compodoc -s -d docs`
 - **docs:rebuild** → `pnpm run docs:generate && pnpm run docs:serve`
 - **docs:update-readme** → `pnpm run docs:json && pnpm run update:readme`
-- **bm** → `ts-node -r tsconfig-paths/register console/bm/index.ts`
 <!-- END:scripts -->
 
 ## 🏗️ Arquitectura

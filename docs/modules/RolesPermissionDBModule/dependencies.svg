@@ -24,167 +24,167 @@
 <title>cluster_RolesPermissionDBModule</title>
 <polygon fill="none" stroke="black" stroke-dasharray="1,5" points="8,-70 8,-268 1387,-268 1387,-70 8,-70"/>
 </g>
-<g id="clust4" class="cluster">
-<title>cluster_RolesPermissionDBModule_exports</title>
-<polygon fill="none" stroke="black" points="196,-208 196,-260 1035,-260 1035,-208 196,-208"/>
+<g id="clust3" class="cluster">
+<title>cluster_RolesPermissionDBModule_imports</title>
+<polygon fill="none" stroke="black" points="1124,-78 1124,-130 1379,-130 1379,-78 1124,-78"/>
 </g>
 <g id="clust6" class="cluster">
 <title>cluster_RolesPermissionDBModule_providers</title>
-<polygon fill="none" stroke="black" points="279,-78 279,-130 1379,-130 1379,-78 279,-78"/>
+<polygon fill="none" stroke="black" points="16,-78 16,-130 1116,-130 1116,-78 16,-78"/>
 </g>
-<g id="clust3" class="cluster">
-<title>cluster_RolesPermissionDBModule_imports</title>
-<polygon fill="none" stroke="black" points="16,-78 16,-130 271,-130 271,-78 16,-78"/>
+<g id="clust4" class="cluster">
+<title>cluster_RolesPermissionDBModule_exports</title>
+<polygon fill="none" stroke="black" points="357,-208 357,-260 1196,-260 1196,-208 357,-208"/>
 </g>
 <!-- DatabaseModule -->
 <g id="node1" class="node">
 <title>DatabaseModule</title>
-<polygon fill="#8dd3c7" stroke="black" points="263.35,-122 260.35,-126 239.35,-126 236.35,-122 152.65,-122 152.65,-86 263.35,-86 263.35,-122"/>
-<text text-anchor="middle" x="208" y="-99.8" font-family="Times,serif" font-size="14.00">DatabaseModule</text>
+<polygon fill="#8dd3c7" stroke="black" points="1371.35,-122 1368.35,-126 1347.35,-126 1344.35,-122 1260.65,-122 1260.65,-86 1371.35,-86 1371.35,-122"/>
+<text text-anchor="middle" x="1316" y="-99.8" font-family="Times,serif" font-size="14.00">DatabaseModule</text>
 </g>
 <!-- RolesPermissionDBModule -->
 <g id="node3" class="node">
 <title>RolesPermissionDBModule</title>
-<polygon fill="#8dd3c7" stroke="black" points="697.6,-187 694.6,-191 673.6,-191 670.6,-187 524.4,-187 524.4,-151 697.6,-151 697.6,-187"/>
-<text text-anchor="middle" x="611" y="-164.8" font-family="Times,serif" font-size="14.00">RolesPermissionDBModule</text>
+<polygon fill="#8dd3c7" stroke="black" points="858.6,-187 855.6,-191 834.6,-191 831.6,-187 685.4,-187 685.4,-151 858.6,-151 858.6,-187"/>
+<text text-anchor="middle" x="772" y="-164.8" font-family="Times,serif" font-size="14.00">RolesPermissionDBModule</text>
 </g>
 <!-- DatabaseModule&#45;&gt;RolesPermissionDBModule -->
 <g id="edge1" class="edge">
 <title>DatabaseModule&#45;&gt;RolesPermissionDBModule</title>
-<path fill="none" stroke="black" d="M233.9,-122.27C233.9,-140.56 233.9,-166 233.9,-166 233.9,-166 514.01,-166 514.01,-166"/>
-<polygon fill="black" stroke="black" points="514.01,-169.5 524.01,-166 514.01,-162.5 514.01,-169.5"/>
+<path fill="none" stroke="black" d="M1316,-122.13C1316,-142.57 1316,-173 1316,-173 1316,-173 868.8,-173 868.8,-173"/>
+<polygon fill="black" stroke="black" points="868.8,-169.5 858.8,-173 868.8,-176.5 868.8,-169.5"/>
 </g>
 <!-- UsersDBModule -->
 <g id="node2" class="node">
 <title>UsersDBModule</title>
-<polygon fill="#8dd3c7" stroke="black" points="134.36,-122 131.36,-126 110.36,-126 107.36,-122 23.64,-122 23.64,-86 134.36,-86 134.36,-122"/>
-<text text-anchor="middle" x="79" y="-99.8" font-family="Times,serif" font-size="14.00">UsersDBModule</text>
+<polygon fill="#8dd3c7" stroke="black" points="1242.36,-122 1239.36,-126 1218.36,-126 1215.36,-122 1131.64,-122 1131.64,-86 1242.36,-86 1242.36,-122"/>
+<text text-anchor="middle" x="1187" y="-99.8" font-family="Times,serif" font-size="14.00">UsersDBModule</text>
 </g>
 <!-- UsersDBModule&#45;&gt;RolesPermissionDBModule -->
 <g id="edge2" class="edge">
 <title>UsersDBModule&#45;&gt;RolesPermissionDBModule</title>
-<path fill="none" stroke="black" d="M79,-122.13C79,-142.57 79,-173 79,-173 79,-173 514.34,-173 514.34,-173"/>
-<polygon fill="black" stroke="black" points="514.34,-176.5 524.34,-173 514.34,-169.5 514.34,-176.5"/>
+<path fill="none" stroke="black" d="M1159.93,-122.27C1159.93,-140.56 1159.93,-166 1159.93,-166 1159.93,-166 868.58,-166 868.58,-166"/>
+<polygon fill="black" stroke="black" points="868.58,-162.5 858.58,-166 868.58,-169.5 868.58,-162.5"/>
 </g>
 <!-- PermissionsDBService  -->
 <g id="node4" class="node">
 <title>PermissionsDBService </title>
-<polygon fill="#fb8072" stroke="black" points="1027.08,-252 878.92,-252 878.92,-216 1027.08,-216 1027.08,-252"/>
-<text text-anchor="middle" x="953" y="-229.8" font-family="Times,serif" font-size="14.00">PermissionsDBService </text>
+<polygon fill="#fb8072" stroke="black" points="1188.08,-252 1039.92,-252 1039.92,-216 1188.08,-216 1188.08,-252"/>
+<text text-anchor="middle" x="1114" y="-229.8" font-family="Times,serif" font-size="14.00">PermissionsDBService </text>
 </g>
 <!-- RolesPermissionDBModule&#45;&gt;PermissionsDBService  -->
 <g id="edge3" class="edge">
 <title>RolesPermissionDBModule&#45;&gt;PermissionsDBService </title>
-<path fill="none" stroke="black" stroke-dasharray="5,2" d="M697.68,-180C779.12,-180 888.55,-180 888.55,-180 888.55,-180 888.55,-205.72 888.55,-205.72"/>
-<polygon fill="black" stroke="black" points="885.05,-205.72 888.55,-215.72 892.05,-205.72 885.05,-205.72"/>
+<path fill="none" stroke="black" stroke-dasharray="5,2" d="M858.91,-180C948.1,-180 1073.89,-180 1073.89,-180 1073.89,-180 1073.89,-205.72 1073.89,-205.72"/>
+<polygon fill="black" stroke="black" points="1070.39,-205.72 1073.89,-215.72 1077.39,-205.72 1070.39,-205.72"/>
 </g>
 <!-- RolePermissionsDBService  -->
 <g id="node5" class="node">
 <title>RolePermissionsDBService </title>
-<polygon fill="#fb8072" stroke="black" points="860.53,-252 685.47,-252 685.47,-216 860.53,-216 860.53,-252"/>
-<text text-anchor="middle" x="773" y="-229.8" font-family="Times,serif" font-size="14.00">RolePermissionsDBService </text>
+<polygon fill="#fb8072" stroke="black" points="1021.53,-252 846.47,-252 846.47,-216 1021.53,-216 1021.53,-252"/>
+<text text-anchor="middle" x="934" y="-229.8" font-family="Times,serif" font-size="14.00">RolePermissionsDBService </text>
 </g>
 <!-- RolesPermissionDBModule&#45;&gt;RolePermissionsDBService  -->
 <g id="edge4" class="edge">
 <title>RolesPermissionDBModule&#45;&gt;RolePermissionsDBService </title>
-<path fill="none" stroke="black" stroke-dasharray="5,2" d="M691.52,-187.11C691.52,-187.11 691.52,-205.99 691.52,-205.99"/>
-<polygon fill="black" stroke="black" points="688.02,-205.99 691.52,-215.99 695.02,-205.99 688.02,-205.99"/>
+<path fill="none" stroke="black" stroke-dasharray="5,2" d="M852.52,-187.11C852.52,-187.11 852.52,-205.99 852.52,-205.99"/>
+<polygon fill="black" stroke="black" points="849.02,-205.99 852.52,-215.99 856.02,-205.99 849.02,-205.99"/>
 </g>
 <!-- RolesDBService  -->
 <g id="node6" class="node">
 <title>RolesDBService </title>
-<polygon fill="#fb8072" stroke="black" points="667.31,-252 554.69,-252 554.69,-216 667.31,-216 667.31,-252"/>
-<text text-anchor="middle" x="611" y="-229.8" font-family="Times,serif" font-size="14.00">RolesDBService </text>
+<polygon fill="#fb8072" stroke="black" points="828.31,-252 715.69,-252 715.69,-216 828.31,-216 828.31,-252"/>
+<text text-anchor="middle" x="772" y="-229.8" font-family="Times,serif" font-size="14.00">RolesDBService </text>
 </g>
 <!-- RolesPermissionDBModule&#45;&gt;RolesDBService  -->
 <g id="edge5" class="edge">
 <title>RolesPermissionDBModule&#45;&gt;RolesDBService </title>
-<path fill="none" stroke="black" stroke-dasharray="5,2" d="M611,-187.11C611,-187.11 611,-205.99 611,-205.99"/>
-<polygon fill="black" stroke="black" points="607.5,-205.99 611,-215.99 614.5,-205.99 607.5,-205.99"/>
+<path fill="none" stroke="black" stroke-dasharray="5,2" d="M772,-187.11C772,-187.11 772,-205.99 772,-205.99"/>
+<polygon fill="black" stroke="black" points="768.5,-205.99 772,-215.99 775.5,-205.99 768.5,-205.99"/>
 </g>
 <!-- UserPermissionsDBService  -->
 <g id="node7" class="node">
 <title>UserPermissionsDBService </title>
-<polygon fill="#fb8072" stroke="black" points="536.51,-252 361.49,-252 361.49,-216 536.51,-216 536.51,-252"/>
-<text text-anchor="middle" x="449" y="-229.8" font-family="Times,serif" font-size="14.00">UserPermissionsDBService </text>
+<polygon fill="#fb8072" stroke="black" points="697.51,-252 522.49,-252 522.49,-216 697.51,-216 697.51,-252"/>
+<text text-anchor="middle" x="610" y="-229.8" font-family="Times,serif" font-size="14.00">UserPermissionsDBService </text>
 </g>
 <!-- RolesPermissionDBModule&#45;&gt;UserPermissionsDBService  -->
 <g id="edge6" class="edge">
 <title>RolesPermissionDBModule&#45;&gt;UserPermissionsDBService </title>
-<path fill="none" stroke="black" stroke-dasharray="5,2" d="M530.48,-187.11C530.48,-187.11 530.48,-205.99 530.48,-205.99"/>
-<polygon fill="black" stroke="black" points="526.98,-205.99 530.48,-215.99 533.98,-205.99 526.98,-205.99"/>
+<path fill="none" stroke="black" stroke-dasharray="5,2" d="M691.48,-187.11C691.48,-187.11 691.48,-205.99 691.48,-205.99"/>
+<polygon fill="black" stroke="black" points="687.98,-205.99 691.48,-215.99 694.98,-205.99 687.98,-205.99"/>
 </g>
 <!-- UserRolesDBService  -->
 <g id="node8" class="node">
 <title>UserRolesDBService </title>
-<polygon fill="#fb8072" stroke="black" points="343.73,-252 204.27,-252 204.27,-216 343.73,-216 343.73,-252"/>
-<text text-anchor="middle" x="274" y="-229.8" font-family="Times,serif" font-size="14.00">UserRolesDBService </text>
+<polygon fill="#fb8072" stroke="black" points="504.73,-252 365.27,-252 365.27,-216 504.73,-216 504.73,-252"/>
+<text text-anchor="middle" x="435" y="-229.8" font-family="Times,serif" font-size="14.00">UserRolesDBService </text>
 </g>
 <!-- RolesPermissionDBModule&#45;&gt;UserRolesDBService  -->
 <g id="edge7" class="edge">
 <title>RolesPermissionDBModule&#45;&gt;UserRolesDBService </title>
-<path fill="none" stroke="black" stroke-dasharray="5,2" d="M524.34,-180C437.14,-180 315.5,-180 315.5,-180 315.5,-180 315.5,-205.72 315.5,-205.72"/>
-<polygon fill="black" stroke="black" points="312,-205.72 315.5,-215.72 319,-205.72 312,-205.72"/>
+<path fill="none" stroke="black" stroke-dasharray="5,2" d="M685.37,-180C603.98,-180 494.61,-180 494.61,-180 494.61,-180 494.61,-205.72 494.61,-205.72"/>
+<polygon fill="black" stroke="black" points="491.11,-205.72 494.61,-215.72 498.11,-205.72 491.11,-205.72"/>
 </g>
 <!-- PermissionsDBService -->
 <g id="node9" class="node">
 <title>PermissionsDBService</title>
-<ellipse fill="#fdb462" stroke="black" cx="1271" cy="-104" rx="100.15" ry="18"/>
-<text text-anchor="middle" x="1271" y="-99.8" font-family="Times,serif" font-size="14.00">PermissionsDBService</text>
+<ellipse fill="#fdb462" stroke="black" cx="1008" cy="-104" rx="100.15" ry="18"/>
+<text text-anchor="middle" x="1008" y="-99.8" font-family="Times,serif" font-size="14.00">PermissionsDBService</text>
 </g>
 <!-- PermissionsDBService&#45;&gt;RolesPermissionDBModule -->
 <g id="edge8" class="edge">
 <title>PermissionsDBService&#45;&gt;RolesPermissionDBModule</title>
-<path fill="none" stroke="black" d="M1271,-122.13C1271,-142.57 1271,-173 1271,-173 1271,-173 707.62,-173 707.62,-173"/>
-<polygon fill="black" stroke="black" points="707.62,-169.5 697.62,-173 707.62,-176.5 707.62,-169.5"/>
+<path fill="none" stroke="black" d="M964.72,-120.5C964.72,-136.7 964.72,-159 964.72,-159 964.72,-159 868.77,-159 868.77,-159"/>
+<polygon fill="black" stroke="black" points="868.78,-155.5 858.77,-159 868.77,-162.5 868.78,-155.5"/>
 </g>
 <!-- RolePermissionsDBService -->
 <g id="node10" class="node">
 <title>RolePermissionsDBService</title>
-<ellipse fill="#fdb462" stroke="black" cx="1035" cy="-104" rx="118.13" ry="18"/>
-<text text-anchor="middle" x="1035" y="-99.8" font-family="Times,serif" font-size="14.00">RolePermissionsDBService</text>
+<ellipse fill="#fdb462" stroke="black" cx="772" cy="-104" rx="118.13" ry="18"/>
+<text text-anchor="middle" x="772" y="-99.8" font-family="Times,serif" font-size="14.00">RolePermissionsDBService</text>
 </g>
 <!-- RolePermissionsDBService&#45;&gt;RolesPermissionDBModule -->
 <g id="edge9" class="edge">
 <title>RolePermissionsDBService&#45;&gt;RolesPermissionDBModule</title>
-<path fill="none" stroke="black" d="M971.99,-119.33C971.99,-137.69 971.99,-166 971.99,-166 971.99,-166 707.93,-166 707.93,-166"/>
-<polygon fill="black" stroke="black" points="707.93,-162.5 697.93,-166 707.93,-169.5 707.93,-162.5"/>
+<path fill="none" stroke="black" d="M772,-122.11C772,-122.11 772,-140.99 772,-140.99"/>
+<polygon fill="black" stroke="black" points="768.5,-140.99 772,-150.99 775.5,-140.99 768.5,-140.99"/>
 </g>
 <!-- RolesDBService -->
 <g id="node11" class="node">
 <title>RolesDBService</title>
-<ellipse fill="#fdb462" stroke="black" cx="823" cy="-104" rx="75.3" ry="18"/>
-<text text-anchor="middle" x="823" y="-99.8" font-family="Times,serif" font-size="14.00">RolesDBService</text>
+<ellipse fill="#fdb462" stroke="black" cx="560" cy="-104" rx="75.3" ry="18"/>
+<text text-anchor="middle" x="560" y="-99.8" font-family="Times,serif" font-size="14.00">RolesDBService</text>
 </g>
 <!-- RolesDBService&#45;&gt;RolesPermissionDBModule -->
 <g id="edge10" class="edge">
 <title>RolesDBService&#45;&gt;RolesPermissionDBModule</title>
-<path fill="none" stroke="black" d="M804.06,-121.71C804.06,-137.78 804.06,-159 804.06,-159 804.06,-159 707.65,-159 707.65,-159"/>
-<polygon fill="black" stroke="black" points="707.65,-155.5 697.65,-159 707.65,-162.5 707.65,-155.5"/>
+<path fill="none" stroke="black" d="M578.95,-121.71C578.95,-137.78 578.95,-159 578.95,-159 578.95,-159 675.36,-159 675.36,-159"/>
+<polygon fill="black" stroke="black" points="675.36,-162.5 685.36,-159 675.36,-155.5 675.36,-162.5"/>
 </g>
 <!-- UserPermissionsDBService -->
 <g id="node12" class="node">
 <title>UserPermissionsDBService</title>
-<ellipse fill="#fdb462" stroke="black" cx="611" cy="-104" rx="118.11" ry="18"/>
-<text text-anchor="middle" x="611" y="-99.8" font-family="Times,serif" font-size="14.00">UserPermissionsDBService</text>
+<ellipse fill="#fdb462" stroke="black" cx="348" cy="-104" rx="118.11" ry="18"/>
+<text text-anchor="middle" x="348" y="-99.8" font-family="Times,serif" font-size="14.00">UserPermissionsDBService</text>
 </g>
 <!-- UserPermissionsDBService&#45;&gt;RolesPermissionDBModule -->
 <g id="edge11" class="edge">
 <title>UserPermissionsDBService&#45;&gt;RolesPermissionDBModule</title>
-<path fill="none" stroke="black" d="M611,-122.11C611,-122.11 611,-140.99 611,-140.99"/>
-<polygon fill="black" stroke="black" points="607.5,-140.99 611,-150.99 614.5,-140.99 607.5,-140.99"/>
+<path fill="none" stroke="black" d="M415.84,-119.01C415.84,-137.36 415.84,-166 415.84,-166 415.84,-166 675.33,-166 675.33,-166"/>
+<polygon fill="black" stroke="black" points="675.33,-169.5 685.33,-166 675.33,-162.5 675.33,-169.5"/>
 </g>
 <!-- UserRolesDBService -->
 <g id="node13" class="node">
 <title>UserRolesDBService</title>
-<ellipse fill="#fdb462" stroke="black" cx="381" cy="-104" rx="93.75" ry="18"/>
-<text text-anchor="middle" x="381" y="-99.8" font-family="Times,serif" font-size="14.00">UserRolesDBService</text>
+<ellipse fill="#fdb462" stroke="black" cx="118" cy="-104" rx="93.75" ry="18"/>
+<text text-anchor="middle" x="118" y="-99.8" font-family="Times,serif" font-size="14.00">UserRolesDBService</text>
 </g>
 <!-- UserRolesDBService&#45;&gt;RolesPermissionDBModule -->
 <g id="edge12" class="edge">
 <title>UserRolesDBService&#45;&gt;RolesPermissionDBModule</title>
-<path fill="none" stroke="black" d="M418.06,-120.8C418.06,-136.98 418.06,-159 418.06,-159 418.06,-159 514.41,-159 514.41,-159"/>
-<polygon fill="black" stroke="black" points="514.41,-162.5 524.41,-159 514.41,-155.5 514.41,-162.5"/>
+<path fill="none" stroke="black" d="M118,-122.13C118,-142.57 118,-173 118,-173 118,-173 675.15,-173 675.15,-173"/>
+<polygon fill="black" stroke="black" points="675.15,-176.5 685.15,-173 675.15,-169.5 675.15,-176.5"/>
 </g>
 </g>
 </svg>
