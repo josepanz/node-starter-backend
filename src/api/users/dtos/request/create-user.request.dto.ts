@@ -5,68 +5,105 @@ import {
   IsBoolean,
   IsOptional,
   IsEnum,
+  IsDate,
 } from 'class-validator';
-import { UserStatus } from '@prisma/client';
+import {
+  AccessLevel,
+  DocumentType,
+  UserProfileStatus,
+  UserStatus,
+} from '@prisma/client';
 
-export class CreateUserRequestDto {
+export class CreateUserRequestDTO {
   @ApiProperty({
     example: 'user@example.com',
-    description:
-      'El correo electrónico del usuario, que será su identificador único.',
+    description: 'El correo electrónico del usuario.',
   })
   @IsEmail()
-  email: string;
+  email!: string;
 
   @ApiProperty({
     example: 'John',
     description: 'El primer nombre del usuario.',
   })
   @IsString()
-  firstName: string;
-
-  @ApiProperty({ example: 'Doe', description: 'El apellido del usuario.' })
-  @IsString()
-  lastName: string;
+  firstName!: string;
 
   @ApiProperty({
-    example: '12345678',
-    description: 'El número de documento del usuario.',
+    example: 'Doe',
+    description: 'El apellido del usuario.',
   })
   @IsString()
-  documentNumber: string;
+  lastName!: string;
 
   @ApiProperty({
     example: true,
-    description: 'Indica si el usuario es un empleado de la empresa.',
+    description: 'Indica si el usuario es un empleado.',
   })
   @IsBoolean()
-  isEmployee: boolean;
+  isEmployee!: boolean;
 
   @ApiProperty({
     example: false,
     description: 'Indica si el usuario está autenticado vía LDAP.',
   })
   @IsBoolean()
-  isLdap: boolean;
+  isLdap!: boolean;
 
   @ApiProperty({
     enum: UserStatus,
-    default: UserStatus.ACTIVE,
-    description: 'El estado actual del usuario.',
+    example: UserStatus.ACTIVE,
+    description: 'El estado del usuario.',
   })
-  @IsOptional()
   @IsEnum(UserStatus)
-  status?: UserStatus;
+  status!: UserStatus;
 
+  @ApiProperty({
+    example: '12345678',
+    required: false,
+    description: 'El número de documento del usuario.',
+  })
+  @IsString()
+  @IsOptional()
+  documentNumber?: string;
+
+  @ApiProperty({
+    example: '+595991234567',
+    required: false,
+    description: 'El número de teléfono del usuario.',
+  })
+  @IsString()
+  @IsOptional()
+  phoneNumber?: string;
+
+  @ApiProperty({
+    example: 'legacy-123',
+    required: false,
+    description: 'ID del usuario en el sistema legacy.',
+  })
   @IsString()
   @IsOptional()
   legacyUserId?: string;
 
   @ApiProperty({
-    example: '2024-06-16T10:20:30Z',
+    enum: AccessLevel,
+    example: AccessLevel.COMMERCE,
     required: false,
-    description: 'La fecha y hora del último inicio de sesión del usuario.',
+    description: 'El nivel de acceso del usuario.',
   })
+  @IsEnum(AccessLevel)
   @IsOptional()
-  lastLogin?: Date;
+  currentAccessLevel?: AccessLevel;
+
+  @IsEnum(UserProfileStatus)
+  @IsOptional()
+  profileStatus?: UserProfileStatus;
+
+  @IsEnum(DocumentType)
+  @IsOptional()
+  documentType?: DocumentType;
+
+  @IsDate()
+  @IsOptional()
+  acceptedTermsAt?: Date;
 }

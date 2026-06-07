@@ -1,265 +1,168 @@
+import { Users } from '@prisma/client';
 import {
   Controller,
   Get,
-  Post,
   Body,
+  Patch,
   Param,
   Put,
-  UseInterceptors,
+  Query,
   Version,
   UseGuards,
   Delete,
-  UnauthorizedException,
+  ParseIntPipe,
 } from '@nestjs/common';
-import {
-  ApiTags,
-  ApiOperation,
-  ApiCreatedResponse,
-  ApiOkResponse,
-  ApiBearerAuth,
-  ApiBadRequestResponse,
-  ApiForbiddenResponse,
-  ApiInternalServerErrorResponse,
-  ApiNotFoundResponse,
-  ApiUnauthorizedResponse,
-} from '@nestjs/swagger';
-import { UsersService } from '../services/users.service';
-import { CreateUserRequestDto } from '../dtos/request/create-user.request.dto';
-import { UpdateUserRequestDto } from '../dtos/request/update-user.request.dto';
-import { Audit } from '@core/middlewares/decorators/audit.decorator';
-import { AuditInterceptor } from '@core/interceptors/audit.interceptor';
-import { UserResponseDto } from '@api/users/dtos/response/user.response.dto';
+import { ApiTags, ApiBearerAuth } from '@nestjs/swagger';
+
+import { UsersApiService } from '@api/users/services/users-api.service';
+import * as DTO from '@api/users/dtos';
+import { UsersDocs } from '@api/users/docs/users-api.docs';
+
 import { PermissionsGuard } from '@modules/auth/guards/permissions.guard';
 import { JwtAuthGuard } from '@modules/auth/guards/jwt-auth.guard';
+import { MerchantContextGuard } from '@modules/auth/guards/merchant-context.guard';
 import { Permissions } from '@common/decorators/permissions.decorator';
 import { User } from '@common/decorators/user.decorator';
-import { Users } from '@prisma/client';
-import { PermissionsEnum } from '@common/enum/permissions.enum';
+import { MerchantContext } from '@modules/auth/decorators/get-merchant-context.decorator';
+import { IMerchantContext } from '@common/interfaces/merchant-context.interface';
+import { PERMISSIONS } from '@common/enum/permissions.enum';
+import { UpdateEditContextRequestDTO } from '@api/users/dtos/request/edit-context.request.dto';
+import {
+  GetEditContextResponseDTO,
+  UpdateEditContextResponseDTO,
+} from '@api/users/dtos/response/edit-context.response.dto';
+import { IUserDataOnJwt } from '@modules/auth/interfaces/user-data-on-jwt.interface';
 
 @ApiTags('Users')
 @ApiBearerAuth()
 @Controller('users')
 @UseGuards(JwtAuthGuard, PermissionsGuard)
 export class UsersController {
-  constructor(private readonly usersService: UsersService) {}
+  constructor(private readonly usersApiService: UsersApiService) {}
 
-  @Post()
+  @Get()
   @Version('1')
-  @Audit('users')
-  @UseInterceptors(AuditInterceptor)
-  @ApiOperation({
-    summary: 'Crear un nuevo usuario',
-    description: 'Registrar un nuevo usuario con datos proveidos',
-  })
-  @ApiCreatedResponse({
-    description: 'Usuario creado satisfactoriamente',
-    type: UserResponseDto,
-  })
-  @ApiBadRequestResponse({
-    description:
-      'Solicitud mal formada, verifique los datos y/o parametros enviados.',
-    example: {
-      statusCode: 400,
-      message:
-        'Solicitud mal formada, verifique los datos y/o parametros enviados.',
-    },
-  })
-  @ApiUnauthorizedResponse({
-    description: 'Credenciales inválidas.',
-    type: UnauthorizedException,
-    example: {
-      statusCode: 401,
-      message: 'Credenciales inválidas.',
-    },
-  })
-  @ApiForbiddenResponse({
-    description: 'Usuario bloqueado.',
-    example: {
-      statusCode: 403,
-      message: 'Usuario bloqueado.',
-    },
-  })
-  @ApiInternalServerErrorResponse({
-    description: 'Error interno del servidor al procesar la solicitud.',
-    example: {
-      statusCode: 500,
-      message: 'Error interno del servidor al procesar la solicitud.',
-    },
-  })
-  @Permissions(PermissionsEnum.USER_CREATE, PermissionsEnum.ADMIN_ALL)
-  async create(
-    @Body() dto: CreateUserRequestDto,
+  @UseGuards(MerchantContextGuard)
+  @Permissions(PERMISSIONS.USER.READ, PERMISSIONS.ADMIN.ALL)
+  @UsersDocs('findAll')
+  async findAll(
+    @Query() query: DTO.ListUsersRequestDTO,
+    @MerchantContext() merchantCtx: IMerchantContext,
+    @User() user: IUserDataOnJwt,
+  ): Promise<DTO.UsersListResponseDTO> {
+    return await this.usersApiService.findAll(query, merchantCtx, user);
+  }
+
+  @Get('reference/:referenceId/edit-context')
+  @Version('1')
+  @UseGuards(MerchantContextGuard)
+  @Permissions(PERMISSIONS.USER.READ, PERMISSIONS.ADMIN.ALL)
+  @UsersDocs('getEditContext')
+  async getEditContext(
+    @Param('referenceId') referenceId: string,
+  ): Promise<GetEditContextResponseDTO> {
+    return await this.usersApiService.getEditContext(referenceId);
+  }
+
+  @Put('reference/:referenceId/edit-context')
+  @Version('1')
+  @UseGuards(MerchantContextGuard)
+  @Permissions(PERMISSIONS.USER.UPDATE, PERMISSIONS.ADMIN.ALL)
+  @UsersDocs('updateEditContext')
+  async updateEditContext(
+    @Param('referenceId') referenceId: string,
+    @Body() dto: UpdateEditContextRequestDTO,
+    @User() operatorUser: Users,
+  ): Promise<UpdateEditContextResponseDTO> {
+    return await this.usersApiService.updateEditContext(
+      referenceId,
+      dto,
+      operatorUser,
+    );
+  }
+
+  @Get('reference/:referenceId')
+  @Version('1')
+  @UseGuards(MerchantContextGuard)
+  @Permissions(PERMISSIONS.USER.READ, PERMISSIONS.ADMIN.ALL)
+  @UsersDocs('findOneByReference')
+  async findOneByReference(
+    @Param('referenceId') referenceId: string,
+  ): Promise<DTO.UserResponseDTO> {
+    return await this.usersApiService.findOneByReference(referenceId);
+  }
+
+  @Put('reference/:referenceId')
+  @Version('1')
+  @Permissions(PERMISSIONS.USER.UPDATE, PERMISSIONS.ADMIN.ALL)
+  @UsersDocs('updateByReference')
+  async updateByReference(
+    @Param('referenceId') referenceId: string,
+    @Body() dto: DTO.UpdateUserRequestDTO,
     @User() user: Users,
-  ): Promise<UserResponseDto> {
-    return await this.usersService.create(dto, user.email);
+  ): Promise<DTO.UserResponseDTO> {
+    return await this.usersApiService.updateByReference(
+      referenceId,
+      dto,
+      user.email,
+    );
+  }
+
+  @Delete('reference/:referenceId')
+  @Version('1')
+  @Permissions(PERMISSIONS.USER.DELETE, PERMISSIONS.ADMIN.ALL)
+  @UsersDocs('deleteByReference')
+  async deleteByReference(
+    @Param('referenceId') referenceId: string,
+    @User() user: Users,
+  ): Promise<void> {
+    await this.usersApiService.deleteByReference(referenceId, user.email);
   }
 
   @Get(':id')
   @Version('1')
-  @ApiOperation({
-    summary: 'Obtener usuario por ID',
-    description: 'Retorna un usuario especifico por su ID',
-  })
-  @ApiOkResponse({
-    description: 'Usuario encontrado exitosamente',
-    type: UserResponseDto,
-  })
-  @ApiBadRequestResponse({
-    description:
-      'Solicitud mal formada, verifique los datos y/o parametros enviados.',
-    example: {
-      statusCode: 400,
-      message:
-        'Solicitud mal formada, verifique los datos y/o parametros enviados.',
-    },
-  })
-  @ApiUnauthorizedResponse({
-    description: 'Credenciales inválidas.',
-    type: UnauthorizedException,
-    example: {
-      statusCode: 401,
-      message: 'Credenciales inválidas.',
-    },
-  })
-  @ApiForbiddenResponse({
-    description: 'Usuario bloqueado.',
-    example: {
-      statusCode: 403,
-      message: 'Usuario bloqueado.',
-    },
-  })
-  @ApiNotFoundResponse({
-    description: 'Usuario no encontrado.',
-    example: {
-      statusCode: 404,
-      message: 'Usuario no encontrado.',
-    },
-  })
-  @ApiInternalServerErrorResponse({
-    description: 'Error interno del servidor al procesar la solicitud.',
-    example: {
-      statusCode: 500,
-      message: 'Error interno del servidor al procesar la solicitud.',
-    },
-  })
-  @Permissions(PermissionsEnum.USER_READ, PermissionsEnum.ADMIN_ALL)
-  async findOne(@Param('id') id: number): Promise<UserResponseDto | null> {
-    return await this.usersService.findOne(id);
+  @UseGuards(MerchantContextGuard)
+  @Permissions(PERMISSIONS.USER.READ, PERMISSIONS.ADMIN.ALL)
+  @UsersDocs('findOne')
+  async findOne(
+    @Param('id', ParseIntPipe) id: number,
+  ): Promise<DTO.UserResponseDTO> {
+    return await this.usersApiService.findOne(id);
   }
 
   @Put(':id')
   @Version('1')
-  @Audit('users')
-  @UseInterceptors(AuditInterceptor)
-  @ApiOperation({
-    summary: 'Actualizar un usuario',
-    description:
-      'Actualiza los datos del usuario según el ID proporcionado y los nuevos valores',
-  })
-  @ApiOkResponse({
-    description: 'Usuario actualizado exitosamente',
-    type: UserResponseDto,
-  })
-  @ApiBadRequestResponse({
-    description:
-      'Solicitud mal formada, verifique los datos y/o parametros enviados.',
-    example: {
-      statusCode: 400,
-      message:
-        'Solicitud mal formada, verifique los datos y/o parametros enviados.',
-    },
-  })
-  @ApiUnauthorizedResponse({
-    description: 'Credenciales inválidas.',
-    type: UnauthorizedException,
-    example: {
-      statusCode: 401,
-      message: 'Credenciales inválidas.',
-    },
-  })
-  @ApiForbiddenResponse({
-    description: 'Usuario bloqueado.',
-    example: {
-      statusCode: 403,
-      message: 'Usuario bloqueado.',
-    },
-  })
-  @ApiNotFoundResponse({
-    description: 'Usuario no encontrado.',
-    example: {
-      statusCode: 404,
-      message: 'Usuario no encontrado.',
-    },
-  })
-  @ApiInternalServerErrorResponse({
-    description: 'Error interno del servidor al procesar la solicitud.',
-    example: {
-      statusCode: 500,
-      message: 'Error interno del servidor al procesar la solicitud.',
-    },
-  })
-  @Permissions(PermissionsEnum.USER_UPDATE, PermissionsEnum.ADMIN_ALL)
+  @Permissions(PERMISSIONS.USER.UPDATE, PERMISSIONS.ADMIN.ALL)
+  @UsersDocs('update')
   async update(
-    @Param('id') id: number,
-    @Body() dto: UpdateUserRequestDto,
+    @Param('id', ParseIntPipe) id: number,
+    @Body() dto: DTO.UpdateUserRequestDTO,
     @User() user: Users,
-  ): Promise<UserResponseDto> {
-    return await this.usersService.update(id, dto, user.email);
+  ): Promise<DTO.UserResponseDTO> {
+    return await this.usersApiService.update(id, dto, user.email);
   }
 
-  @Delete(':id')
+  @Patch(':id/block')
   @Version('1')
-  @Audit('users')
-  @UseInterceptors(AuditInterceptor)
-  @ApiOperation({
-    summary: 'Actualizar un usuario',
-    description:
-      'Actualiza los datos del usuario según el ID proporcionado y los nuevos valores',
-  })
-  @ApiOkResponse({
-    description: 'Usuario actualizado exitosamente',
-    type: UserResponseDto,
-  })
-  @ApiBadRequestResponse({
-    description:
-      'Solicitud mal formada, verifique los datos y/o parametros enviados.',
-    example: {
-      statusCode: 400,
-      message:
-        'Solicitud mal formada, verifique los datos y/o parametros enviados.',
-    },
-  })
-  @ApiUnauthorizedResponse({
-    description: 'Credenciales inválidas.',
-    type: UnauthorizedException,
-    example: {
-      statusCode: 401,
-      message: 'Credenciales inválidas.',
-    },
-  })
-  @ApiForbiddenResponse({
-    description: 'Usuario bloqueado.',
-    example: {
-      statusCode: 403,
-      message: 'Usuario bloqueado.',
-    },
-  })
-  @ApiNotFoundResponse({
-    description: 'Usuario no encontrado.',
-    example: {
-      statusCode: 404,
-      message: 'Usuario no encontrado.',
-    },
-  })
-  @ApiInternalServerErrorResponse({
-    description: 'Error interno del servidor al procesar la solicitud.',
-    example: {
-      statusCode: 500,
-      message: 'Error interno del servidor al procesar la solicitud.',
-    },
-  })
-  @Permissions(PermissionsEnum.USER_DELETE, PermissionsEnum.ADMIN_ALL)
-  async delete(@Param('id') id: number, @User() user: Users): Promise<void> {
-    await this.usersService.inactive(id, user.email);
+  @Permissions(PERMISSIONS.USER.UPDATE, PERMISSIONS.ADMIN.ALL)
+  @UsersDocs('block')
+  async block(
+    @Param('id', ParseIntPipe) id: number,
+    @Body() dto: DTO.BlockUserRequestDTO,
+    @User() user: Users,
+  ): Promise<DTO.UserResponseDTO> {
+    return await this.usersApiService.block(id, dto, user.email);
+  }
+
+  @Patch(':id/unblock')
+  @Version('1')
+  @Permissions(PERMISSIONS.USER.UPDATE, PERMISSIONS.ADMIN.ALL)
+  @UsersDocs('unblock')
+  async unblock(
+    @Param('id', ParseIntPipe) id: number,
+    @Body() dto: DTO.UnblockUserRequestDTO,
+    @User() user: Users,
+  ): Promise<DTO.UserResponseDTO> {
+    return await this.usersApiService.unblock(id, dto, user.email);
   }
 }

@@ -182,7 +182,7 @@
                 </tr>
                         <tr>
                             <td class="col-md-4">
-                                <div class="io-line">Defined in <a href="" data-line="11" class="link-to-prism">src/modules/auth/guards/permissions.guard.ts:11</a></div>
+                                <div class="io-line">Defined in <a href="" data-line="12" class="link-to-prism">src/modules/auth/guards/permissions.guard.ts:12</a></div>
                             </td>
                         </tr>
 
@@ -245,8 +245,8 @@
 
                     <tr>
                         <td class="col-md-4">
-                            <div class="io-line">Defined in <a href="" data-line="14"
-                                    class="link-to-prism">src/modules/auth/guards/permissions.guard.ts:14</a></div>
+                            <div class="io-line">Defined in <a href="" data-line="15"
+                                    class="link-to-prism">src/modules/auth/guards/permissions.guard.ts:15</a></div>
                         </td>
                     </tr>
 
@@ -297,8 +297,7 @@
 
 
         <div class="tab-pane fade  tab-source-code" id="source">
-            <pre class="line-numbers compodoc-sourcecode"><code class="language-typescript">import { PERMISSIONS_KEY } from &#x27;@common/decorators/permissions.decorator&#x27;;
-import {
+            <pre class="line-numbers compodoc-sourcecode"><code class="language-typescript">import {
   Injectable,
   CanActivate,
   ExecutionContext,
@@ -306,36 +305,32 @@ import {
 } from &#x27;@nestjs/common&#x27;;
 import { Reflector } from &#x27;@nestjs/core&#x27;;
 
+const PERMISSIONS_KEY &#x3D; &#x27;permissions&#x27;;
+
 @Injectable()
 export class PermissionsGuard implements CanActivate {
   constructor(private reflector: Reflector) {}
 
   canActivate(context: ExecutionContext): boolean {
-    // Obtener los permisos requeridos de los metadatos de la ruta
     const requiredPermissions &#x3D; this.reflector.get&lt;string[]&gt;(
       PERMISSIONS_KEY,
       context.getHandler(),
     );
 
-    // Si no hay permisos definidos, la ruta es de acceso público
     if (!requiredPermissions) {
       return true;
     }
 
     const { user } &#x3D; context.switchToHttp().getRequest();
 
-    // El objeto &#x27;user&#x27; viene de JwtStrategy y contiene los permisos del usuario
-    // Si no hay usuario o no tiene permisos, deniega el acceso
-    if (!user || !user.permissions) {
-      throw new ForbiddenException(&#x60;Usuario no permisos asignados.&#x60;);
+    if (!user || !user.permissions || !Array.isArray(user.permissions)) {
+      throw new ForbiddenException(&#x60;Usuario sin permisos asignados.&#x60;);
     }
 
-    // Verificar si el usuario tiene al menos uno de los permisos requeridos
     const hasPermission &#x3D; requiredPermissions.some((permission) &#x3D;&gt;
       user.permissions.includes(permission),
     );
 
-    // Si el usuario no tiene los permisos necesarios, lanza una excepción con un mensaje detallado
     if (!hasPermission) {
       throw new ForbiddenException(
         &#x60;Usuario no tiene los permisos necesarios: ${requiredPermissions.toString()}.&#x60;,

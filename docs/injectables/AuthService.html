@@ -137,6 +137,14 @@
         </p>
 
 
+            <p class="comment">
+                <h3>Description</h3>
+            </p>
+            <p class="comment">
+                <p>Servicio principal de autenticación - Lógica de Negocio
+Usa helpers especializados para mantener el código organizado</p>
+
+            </p>
 
 
 
@@ -170,9 +178,40 @@
                     <td class="col-md-4">
                         <ul class="index-list">
                             <li>
-                                    <span class="modifier">Public</span>
                                     <span class="modifier">Async</span>
-                                <a href="#generateTokens" >generateTokens</a>
+                                <a href="#changePassword" >changePassword</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Async</span>
+                                <a href="#checkVerificationStatus" >checkVerificationStatus</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Async</span>
+                                <a href="#createPassword" >createPassword</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Async</span>
+                                <a href="#getUserScope" >getUserScope</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Async</span>
+                                <a href="#login" >login</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Async</span>
+                                <a href="#refreshAccessToken" >refreshAccessToken</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Async</span>
+                                <a href="#resetPassword" >resetPassword</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Private</span>
+                                <a href="#validateUserStatus" >validateUserStatus</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Async</span>
+                                <a href="#verifyUser" >verifyUser</a>
                             </li>
                         </ul>
                     </td>
@@ -192,12 +231,12 @@
             <tbody>
                 <tr>
                     <td class="col-md-4">
-<code>constructor(prisma: <a href="../injectables/PrismaDatasource.html" target="_self">PrismaDatasource</a>, configService: <a href="../undefineds/AppConfigType.html" target="_self">ConfigType&lt;AppConfigType&gt;</a>)</code>
+<code>constructor(userRepository: <a href="../injectables/UsersDBService.html" target="_self">UsersDBService</a>, authTokenService: <a href="../injectables/AuthTokenService.html" target="_self">AuthTokenService</a>, authPasswordService: <a href="../injectables/AuthPasswordService.html" target="_self">AuthPasswordService</a>)</code>
                     </td>
                 </tr>
                         <tr>
                             <td class="col-md-4">
-                                <div class="io-line">Defined in <a href="" data-line="11" class="link-to-prism">src/modules/auth/services/auth.service.ts:11</a></div>
+                                <div class="io-line">Defined in <a href="" data-line="19" class="link-to-prism">src/modules/auth/services/auth.service.ts:19</a></div>
                             </td>
                         </tr>
 
@@ -215,10 +254,10 @@
                                         </thead>
                                         <tbody>
                                                 <tr>
-                                                        <td>prisma</td>
+                                                        <td>userRepository</td>
                                                   
                                                         <td>
-                                                                        <code><a href="../injectables/PrismaDatasource.html" target="_self" >PrismaDatasource</a></code>
+                                                                        <code><a href="../injectables/UsersDBService.html" target="_self" >UsersDBService</a></code>
                                                         </td>
                                                   
                                                     <td>
@@ -227,10 +266,22 @@
                                                     
                                                 </tr>
                                                 <tr>
-                                                        <td>configService</td>
+                                                        <td>authTokenService</td>
                                                   
                                                         <td>
-                                                                        <code><a href="../miscellaneous/typealiases.html#AppConfigType" target="_self" >ConfigType&lt;AppConfigType&gt;</a></code>
+                                                                        <code><a href="../injectables/AuthTokenService.html" target="_self" >AuthTokenService</a></code>
+                                                        </td>
+                                                  
+                                                    <td>
+                                                            No
+                                                    </td>
+                                                    
+                                                </tr>
+                                                <tr>
+                                                        <td>authPasswordService</td>
+                                                  
+                                                        <td>
+                                                                        <code><a href="../injectables/AuthPasswordService.html" target="_self" >AuthPasswordService</a></code>
                                                         </td>
                                                   
                                                     <td>
@@ -256,34 +307,33 @@
         <tbody>
             <tr>
                 <td class="col-md-4">
-                    <a name="generateTokens"></a>
+                    <a name="changePassword"></a>
                     <span class="name">
-                            <span class="modifier">Public</span>
                             <span class="modifier">Async</span>
-                        <span ><b>generateTokens</b></span>
-                        <a href="#generateTokens"><span class="icon ion-ios-link"></span></a>
+                        <span ><b>changePassword</b></span>
+                        <a href="#changePassword"><span class="icon ion-ios-link"></span></a>
                     </span>
                 </td>
             </tr>
             <tr>
                 <td class="col-md-4">
                         <span class="modifier-icon icon ion-ios-reset"></span>
-                    <code>generateTokens(userEmail: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank">string</a>, user: <a href="../unknowns/User.html" target="_self">Users</a>, userAgent?: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank">string</a>)</code>
+                    <code>changePassword(payload: literal type)</code>
                 </td>
             </tr>
 
 
                     <tr>
                         <td class="col-md-4">
-                            <div class="io-line">Defined in <a href="" data-line="28"
-                                    class="link-to-prism">src/modules/auth/services/auth.service.ts:28</a></div>
+                            <div class="io-line">Defined in <a href="" data-line="122"
+                                    class="link-to-prism">src/modules/auth/services/auth.service.ts:122</a></div>
                         </td>
                     </tr>
 
 
             <tr>
                 <td class="col-md-4">
-                        <div class="io-description"><p>Genera tokens de acceso y refresco para un usuario.</p>
+                        <div class="io-description"><p>Cambia la contraseña de un usuario</p>
 </div>
 
                             <div class="io-description">
@@ -295,14 +345,13 @@
                                             <td>Name</td>
                                                 <td>Type</td>
                                             <td>Optional</td>
-                                                <td>Description</td>
                                         </tr>
                                     </thead>
                                     <tbody>
                                         <tr>
-                                                <td>userEmail</td>
+                                                <td>payload</td>
                                             <td>
-                                                            <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
+                                                        <code>literal type</code>
                                             </td>
 
                                             <td>
@@ -310,11 +359,66 @@
                                             </td>
 
 
-                                            <td>
-                                                    <p>Email del usuario.</p>
-
-                                            </td>
                                         </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        <div class="io-description">
+                            <b>Returns : </b>    <code>Promise&lt;literal type&gt;</code>
+
+                        </div>
+                            <div class="io-description">
+                                
+                            </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="checkVerificationStatus"></a>
+                    <span class="name">
+                            <span class="modifier">Async</span>
+                        <span ><b>checkVerificationStatus</b></span>
+                        <a href="#checkVerificationStatus"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                        <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>checkVerificationStatus(user: <a href="../unknowns/User.html" target="_self">Users</a>)</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="256"
+                                    class="link-to-prism">src/modules/auth/services/auth.service.ts:256</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                        <div class="io-description"><p>Verifica el estado de verificación</p>
+</div>
+
+                            <div class="io-description">
+                                <b>Parameters :</b>
+                                
+                                <table class="params">
+                                    <thead>
+                                        <tr>
+                                            <td>Name</td>
+                                                <td>Type</td>
+                                            <td>Optional</td>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
                                         <tr>
                                                 <td>user</td>
                                             <td>
@@ -326,26 +430,6 @@
                                             </td>
 
 
-                                            <td>
-                                                    <p>Datos del usuario.</p>
-
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                                <td>userAgent</td>
-                                            <td>
-                                                            <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
-                                            </td>
-
-                                            <td>
-                                                    Yes
-                                            </td>
-
-
-                                            <td>
-                                                    <p>User agent del dispositivo que realiza la petición.</p>
-
-                                            </td>
                                         </tr>
                                     </tbody>
                                 </table>
@@ -355,8 +439,504 @@
 
                         </div>
                             <div class="io-description">
-                                <p>Access token y refresh token.</p>
+                                
+                            </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="createPassword"></a>
+                    <span class="name">
+                            <span class="modifier">Async</span>
+                        <span ><b>createPassword</b></span>
+                        <a href="#createPassword"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                        <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>createPassword(payload: literal type)</code>
+                </td>
+            </tr>
 
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="98"
+                                    class="link-to-prism">src/modules/auth/services/auth.service.ts:98</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                        <div class="io-description"><p>Crea una contraseña para un usuario</p>
+</div>
+
+                            <div class="io-description">
+                                <b>Parameters :</b>
+                                
+                                <table class="params">
+                                    <thead>
+                                        <tr>
+                                            <td>Name</td>
+                                                <td>Type</td>
+                                            <td>Optional</td>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                                <td>payload</td>
+                                            <td>
+                                                        <code>literal type</code>
+                                            </td>
+
+                                            <td>
+                                                    No
+                                            </td>
+
+
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        <div class="io-description">
+                            <b>Returns : </b>    <code>Promise&lt;literal type&gt;</code>
+
+                        </div>
+                            <div class="io-description">
+                                
+                            </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="getUserScope"></a>
+                    <span class="name">
+                            <span class="modifier">Async</span>
+                        <span ><b>getUserScope</b></span>
+                        <a href="#getUserScope"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                        <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>getUserScope(userId: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/number" target="_blank">number</a>)</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="214"
+                                    class="link-to-prism">src/modules/auth/services/auth.service.ts:214</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                        <div class="io-description"><p>Obtiene el scope del usuario (roles y permisos)</p>
+</div>
+
+                            <div class="io-description">
+                                <b>Parameters :</b>
+                                
+                                <table class="params">
+                                    <thead>
+                                        <tr>
+                                            <td>Name</td>
+                                                <td>Type</td>
+                                            <td>Optional</td>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                                <td>userId</td>
+                                            <td>
+                                                            <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/number" target="_blank" >number</a></code>
+                                            </td>
+
+                                            <td>
+                                                    No
+                                            </td>
+
+
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        <div class="io-description">
+                            <b>Returns : </b>    <code>Promise&lt;literal type&gt;</code>
+
+                        </div>
+                            <div class="io-description">
+                                
+                            </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="login"></a>
+                    <span class="name">
+                            <span class="modifier">Async</span>
+                        <span ><b>login</b></span>
+                        <a href="#login"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                        <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>login(payload: literal type)</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="30"
+                                    class="link-to-prism">src/modules/auth/services/auth.service.ts:30</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                        <div class="io-description"><p>Procesa el login completo de un usuario</p>
+</div>
+
+                            <div class="io-description">
+                                <b>Parameters :</b>
+                                
+                                <table class="params">
+                                    <thead>
+                                        <tr>
+                                            <td>Name</td>
+                                                <td>Type</td>
+                                            <td>Optional</td>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                                <td>payload</td>
+                                            <td>
+                                                        <code>literal type</code>
+                                            </td>
+
+                                            <td>
+                                                    No
+                                            </td>
+
+
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        <div class="io-description">
+                            <b>Returns : </b>    <code>Promise&lt;literal type&gt;</code>
+
+                        </div>
+                            <div class="io-description">
+                                
+                            </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="refreshAccessToken"></a>
+                    <span class="name">
+                            <span class="modifier">Async</span>
+                        <span ><b>refreshAccessToken</b></span>
+                        <a href="#refreshAccessToken"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                        <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>refreshAccessToken(refreshToken: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank">string</a>)</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="202"
+                                    class="link-to-prism">src/modules/auth/services/auth.service.ts:202</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                        <div class="io-description"><p>Refresca el access token</p>
+</div>
+
+                            <div class="io-description">
+                                <b>Parameters :</b>
+                                
+                                <table class="params">
+                                    <thead>
+                                        <tr>
+                                            <td>Name</td>
+                                                <td>Type</td>
+                                            <td>Optional</td>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                                <td>refreshToken</td>
+                                            <td>
+                                                            <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
+                                            </td>
+
+                                            <td>
+                                                    No
+                                            </td>
+
+
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        <div class="io-description">
+                            <b>Returns : </b>    <code>Promise&lt;literal type&gt;</code>
+
+                        </div>
+                            <div class="io-description">
+                                
+                            </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="resetPassword"></a>
+                    <span class="name">
+                            <span class="modifier">Async</span>
+                        <span ><b>resetPassword</b></span>
+                        <a href="#resetPassword"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                        <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>resetPassword(payload: literal type)</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="158"
+                                    class="link-to-prism">src/modules/auth/services/auth.service.ts:158</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                        <div class="io-description"><p>Resetea la contraseña (forgot password)</p>
+</div>
+
+                            <div class="io-description">
+                                <b>Parameters :</b>
+                                
+                                <table class="params">
+                                    <thead>
+                                        <tr>
+                                            <td>Name</td>
+                                                <td>Type</td>
+                                            <td>Optional</td>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                                <td>payload</td>
+                                            <td>
+                                                        <code>literal type</code>
+                                            </td>
+
+                                            <td>
+                                                    No
+                                            </td>
+
+
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        <div class="io-description">
+                            <b>Returns : </b>    <code>Promise&lt;literal type&gt;</code>
+
+                        </div>
+                            <div class="io-description">
+                                
+                            </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="validateUserStatus"></a>
+                    <span class="name">
+                            <span class="modifier">Private</span>
+                        <span ><b>validateUserStatus</b></span>
+                        <a href="#validateUserStatus"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                        <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>validateUserStatus(status: <a href="../unknowns/User.html" target="_self">UserStatus</a>)</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="269"
+                                    class="link-to-prism">src/modules/auth/services/auth.service.ts:269</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                        <div class="io-description"><p>Valida el estado de un usuario</p>
+</div>
+
+                            <div class="io-description">
+                                <b>Parameters :</b>
+                                
+                                <table class="params">
+                                    <thead>
+                                        <tr>
+                                            <td>Name</td>
+                                                <td>Type</td>
+                                            <td>Optional</td>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                                <td>status</td>
+                                            <td>
+                                                            <code><a href="../miscellaneous/variables.html#User" target="_self" >UserStatus</a></code>
+                                            </td>
+
+                                            <td>
+                                                    No
+                                            </td>
+
+
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        <div class="io-description">
+                            <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                        </div>
+                            <div class="io-description">
+                                
+                            </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="verifyUser"></a>
+                    <span class="name">
+                            <span class="modifier">Async</span>
+                        <span ><b>verifyUser</b></span>
+                        <a href="#verifyUser"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                        <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>verifyUser(userId: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/number" target="_blank">number</a>)</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="249"
+                                    class="link-to-prism">src/modules/auth/services/auth.service.ts:249</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                        <div class="io-description"><p>Verifica un usuario</p>
+</div>
+
+                            <div class="io-description">
+                                <b>Parameters :</b>
+                                
+                                <table class="params">
+                                    <thead>
+                                        <tr>
+                                            <td>Name</td>
+                                                <td>Type</td>
+                                            <td>Optional</td>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                                <td>userId</td>
+                                            <td>
+                                                            <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/number" target="_blank" >number</a></code>
+                                            </td>
+
+                                            <td>
+                                                    No
+                                            </td>
+
+
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        <div class="io-description">
+                            <b>Returns : </b>    <code>Promise&lt;void&gt;</code>
+
+                        </div>
+                            <div class="io-description">
+                                
                             </div>
                 </td>
             </tr>
@@ -394,7 +974,7 @@
                 </tr>
                     <tr>
                         <td class="col-md-4">
-                                <div class="io-line">Defined in <a href="" data-line="11" class="link-to-prism">src/modules/auth/services/auth.service.ts:11</a></div>
+                                <div class="io-line">Defined in <a href="" data-line="19" class="link-to-prism">src/modules/auth/services/auth.service.ts:19</a></div>
                         </td>
                     </tr>
 
@@ -407,70 +987,288 @@
 
 
     <div class="tab-pane fade  tab-source-code" id="source">
-        <pre class="line-numbers compodoc-sourcecode"><code class="language-typescript">import { Inject, Injectable, Logger } from &#x27;@nestjs/common&#x27;;
-import { APP_CONFIG, AppConfigType } from &#x27;@core/config/config-loader&#x27;;
-import { ConfigType } from &#x27;@nestjs/config&#x27;;
-import { Users } from &#x27;@prisma/client&#x27;;
-import { PrismaDatasource } from &#x27;@core/database/prisma.service&#x27;;
-import { CryptoHelper } from &#x27;@common/helpers/crypto-helpers&#x27;;
-import { parseTime } from &#x27;@common/helpers/date.helper&#x27;;
+        <pre class="line-numbers compodoc-sourcecode"><code class="language-typescript">import {
+  Injectable,
+  Logger,
+  NotFoundException,
+  UnauthorizedException,
+} from &#x27;@nestjs/common&#x27;;
+import { Users, UserStatus } from &#x27;@prisma/client&#x27;;
 
+import { AuthTokenService } from &#x27;@modules/auth/services/auth-token.service&#x27;;
+import { AuthPasswordService } from &#x27;@modules/auth/services/auth-password.service&#x27;;
+import { UsersDBService } from &#x27;@modules/users-db/services/users-db.service&#x27;;
+
+/**
+ * Servicio principal de autenticación - Lógica de Negocio
+ * Usa helpers especializados para mantener el código organizado
+ */
 @Injectable()
 export class AuthService {
   private readonly logger &#x3D; new Logger(AuthService.name);
 
   constructor(
-    private readonly prisma: PrismaDatasource,
-    @Inject(APP_CONFIG.KEY)
-    private configService: ConfigType&lt;AppConfigType&gt;,
-  ) {
-    CryptoHelper.initConfigService(configService);
+    private readonly userRepository: UsersDBService,
+    private readonly authTokenService: AuthTokenService,
+    private readonly authPasswordService: AuthPasswordService,
+  ) {}
+
+  /**
+   * Procesa el login completo de un usuario
+   */
+  async login(payload: {
+    email: string;
+    encryptedPassword: string;
+    userAgent?: string;
+    rembemberMe: boolean;
+  }): Promise&lt;{
+    success: boolean;
+    accessToken?: string;
+    refreshToken?: string;
+    requiresPasswordCreation: boolean;
+  }&gt; {
+    // Buscar credenciales
+    const userCredentials &#x3D; await this.userRepository.findCredentialsByEmail(
+      payload.email,
+    );
+
+    // Si no tiene credenciales, verificar si existe
+    if (!userCredentials) {
+      const userExists &#x3D; await this.userRepository.findActiveUserByEmail(
+        payload.email,
+      );
+
+      if (userExists) {
+        return { success: false, requiresPasswordCreation: true };
+      }
+      this.logger.log(
+        &#x27;No se encontraron datos para los parámetros proporcionados.&#x27;,
+      );
+      return { success: false, requiresPasswordCreation: false };
+    }
+
+    // Validar estado
+    this.validateUserStatus(userCredentials.user.status);
+
+    // Validar contraseña encriptada
+    const isPasswordValid &#x3D; this.authPasswordService.validateEncryptedPassword(
+      payload.encryptedPassword,
+      userCredentials.passwordHash,
+    );
+
+    if (!isPasswordValid) {
+      await this.authPasswordService.handleFailedAttempt(userCredentials);
+      throw new UnauthorizedException(&#x27;Credenciales inválidas.&#x27;);
+    }
+
+    // Resetear intentos fallidos
+    await this.authPasswordService.resetFailedAttempts(userCredentials);
+
+    // Actualizar último login
+    await this.userRepository.updateLastLogin(userCredentials.userId);
+
+    // Generar tokens
+    const tokens &#x3D; this.authTokenService.generateTokens({
+      user: userCredentials.user,
+      rememberMe: payload.rembemberMe,
+    });
+
+    return {
+      success: true,
+      accessToken: tokens.accessToken,
+      refreshToken: tokens.refreshToken,
+      requiresPasswordCreation: false,
+    };
   }
 
   /**
-   * Genera tokens de acceso y refresco para un usuario.
-   * @param userEmail Email del usuario.
-   * @param user Datos del usuario.
-   * @param userAgent User agent del dispositivo que realiza la petición.
-   * @returns Access token y refresh token.
+   * Crea una contraseña para un usuario
    */
-  public async generateTokens(
-    userEmail: string,
+  async createPassword(payload: {
+    email: string;
+    encryptedPassword: string;
+  }): Promise&lt;{ success: boolean; message: string }&gt; {
+    const user &#x3D; await this.userRepository.findActiveUserByEmail(payload.email);
+
+    if (!user) {
+      throw new NotFoundException(&#x27;Usuario no encontrado.&#x27;);
+    }
+
+    await this.authPasswordService.createOrUpdateEncryptedPassword(
+      user.id,
+      payload.encryptedPassword,
+    );
+
+    return {
+      success: true,
+      message: &#x27;Contraseña creada correctamente.&#x27;,
+    };
+  }
+
+  /**
+   * Cambia la contraseña de un usuario
+   */
+  async changePassword(payload: {
+    email: string;
+    encryptedOldPassword: string;
+    encryptedNewPassword: string;
+  }): Promise&lt;{ success: boolean; message: string }&gt; {
+    const user &#x3D; await this.userRepository.findActiveUserByEmail(payload.email);
+
+    if (!user) {
+      throw new NotFoundException(&#x27;Usuario no encontrado.&#x27;);
+    }
+
+    const userCredentials &#x3D; await this.userRepository.findCredentialsByEmail(
+      payload.email,
+    );
+
+    if (!userCredentials) {
+      throw new NotFoundException(
+        &#x27;No se encontraron credenciales para el usuario, favor crear contraseña.&#x27;,
+      );
+    }
+
+    await this.authPasswordService.changeEncryptedPassword(
+      userCredentials,
+      payload.encryptedOldPassword,
+      payload.encryptedNewPassword,
+    );
+
+    return {
+      success: true,
+      message: &#x27;Contraseña actualizada correctamente.&#x27;,
+    };
+  }
+
+  /**
+   * Resetea la contraseña (forgot password)
+   */
+  async resetPassword(payload: {
+    email: string;
+    encryptedNewPassword: string;
+    encryptedConfirmPassword: string;
+  }): Promise&lt;{ success: boolean; message: string }&gt; {
+    // Desencriptar y validar que coincidan
+    const newPassword &#x3D; this.authPasswordService.decryptPassword(
+      payload.encryptedNewPassword,
+    );
+    const confirmPassword &#x3D; this.authPasswordService.decryptPassword(
+      payload.encryptedConfirmPassword,
+    );
+
+    if (newPassword !&#x3D;&#x3D; confirmPassword) {
+      throw new UnauthorizedException(&#x27;Las contraseñas no coinciden.&#x27;);
+    }
+
+    const user &#x3D; await this.userRepository.findActiveUserByEmail(payload.email);
+
+    if (!user) {
+      throw new NotFoundException(&#x27;Usuario no encontrado.&#x27;);
+    }
+
+    const userCredentials &#x3D; await this.userRepository.findCredentialsByEmail(
+      payload.email,
+    );
+
+    if (!userCredentials) {
+      throw new NotFoundException(
+        &#x27;No se encontraron credenciales para el usuario, favor crear contraseña.&#x27;,
+      );
+    }
+
+    await this.authPasswordService.createOrUpdatePassword(user.id, newPassword);
+
+    return {
+      success: true,
+      message: &#x27;Contraseña actualizada correctamente.&#x27;,
+    };
+  }
+
+  /**
+   * Refresca el access token
+   */
+  async refreshAccessToken(
+    refreshToken: string,
+  ): Promise&lt;{ accessToken: string }&gt; {
+    const newAccessToken &#x3D;
+      await this.authTokenService.generateAccessTokenFromRefresh(refreshToken);
+
+    return { accessToken: newAccessToken };
+  }
+
+  /**
+   * Obtiene el scope del usuario (roles y permisos)
+   */
+  async getUserScope(userId: number): Promise&lt;{
+    roles: Array&lt;{ name: string; description: string | null }&gt;;
+    permissions: Array&lt;{ name: string }&gt;;
+  }&gt; {
+    const roles &#x3D; await this.userRepository.getUserRoles(userId);
+
+    const userPermissions &#x3D;
+      await this.userRepository.getUserPermissions(userId);
+
+    //  Obtener permisos de los roles
+    const roleIds &#x3D; roles.map((role) &#x3D;&gt; role.id);
+    const rolePermissions &#x3D;
+      await this.userRepository.getRolePermissions(roleIds);
+
+    // Combinar permisos (roles + directos)
+    const allPermissions &#x3D; [...rolePermissions, ...userPermissions];
+
+    // Deduplicar por &#x27;name&#x27; (movements:read, customers:update, etc)
+    const uniquePermissions &#x3D; allPermissions.filter(
+      (perm, index, self) &#x3D;&gt;
+        index &#x3D;&#x3D;&#x3D; self.findIndex((p) &#x3D;&gt; p.name &#x3D;&#x3D;&#x3D; perm.name),
+    );
+
+    return {
+      roles: roles.map((role) &#x3D;&gt; ({
+        name: role.name,
+        description: role.description,
+      })),
+      permissions: uniquePermissions,
+    };
+  }
+
+  /**
+   * Verifica un usuario
+   */
+  async verifyUser(userId: number): Promise&lt;void&gt; {
+    await this.userRepository.verifyUser(userId);
+  }
+
+  /**
+   * Verifica el estado de verificación
+   */
+  async checkVerificationStatus(
     user: Users,
-    userAgent?: string,
-  ): Promise&lt;{ accessToken: string; refreshToken: string }&gt; {
-    const [accessToken, refreshToken] &#x3D; [
-      CryptoHelper.generateToken(
-        &#x27;accessToken&#x27;,
-        {
-          sub: String(user?.id),
-          email: userEmail,
-          user: user,
-        },
-        &#x27;RS256&#x27;,
-        this.configService.authentication.accessTokenExpires,
-      ),
-      CryptoHelper.generateToken(
-        &#x27;refreshToken&#x27;,
-        { sub: String(user?.id), email: userEmail },
-        &#x27;RS256&#x27;,
-        this.configService.authentication.refreshTokenExpires,
-      ),
-    ];
+  ): Promise&lt;{ verified: boolean; email: string }&gt; {
+    const verifiedUser &#x3D; await this.userRepository.findById(user.id);
+    return {
+      verified: verifiedUser?.status &#x3D;&#x3D;&#x3D; UserStatus.ACTIVE,
+      email: user.email,
+    };
+  }
 
-    await this.prisma.refreshTokens.create({
-      data: {
-        token: refreshToken,
-        userId: user?.id,
-        expiresAt: new Date(
-          Date.now() +
-            parseTime(this.configService.authentication.refreshTokenExpires),
-        ),
-        userAgent: userAgent,
-      },
-    });
-
-    return { accessToken, refreshToken };
+  /**
+   * Valida el estado de un usuario
+   */
+  private validateUserStatus(status: UserStatus): void {
+    switch (status) {
+      case UserStatus.BLOCKED:
+        throw new UnauthorizedException(&#x27;El usuario está bloqueado.&#x27;);
+      case UserStatus.INACTIVE:
+        throw new UnauthorizedException(&#x27;El usuario no está activo.&#x27;);
+      case UserStatus.DELETED:
+        throw new UnauthorizedException(&#x27;El usuario está eliminado.&#x27;);
+      case UserStatus.PENDING_VERIFICATION:
+        this.logger.warn(&#x27;El usuario no ha verificado su cuenta.&#x27;);
+        return;
+      case UserStatus.ACTIVE:
+        return;
+    }
   }
 }
 </code></pre>

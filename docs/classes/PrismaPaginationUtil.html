@@ -1,0 +1,526 @@
+<!doctype html>
+<html class="no-js" lang="">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="x-ua-compatible" content="ie=edge">
+        <title>node-started-backend documentation</title>
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+
+        <link rel="icon" type="image/x-icon" href="../images/favicon.ico">
+	   <link rel="stylesheet" href="../styles/style.css">
+        <link rel="stylesheet" href="../styles/dark.css">
+    </head>
+    <body>
+          <script>
+               // Blocking script to avoid flickering dark mode
+               // Dark mode toggle button
+               var useDark = window.matchMedia('(prefers-color-scheme: dark)');
+               var darkModeState = useDark.matches;
+               var $darkModeToggleSwitchers = document.querySelectorAll('.dark-mode-switch input');
+               var $darkModeToggles = document.querySelectorAll('.dark-mode-switch');
+               var darkModeStateLocal = localStorage.getItem('compodoc_darkmode-state');
+
+               function checkToggle(check) {
+                    for (var i = 0; i < $darkModeToggleSwitchers.length; i++) {
+                         $darkModeToggleSwitchers[i].checked = check;
+                    }
+               }
+
+               function toggleDarkMode(state) {
+                    if (window.localStorage) {
+                         localStorage.setItem('compodoc_darkmode-state', state);
+                    }
+
+                    checkToggle(state);
+
+                    const hasClass = document.body.classList.contains('dark');
+
+                    if (state) {
+                         for (var i = 0; i < $darkModeToggles.length; i++) {
+                              $darkModeToggles[i].classList.add('dark');
+                         }
+                         if (!hasClass) {
+                              document.body.classList.add('dark');
+                         }
+                    } else {
+                         for (var i = 0; i < $darkModeToggles.length; i++) {
+                              $darkModeToggles[i].classList.remove('dark');
+                         }
+                         if (hasClass) {
+                              document.body.classList.remove('dark');
+                         }
+                    }
+               }
+
+               useDark.addEventListener('change', function (evt) {
+                    toggleDarkMode(evt.matches);
+               });
+               if (darkModeStateLocal) {
+                    darkModeState = darkModeStateLocal === 'true';
+               }
+               toggleDarkMode(darkModeState);
+          </script>
+          <script>
+              // --- Iframe navigation tracking for Template Playground ---
+              function sendCurrentUrlToParent() {
+                  if (window.parent && window.parent !== window) {
+                      window.parent.postMessage({
+                          type: 'compodoc-iframe-navigate',
+                          url: window.location.pathname + window.location.hash
+                      }, '*');
+                  }
+              }
+              window.addEventListener('hashchange', sendCurrentUrlToParent, false);
+              window.addEventListener('popstate', sendCurrentUrlToParent, false);
+              window.addEventListener('DOMContentLoaded', sendCurrentUrlToParent, false);
+          </script>
+
+        <div class="navbar navbar-default navbar-fixed-top d-md-none p-0">
+               <div class="d-flex">
+                    <a href="../" class="navbar-brand">node-started-backend documentation</a>
+                    <button type="button" class="btn btn-default btn-menu ion-ios-menu" id="btn-menu"></button>
+               </div>
+        </div>
+
+        <div class="xs-menu menu" id="mobile-menu">
+                <div id="book-search-input" role="search"><input type="text" placeholder="Type to search"></div>            <compodoc-menu></compodoc-menu>
+        </div>
+
+        <div class="container-fluid main">
+           <div class="row main">
+               <div class="d-none d-md-block menu">
+                   <compodoc-menu mode="normal"></compodoc-menu>
+               </div>
+               <!-- START CONTENT -->
+               <div class="content class">
+                   <div class="content-data">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<ol class="breadcrumb">
+  <li class="breadcrumb-item">Classes</li>
+  <li class="breadcrumb-item" >PrismaPaginationUtil</li>
+</ol>
+
+<ul class="nav nav-tabs" role="tablist">
+        <li class="nav-item">
+            <a href="#info" 
+                class="nav-link"
+                class="nav-link active"
+                role="tab" id="info-tab" data-bs-toggle="tab" data-link="info">Info</a>
+        </li>
+        <li class="nav-item">
+            <a href="#source" 
+                class="nav-link"
+                
+                role="tab" id="source-tab" data-bs-toggle="tab" data-link="source">Source</a>
+        </li>
+</ul>
+
+<div class="tab-content">
+    <div class="tab-pane fade active in" id="info">
+        <p class="comment">
+            <h3>File</h3>
+        </p>
+        <p class="comment">
+            <code>src/common/utils/prisma-pagination.util.ts</code>
+        </p>
+
+
+
+
+
+
+            <section data-compodoc="block-index">
+    <h3 id="index">Index</h3>
+    <table class="table table-sm table-bordered index-table">
+        <tbody>
+
+                <tr>
+                    <td class="col-md-4">
+                        <h6><b>Methods</b></h6>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <ul class="index-list">
+                            <li>
+                                    <span class="modifier">Static</span>
+                                    <span class="modifier">Async</span>
+                                <a href="#paginate" >paginate</a>
+                            </li>
+                        </ul>
+                    </td>
+                </tr>
+
+
+
+
+
+        </tbody>
+    </table>
+</section>
+
+
+
+            <section data-compodoc="block-methods">
+    
+    <h3 id="methods">
+        Methods
+    </h3>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="paginate"></a>
+                    <span class="name">
+                            <span class="modifier">Static</span>
+                            <span class="modifier">Async</span>
+                        <span ><b>paginate</b></span>
+                        <a href="#paginate"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                        <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>paginate(prismaModel: <a href="../interfaces/PrismaModelDelegate.html" target="_self">PrismaModelDelegate</a>, query: unknown, options: <a href="../interfaces/PaginationOptions.html" target="_self">PaginationOptions</a>)</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="12"
+                                    class="link-to-prism">src/common/utils/prisma-pagination.util.ts:12</a></div>
+                        </td>
+                    </tr>
+
+                    <tr>
+                        <td class="col-md-4">
+                            <b>Type parameters :</b>
+                            <ul class="type-parameters">
+                                    <li>TModel</li>
+                            </ul>
+                        </td>
+                    </tr>
+
+            <tr>
+                <td class="col-md-4">
+                        <div class="io-description"><p>Pagina de forma segura resolviendo las discrepancias estructurales de las relaciones de Prisma.</p>
+</div>
+
+                            <div class="io-description">
+                                <b>Parameters :</b>
+                                
+                                <table class="params">
+                                    <thead>
+                                        <tr>
+                                            <td>Name</td>
+                                                <td>Type</td>
+                                            <td>Optional</td>
+                                                <td>Default value</td>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                                <td>prismaModel</td>
+                                            <td>
+                                                            <code><a href="../interfaces/PrismaModelDelegate.html" target="_self" >PrismaModelDelegate</a></code>
+                                            </td>
+
+                                            <td>
+                                                    No
+                                            </td>
+
+                                            <td>
+                                            </td>
+
+                                        </tr>
+                                        <tr>
+                                                <td>query</td>
+                                            <td>
+                                                        <code>unknown</code>
+                                            </td>
+
+                                            <td>
+                                                    No
+                                            </td>
+
+                                            <td>
+                                            </td>
+
+                                        </tr>
+                                        <tr>
+                                                <td>options</td>
+                                            <td>
+                                                            <code><a href="../interfaces/PaginationOptions.html" target="_self" >PaginationOptions</a></code>
+                                            </td>
+
+                                            <td>
+                                                    No
+                                            </td>
+
+                                            <td>
+                                                    <code>{}</code>
+                                            </td>
+
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        <div class="io-description">
+                            <b>Returns : </b>    <code>Promise&lt;literal type&gt;</code>
+
+                        </div>
+                            <div class="io-description">
+                                
+                            </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</section>
+
+
+
+
+
+    </div>
+
+
+    <div class="tab-pane fade  tab-source-code" id="source">
+        <pre class="line-numbers compodoc-sourcecode"><code class="language-typescript">import { PaginationQueryDTO } from &#x27;@common/dtos/pagination.dto&#x27;;
+import { PaginationResponseDTO } from &#x27;@common/dtos/pagination.dto&#x27;;
+import {
+  PaginationOptions,
+  PrismaModelDelegate,
+} from &#x27;@common/interfaces/prisma-pagination.interface&#x27;;
+
+export class PrismaPaginationUtil {
+  /**
+   * Pagina de forma segura resolviendo las discrepancias estructurales de las relaciones de Prisma.
+   */
+  static async paginate&lt;TModel&gt;(
+    prismaModel: PrismaModelDelegate,
+    query: PaginationQueryDTO &amp; Record&lt;string, unknown&gt;,
+    options: PaginationOptions &#x3D; {},
+  ): Promise&lt;{ data: TModel[]; pagination: PaginationResponseDTO }&gt; {
+    try {
+      const page &#x3D; Number(query.page) || 1;
+      const pageSize &#x3D; Number(query.pageSize) || 10;
+      const skip &#x3D; (page - 1) * pageSize;
+
+      // 1. Inicializar el WHERE combinando lo que viene explícito del Service
+      const finalWhere &#x3D; { ...(options.where || {}) };
+      const mapping &#x3D; options.fieldMapping || {};
+
+      // 2. Extraer y mapear filtros directos del DTO (status, type, etc.)
+      const infrastructureKeys &#x3D; [
+        &#x27;page&#x27;,
+        &#x27;pageSize&#x27;,
+        &#x27;orderBy&#x27;,
+        &#x27;startDate&#x27;,
+        &#x27;endDate&#x27;,
+        &#x27;branches&#x27;,
+        &#x27;search&#x27;,
+      ];
+
+      Object.keys(query).forEach((key) &#x3D;&gt; {
+        if (
+          !infrastructureKeys.includes(key) &amp;&amp;
+          query[key] !&#x3D;&#x3D; undefined &amp;&amp;
+          query[key] !&#x3D;&#x3D; null &amp;&amp;
+          query[key] !&#x3D;&#x3D; &#x27;&#x27;
+        ) {
+          const targetKey &#x3D; mapping[key] !&#x3D;&#x3D; undefined ? mapping[key] : key;
+
+          if (targetKey &#x3D;&#x3D;&#x3D; &#x27;&#x27;) {
+            return;
+          }
+
+          finalWhere[targetKey] &#x3D; query[key];
+        }
+      });
+
+      // 3. Búsqueda multi-palabra (AND de ORs sobre los campos indicados)
+      if (
+        typeof query.search &#x3D;&#x3D;&#x3D; &#x27;string&#x27; &amp;&amp;
+        query.search &amp;&amp;
+        options.searchFields?.length
+      ) {
+        const words &#x3D; query.search.trim().split(/\s+/).filter(Boolean);
+
+        if (words.length &gt; 0) {
+          finalWhere.AND &#x3D; words.map((word) &#x3D;&gt; ({
+            OR: options.searchFields!.map((field) &#x3D;&gt; ({
+              [field]: { contains: word, mode: &#x27;insensitive&#x27; },
+            })),
+          }));
+        }
+      }
+
+      // 4. Rangos de Fecha
+      const dateFilter &#x3D;
+        (finalWhere.createdAt as Record&lt;string, unknown&gt;) || {};
+      if (query.startDate || query.endDate) {
+        if (query.startDate) dateFilter.gte &#x3D; query.startDate;
+        if (query.endDate) dateFilter.lte &#x3D; query.endDate;
+      }
+      if (Object.keys(dateFilter).length &gt; 0) {
+        finalWhere.createdAt &#x3D; dateFilter;
+      }
+
+      // 5. Sucursales Múltiples
+      if (query.branches) {
+        const branchArray &#x3D; query.branches.split(&#x27;,&#x27;).map((b) &#x3D;&gt; b.trim());
+        finalWhere.branchCode &#x3D; { in: branchArray };
+      }
+
+      // 6. Parseo de ordenamiento (campo:dirección)
+      let orderBy: Record&lt;string, &#x27;asc&#x27; | &#x27;desc&#x27;&gt; &#x3D; {
+        [options.defaultOrderByField || &#x27;createdAt&#x27;]: &#x27;desc&#x27;,
+      };
+
+      if (typeof query.orderBy &#x3D;&#x3D;&#x3D; &#x27;string&#x27; &amp;&amp; query.orderBy.includes(&#x27;:&#x27;)) {
+        const [field, direction] &#x3D; query.orderBy.split(&#x27;:&#x27;);
+        const targetOrderField &#x3D; mapping[field] || field;
+        if (field &amp;&amp; direction) {
+          orderBy &#x3D; {
+            [targetOrderField]: direction.toLowerCase() as &#x27;asc&#x27; | &#x27;desc&#x27;,
+          };
+        }
+      }
+
+      // 7. Consulta concurrente
+      const [items, rawTotal] &#x3D; await Promise.all([
+        prismaModel.findMany({
+          where: finalWhere,
+          include: options.include,
+          skip,
+          take: pageSize,
+          orderBy,
+        }),
+        prismaModel.count({
+          where: finalWhere,
+        }),
+      ]);
+
+      const total &#x3D; typeof rawTotal &#x3D;&#x3D;&#x3D; &#x27;number&#x27; ? rawTotal : 0;
+      const totalPages &#x3D; Math.ceil(total / pageSize);
+
+      // Forzamos el casteo de la lista plana al modelo tipado final de salida con relaciones
+      const typedData &#x3D; items as unknown as TModel[];
+
+      return {
+        data: typedData,
+        pagination: {
+          total,
+          page,
+          pageSize,
+          totalPages,
+        },
+      };
+    } catch (error) {
+      console.error(&#x27;Error en paginación de Prisma:&#x27;, error);
+      throw error;
+    }
+  }
+}
+</code></pre>
+    </div>
+</div>
+
+
+
+
+
+
+
+
+
+                   </div><div class="search-results">
+    <div class="has-results">
+        <h1 class="search-results-title"><span class='search-results-count'></span> results matching "<span class='search-query'></span>"</h1>
+        <ul class="search-results-list"></ul>
+    </div>
+    <div class="no-results">
+        <h1 class="search-results-title">No results matching "<span class='search-query'></span>"</h1>
+    </div>
+</div>
+</div>
+               <!-- END CONTENT -->
+           </div>
+       </div>
+
+          <label class="dark-mode-switch">
+               <input type="checkbox">
+               <span class="slider">
+                    <svg class="slider-icon" viewBox="0 0 24 24" fill="none" height="20" stroke="#000" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" width="20" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M21 12.79A9 9 0 1111.21 3 7 7 0 0021 12.79z"></path>
+                    </svg>
+               </span>
+          </label>
+
+       <script>
+            var COMPODOC_CURRENT_PAGE_DEPTH = 1;
+            var COMPODOC_CURRENT_PAGE_CONTEXT = 'class';
+            var COMPODOC_CURRENT_PAGE_URL = 'PrismaPaginationUtil.html';
+            var MAX_SEARCH_RESULTS = 15;
+       </script>
+
+       <script>
+               $darkModeToggleSwitchers = document.querySelectorAll('.dark-mode-switch input');
+               checkToggle(darkModeState);
+               if ($darkModeToggleSwitchers.length > 0) {
+                    for (var i = 0; i < $darkModeToggleSwitchers.length; i++) {
+                         $darkModeToggleSwitchers[i].addEventListener('change', function (event) {
+                              darkModeState = !darkModeState;
+                              toggleDarkMode(darkModeState);
+                         });
+                    }
+               }
+          </script>
+
+       <script src="../js/libs/custom-elements.min.js"></script>
+       <script src="../js/libs/lit-html.js"></script>
+
+       <script src="../js/menu-wc.js" defer></script>
+       <script nomodule src="../js/menu-wc_es5.js" defer></script>
+
+       <script src="../js/libs/bootstrap-native.js"></script>
+
+       <script src="../js/libs/es6-shim.min.js"></script>
+       <script src="../js/libs/EventDispatcher.js"></script>
+       <script src="../js/libs/promise.min.js"></script>
+
+       <script src="../js/compodoc.js"></script>
+
+       <script src="../js/tabs.js"></script>
+       <script src="../js/menu.js"></script>
+       <script src="../js/libs/clipboard.min.js"></script>
+       <script src="../js/libs/prism.js"></script>
+       <script src="../js/sourceCode.js"></script>
+          <script src="../js/search/search.js"></script>
+          <script src="../js/search/lunr.min.js"></script>
+          <script src="../js/search/search-lunr.js"></script>
+          <script src="../js/search/search_index.js"></script>
+       <script src="../js/lazy-load-graphs.js"></script>
+
+
+    </body>
+</html>

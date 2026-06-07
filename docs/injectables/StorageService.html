@@ -1,0 +1,1711 @@
+<!doctype html>
+<html class="no-js" lang="">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="x-ua-compatible" content="ie=edge">
+        <title>node-started-backend documentation</title>
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+
+        <link rel="icon" type="image/x-icon" href="../images/favicon.ico">
+	   <link rel="stylesheet" href="../styles/style.css">
+        <link rel="stylesheet" href="../styles/dark.css">
+    </head>
+    <body>
+          <script>
+               // Blocking script to avoid flickering dark mode
+               // Dark mode toggle button
+               var useDark = window.matchMedia('(prefers-color-scheme: dark)');
+               var darkModeState = useDark.matches;
+               var $darkModeToggleSwitchers = document.querySelectorAll('.dark-mode-switch input');
+               var $darkModeToggles = document.querySelectorAll('.dark-mode-switch');
+               var darkModeStateLocal = localStorage.getItem('compodoc_darkmode-state');
+
+               function checkToggle(check) {
+                    for (var i = 0; i < $darkModeToggleSwitchers.length; i++) {
+                         $darkModeToggleSwitchers[i].checked = check;
+                    }
+               }
+
+               function toggleDarkMode(state) {
+                    if (window.localStorage) {
+                         localStorage.setItem('compodoc_darkmode-state', state);
+                    }
+
+                    checkToggle(state);
+
+                    const hasClass = document.body.classList.contains('dark');
+
+                    if (state) {
+                         for (var i = 0; i < $darkModeToggles.length; i++) {
+                              $darkModeToggles[i].classList.add('dark');
+                         }
+                         if (!hasClass) {
+                              document.body.classList.add('dark');
+                         }
+                    } else {
+                         for (var i = 0; i < $darkModeToggles.length; i++) {
+                              $darkModeToggles[i].classList.remove('dark');
+                         }
+                         if (hasClass) {
+                              document.body.classList.remove('dark');
+                         }
+                    }
+               }
+
+               useDark.addEventListener('change', function (evt) {
+                    toggleDarkMode(evt.matches);
+               });
+               if (darkModeStateLocal) {
+                    darkModeState = darkModeStateLocal === 'true';
+               }
+               toggleDarkMode(darkModeState);
+          </script>
+          <script>
+              // --- Iframe navigation tracking for Template Playground ---
+              function sendCurrentUrlToParent() {
+                  if (window.parent && window.parent !== window) {
+                      window.parent.postMessage({
+                          type: 'compodoc-iframe-navigate',
+                          url: window.location.pathname + window.location.hash
+                      }, '*');
+                  }
+              }
+              window.addEventListener('hashchange', sendCurrentUrlToParent, false);
+              window.addEventListener('popstate', sendCurrentUrlToParent, false);
+              window.addEventListener('DOMContentLoaded', sendCurrentUrlToParent, false);
+          </script>
+
+        <div class="navbar navbar-default navbar-fixed-top d-md-none p-0">
+               <div class="d-flex">
+                    <a href="../" class="navbar-brand">node-started-backend documentation</a>
+                    <button type="button" class="btn btn-default btn-menu ion-ios-menu" id="btn-menu"></button>
+               </div>
+        </div>
+
+        <div class="xs-menu menu" id="mobile-menu">
+                <div id="book-search-input" role="search"><input type="text" placeholder="Type to search"></div>            <compodoc-menu></compodoc-menu>
+        </div>
+
+        <div class="container-fluid main">
+           <div class="row main">
+               <div class="d-none d-md-block menu">
+                   <compodoc-menu mode="normal"></compodoc-menu>
+               </div>
+               <!-- START CONTENT -->
+               <div class="content injectable">
+                   <div class="content-data">
+
+
+
+
+
+
+
+
+
+
+
+
+<ol class="breadcrumb">
+  <li class="breadcrumb-item">Injectables</li>
+  <li class="breadcrumb-item" >StorageService</li>
+</ol>
+
+<ul class="nav nav-tabs" role="tablist">
+        <li class="nav-item">
+            <a href="#info" 
+                class="nav-link"
+                class="nav-link active"
+                role="tab" id="info-tab" data-bs-toggle="tab" data-link="info">Info</a>
+        </li>
+        <li class="nav-item">
+            <a href="#source" 
+                class="nav-link"
+                
+                role="tab" id="source-tab" data-bs-toggle="tab" data-link="source">Source</a>
+        </li>
+</ul>
+
+<div class="tab-content">
+    <div class="tab-pane fade active in" id="info">
+        <p class="comment">
+            <h3>File</h3>
+        </p>
+        <p class="comment">
+            <code>src/modules/storage/services/storage.service.ts</code>
+        </p>
+
+
+
+
+
+            <section data-compodoc="block-index">
+    <h3 id="index">Index</h3>
+    <table class="table table-sm table-bordered index-table">
+        <tbody>
+                <tr>
+                    <td class="col-md-4">
+                        <h6><b>Properties</b></h6>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <ul class="index-list">
+                            <li>
+                                    <span class="modifier">Private</span>
+                                    <span class="modifier">Readonly</span>
+                                <a href="#manager" >manager</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Private</span>
+                                    <span class="modifier">Readonly</span>
+                                <a href="#urlCache" >urlCache</a>
+                            </li>
+                        </ul>
+                    </td>
+                </tr>
+
+                <tr>
+                    <td class="col-md-4">
+                        <h6><b>Methods</b></h6>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <ul class="index-list">
+                            <li>
+                                    <span class="modifier">Async</span>
+                                <a href="#deleteFileBatch" >deleteFileBatch</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Async</span>
+                                <a href="#deleteFilesBatch" >deleteFilesBatch</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Async</span>
+                                <a href="#deleteFilesQueue" >deleteFilesQueue</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Async</span>
+                                <a href="#deleteQueue" >deleteQueue</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Async</span>
+                                <a href="#getPresignedGetUrlsBatch" >getPresignedGetUrlsBatch</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Async</span>
+                                <a href="#getPresignedGetUrlsQueue" >getPresignedGetUrlsQueue</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Async</span>
+                                <a href="#getPresignedUrlQueue" >getPresignedUrlQueue</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Async</span>
+                                <a href="#uploadFilesBatch" >uploadFilesBatch</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Async</span>
+                                <a href="#uploadFilesQueue" >uploadFilesQueue</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Async</span>
+                                <a href="#uploadQueue" >uploadQueue</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Private</span>
+                                    <span class="modifier">Async</span>
+                                <a href="#uploadSingleFileBatch" >uploadSingleFileBatch</a>
+                            </li>
+                        </ul>
+                    </td>
+                </tr>
+
+
+
+
+
+        </tbody>
+    </table>
+</section>
+
+            <section data-compodoc="block-constructor">
+    <h3 id="constructor">Constructor</h3>
+        <table class="table table-sm table-bordered">
+            <tbody>
+                <tr>
+                    <td class="col-md-4">
+<code>constructor(s3: S3Client, options: <a href="../interfaces/StorageModuleOptions.html" target="_self">StorageModuleOptions</a>)</code>
+                    </td>
+                </tr>
+                        <tr>
+                            <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="36" class="link-to-prism">src/modules/storage/services/storage.service.ts:36</a></div>
+                            </td>
+                        </tr>
+
+                <tr>
+                    <td class="col-md-4">
+                            <div>
+                                    <b>Parameters :</b>
+                                    <table class="params">
+                                        <thead>
+                                            <tr>
+                                                <td>Name</td>
+                                                    <td>Type</td>
+                                                <td>Optional</td>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                                <tr>
+                                                        <td>s3</td>
+                                                  
+                                                        <td>
+                                                                    <code>S3Client</code>
+                                                        </td>
+                                                  
+                                                    <td>
+                                                            No
+                                                    </td>
+                                                    
+                                                </tr>
+                                                <tr>
+                                                        <td>options</td>
+                                                  
+                                                        <td>
+                                                                        <code><a href="../interfaces/StorageModuleOptions.html" target="_self" >StorageModuleOptions</a></code>
+                                                        </td>
+                                                  
+                                                    <td>
+                                                            No
+                                                    </td>
+                                                    
+                                                </tr>
+                                        </tbody>
+                                    </table>
+                            </div>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+</section>
+
+            <section data-compodoc="block-methods">
+    
+    <h3 id="methods">
+        Methods
+    </h3>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="deleteFileBatch"></a>
+                    <span class="name">
+                            <span class="modifier">Async</span>
+                        <span ><b>deleteFileBatch</b></span>
+                        <a href="#deleteFileBatch"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                        <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>deleteFileBatch(keys: string[])</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="277"
+                                    class="link-to-prism">src/modules/storage/services/storage.service.ts:277</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                            <div class="io-description">
+                                <b>Parameters :</b>
+                                
+                                <table class="params">
+                                    <thead>
+                                        <tr>
+                                            <td>Name</td>
+                                                <td>Type</td>
+                                            <td>Optional</td>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                                <td>keys</td>
+                                            <td>
+                                                        <code>string[]</code>
+                                            </td>
+
+                                            <td>
+                                                    No
+                                            </td>
+
+
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        <div class="io-description">
+                            <b>Returns : </b>    <code>Promise&lt;void&gt;</code>
+
+                        </div>
+                            <div class="io-description">
+                                
+                            </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="deleteFilesBatch"></a>
+                    <span class="name">
+                            <span class="modifier">Async</span>
+                        <span ><b>deleteFilesBatch</b></span>
+                        <a href="#deleteFilesBatch"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                        <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>deleteFilesBatch(files: <a href="../undefineds/DeleteFileTarget.html" target="_self">DeleteFileTarget[]</a>, executionOptions?: <a href="../interfaces/StorageExecutionOptions.html" target="_self">StorageExecutionOptions</a>)</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="244"
+                                    class="link-to-prism">src/modules/storage/services/storage.service.ts:244</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                            <div class="io-description">
+                                <b>Parameters :</b>
+                                
+                                <table class="params">
+                                    <thead>
+                                        <tr>
+                                            <td>Name</td>
+                                                <td>Type</td>
+                                            <td>Optional</td>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                                <td>files</td>
+                                            <td>
+                                                            <code><a href="../miscellaneous/typealiases.html#DeleteFileTarget" target="_self" >DeleteFileTarget[]</a></code>
+                                            </td>
+
+                                            <td>
+                                                    No
+                                            </td>
+
+
+                                        </tr>
+                                        <tr>
+                                                <td>executionOptions</td>
+                                            <td>
+                                                            <code><a href="../interfaces/StorageExecutionOptions.html" target="_self" >StorageExecutionOptions</a></code>
+                                            </td>
+
+                                            <td>
+                                                    Yes
+                                            </td>
+
+
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        <div class="io-description">
+                            <b>Returns : </b>    <code>Promise&lt;void&gt;</code>
+
+                        </div>
+                            <div class="io-description">
+                                
+                            </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="deleteFilesQueue"></a>
+                    <span class="name">
+                            <span class="modifier">Async</span>
+                        <span ><b>deleteFilesQueue</b></span>
+                        <a href="#deleteFilesQueue"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                        <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>deleteFilesQueue(keys: string[], bucket?: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank">string</a>)</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="184"
+                                    class="link-to-prism">src/modules/storage/services/storage.service.ts:184</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                        <div class="io-description"><p>Borra múltiples archivos del storage respetando la cola de concurrencia.</p>
+</div>
+
+                            <div class="io-description">
+                                <b>Parameters :</b>
+                                
+                                <table class="params">
+                                    <thead>
+                                        <tr>
+                                            <td>Name</td>
+                                                <td>Type</td>
+                                            <td>Optional</td>
+                                                <td>Description</td>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                                <td>keys</td>
+                                            <td>
+                                                        <code>string[]</code>
+                                            </td>
+
+                                            <td>
+                                                    No
+                                            </td>
+
+
+                                            <td>
+                                                    <p>Array de llaves de los archivos</p>
+
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                                <td>bucket</td>
+                                            <td>
+                                                            <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
+                                            </td>
+
+                                            <td>
+                                                    Yes
+                                            </td>
+
+
+                                            <td>
+                                                    <p>Bucket (opcional)</p>
+
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        <div class="io-description">
+                            <b>Returns : </b>    <code>Promise&lt;DeleteObjectCommandOutput[]&gt;</code>
+
+                        </div>
+                            <div class="io-description">
+                                
+                            </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="deleteQueue"></a>
+                    <span class="name">
+                            <span class="modifier">Async</span>
+                        <span ><b>deleteQueue</b></span>
+                        <a href="#deleteQueue"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                        <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>deleteQueue(key: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank">string</a>, bucket?: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank">string</a>)</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="201"
+                                    class="link-to-prism">src/modules/storage/services/storage.service.ts:201</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                        <div class="io-description"><p>Borrado Seguro (Reemplazo/Update)</p>
+</div>
+
+                            <div class="io-description">
+                                <b>Parameters :</b>
+                                
+                                <table class="params">
+                                    <thead>
+                                        <tr>
+                                            <td>Name</td>
+                                                <td>Type</td>
+                                            <td>Optional</td>
+                                                <td>Description</td>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                                <td>key</td>
+                                            <td>
+                                                            <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
+                                            </td>
+
+                                            <td>
+                                                    No
+                                            </td>
+
+
+                                            <td>
+                                                    <p>Llave del archivo</p>
+
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                                <td>bucket</td>
+                                            <td>
+                                                            <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
+                                            </td>
+
+                                            <td>
+                                                    Yes
+                                            </td>
+
+
+                                            <td>
+                                                    <p>Bucket</p>
+
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        <div class="io-description">
+                            <b>Returns : </b>    <code>Promise&lt;DeleteObjectCommandOutput&gt;</code>
+
+                        </div>
+                            <div class="io-description">
+                                
+                            </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="getPresignedGetUrlsBatch"></a>
+                    <span class="name">
+                            <span class="modifier">Async</span>
+                        <span ><b>getPresignedGetUrlsBatch</b></span>
+                        <a href="#getPresignedGetUrlsBatch"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                        <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>getPresignedGetUrlsBatch(files: <a href="../undefineds/PresignedUrlTarget.html" target="_self">PresignedUrlTarget[]</a>, options?: <a href="../interfaces/StoragePresignedUrlOptions.html" target="_self">StoragePresignedUrlOptions</a>)</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="281"
+                                    class="link-to-prism">src/modules/storage/services/storage.service.ts:281</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                            <div class="io-description">
+                                <b>Parameters :</b>
+                                
+                                <table class="params">
+                                    <thead>
+                                        <tr>
+                                            <td>Name</td>
+                                                <td>Type</td>
+                                            <td>Optional</td>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                                <td>files</td>
+                                            <td>
+                                                            <code><a href="../miscellaneous/typealiases.html#PresignedUrlTarget" target="_self" >PresignedUrlTarget[]</a></code>
+                                            </td>
+
+                                            <td>
+                                                    No
+                                            </td>
+
+
+                                        </tr>
+                                        <tr>
+                                                <td>options</td>
+                                            <td>
+                                                            <code><a href="../interfaces/StoragePresignedUrlOptions.html" target="_self" >StoragePresignedUrlOptions</a></code>
+                                            </td>
+
+                                            <td>
+                                                    Yes
+                                            </td>
+
+
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        <div class="io-description">
+                            <b>Returns : </b>        <code><a href="../interfaces/StoragePresignedUrlResult.html" target="_self" >Promise&lt;StoragePresignedUrlResult[]&gt;</a></code>
+
+                        </div>
+                            <div class="io-description">
+                                
+                            </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="getPresignedGetUrlsQueue"></a>
+                    <span class="name">
+                            <span class="modifier">Async</span>
+                        <span ><b>getPresignedGetUrlsQueue</b></span>
+                        <a href="#getPresignedGetUrlsQueue"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                        <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>getPresignedGetUrlsQueue(files: <a href="../undefineds/PresignedUrlTarget.html" target="_self">PresignedUrlTarget[]</a>, options?: <a href="../interfaces/StoragePresignedUrlOptions.html" target="_self">StoragePresignedUrlOptions</a>)</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="144"
+                                    class="link-to-prism">src/modules/storage/services/storage.service.ts:144</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                            <div class="io-description">
+                                <b>Parameters :</b>
+                                
+                                <table class="params">
+                                    <thead>
+                                        <tr>
+                                            <td>Name</td>
+                                                <td>Type</td>
+                                            <td>Optional</td>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                                <td>files</td>
+                                            <td>
+                                                            <code><a href="../miscellaneous/typealiases.html#PresignedUrlTarget" target="_self" >PresignedUrlTarget[]</a></code>
+                                            </td>
+
+                                            <td>
+                                                    No
+                                            </td>
+
+
+                                        </tr>
+                                        <tr>
+                                                <td>options</td>
+                                            <td>
+                                                            <code><a href="../interfaces/StoragePresignedUrlOptions.html" target="_self" >StoragePresignedUrlOptions</a></code>
+                                            </td>
+
+                                            <td>
+                                                    Yes
+                                            </td>
+
+
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        <div class="io-description">
+                            <b>Returns : </b>        <code><a href="../interfaces/StoragePresignedUrlResult.html" target="_self" >Promise&lt;StoragePresignedUrlResult[]&gt;</a></code>
+
+                        </div>
+                            <div class="io-description">
+                                
+                            </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="getPresignedUrlQueue"></a>
+                    <span class="name">
+                            <span class="modifier">Async</span>
+                        <span ><b>getPresignedUrlQueue</b></span>
+                        <a href="#getPresignedUrlQueue"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                        <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>getPresignedUrlQueue(target: literal type)</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="108"
+                                    class="link-to-prism">src/modules/storage/services/storage.service.ts:108</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                        <div class="io-description"><p>Método que tiene la url pre-firmada, soporta expiración variable y ser llamado por el queue.</p>
+</div>
+
+                            <div class="io-description">
+                                <b>Parameters :</b>
+                                
+                                <table class="params">
+                                    <thead>
+                                        <tr>
+                                            <td>Name</td>
+                                                <td>Type</td>
+                                            <td>Optional</td>
+                                                <td>Description</td>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                                <td>target</td>
+                                            <td>
+                                                        <code>literal type</code>
+                                            </td>
+
+                                            <td>
+                                                    No
+                                            </td>
+
+
+                                            <td>
+                                                    <p>Archivo objetivo, contiene: key, bucket, userId</p>
+
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        <div class="io-description">
+                            <b>Returns : </b>    <code>Promise&lt;string&gt;</code>
+
+                        </div>
+                            <div class="io-description">
+                                <p>string</p>
+
+                            </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="uploadFilesBatch"></a>
+                    <span class="name">
+                            <span class="modifier">Async</span>
+                        <span ><b>uploadFilesBatch</b></span>
+                        <a href="#uploadFilesBatch"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                        <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>uploadFilesBatch(files: <a href="../interfaces/StorageUploadInput.html" target="_self">StorageUploadInput[]</a>, executionOptions?: <a href="../interfaces/StorageExecutionOptions.html" target="_self">StorageExecutionOptions</a>)</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="221"
+                                    class="link-to-prism">src/modules/storage/services/storage.service.ts:221</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                            <div class="io-description">
+                                <b>Parameters :</b>
+                                
+                                <table class="params">
+                                    <thead>
+                                        <tr>
+                                            <td>Name</td>
+                                                <td>Type</td>
+                                            <td>Optional</td>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                                <td>files</td>
+                                            <td>
+                                                            <code><a href="../interfaces/StorageUploadInput.html" target="_self" >StorageUploadInput[]</a></code>
+                                            </td>
+
+                                            <td>
+                                                    No
+                                            </td>
+
+
+                                        </tr>
+                                        <tr>
+                                                <td>executionOptions</td>
+                                            <td>
+                                                            <code><a href="../interfaces/StorageExecutionOptions.html" target="_self" >StorageExecutionOptions</a></code>
+                                            </td>
+
+                                            <td>
+                                                    Yes
+                                            </td>
+
+
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        <div class="io-description">
+                            <b>Returns : </b>        <code><a href="../interfaces/StorageUploadResult.html" target="_self" >Promise&lt;StorageUploadResult[]&gt;</a></code>
+
+                        </div>
+                            <div class="io-description">
+                                
+                            </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="uploadFilesQueue"></a>
+                    <span class="name">
+                            <span class="modifier">Async</span>
+                        <span ><b>uploadFilesQueue</b></span>
+                        <a href="#uploadFilesQueue"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                        <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>uploadFilesQueue(files: <a href="../interfaces/StorageUploadInput.html" target="_self">StorageUploadInput[]</a>)</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="46"
+                                    class="link-to-prism">src/modules/storage/services/storage.service.ts:46</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                            <div class="io-description">
+                                <b>Parameters :</b>
+                                
+                                <table class="params">
+                                    <thead>
+                                        <tr>
+                                            <td>Name</td>
+                                                <td>Type</td>
+                                            <td>Optional</td>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                                <td>files</td>
+                                            <td>
+                                                            <code><a href="../interfaces/StorageUploadInput.html" target="_self" >StorageUploadInput[]</a></code>
+                                            </td>
+
+                                            <td>
+                                                    No
+                                            </td>
+
+
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        <div class="io-description">
+                            <b>Returns : </b>        <code><a href="../interfaces/StorageUploadResult.html" target="_self" >Promise&lt;StorageUploadResult[]&gt;</a></code>
+
+                        </div>
+                            <div class="io-description">
+                                
+                            </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="uploadQueue"></a>
+                    <span class="name">
+                            <span class="modifier">Async</span>
+                        <span ><b>uploadQueue</b></span>
+                        <a href="#uploadQueue"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                        <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>uploadQueue(input: literal type)</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="79"
+                                    class="link-to-prism">src/modules/storage/services/storage.service.ts:79</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                        <div class="io-description"><p>Método para cargar imagen</p>
+</div>
+
+                            <div class="io-description">
+                                <b>Parameters :</b>
+                                
+                                <table class="params">
+                                    <thead>
+                                        <tr>
+                                            <td>Name</td>
+                                                <td>Type</td>
+                                            <td>Optional</td>
+                                                <td>Description</td>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                                <td>input</td>
+                                            <td>
+                                                        <code>literal type</code>
+                                            </td>
+
+                                            <td>
+                                                    No
+                                            </td>
+
+
+                                            <td>
+                                                    <p>Datos de la imagen: file, key, mimetype, bucket</p>
+
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        <div class="io-description">
+                            <b>Returns : </b>    <code>Promise&lt;PutObjectCommandOutput&gt;</code>
+
+                        </div>
+                            <div class="io-description">
+                                <p>void</p>
+
+                            </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="uploadSingleFileBatch"></a>
+                    <span class="name">
+                            <span class="modifier">Private</span>
+                            <span class="modifier">Async</span>
+                        <span ><b>uploadSingleFileBatch</b></span>
+                        <a href="#uploadSingleFileBatch"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                        <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>uploadSingleFileBatch(fileInput: <a href="../interfaces/StorageUploadInput.html" target="_self">StorageUploadInput</a>, executionOptions?: <a href="../interfaces/StorageExecutionOptions.html" target="_self">StorageExecutionOptions</a>)</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="328"
+                                    class="link-to-prism">src/modules/storage/services/storage.service.ts:328</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                            <div class="io-description">
+                                <b>Parameters :</b>
+                                
+                                <table class="params">
+                                    <thead>
+                                        <tr>
+                                            <td>Name</td>
+                                                <td>Type</td>
+                                            <td>Optional</td>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                                <td>fileInput</td>
+                                            <td>
+                                                            <code><a href="../interfaces/StorageUploadInput.html" target="_self" >StorageUploadInput</a></code>
+                                            </td>
+
+                                            <td>
+                                                    No
+                                            </td>
+
+
+                                        </tr>
+                                        <tr>
+                                                <td>executionOptions</td>
+                                            <td>
+                                                            <code><a href="../interfaces/StorageExecutionOptions.html" target="_self" >StorageExecutionOptions</a></code>
+                                            </td>
+
+                                            <td>
+                                                    Yes
+                                            </td>
+
+
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        <div class="io-description">
+                            <b>Returns : </b>        <code><a href="../interfaces/StorageUploadResult.html" target="_self" >Promise&lt;StorageUploadResult&gt;</a></code>
+
+                        </div>
+                            <div class="io-description">
+                                
+                            </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</section>
+            <section data-compodoc="block-properties">
+    
+    <h3 id="inputs">
+        Properties
+    </h3>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="manager"></a>
+                    <span class="name">
+                            <span class="modifier">Private</span>
+                            <span class="modifier">Readonly</span>
+                        <span ><b>manager</b></span>
+                        <a href="#manager"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>        <code><a href="../classes/AsyncManager.html" target="_self" >AsyncManager</a></code>
+
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="32" class="link-to-prism">src/modules/storage/services/storage.service.ts:32</a></div>
+                        </td>
+                    </tr>
+
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="urlCache"></a>
+                    <span class="name">
+                            <span class="modifier">Private</span>
+                            <span class="modifier">Readonly</span>
+                        <span ><b>urlCache</b></span>
+                        <a href="#urlCache"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>    <code>unknown</code>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Default value : </i><code>new Map&lt;
+    string,
+    { url: string; expires: number }
+  &gt;()</code>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="33" class="link-to-prism">src/modules/storage/services/storage.service.ts:33</a></div>
+                        </td>
+                    </tr>
+
+
+        </tbody>
+    </table>
+</section>
+
+    </div>
+
+
+    <div class="tab-pane fade  tab-source-code" id="source">
+        <pre class="line-numbers compodoc-sourcecode"><code class="language-typescript">import {
+  PutObjectCommand,
+  S3Client,
+  DeleteObjectCommand,
+  GetObjectCommand,
+  PutObjectCommandOutput,
+  DeleteObjectCommandOutput,
+} from &#x27;@aws-sdk/client-s3&#x27;;
+import { getSignedUrl } from &#x27;@aws-sdk/s3-request-presigner&#x27;;
+import {
+  BadRequestException,
+  Inject,
+  Injectable,
+  ServiceUnavailableException,
+} from &#x27;@nestjs/common&#x27;;
+import { STORAGE_MODULE_OPTIONS } from &#x27;../interfaces/storage.interface&#x27;;
+import type {
+  StorageExecutionOptions,
+  StorageModuleOptions,
+  StoragePresignedUrlOptions,
+  StoragePresignedUrlResult,
+  StorageUploadInput,
+  StorageUploadResult,
+} from &#x27;../interfaces/storage.interface&#x27;;
+import { AsyncManager } from &#x27;@common/helpers/async-manager&#x27;;
+import { ProcessBatchManager } from &#x27;@common/helpers/process-batch&#x27;;
+import { StorageHelper } from &#x27;../helpers/storage.helper&#x27;;
+import { DeleteFileTarget, PresignedUrlTarget } from &#x27;../types/storage.types&#x27;;
+
+@Injectable()
+export class StorageService {
+  private readonly manager: AsyncManager;
+  private readonly urlCache &#x3D; new Map&lt;
+    string,
+    { url: string; expires: number }
+  &gt;();
+
+  constructor(
+    private readonly s3: S3Client,
+    @Inject(STORAGE_MODULE_OPTIONS)
+    private readonly options: StorageModuleOptions,
+  ) {
+    this.manager &#x3D; new AsyncManager(this.options.maxConcurrency || 5);
+  }
+
+  async uploadFilesQueue(
+    files: StorageUploadInput[],
+  ): Promise&lt;StorageUploadResult[]&gt; {
+    if (!files.length) {
+      throw new BadRequestException(&#x27;At least one file is required&#x27;);
+    }
+
+    const uploadPromises &#x3D; files.map(async (fileInput) &#x3D;&gt; {
+      const key &#x3D; StorageHelper.resolveUploadKey(fileInput);
+      const bucket &#x3D; fileInput.bucket ?? this.options.defaultBucket;
+
+      await this.uploadQueue({
+        file: fileInput.file.buffer,
+        key: key,
+        mimetype: fileInput.contentType ?? fileInput.file.mimetype,
+        bucket: bucket,
+      });
+
+      return {
+        key,
+        bucket,
+        id: fileInput.id,
+      };
+    });
+
+    return Promise.all(uploadPromises);
+  }
+
+  /**
+   * Método para cargar imagen
+   * @param input Datos de la imagen: file, key, mimetype, bucket
+   * @returns void
+   */
+  async uploadQueue(input: {
+    file: Buffer;
+    key: string;
+    mimetype: string;
+    bucket?: string;
+  }): Promise&lt;PutObjectCommandOutput&gt; {
+    return this.manager.enqueue(
+      () &#x3D;&gt;
+        this.s3.send(
+          new PutObjectCommand({
+            Bucket: input.bucket ?? this.options.defaultBucket,
+            Key: input.key,
+            Body: input.file,
+            ContentType: input.mimetype,
+          }),
+        ),
+      {
+        attempts: this?.options?.retryAttempts ?? 3,
+        delayMs: 1000,
+        shouldRetry: (err) &#x3D;&gt; StorageHelper.isRetryable(err),
+      },
+    );
+  }
+
+  /**
+   * Método que tiene la url pre-firmada, soporta expiración variable y ser llamado por el queue.
+   * @param target Archivo objetivo, contiene: key, bucket, userId
+   * @returns string
+   */
+  async getPresignedUrlQueue(target: {
+    key: string;
+    bucket?: string;
+    expiresIn?: number;
+  }): Promise&lt;string&gt; {
+    const bucket &#x3D; target.bucket ?? this.options.defaultBucket;
+    const expiresIn &#x3D;
+      target.expiresIn ?? this.options.presignedUrlExpiresInSeconds;
+
+    const cacheKey &#x3D; &#x60;${bucket}:${target.key}:${expiresIn}&#x60;;
+    const now &#x3D; Date.now();
+
+    if (this.urlCache.has(cacheKey)) {
+      const cached &#x3D; this.urlCache.get(cacheKey)!;
+      if (cached.expires &gt; now + 60000) return cached.url;
+    }
+
+    return this.manager.enqueue(
+      async () &#x3D;&gt; {
+        const url &#x3D; await getSignedUrl(
+          this.s3 as any,
+          new GetObjectCommand({ Bucket: bucket, Key: target.key }) as any,
+          { expiresIn },
+        );
+
+        this.urlCache.set(cacheKey, {
+          url,
+          expires: now + expiresIn * 1000,
+        });
+
+        return url;
+      },
+      { attempts: 2, delayMs: 500 },
+    );
+  }
+
+  async getPresignedGetUrlsQueue(
+    files: PresignedUrlTarget[],
+    options?: StoragePresignedUrlOptions,
+  ): Promise&lt;StoragePresignedUrlResult[]&gt; {
+    if (!files.length) {
+      throw new BadRequestException(&#x27;At least one key is required&#x27;);
+    }
+
+    const expiresInSeconds &#x3D; StorageHelper.resolvePresignedUrlExpiresIn(
+      options?.expiresInSeconds ?? this.options.presignedUrlExpiresInSeconds,
+    );
+
+    const urlPromises &#x3D; files.map(async (fileInput) &#x3D;&gt; {
+      const normalizedFile &#x3D;
+        typeof fileInput &#x3D;&#x3D;&#x3D; &#x27;string&#x27; ? { key: fileInput } : fileInput;
+      const key &#x3D; StorageHelper.normalizeKey(normalizedFile.key, &#x27;key&#x27;);
+      const bucket &#x3D; normalizedFile.bucket ?? this.options.defaultBucket;
+
+      const url &#x3D; await this.getPresignedUrlQueue({
+        key,
+        bucket,
+        expiresIn: expiresInSeconds,
+      });
+
+      return {
+        key,
+        bucket,
+        url,
+        id: normalizedFile.id,
+      };
+    });
+
+    return Promise.all(urlPromises);
+  }
+
+  /**
+   * Borra múltiples archivos del storage respetando la cola de concurrencia.
+   * @param keys Array de llaves de los archivos
+   * @param bucket Bucket (opcional)
+   */
+  async deleteFilesQueue(
+    keys: string[],
+    bucket?: string,
+  ): Promise&lt;DeleteObjectCommandOutput[]&gt; {
+    if (!keys.length) return [];
+
+    const deletePromises &#x3D; keys.map((key) &#x3D;&gt; this.deleteQueue(key, bucket));
+
+    return Promise.all(deletePromises);
+  }
+
+  /**
+   * Borrado Seguro (Reemplazo/Update)
+   * @param key Llave del archivo
+   * @param bucket Bucket
+   * @returns
+   */
+  async deleteQueue(
+    key: string,
+    bucket?: string,
+  ): Promise&lt;DeleteObjectCommandOutput&gt; {
+    return this.manager.enqueue(
+      () &#x3D;&gt;
+        this.s3.send(
+          new DeleteObjectCommand({
+            Bucket: bucket ?? this.options.defaultBucket,
+            Key: key,
+          }),
+        ),
+      {
+        attempts: this.options.retryAttempts ?? 3,
+        delayMs: 1000,
+        shouldRetry: (err) &#x3D;&gt; StorageHelper.isRetryable(err),
+      },
+    );
+  }
+
+  async uploadFilesBatch(
+    files: StorageUploadInput[],
+    executionOptions?: StorageExecutionOptions,
+  ): Promise&lt;StorageUploadResult[]&gt; {
+    if (!files.length) {
+      throw new BadRequestException(&#x27;At least one file is required&#x27;);
+    }
+
+    const process &#x3D; new ProcessBatchManager();
+
+    const maxConcurrency &#x3D; StorageHelper.resolvePositiveNumber(
+      executionOptions?.maxConcurrency ?? this.options.maxConcurrency,
+      &#x27;maxConcurrency&#x27;,
+    );
+
+    return process.processInBatches(
+      files,
+      maxConcurrency,
+      (fileInput): Promise&lt;StorageUploadResult&gt; &#x3D;&gt;
+        this.uploadSingleFileBatch(fileInput, executionOptions),
+    );
+  }
+
+  async deleteFilesBatch(
+    files: DeleteFileTarget[],
+    executionOptions?: StorageExecutionOptions,
+  ): Promise&lt;void&gt; {
+    if (!files.length) {
+      throw new BadRequestException(&#x27;At least one key is required&#x27;);
+    }
+    const process &#x3D; new ProcessBatchManager();
+
+    const maxConcurrency &#x3D; StorageHelper.resolvePositiveNumber(
+      executionOptions?.maxConcurrency ?? this.options.maxConcurrency,
+      &#x27;maxConcurrency&#x27;,
+    );
+
+    await process.processInBatches(files, maxConcurrency, async (fileInput) &#x3D;&gt; {
+      const normalizedFile &#x3D;
+        typeof fileInput &#x3D;&#x3D;&#x3D; &#x27;string&#x27; ? { key: fileInput } : fileInput;
+      const key &#x3D; StorageHelper.normalizeKey(normalizedFile.key, &#x27;key&#x27;);
+      const bucket &#x3D; normalizedFile.bucket ?? this.options.defaultBucket;
+
+      await process.executeWithRetry(
+        () &#x3D;&gt;
+          this.s3.send(
+            new DeleteObjectCommand({
+              Bucket: bucket,
+              Key: key,
+            }),
+          ),
+        executionOptions,
+      );
+    });
+  }
+
+  async deleteFileBatch(keys: string[]): Promise&lt;void&gt; {
+    await this.deleteFilesBatch(keys);
+  }
+
+  async getPresignedGetUrlsBatch(
+    files: PresignedUrlTarget[],
+    options?: StoragePresignedUrlOptions,
+  ): Promise&lt;StoragePresignedUrlResult[]&gt; {
+    if (!files.length) {
+      throw new BadRequestException(&#x27;At least one key is required&#x27;);
+    }
+    const process &#x3D; new ProcessBatchManager();
+
+    const maxConcurrency &#x3D; StorageHelper.resolvePositiveNumber(
+      options?.maxConcurrency ?? this.options.maxConcurrency,
+      &#x27;maxConcurrency&#x27;,
+    );
+    const expiresInSeconds &#x3D; StorageHelper.resolvePresignedUrlExpiresIn(
+      options?.expiresInSeconds,
+    );
+
+    return process.processInBatches(
+      files,
+      maxConcurrency,
+      async (fileInput): Promise&lt;StoragePresignedUrlResult&gt; &#x3D;&gt; {
+        const normalizedFile &#x3D;
+          typeof fileInput &#x3D;&#x3D;&#x3D; &#x27;string&#x27; ? { key: fileInput } : fileInput;
+        const key &#x3D; StorageHelper.normalizeKey(normalizedFile.key, &#x27;key&#x27;);
+        const bucket &#x3D; normalizedFile.bucket ?? this.options.defaultBucket;
+        const signerClient &#x3D; this.s3 as unknown as Parameters&lt;
+          typeof getSignedUrl
+        &gt;[0];
+        const getObjectCommand &#x3D; new GetObjectCommand({
+          Bucket: bucket,
+          Key: key,
+        }) as unknown as Parameters&lt;typeof getSignedUrl&gt;[1];
+
+        const url &#x3D; await getSignedUrl(signerClient, getObjectCommand, {
+          expiresIn: expiresInSeconds,
+        });
+
+        return {
+          key,
+          bucket,
+          url,
+          id: normalizedFile.id,
+        };
+      },
+    );
+  }
+
+  private async uploadSingleFileBatch(
+    fileInput: StorageUploadInput,
+    executionOptions?: StorageExecutionOptions,
+  ): Promise&lt;StorageUploadResult&gt; {
+    StorageHelper.validateFileInput(fileInput);
+    const process &#x3D; new ProcessBatchManager();
+
+    const bucket &#x3D; fileInput.bucket ?? this.options.defaultBucket;
+    const key &#x3D; StorageHelper.resolveUploadKey(fileInput);
+
+    try {
+      await process.executeWithRetry(
+        () &#x3D;&gt;
+          this.s3.send(
+            new PutObjectCommand({
+              Bucket: bucket,
+              Key: key,
+              Body: fileInput.file.buffer,
+              ContentType: fileInput.contentType ?? fileInput.file.mimetype,
+              ContentDisposition: fileInput.contentDisposition,
+              Metadata: fileInput.metadata,
+            }),
+          ),
+        executionOptions,
+      );
+    } catch (error) {
+      throw new ServiceUnavailableException(
+        &#x27;Storage service is temporarily unavailable&#x27;,
+        { cause: error },
+      );
+    }
+
+    return {
+      key,
+      bucket,
+      id: fileInput.id,
+    };
+  }
+}
+</code></pre>
+    </div>
+
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+                   </div><div class="search-results">
+    <div class="has-results">
+        <h1 class="search-results-title"><span class='search-results-count'></span> results matching "<span class='search-query'></span>"</h1>
+        <ul class="search-results-list"></ul>
+    </div>
+    <div class="no-results">
+        <h1 class="search-results-title">No results matching "<span class='search-query'></span>"</h1>
+    </div>
+</div>
+</div>
+               <!-- END CONTENT -->
+           </div>
+       </div>
+
+          <label class="dark-mode-switch">
+               <input type="checkbox">
+               <span class="slider">
+                    <svg class="slider-icon" viewBox="0 0 24 24" fill="none" height="20" stroke="#000" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" width="20" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M21 12.79A9 9 0 1111.21 3 7 7 0 0021 12.79z"></path>
+                    </svg>
+               </span>
+          </label>
+
+       <script>
+            var COMPODOC_CURRENT_PAGE_DEPTH = 1;
+            var COMPODOC_CURRENT_PAGE_CONTEXT = 'injectable';
+            var COMPODOC_CURRENT_PAGE_URL = 'StorageService.html';
+            var MAX_SEARCH_RESULTS = 15;
+       </script>
+
+       <script>
+               $darkModeToggleSwitchers = document.querySelectorAll('.dark-mode-switch input');
+               checkToggle(darkModeState);
+               if ($darkModeToggleSwitchers.length > 0) {
+                    for (var i = 0; i < $darkModeToggleSwitchers.length; i++) {
+                         $darkModeToggleSwitchers[i].addEventListener('change', function (event) {
+                              darkModeState = !darkModeState;
+                              toggleDarkMode(darkModeState);
+                         });
+                    }
+               }
+          </script>
+
+       <script src="../js/libs/custom-elements.min.js"></script>
+       <script src="../js/libs/lit-html.js"></script>
+
+       <script src="../js/menu-wc.js" defer></script>
+       <script nomodule src="../js/menu-wc_es5.js" defer></script>
+
+       <script src="../js/libs/bootstrap-native.js"></script>
+
+       <script src="../js/libs/es6-shim.min.js"></script>
+       <script src="../js/libs/EventDispatcher.js"></script>
+       <script src="../js/libs/promise.min.js"></script>
+
+       <script src="../js/compodoc.js"></script>
+
+       <script src="../js/tabs.js"></script>
+       <script src="../js/menu.js"></script>
+       <script src="../js/libs/clipboard.min.js"></script>
+       <script src="../js/libs/prism.js"></script>
+       <script src="../js/sourceCode.js"></script>
+          <script src="../js/search/search.js"></script>
+          <script src="../js/search/lunr.min.js"></script>
+          <script src="../js/search/search-lunr.js"></script>
+          <script src="../js/search/search_index.js"></script>
+       <script src="../js/lazy-load-graphs.js"></script>
+
+
+    </body>
+</html>

@@ -2,37 +2,69 @@
 /* eslint-disable @typescript-eslint/no-unsafe-call */
 import { Injectable, Logger, OnModuleInit } from '@nestjs/common';
 import { PrismaClient } from '@prisma/client';
+import { AsyncLocalStorage } from 'async_hooks';
 
-//import { REQUEST } from '@nestjs/core';
-//import { TRACE_ID_HEADER } from '../middlewares/trace-id.middleware';
+export const auditStorage = new AsyncLocalStorage<{
+  userId: string;
+  ip: string;
+  userAgent: string;
+  applicationName: string;
+}>();
+
+// Guard: evita re-entrar a la lógica de auditoría cuando tx[model][operation] re-dispara la extensión
+const auditTxActive = new AsyncLocalStorage<boolean>();
 
 @Injectable()
 export class PrismaDatasource extends PrismaClient implements OnModuleInit {
   public isConnected: boolean = false;
   private readonly logger = new Logger(PrismaDatasource.name);
 
-  /*constructor(@Inject(REQUEST) private readonly request: Request) {
-    super({
-      log: [
-        { emit: 'event', level: 'query' },
-        { emit: 'event', level: 'info' },
-        { emit: 'event', level: 'warn' },
-        { emit: 'event', level: 'error' },
-      ],
-    });
+  public readonly extended = this.$extends({
+    query: {
+      $allModels: {
+        $allOperations: async ({ model, operation, args, query }) => {
+          const writeOperations = [
+            'create',
+            'update',
+            'upsert',
+            'delete',
+            'createMany',
+            'updateMany',
+            'deleteMany',
+          ];
 
-    this.$on('query' as never, (event: Prisma.QueryEvent) =>
-      this.handleDbQueryEvent(event),
-    );
+          const context = auditStorage.getStore();
+          const isReentrant = auditTxActive.getStore();
 
-    this.$on('error' as never, (error: Prisma.PrismaClientKnownRequestError) =>
-      this.handleDbQueryError(error),
-    );
+          if (
+            context &&
+            !isReentrant &&
+            writeOperations.includes(operation) &&
+            (model as string) !== 'AuditLogs'
+          ) {
+            const base = this as unknown as PrismaClient;
 
-    this.$on('warn' as never, (warn: any) => this.handleDbQueryWarn(warn));
+            return auditTxActive.run(true, () =>
+              base.$transaction(async (tx) => {
+                // set_config con is_local=true: aplica solo a esta transacción
+                // $executeRaw con template literals: parametrizado, sin riesgo de SQL injection
+                await tx.$executeRaw`SELECT set_config('app.current_user_id', ${context.userId}, true)`;
+                await tx.$executeRaw`SELECT set_config('app.client_ip', ${context.ip}, true)`;
+                await tx.$executeRaw`SELECT set_config('app.user_agent', ${context.userAgent}, true)`;
+                await tx.$executeRaw`SELECT set_config('app.application_name', ${context.applicationName}, true)`;
 
-    this.$on('info' as never, (info: any) => this.handleDbQueryInfo(info));
-  }*/
+                // Ejecutar la operación del modelo a través de tx (misma conexión/transacción)
+                // Así el trigger dispara dentro de la misma tx y lee las variables de sesión
+                return tx[model as string][operation](args) as Promise<unknown>;
+              }),
+            );
+          }
+
+          return query(args);
+        },
+      },
+    },
+  });
 
   async onModuleInit() {
     await this.$connect()

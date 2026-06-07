@@ -1,9 +1,19 @@
 {
   "moduleFileExtensions": ["js", "json", "ts"],
   "rootDir": ".",
-  "testEnvironment": "node",
-  "testRegex": ".e2e-spec.ts$",
+  "testRegex": ".*\\.e2e-spec\\.ts$",
   "transform": {
     "^.+\\.(t|j)s$": "ts-jest"
-  }
+  },
+  "moduleNameMapper": {
+    "^@core/(.*)$": "<rootDir>/../src/core/$1",
+    "^@modules/(.*)$": "<rootDir>/../src/modules/$1",
+    "^@api/(.*)$": "<rootDir>/../src/api/$1",
+    "^@common/(.*)$": "<rootDir>/../src/common/$1",
+    "^@shared/(.*)$": "<rootDir>/../src/shared/$1",
+    "^@helpers/(.*)$": "<rootDir>/../src/helpers/$1",
+    "^@auth/(.*)$": "<rootDir>/../src/modules/auth/$1",
+    "^@email/(.*)$": "<rootDir>/../src/modules/email/$1"
+  },
+  "testEnvironment": "node"
 }

@@ -164,24 +164,10 @@
                                     <span class="modifier"></span>
                                     <span class="modifier"></span>
                                     <span class="modifier"></span>
-                                    <span class="modifier"></span>
-                                    <span class="modifier"></span>
-                                    <span class="modifier"></span>
-                                    <span class="modifier"></span>
-                                    <span class="modifier"></span>
-                                    <span class="modifier"></span>
-                                    <span class="modifier"></span>
                                     <span class="modifier">Async</span>
                                 <a href="#changePassword" >changePassword</a>
                             </li>
                             <li>
-                                    <span class="modifier"></span>
-                                    <span class="modifier"></span>
-                                    <span class="modifier"></span>
-                                    <span class="modifier"></span>
-                                    <span class="modifier"></span>
-                                    <span class="modifier"></span>
-                                    <span class="modifier"></span>
                                     <span class="modifier"></span>
                                     <span class="modifier"></span>
                                     <span class="modifier"></span>
@@ -196,24 +182,10 @@
                                     <span class="modifier"></span>
                                     <span class="modifier"></span>
                                     <span class="modifier"></span>
-                                    <span class="modifier"></span>
-                                    <span class="modifier"></span>
-                                    <span class="modifier"></span>
-                                    <span class="modifier"></span>
-                                    <span class="modifier"></span>
-                                    <span class="modifier"></span>
-                                    <span class="modifier"></span>
                                     <span class="modifier">Async</span>
                                 <a href="#forgotPassword" >forgotPassword</a>
                             </li>
                             <li>
-                                    <span class="modifier"></span>
-                                    <span class="modifier"></span>
-                                    <span class="modifier"></span>
-                                    <span class="modifier"></span>
-                                    <span class="modifier"></span>
-                                    <span class="modifier"></span>
-                                    <span class="modifier"></span>
                                     <span class="modifier"></span>
                                     <span class="modifier"></span>
                                     <span class="modifier"></span>
@@ -227,31 +199,10 @@
                                     <span class="modifier"></span>
                                     <span class="modifier"></span>
                                     <span class="modifier"></span>
-                                    <span class="modifier"></span>
-                                    <span class="modifier"></span>
-                                    <span class="modifier"></span>
-                                    <span class="modifier"></span>
-                                    <span class="modifier">Async</span>
-                                <a href="#logout" >logout</a>
-                            </li>
-                            <li>
-                                    <span class="modifier"></span>
-                                    <span class="modifier"></span>
-                                    <span class="modifier"></span>
-                                    <span class="modifier"></span>
-                                    <span class="modifier"></span>
-                                    <span class="modifier"></span>
-                                    <span class="modifier"></span>
-                                    <span class="modifier"></span>
                                     <span class="modifier">Async</span>
                                 <a href="#refreshToken" >refreshToken</a>
                             </li>
                             <li>
-                                    <span class="modifier"></span>
-                                    <span class="modifier"></span>
-                                    <span class="modifier"></span>
-                                    <span class="modifier"></span>
-                                    <span class="modifier"></span>
                                     <span class="modifier"></span>
                                     <span class="modifier"></span>
                                     <span class="modifier"></span>
@@ -266,12 +217,8 @@
                                     <span class="modifier"></span>
                                     <span class="modifier"></span>
                                     <span class="modifier"></span>
-                                    <span class="modifier"></span>
-                                    <span class="modifier"></span>
-                                    <span class="modifier"></span>
-                                    <span class="modifier"></span>
-                                    <span class="modifier"></span>
-                                <a href="#userVerificationStatus" >userVerificationStatus</a>
+                                    <span class="modifier">Async</span>
+                                <a href="#sendCreatePasswordEmail" >sendCreatePasswordEmail</a>
                             </li>
                             <li>
                                     <span class="modifier"></span>
@@ -279,6 +226,28 @@
                                     <span class="modifier"></span>
                                     <span class="modifier"></span>
                                     <span class="modifier"></span>
+                                    <span class="modifier">Async</span>
+                                <a href="#sendPasswordResetEmail" >sendPasswordResetEmail</a>
+                            </li>
+                            <li>
+                                    <span class="modifier"></span>
+                                    <span class="modifier"></span>
+                                    <span class="modifier"></span>
+                                    <span class="modifier"></span>
+                                    <span class="modifier"></span>
+                                    <span class="modifier">Async</span>
+                                <a href="#sendVerificationEmail" >sendVerificationEmail</a>
+                            </li>
+                            <li>
+                                    <span class="modifier"></span>
+                                    <span class="modifier"></span>
+                                    <span class="modifier"></span>
+                                    <span class="modifier"></span>
+                                    <span class="modifier"></span>
+                                    <span class="modifier">Async</span>
+                                <a href="#userVerificationStatus" >userVerificationStatus</a>
+                            </li>
+                            <li>
                                     <span class="modifier"></span>
                                     <span class="modifier"></span>
                                     <span class="modifier"></span>
@@ -316,13 +285,6 @@
                             <span class="modifier"></span>
                             <span class="modifier"></span>
                             <span class="modifier"></span>
-                            <span class="modifier"></span>
-                            <span class="modifier"></span>
-                            <span class="modifier"></span>
-                            <span class="modifier"></span>
-                            <span class="modifier"></span>
-                            <span class="modifier"></span>
-                            <span class="modifier"></span>
                             <span class="modifier">Async</span>
                         <span ><b>changePassword</b></span>
                         <a href="#changePassword"><span class="icon ion-ios-link"></span></a>
@@ -332,7 +294,7 @@
             <tr>
                 <td class="col-md-4">
                         <span class="modifier-icon icon ion-ios-reset"></span>
-                    <code>changePassword(dto: <a href="../classes/UpdateUserPasswordDto.html" target="_self">UpdateUserPasswordDto</a>)</code>
+                    <code>changePassword(dto: <a href="../classes/UpdateUserPasswordDTO.html" target="_self">DTO.UpdateUserPasswordDTO</a>)</code>
                 </td>
             </tr>
 
@@ -340,14 +302,14 @@
                 <td class="col-md-4">
                     <b>Decorators : </b>
                     <br />
-                    <code>@Put(&#x27;change-password&#x27;)<br />@ApiBearerAuth()<br />@Version(&#x27;1&#x27;)<br />@HttpCode(200)<br />@ApiOperation({summary: &#x27;Cambio de credenciales y password del usuario.&#x27;, description: &#x27;Cambio de credenciales y password del usuario.&#x27;})<br />@ApiOkResponse({description: &#x27;Credenciales actualizadas correctamente.&#x27;, example: undefined})<br />@ApiUnauthorizedResponse({description: &#x27;Credenciales inválidas.&#x27;, type: UnauthorizedException, example: undefined})<br />@ApiForbiddenResponse({description: &#x27;Usuario bloqueado.&#x27;, example: undefined})<br />@ApiNotFoundResponse({description: &#x27;Usuario no encontrado.&#x27;, example: undefined})<br />@ApiBadRequestResponse({description: &#x27;Solicitud mal formada, verifique los datos y/o parametros enviados.&#x27;, example: undefined})<br />@ApiInternalServerErrorResponse({description: &#x27;Error interno del servidor al procesar la solicitud.&#x27;, example: undefined})<br />@UseGuards(JwtAuthGuard, PermissionsGuard)<br />@Permissions(PermissionsEnum.USER_PASSWORD_UPDATE, PermissionsEnum.ADMIN_ALL)<br /></code>
+                    <code>@Put(&#x27;change-password&#x27;)<br />@ApiBearerAuth()<br />@Version(&#x27;1&#x27;)<br />@UseGuards(JwtAuthGuard, PermissionsGuard)<br />@Permissions(undefined.UPDATE, undefined.ALL)<br />@AuthDocs(&#x27;changePassword&#x27;)<br /></code>
                 </td>
             </tr>
 
                     <tr>
                         <td class="col-md-4">
-                            <div class="io-line">Defined in <a href="" data-line="259"
-                                    class="link-to-prism">src/api/auth/controllers/auth-api.controller.ts:259</a></div>
+                            <div class="io-line">Defined in <a href="" data-line="95"
+                                    class="link-to-prism">src/api/auth/controllers/auth-api.controller.ts:95</a></div>
                         </td>
                     </tr>
 
@@ -370,7 +332,7 @@
                                         <tr>
                                                 <td>dto</td>
                                             <td>
-                                                            <code><a href="../classes/UpdateUserPasswordDto.html" target="_self" >UpdateUserPasswordDto</a></code>
+                                                            <code><a href="../classes/UpdateUserPasswordDTO.html" target="_self" >DTO.UpdateUserPasswordDTO</a></code>
                                             </td>
 
                                             <td>
@@ -383,7 +345,7 @@
                                 </table>
                             </div>
                         <div class="io-description">
-                            <b>Returns : </b>    <code>Promise&lt;literal type&gt;</code>
+                            <b>Returns : </b>        <code><a href="../classes/PasswordResponseDTO.html" target="_self" >Promise&lt;DTO.PasswordResponseDTO&gt;</a></code>
 
                         </div>
                             <div class="io-description">
@@ -404,13 +366,6 @@
                             <span class="modifier"></span>
                             <span class="modifier"></span>
                             <span class="modifier"></span>
-                            <span class="modifier"></span>
-                            <span class="modifier"></span>
-                            <span class="modifier"></span>
-                            <span class="modifier"></span>
-                            <span class="modifier"></span>
-                            <span class="modifier"></span>
-                            <span class="modifier"></span>
                             <span class="modifier">Async</span>
                         <span ><b>createPassword</b></span>
                         <a href="#createPassword"><span class="icon ion-ios-link"></span></a>
@@ -420,7 +375,7 @@
             <tr>
                 <td class="col-md-4">
                         <span class="modifier-icon icon ion-ios-reset"></span>
-                    <code>createPassword(dto: <a href="../classes/LoginUserDto.html" target="_self">LoginUserDto</a>)</code>
+                    <code>createPassword(dto: <a href="../classes/CreatePasswordDTO.html" target="_self">DTO.CreatePasswordDTO</a>)</code>
                 </td>
             </tr>
 
@@ -428,14 +383,14 @@
                 <td class="col-md-4">
                     <b>Decorators : </b>
                     <br />
-                    <code>@Post(&#x27;create-password&#x27;)<br />@Version(&#x27;1&#x27;)<br />@ApiBasicAuth()<br />@UseGuards(BasicAuthGuard)<br />@HttpCode(201)<br />@ApiOperation({summary: &#x27;Creación de credenciales y password del usuario.&#x27;, description: &#x27;Creación de credenciales y password del usuario.&#x27;})<br />@ApiOkResponse({description: &#x27;Credenciales creadas correctamente.&#x27;, example: undefined})<br />@ApiUnauthorizedResponse({description: &#x27;Credenciales inválidas.&#x27;, type: UnauthorizedException, example: undefined})<br />@ApiForbiddenResponse({description: &#x27;Usuario bloqueado.&#x27;, example: undefined})<br />@ApiNotFoundResponse({description: &#x27;Usuario no encontrado.&#x27;, example: undefined})<br />@ApiBadRequestResponse({description: &#x27;Solicitud mal formada, verifique los datos y/o parametros enviados.&#x27;, example: undefined})<br />@ApiInternalServerErrorResponse({description: &#x27;Error interno del servidor al procesar la solicitud.&#x27;, example: undefined})<br /></code>
+                    <code>@Post(&#x27;create-password&#x27;)<br />@Version(&#x27;1&#x27;)<br />@ApiBasicAuth()<br />@UseGuards(BasicAuthGuard)<br />@AuthDocs(&#x27;createPassword&#x27;)<br /></code>
                 </td>
             </tr>
 
                     <tr>
                         <td class="col-md-4">
-                            <div class="io-line">Defined in <a href="" data-line="195"
-                                    class="link-to-prism">src/api/auth/controllers/auth-api.controller.ts:195</a></div>
+                            <div class="io-line">Defined in <a href="" data-line="83"
+                                    class="link-to-prism">src/api/auth/controllers/auth-api.controller.ts:83</a></div>
                         </td>
                     </tr>
 
@@ -458,7 +413,7 @@
                                         <tr>
                                                 <td>dto</td>
                                             <td>
-                                                            <code><a href="../classes/LoginUserDto.html" target="_self" >LoginUserDto</a></code>
+                                                            <code><a href="../classes/CreatePasswordDTO.html" target="_self" >DTO.CreatePasswordDTO</a></code>
                                             </td>
 
                                             <td>
@@ -471,7 +426,7 @@
                                 </table>
                             </div>
                         <div class="io-description">
-                            <b>Returns : </b>    <code>Promise&lt;literal type&gt;</code>
+                            <b>Returns : </b>        <code><a href="../classes/PasswordResponseDTO.html" target="_self" >Promise&lt;DTO.PasswordResponseDTO&gt;</a></code>
 
                         </div>
                             <div class="io-description">
@@ -492,13 +447,6 @@
                             <span class="modifier"></span>
                             <span class="modifier"></span>
                             <span class="modifier"></span>
-                            <span class="modifier"></span>
-                            <span class="modifier"></span>
-                            <span class="modifier"></span>
-                            <span class="modifier"></span>
-                            <span class="modifier"></span>
-                            <span class="modifier"></span>
-                            <span class="modifier"></span>
                             <span class="modifier">Async</span>
                         <span ><b>forgotPassword</b></span>
                         <a href="#forgotPassword"><span class="icon ion-ios-link"></span></a>
@@ -508,7 +456,7 @@
             <tr>
                 <td class="col-md-4">
                         <span class="modifier-icon icon ion-ios-reset"></span>
-                    <code>forgotPassword(dto: <a href="../classes/ForgotUserPasswordDto.html" target="_self">ForgotUserPasswordDto</a>)</code>
+                    <code>forgotPassword(dto: <a href="../classes/ForgotUserPasswordDTO.html" target="_self">DTO.ForgotUserPasswordDTO</a>)</code>
                 </td>
             </tr>
 
@@ -516,14 +464,14 @@
                 <td class="col-md-4">
                     <b>Decorators : </b>
                     <br />
-                    <code>@Put(&#x27;forgot-password&#x27;)<br />@ApiBearerAuth()<br />@Version(&#x27;1&#x27;)<br />@HttpCode(200)<br />@ApiOperation({summary: &#x27;Olvide mi contraseña. Cambio de credenciales y password del usuario.&#x27;, description: &#x27;Olvide mi contraseña. Cambio de credenciales y password del usuario.&#x27;})<br />@ApiOkResponse({description: &#x27;Credenciales actualizadas correctamente.&#x27;, example: undefined})<br />@ApiUnauthorizedResponse({description: &#x27;Credenciales inválidas.&#x27;, type: UnauthorizedException, example: undefined})<br />@ApiForbiddenResponse({description: &#x27;Usuario bloqueado.&#x27;, example: undefined})<br />@ApiNotFoundResponse({description: &#x27;Usuario no encontrado.&#x27;, example: undefined})<br />@ApiBadRequestResponse({description: &#x27;Solicitud mal formada, verifique los datos y/o parametros enviados.&#x27;, example: undefined})<br />@ApiInternalServerErrorResponse({description: &#x27;Error interno del servidor al procesar la solicitud.&#x27;, example: undefined})<br />@UseGuards(JwtAuthGuard)<br /></code>
+                    <code>@Put(&#x27;forgot-password&#x27;)<br />@ApiBasicAuth()<br />@Version(&#x27;1&#x27;)<br />@UseGuards(BasicAuthGuard)<br />@AuthDocs(&#x27;forgotPassword&#x27;)<br /></code>
                 </td>
             </tr>
 
                     <tr>
                         <td class="col-md-4">
-                            <div class="io-line">Defined in <a href="" data-line="325"
-                                    class="link-to-prism">src/api/auth/controllers/auth-api.controller.ts:325</a></div>
+                            <div class="io-line">Defined in <a href="" data-line="106"
+                                    class="link-to-prism">src/api/auth/controllers/auth-api.controller.ts:106</a></div>
                         </td>
                     </tr>
 
@@ -546,7 +494,7 @@
                                         <tr>
                                                 <td>dto</td>
                                             <td>
-                                                            <code><a href="../classes/ForgotUserPasswordDto.html" target="_self" >ForgotUserPasswordDto</a></code>
+                                                            <code><a href="../classes/ForgotUserPasswordDTO.html" target="_self" >DTO.ForgotUserPasswordDTO</a></code>
                                             </td>
 
                                             <td>
@@ -559,7 +507,7 @@
                                 </table>
                             </div>
                         <div class="io-description">
-                            <b>Returns : </b>    <code>Promise&lt;literal type&gt;</code>
+                            <b>Returns : </b>        <code><a href="../classes/PasswordResponseDTO.html" target="_self" >Promise&lt;DTO.PasswordResponseDTO&gt;</a></code>
 
                         </div>
                             <div class="io-description">
@@ -580,13 +528,6 @@
                             <span class="modifier"></span>
                             <span class="modifier"></span>
                             <span class="modifier"></span>
-                            <span class="modifier"></span>
-                            <span class="modifier"></span>
-                            <span class="modifier"></span>
-                            <span class="modifier"></span>
-                            <span class="modifier"></span>
-                            <span class="modifier"></span>
-                            <span class="modifier"></span>
                             <span class="modifier">Async</span>
                         <span ><b>login</b></span>
                         <a href="#login"><span class="icon ion-ios-link"></span></a>
@@ -596,7 +537,7 @@
             <tr>
                 <td class="col-md-4">
                         <span class="modifier-icon icon ion-ios-reset"></span>
-                    <code>login(dto: <a href="../classes/LoginUserDto.html" target="_self">LoginUserDto</a>, req: Request, res: Response)</code>
+                    <code>login(dto: <a href="../classes/LoginUserDTO.html" target="_self">DTO.LoginUserDTO</a>, req: Request, res: Response)</code>
                 </td>
             </tr>
 
@@ -604,14 +545,14 @@
                 <td class="col-md-4">
                     <b>Decorators : </b>
                     <br />
-                    <code>@Post(&#x27;login&#x27;)<br />@Version(&#x27;1&#x27;)<br />@ApiBasicAuth()<br />@UseGuards(BasicAuthGuard)<br />@HttpCode(200)<br />@ApiOperation({summary: &#x27;Login del usuario con hash dinámico y nonce.&#x27;, description: &#x27;Login del usuario, si es primer login se importan sus datos y configuraciones.&#x27;})<br />@ApiOkResponse({description: &#x27;Usuario logueado exitosamente.&#x27;, type: LoginUserResponseDto, headers: undefined})<br />@ApiUnauthorizedResponse({description: &#x27;Credenciales inválidas.&#x27;, type: UnauthorizedException, example: undefined})<br />@ApiForbiddenResponse({description: &#x27;Usuario bloqueado.&#x27;, example: undefined})<br />@ApiNotFoundResponse({description: &#x27;Usuario no encontrado.&#x27;, example: undefined})<br />@ApiBadRequestResponse({description: &#x27;Solicitud mal formada, verifique los datos y/o parametros enviados.&#x27;, example: undefined})<br />@ApiInternalServerErrorResponse({description: &#x27;Error interno del servidor al procesar la solicitud.&#x27;, example: undefined})<br /></code>
+                    <code>@Post(&#x27;login&#x27;)<br />@Version(&#x27;1&#x27;)<br />@ApiBasicAuth()<br />@UseGuards(BasicAuthGuard)<br />@AuthDocs(&#x27;login&#x27;)<br /></code>
                 </td>
             </tr>
 
                     <tr>
                         <td class="col-md-4">
-                            <div class="io-line">Defined in <a href="" data-line="120"
-                                    class="link-to-prism">src/api/auth/controllers/auth-api.controller.ts:120</a></div>
+                            <div class="io-line">Defined in <a href="" data-line="51"
+                                    class="link-to-prism">src/api/auth/controllers/auth-api.controller.ts:51</a></div>
                         </td>
                     </tr>
 
@@ -634,7 +575,7 @@
                                         <tr>
                                                 <td>dto</td>
                                             <td>
-                                                            <code><a href="../classes/LoginUserDto.html" target="_self" >LoginUserDto</a></code>
+                                                            <code><a href="../classes/LoginUserDTO.html" target="_self" >DTO.LoginUserDTO</a></code>
                                             </td>
 
                                             <td>
@@ -671,91 +612,7 @@
                                 </table>
                             </div>
                         <div class="io-description">
-                            <b>Returns : </b>        <code><a href="../miscellaneous/variables.html#User" target="_self" >Promise&lt;LoginUserResponseDto&gt;</a></code>
-
-                        </div>
-                            <div class="io-description">
-                                
-                            </div>
-                </td>
-            </tr>
-        </tbody>
-    </table>
-    <table class="table table-sm table-bordered">
-        <tbody>
-            <tr>
-                <td class="col-md-4">
-                    <a name="logout"></a>
-                    <span class="name">
-                            <span class="modifier"></span>
-                            <span class="modifier"></span>
-                            <span class="modifier"></span>
-                            <span class="modifier"></span>
-                            <span class="modifier"></span>
-                            <span class="modifier"></span>
-                            <span class="modifier"></span>
-                            <span class="modifier"></span>
-                            <span class="modifier">Async</span>
-                        <span ><b>logout</b></span>
-                        <a href="#logout"><span class="icon ion-ios-link"></span></a>
-                    </span>
-                </td>
-            </tr>
-            <tr>
-                <td class="col-md-4">
-                        <span class="modifier-icon icon ion-ios-reset"></span>
-                    <code>logout(req: <a href="../interfaces/IAuthenticatedRequest.html" target="_self">IAuthenticatedRequest</a>)</code>
-                </td>
-            </tr>
-
-            <tr>
-                <td class="col-md-4">
-                    <b>Decorators : </b>
-                    <br />
-                    <code>@Post(&#x27;logout&#x27;)<br />@UseGuards(JwtAuthGuard, undefined)<br />@ApiBearerAuth()<br />@Version(&#x27;1&#x27;)<br />@HttpCode(200)<br />@ApiOperation({summary: &#x27;Cierra la sesión del usuario.&#x27;, description: &#x27;Revoca el token de refresco, invalidando la sesión en el dispositivo actual. El token de refresco debe ser enviado en una cookie.&#x27;})<br />@ApiResponse({status: 200, description: &#x27;Sesión cerrada con éxito.&#x27;, example: undefined})<br />@ApiUnauthorizedResponse({description: &#x27;Token de refresco inválido o expirado.&#x27;, type: UnauthorizedException, example: undefined})<br /></code>
-                </td>
-            </tr>
-
-                    <tr>
-                        <td class="col-md-4">
-                            <div class="io-line">Defined in <a href="" data-line="396"
-                                    class="link-to-prism">src/api/auth/controllers/auth-api.controller.ts:396</a></div>
-                        </td>
-                    </tr>
-
-
-            <tr>
-                <td class="col-md-4">
-
-                            <div class="io-description">
-                                <b>Parameters :</b>
-                                
-                                <table class="params">
-                                    <thead>
-                                        <tr>
-                                            <td>Name</td>
-                                                <td>Type</td>
-                                            <td>Optional</td>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        <tr>
-                                                <td>req</td>
-                                            <td>
-                                                            <code><a href="../interfaces/IAuthenticatedRequest.html" target="_self" >IAuthenticatedRequest</a></code>
-                                            </td>
-
-                                            <td>
-                                                    No
-                                            </td>
-
-
-                                        </tr>
-                                    </tbody>
-                                </table>
-                            </div>
-                        <div class="io-description">
-                            <b>Returns : </b>    <code>unknown</code>
+                            <b>Returns : </b>        <code><a href="../miscellaneous/variables.html#User" target="_self" >Promise&lt;DTO.LoginUserResponseDTO&gt;</a></code>
 
                         </div>
                             <div class="io-description">
@@ -775,10 +632,6 @@
                             <span class="modifier"></span>
                             <span class="modifier"></span>
                             <span class="modifier"></span>
-                            <span class="modifier"></span>
-                            <span class="modifier"></span>
-                            <span class="modifier"></span>
-                            <span class="modifier"></span>
                             <span class="modifier">Async</span>
                         <span ><b>refreshToken</b></span>
                         <a href="#refreshToken"><span class="icon ion-ios-link"></span></a>
@@ -788,7 +641,7 @@
             <tr>
                 <td class="col-md-4">
                         <span class="modifier-icon icon ion-ios-reset"></span>
-                    <code>refreshToken(req: <a href="../interfaces/IAuthenticatedRequest.html" target="_self">IAuthenticatedRequest</a>, user: <a href="../unknowns/User.html" target="_self">Users</a>)</code>
+                    <code>refreshToken(req: <a href="../interfaces/IAuthenticatedRequest.html" target="_self">IAuthenticatedRequest</a>, res: Response)</code>
                 </td>
             </tr>
 
@@ -796,14 +649,14 @@
                 <td class="col-md-4">
                     <b>Decorators : </b>
                     <br />
-                    <code>@Post(&#x27;refresh-token&#x27;)<br />@UseGuards(JwtAuthGuard, undefined, BasicAuthGuard)<br />@ApiBearerAuth()<br />@Version(&#x27;1&#x27;)<br />@HttpCode(200)<br />@ApiOperation({summary: &#x27;Refresca el token de acceso usando el token de refresco.&#x27;, description: &#x27;Endpoint para obtener un nuevo token de acceso a partir de un token de refresco válido. El token de refresco debe ser enviado en una cookie.&#x27;})<br />@ApiResponse({status: 200, description: &#x27;Tokens de acceso y refresco renovados con éxito.&#x27;, example: undefined})<br />@ApiUnauthorizedResponse({description: &#x27;Token de refresco inválido o expirado.&#x27;, type: UnauthorizedException, example: undefined})<br /></code>
+                    <code>@Post(&#x27;refresh-token&#x27;)<br />@UseGuards(undefined, BasicAuthGuard)<br />@Version(&#x27;1&#x27;)<br />@AuthDocs(&#x27;refreshToken&#x27;)<br /></code>
                 </td>
             </tr>
 
                     <tr>
                         <td class="col-md-4">
-                            <div class="io-line">Defined in <a href="" data-line="361"
-                                    class="link-to-prism">src/api/auth/controllers/auth-api.controller.ts:361</a></div>
+                            <div class="io-line">Defined in <a href="" data-line="116"
+                                    class="link-to-prism">src/api/auth/controllers/auth-api.controller.ts:116</a></div>
                         </td>
                     </tr>
 
@@ -836,9 +689,9 @@
 
                                         </tr>
                                         <tr>
-                                                <td>user</td>
+                                                <td>res</td>
                                             <td>
-                                                            <code><a href="../miscellaneous/variables.html#User" target="_self" >Users</a></code>
+                                                        <code>Response</code>
                                             </td>
 
                                             <td>
@@ -851,7 +704,7 @@
                                 </table>
                             </div>
                         <div class="io-description">
-                            <b>Returns : </b>    <code>unknown</code>
+                            <b>Returns : </b>        <code><a href="../classes/RefreshTokenResponseDTO.html" target="_self" >Promise&lt;DTO.RefreshTokenResponseDTO&gt;</a></code>
 
                         </div>
                             <div class="io-description">
@@ -872,11 +725,6 @@
                             <span class="modifier"></span>
                             <span class="modifier"></span>
                             <span class="modifier"></span>
-                            <span class="modifier"></span>
-                            <span class="modifier"></span>
-                            <span class="modifier"></span>
-                            <span class="modifier"></span>
-                            <span class="modifier"></span>
                             <span class="modifier">Async</span>
                         <span ><b>scope</b></span>
                         <a href="#scope"><span class="icon ion-ios-link"></span></a>
@@ -886,7 +734,7 @@
             <tr>
                 <td class="col-md-4">
                         <span class="modifier-icon icon ion-ios-reset"></span>
-                    <code>scope(user: <a href="../unknowns/User.html" target="_self">Users</a>)</code>
+                    <code>scope(user: <a href="../interfaces/IUserDataOnJwt.html" target="_self">IUserDataOnJwt</a>)</code>
                 </td>
             </tr>
 
@@ -894,14 +742,14 @@
                 <td class="col-md-4">
                     <b>Decorators : </b>
                     <br />
-                    <code>@Get(&#x27;scope&#x27;)<br />@UseGuards(JwtAuthGuard)<br />@ApiBearerAuth()<br />@Version(&#x27;1&#x27;)<br />@HttpCode(200)<br />@ApiOperation({summary: &#x27;Obtiene el scope del usuario.&#x27;, description: &#x27;Obtiene el scope del usuario, sus role, rolePermissions y userPermissions asignados.&#x27;})<br />@ApiOkResponse({description: &#x27;Scope del usuario obtenido con éxito.&#x27;, type: UserScopeResponseDto})<br />@ApiUnauthorizedResponse({description: &#x27;Token de acceso inválido o expirado.&#x27;, example: undefined})<br />@ApiNotFoundResponse({description: &#x27;El usuario no tiene roles ni permisos asignados.&#x27;, example: undefined})<br />@ApiInternalServerErrorResponse({description: &#x27;Error interno del servidor al procesar la solicitud.&#x27;, example: undefined})<br /></code>
+                    <code>@Get(&#x27;scope&#x27;)<br />@UseGuards(JwtAuthGuard)<br />@ApiBearerAuth()<br />@Version(&#x27;1&#x27;)<br />@AuthDocs(&#x27;scope&#x27;)<br /></code>
                 </td>
             </tr>
 
                     <tr>
                         <td class="col-md-4">
-                            <div class="io-line">Defined in <a href="" data-line="438"
-                                    class="link-to-prism">src/api/auth/controllers/auth-api.controller.ts:438</a></div>
+                            <div class="io-line">Defined in <a href="" data-line="138"
+                                    class="link-to-prism">src/api/auth/controllers/auth-api.controller.ts:138</a></div>
                         </td>
                     </tr>
 
@@ -924,6 +772,99 @@
                                         <tr>
                                                 <td>user</td>
                                             <td>
+                                                            <code><a href="../interfaces/IUserDataOnJwt.html" target="_self" >IUserDataOnJwt</a></code>
+                                            </td>
+
+                                            <td>
+                                                    No
+                                            </td>
+
+
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        <div class="io-description">
+                            <b>Returns : </b>        <code><a href="../classes/UserScopeResponseDTO.html" target="_self" >Promise&lt;DTO.UserScopeResponseDTO&gt;</a></code>
+
+                        </div>
+                            <div class="io-description">
+                                
+                            </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="sendCreatePasswordEmail"></a>
+                    <span class="name">
+                            <span class="modifier"></span>
+                            <span class="modifier"></span>
+                            <span class="modifier"></span>
+                            <span class="modifier"></span>
+                            <span class="modifier"></span>
+                            <span class="modifier">Async</span>
+                        <span ><b>sendCreatePasswordEmail</b></span>
+                        <a href="#sendCreatePasswordEmail"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                        <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>sendCreatePasswordEmail(dto: <a href="../classes/EmailSendRequestDTO.html" target="_self">DTO.EmailSendRequestDTO</a>, user: <a href="../unknowns/User.html" target="_self">Users</a>)</code>
+                </td>
+            </tr>
+
+            <tr>
+                <td class="col-md-4">
+                    <b>Decorators : </b>
+                    <br />
+                    <code>@Post(&#x27;email/send-create-password&#x27;)<br />@Version(&#x27;1&#x27;)<br />@ApiBasicAuth()<br />@UseGuards(BasicAuthGuard, UserByEmailLoaderGuard)<br />@AuthDocs(&#x27;sendCreatePasswordEmail&#x27;)<br /></code>
+                </td>
+            </tr>
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="181"
+                                    class="link-to-prism">src/api/auth/controllers/auth-api.controller.ts:181</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                            <div class="io-description">
+                                <b>Parameters :</b>
+                                
+                                <table class="params">
+                                    <thead>
+                                        <tr>
+                                            <td>Name</td>
+                                                <td>Type</td>
+                                            <td>Optional</td>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                                <td>dto</td>
+                                            <td>
+                                                            <code><a href="../classes/EmailSendRequestDTO.html" target="_self" >DTO.EmailSendRequestDTO</a></code>
+                                            </td>
+
+                                            <td>
+                                                    No
+                                            </td>
+
+
+                                        </tr>
+                                        <tr>
+                                                <td>user</td>
+                                            <td>
                                                             <code><a href="../miscellaneous/variables.html#User" target="_self" >Users</a></code>
                                             </td>
 
@@ -937,7 +878,193 @@
                                 </table>
                             </div>
                         <div class="io-description">
-                            <b>Returns : </b>    <code>unknown</code>
+                            <b>Returns : </b>        <code><a href="../classes/PasswordOnlyMessageResponseDTO.html" target="_self" >Promise&lt;DTO.PasswordOnlyMessageResponseDTO&gt;</a></code>
+
+                        </div>
+                            <div class="io-description">
+                                
+                            </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="sendPasswordResetEmail"></a>
+                    <span class="name">
+                            <span class="modifier"></span>
+                            <span class="modifier"></span>
+                            <span class="modifier"></span>
+                            <span class="modifier"></span>
+                            <span class="modifier"></span>
+                            <span class="modifier">Async</span>
+                        <span ><b>sendPasswordResetEmail</b></span>
+                        <a href="#sendPasswordResetEmail"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                        <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>sendPasswordResetEmail(dto: <a href="../classes/EmailSendRequestDTO.html" target="_self">DTO.EmailSendRequestDTO</a>, user: <a href="../unknowns/User.html" target="_self">Users</a>)</code>
+                </td>
+            </tr>
+
+            <tr>
+                <td class="col-md-4">
+                    <b>Decorators : </b>
+                    <br />
+                    <code>@Post(&#x27;email/send-password-reset&#x27;)<br />@Version(&#x27;1&#x27;)<br />@ApiBasicAuth()<br />@UseGuards(BasicAuthGuard, UserByEmailLoaderGuard)<br />@AuthDocs(&#x27;sendPasswordResetEmail&#x27;)<br /></code>
+                </td>
+            </tr>
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="196"
+                                    class="link-to-prism">src/api/auth/controllers/auth-api.controller.ts:196</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                            <div class="io-description">
+                                <b>Parameters :</b>
+                                
+                                <table class="params">
+                                    <thead>
+                                        <tr>
+                                            <td>Name</td>
+                                                <td>Type</td>
+                                            <td>Optional</td>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                                <td>dto</td>
+                                            <td>
+                                                            <code><a href="../classes/EmailSendRequestDTO.html" target="_self" >DTO.EmailSendRequestDTO</a></code>
+                                            </td>
+
+                                            <td>
+                                                    No
+                                            </td>
+
+
+                                        </tr>
+                                        <tr>
+                                                <td>user</td>
+                                            <td>
+                                                            <code><a href="../miscellaneous/variables.html#User" target="_self" >Users</a></code>
+                                            </td>
+
+                                            <td>
+                                                    No
+                                            </td>
+
+
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        <div class="io-description">
+                            <b>Returns : </b>        <code><a href="../classes/PasswordOnlyMessageResponseDTO.html" target="_self" >Promise&lt;DTO.PasswordOnlyMessageResponseDTO&gt;</a></code>
+
+                        </div>
+                            <div class="io-description">
+                                
+                            </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="sendVerificationEmail"></a>
+                    <span class="name">
+                            <span class="modifier"></span>
+                            <span class="modifier"></span>
+                            <span class="modifier"></span>
+                            <span class="modifier"></span>
+                            <span class="modifier"></span>
+                            <span class="modifier">Async</span>
+                        <span ><b>sendVerificationEmail</b></span>
+                        <a href="#sendVerificationEmail"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                        <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>sendVerificationEmail(dto: <a href="../classes/EmailSendRequestDTO.html" target="_self">DTO.EmailSendRequestDTO</a>, user: <a href="../unknowns/User.html" target="_self">Users</a>)</code>
+                </td>
+            </tr>
+
+            <tr>
+                <td class="col-md-4">
+                    <b>Decorators : </b>
+                    <br />
+                    <code>@Post(&#x27;email/send-verification&#x27;)<br />@Version(&#x27;1&#x27;)<br />@ApiBasicAuth()<br />@UseGuards(BasicAuthGuard, UserByEmailLoaderGuard)<br />@AuthDocs(&#x27;sendVerificationEmail&#x27;)<br /></code>
+                </td>
+            </tr>
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="168"
+                                    class="link-to-prism">src/api/auth/controllers/auth-api.controller.ts:168</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                            <div class="io-description">
+                                <b>Parameters :</b>
+                                
+                                <table class="params">
+                                    <thead>
+                                        <tr>
+                                            <td>Name</td>
+                                                <td>Type</td>
+                                            <td>Optional</td>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                                <td>dto</td>
+                                            <td>
+                                                            <code><a href="../classes/EmailSendRequestDTO.html" target="_self" >DTO.EmailSendRequestDTO</a></code>
+                                            </td>
+
+                                            <td>
+                                                    No
+                                            </td>
+
+
+                                        </tr>
+                                        <tr>
+                                                <td>user</td>
+                                            <td>
+                                                            <code><a href="../miscellaneous/variables.html#User" target="_self" >Users</a></code>
+                                            </td>
+
+                                            <td>
+                                                    No
+                                            </td>
+
+
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        <div class="io-description">
+                            <b>Returns : </b>        <code><a href="../classes/PasswordOnlyMessageResponseDTO.html" target="_self" >Promise&lt;DTO.PasswordOnlyMessageResponseDTO&gt;</a></code>
 
                         </div>
                             <div class="io-description">
@@ -958,11 +1085,7 @@
                             <span class="modifier"></span>
                             <span class="modifier"></span>
                             <span class="modifier"></span>
-                            <span class="modifier"></span>
-                            <span class="modifier"></span>
-                            <span class="modifier"></span>
-                            <span class="modifier"></span>
-                            <span class="modifier"></span>
+                            <span class="modifier">Async</span>
                         <span ><b>userVerificationStatus</b></span>
                         <a href="#userVerificationStatus"><span class="icon ion-ios-link"></span></a>
                     </span>
@@ -971,7 +1094,7 @@
             <tr>
                 <td class="col-md-4">
                         <span class="modifier-icon icon ion-ios-reset"></span>
-                    <code>userVerificationStatus(email: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank">string</a>, user: <a href="../unknowns/User.html" target="_self">Users</a>)</code>
+                    <code>userVerificationStatus(query: <a href="../classes/VerificationStatusQueryDTO.html" target="_self">DTO.VerificationStatusQueryDTO</a>, user: <a href="../unknowns/User.html" target="_self">Users</a>)</code>
                 </td>
             </tr>
 
@@ -979,14 +1102,14 @@
                 <td class="col-md-4">
                     <b>Decorators : </b>
                     <br />
-                    <code>@Get(&#x27;verification-status&#x27;)<br />@Version(&#x27;1&#x27;)<br />@ApiBasicAuth()<br />@UseGuards(BasicAuthGuard, UserByEmailLoaderGuard)<br />@HttpCode(200)<br />@ApiOperation({summary: &#x27;Consulta el estado de verificación del email del usuario.&#x27;, description: &#x27;Endpoint para consultar si un email ya ha sido verificado. Usado para polling en flujos de verificación cross-device.&#x27;})<br />@ApiOkResponse({description: &#x27;Estado de verificación consultado exitosamente.&#x27;, example: undefined})<br />@ApiBadRequestResponse({description: &#x27;Email requerido.&#x27;, example: undefined})<br />@ApiNotFoundResponse({description: &#x27;Usuario no encontrado.&#x27;, example: undefined})<br />@ApiInternalServerErrorResponse({description: &#x27;Error interno del servidor al procesar la solicitud.&#x27;, example: undefined})<br /></code>
+                    <code>@Get(&#x27;verification-status&#x27;)<br />@Version(&#x27;1&#x27;)<br />@ApiBasicAuth()<br />@UseGuards(BasicAuthGuard, UserByEmailLoaderGuard)<br />@AuthDocs(&#x27;verificationStatus&#x27;)<br /></code>
                 </td>
             </tr>
 
                     <tr>
                         <td class="col-md-4">
-                            <div class="io-line">Defined in <a href="" data-line="519"
-                                    class="link-to-prism">src/api/auth/controllers/auth-api.controller.ts:519</a></div>
+                            <div class="io-line">Defined in <a href="" data-line="156"
+                                    class="link-to-prism">src/api/auth/controllers/auth-api.controller.ts:156</a></div>
                         </td>
                     </tr>
 
@@ -1007,9 +1130,9 @@
                                     </thead>
                                     <tbody>
                                         <tr>
-                                                <td>email</td>
+                                                <td>query</td>
                                             <td>
-                                                            <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
+                                                            <code><a href="../classes/VerificationStatusQueryDTO.html" target="_self" >DTO.VerificationStatusQueryDTO</a></code>
                                             </td>
 
                                             <td>
@@ -1034,7 +1157,7 @@
                                 </table>
                             </div>
                         <div class="io-description">
-                            <b>Returns : </b>    <code>literal type</code>
+                            <b>Returns : </b>        <code><a href="../classes/VerificationStatusResponseDTO.html" target="_self" >Promise&lt;DTO.VerificationStatusResponseDTO&gt;</a></code>
 
                         </div>
                             <div class="io-description">
@@ -1050,11 +1173,6 @@
                 <td class="col-md-4">
                     <a name="userVerify"></a>
                     <span class="name">
-                            <span class="modifier"></span>
-                            <span class="modifier"></span>
-                            <span class="modifier"></span>
-                            <span class="modifier"></span>
-                            <span class="modifier"></span>
                             <span class="modifier"></span>
                             <span class="modifier"></span>
                             <span class="modifier"></span>
@@ -1077,14 +1195,14 @@
                 <td class="col-md-4">
                     <b>Decorators : </b>
                     <br />
-                    <code>@Get(&#x27;user-verify&#x27;)<br />@UseGuards(JwtAuthGuard)<br />@ApiBearerAuth()<br />@Version(&#x27;1&#x27;)<br />@HttpCode(200)<br />@ApiOperation({summary: &#x27;Verifica el email del usuario.&#x27;, description: &#x27;Verifica el email del usuario y lo activa para que asi tenga acceso a las acciones del sistema.&#x27;})<br />@ApiResponse({status: 204, description: &#x27;Usuario verificado con exito.&#x27;})<br />@ApiUnauthorizedResponse({description: &#x27;Token temporal inválido o expirado.&#x27;, example: undefined})<br />@ApiNotFoundResponse({description: &#x27;Usuario no encontrado.&#x27;, example: undefined})<br />@ApiInternalServerErrorResponse({description: &#x27;Error interno del servidor al procesar la solicitud.&#x27;, example: undefined})<br /></code>
+                    <code>@Get(&#x27;user-verify&#x27;)<br />@UseGuards(JwtAuthGuard)<br />@ApiBearerAuth()<br />@Version(&#x27;1&#x27;)<br />@AuthDocs(&#x27;userVerify&#x27;)<br /></code>
                 </td>
             </tr>
 
                     <tr>
                         <td class="col-md-4">
-                            <div class="io-line">Defined in <a href="" data-line="477"
-                                    class="link-to-prism">src/api/auth/controllers/auth-api.controller.ts:477</a></div>
+                            <div class="io-line">Defined in <a href="" data-line="147"
+                                    class="link-to-prism">src/api/auth/controllers/auth-api.controller.ts:147</a></div>
                         </td>
                     </tr>
 
@@ -1120,7 +1238,7 @@
                                 </table>
                             </div>
                         <div class="io-description">
-                            <b>Returns : </b>    <code>unknown</code>
+                            <b>Returns : </b>    <code>Promise&lt;void&gt;</code>
 
                         </div>
                             <div class="io-description">
@@ -1134,146 +1252,80 @@
 
 
     <div class="tab-pane fade  tab-source-code" id="source">
-        <pre class="line-numbers compodoc-sourcecode"><code class="language-typescript">import {
+        <pre class="line-numbers compodoc-sourcecode"><code class="language-typescript">import { Response } from &#x27;express&#x27;;
+import { AuthGuard } from &#x27;@nestjs/passport&#x27;;
+import { Users } from &#x27;@prisma/client&#x27;;
+
+import {
   Controller,
   Get,
   Post,
-  Body,
-  UnauthorizedException,
-  Version,
   Put,
-  Res,
-  UseGuards,
-  Req,
-  HttpCode,
+  Body,
   Query,
-  Logger,
+  Res,
+  Req,
+  Version,
+  UseGuards,
+  UnauthorizedException,
 } from &#x27;@nestjs/common&#x27;;
-import {
-  ApiBadRequestResponse,
-  ApiBasicAuth,
-  ApiBearerAuth,
-  ApiForbiddenResponse,
-  ApiInternalServerErrorResponse,
-  ApiNotFoundResponse,
-  ApiOkResponse,
-  ApiOperation,
-  ApiResponse,
-  ApiTags,
-  ApiUnauthorizedResponse,
-} from &#x27;@nestjs/swagger&#x27;;
-import { AuthApiService } from &#x27;@api/auth/services/auth-api.service&#x27;;
-import { LoginUserDto } from &#x27;@api/auth/dtos/request/login-user.request.dto&#x27;;
-import { LoginUserResponseDto } from &#x27;@api/auth/dtos/response/login-user.response.dto&#x27;;
-import {
-  IChangePasswordPayload,
-  IForgotPasswordPayload,
-  IPasswordPayload,
-} from &#x27;@modules/auth/interfaces/jwt-payload.interface&#x27;;
-import { Response } from &#x27;express&#x27;;
-import { UpdateUserPasswordDto } from &#x27;@api/auth/dtos/request/update-user-password.dto&#x27;;
-import { ForgotUserPasswordDto } from &#x27;@api/auth/dtos/request/forgot-user-password.dto&#x27;;
-import { AuthGuard } from &#x27;@nestjs/passport&#x27;;
+import { ApiBasicAuth, ApiBearerAuth, ApiTags } from &#x27;@nestjs/swagger&#x27;;
+
+import * as DTO from &#x27;@api/auth/dtos&#x27;;
+
+import { IAuthenticatedRequest } from &#x27;@api/auth/interfaces&#x27;;
+
 import { JwtAuthGuard } from &#x27;@modules/auth/guards/jwt-auth.guard&#x27;;
-import { IAuthenticatedRequest } from &#x27;@modules/auth/interfaces/authenticated-request.interface&#x27;;
 import { PermissionsGuard } from &#x27;@modules/auth/guards/permissions.guard&#x27;;
-import { Permissions } from &#x27;@common/decorators/permissions.decorator&#x27;;
-import { Users } from &#x27;@prisma/client&#x27;;
-import { User } from &#x27;@common/decorators/user.decorator&#x27;;
-import { UserScopeResponseDto } from &#x27;@api/auth/dtos/response/user-scope.response.dto&#x27;;
-import { PermissionsEnum } from &#x27;@common/enum/permissions.enum&#x27;;
 import { BasicAuthGuard } from &#x27;@modules/auth/guards/basic-auth.guard&#x27;;
 import { UserByEmailLoaderGuard } from &#x27;@modules/auth/guards/user-by-email-loader.guard&#x27;;
+
+import { User } from &#x27;@common/decorators/user.decorator&#x27;;
+import { Permissions } from &#x27;@common/decorators/permissions.decorator&#x27;;
+import { PERMISSIONS } from &#x27;@common/enum/permissions.enum&#x27;;
+
+import { AuthApiService } from &#x27;@api/auth/services/auth-api.service&#x27;;
+import { AuthCookieService } from &#x27;@api/auth/services/auth-cookie.service&#x27;;
+import { AuthDocs } from &#x27;@api/auth/docs/auth-api.docs&#x27;;
+import { IUserDataOnJwt } from &#x27;@modules/auth/interfaces/user-data-on-jwt.interface&#x27;;
 
 @ApiTags(&#x27;Auth&#x27;)
 @Controller(&#x27;auth&#x27;)
 export class AuthApiController {
-  private readonly logger &#x3D; new Logger(AuthApiController.name);
-  constructor(private readonly authApiService: AuthApiService) {}
+  constructor(
+    private readonly authApiService: AuthApiService,
+    private readonly cookieService: AuthCookieService,
+  ) {}
 
   @Post(&#x27;login&#x27;)
   @Version(&#x27;1&#x27;)
   @ApiBasicAuth()
   @UseGuards(BasicAuthGuard)
-  @HttpCode(200)
-  @ApiOperation({
-    summary: &#x27;Login del usuario con hash dinámico y nonce.&#x27;,
-    description:
-      &#x27;Login del usuario, si es primer login se importan sus datos y configuraciones.&#x27;,
-  })
-  @ApiOkResponse({
-    description: &#x27;Usuario logueado exitosamente.&#x27;,
-    type: LoginUserResponseDto,
-    headers: {
-      &#x27;Set-Cookie&#x27;: {
-        description: &#x27;Contiene el refreshToken&#x27;,
-        schema: {
-          type: &#x27;string&#x27;,
-          example:
-            &#x27;refreshToken&#x3D;eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIiLCJlbWFpbCI6Impvc2VwYW56YTFAZ21haWwuY29tIiwidG9rZW5UeXBlIjoicmVmcmVzaFRva2Vu; Max-Age&#x3D;604800; Path&#x3D;/; Expires&#x3D;Wed, 17 Sep 2025 13:39:05 GMT; HttpOnly; Secure; SameSite&#x3D;Strict&#x27;,
-        },
-      },
-    },
-  })
-  @ApiUnauthorizedResponse({
-    description: &#x27;Credenciales inválidas.&#x27;,
-    type: UnauthorizedException,
-    example: {
-      statusCode: 401,
-      message: &#x27;Credenciales inválidas.&#x27;,
-    },
-  })
-  @ApiForbiddenResponse({
-    description: &#x27;Usuario bloqueado.&#x27;,
-    example: {
-      statusCode: 403,
-      message: &#x27;Usuario bloqueado.&#x27;,
-    },
-  })
-  @ApiNotFoundResponse({
-    description: &#x27;Usuario no encontrado.&#x27;,
-    example: {
-      statusCode: 404,
-      message: &#x27;Usuario no encontrado.&#x27;,
-    },
-  })
-  @ApiBadRequestResponse({
-    description:
-      &#x27;Solicitud mal formada, verifique los datos y/o parametros enviados.&#x27;,
-    example: {
-      statusCode: 400,
-      message:
-        &#x27;Solicitud mal formada, verifique los datos y/o parametros enviados.&#x27;,
-    },
-  })
-  @ApiInternalServerErrorResponse({
-    description: &#x27;Error interno del servidor al procesar la solicitud.&#x27;,
-    example: {
-      statusCode: 500,
-      message: &#x27;Error interno del servidor al procesar la solicitud.&#x27;,
-    },
-  })
+  @AuthDocs(&#x27;login&#x27;)
   async login(
-    @Body() dto: LoginUserDto,
+    @Body() dto: DTO.LoginUserDTO,
     @Req() req: Request,
     @Res({ passthrough: true }) res: Response,
-  ): Promise&lt;LoginUserResponseDto&gt; {
-    const userAgent &#x3D; req?.headers[&#x27;user-agent&#x27;] as string;
+  ): Promise&lt;DTO.LoginUserResponseDTO&gt; {
+    const userAgent &#x3D; req.headers[&#x27;user-agent&#x27;] as string;
     const data &#x3D; await this.authApiService.handleLogin(dto, userAgent);
 
-    // guardar refreshToken en cookie segura
-    if (data.refreshToken) {
-      res.cookie(&#x27;refreshToken&#x27;, data.refreshToken, {
-        httpOnly: true,
-        secure: true, // true ya que se usa HTTPS
-        sameSite: &#x27;strict&#x27;, // o &#x27;lax&#x27;
-        maxAge: 7 * 24 * 60 * 60 * 1000, // 7 días
-      });
+    if (data.accessToken) {
+      this.cookieService.setAccessToken(res, data.accessToken);
     }
+
+    if (data.refreshToken) {
+      this.cookieService.setRefreshToken(
+        res,
+        data.refreshToken,
+        dto.rememberMe ?? false,
+      );
+    }
+
     return {
       login: data.login,
-      accessToken: data.accessToken,
       requiredNewPassword: data.requiredNewPassword,
+      accessToken: data.accessToken,
     };
   }
 
@@ -1281,383 +1333,128 @@ export class AuthApiController {
   @Version(&#x27;1&#x27;)
   @ApiBasicAuth()
   @UseGuards(BasicAuthGuard)
-  @HttpCode(201)
-  @ApiOperation({
-    summary: &#x27;Creación de credenciales y password del usuario.&#x27;,
-    description: &#x27;Creación de credenciales y password del usuario.&#x27;,
-  })
-  @ApiOkResponse({
-    description: &#x27;Credenciales creadas correctamente.&#x27;,
-    example: { success: true, message: &#x27;Contraseña creada correctamente.&#x27; },
-  })
-  @ApiUnauthorizedResponse({
-    description: &#x27;Credenciales inválidas.&#x27;,
-    type: UnauthorizedException,
-    example: {
-      statusCode: 401,
-      message: &#x27;Credenciales inválidas.&#x27;,
-    },
-  })
-  @ApiForbiddenResponse({
-    description: &#x27;Usuario bloqueado.&#x27;,
-    example: {
-      statusCode: 403,
-      message: &#x27;Usuario bloqueado.&#x27;,
-    },
-  })
-  @ApiNotFoundResponse({
-    description: &#x27;Usuario no encontrado.&#x27;,
-    example: {
-      statusCode: 404,
-      message: &#x27;Usuario no encontrado.&#x27;,
-    },
-  })
-  @ApiBadRequestResponse({
-    description:
-      &#x27;Solicitud mal formada, verifique los datos y/o parametros enviados.&#x27;,
-    example: {
-      statusCode: 400,
-      message:
-        &#x27;Solicitud mal formada, verifique los datos y/o parametros enviados.&#x27;,
-    },
-  })
-  @ApiInternalServerErrorResponse({
-    description: &#x27;Error interno del servidor al procesar la solicitud.&#x27;,
-    example: {
-      statusCode: 500,
-      message: &#x27;Error interno del servidor al procesar la solicitud.&#x27;,
-    },
-  })
+  @AuthDocs(&#x27;createPassword&#x27;)
   async createPassword(
-    @Body() dto: LoginUserDto,
-  ): Promise&lt;{ success: boolean; message: string }&gt; {
-    return await this.authApiService.createPassword({
-      email: dto.email,
-      password: dto.password,
-    } as IPasswordPayload);
+    @Body() dto: DTO.CreatePasswordDTO,
+  ): Promise&lt;DTO.PasswordResponseDTO&gt; {
+    return await this.authApiService.createPasswordWithToken(dto);
   }
 
   @Put(&#x27;change-password&#x27;)
   @ApiBearerAuth()
   @Version(&#x27;1&#x27;)
-  @HttpCode(200)
-  @ApiOperation({
-    summary: &#x27;Cambio de credenciales y password del usuario.&#x27;,
-    description: &#x27;Cambio de credenciales y password del usuario.&#x27;,
-  })
-  @ApiOkResponse({
-    description: &#x27;Credenciales actualizadas correctamente.&#x27;,
-    example: {
-      success: true,
-      message: &#x27;Contraseña actualizada correctamente.&#x27;,
-    },
-  })
-  @ApiUnauthorizedResponse({
-    description: &#x27;Credenciales inválidas.&#x27;,
-    type: UnauthorizedException,
-    example: {
-      statusCode: 401,
-      message: &#x27;Credenciales inválidas.&#x27;,
-    },
-  })
-  @ApiForbiddenResponse({
-    description: &#x27;Usuario bloqueado.&#x27;,
-    example: {
-      statusCode: 403,
-      message: &#x27;Usuario bloqueado.&#x27;,
-    },
-  })
-  @ApiNotFoundResponse({
-    description: &#x27;Usuario no encontrado.&#x27;,
-    example: {
-      statusCode: 404,
-      message: &#x27;Usuario no encontrado.&#x27;,
-    },
-  })
-  @ApiBadRequestResponse({
-    description:
-      &#x27;Solicitud mal formada, verifique los datos y/o parametros enviados.&#x27;,
-    example: {
-      statusCode: 400,
-      message:
-        &#x27;Solicitud mal formada, verifique los datos y/o parametros enviados.&#x27;,
-    },
-  })
-  @ApiInternalServerErrorResponse({
-    description: &#x27;Error interno del servidor al procesar la solicitud.&#x27;,
-    example: {
-      statusCode: 500,
-      message: &#x27;Error interno del servidor al procesar la solicitud.&#x27;,
-    },
-  })
   @UseGuards(JwtAuthGuard, PermissionsGuard)
-  @Permissions(PermissionsEnum.USER_PASSWORD_UPDATE, PermissionsEnum.ADMIN_ALL)
+  @Permissions(PERMISSIONS.USER.PASSWORD.UPDATE, PERMISSIONS.ADMIN.ALL)
+  @AuthDocs(&#x27;changePassword&#x27;)
   async changePassword(
-    @Body() dto: UpdateUserPasswordDto,
-  ): Promise&lt;{ success: boolean; message: string }&gt; {
-    return await this.authApiService.updatePassword({
-      email: dto.email,
-      oldPassword: dto.oldPassword,
-      newPassword: dto.newPassword,
-    } as IChangePasswordPayload);
+    @Body() dto: DTO.UpdateUserPasswordDTO,
+  ): Promise&lt;DTO.PasswordResponseDTO&gt; {
+    return await this.authApiService.updatePassword(dto);
   }
 
   @Put(&#x27;forgot-password&#x27;)
-  @ApiBearerAuth()
+  @ApiBasicAuth()
   @Version(&#x27;1&#x27;)
-  @HttpCode(200)
-  @ApiOperation({
-    summary:
-      &#x27;Olvide mi contraseña. Cambio de credenciales y password del usuario.&#x27;,
-    description:
-      &#x27;Olvide mi contraseña. Cambio de credenciales y password del usuario.&#x27;,
-  })
-  @ApiOkResponse({
-    description: &#x27;Credenciales actualizadas correctamente.&#x27;,
-    example: {
-      success: true,
-      message: &#x27;Contraseña actualizada correctamente.&#x27;,
-    },
-  })
-  @ApiUnauthorizedResponse({
-    description: &#x27;Credenciales inválidas.&#x27;,
-    type: UnauthorizedException,
-    example: {
-      statusCode: 401,
-      message: &#x27;Credenciales inválidas.&#x27;,
-    },
-  })
-  @ApiForbiddenResponse({
-    description: &#x27;Usuario bloqueado.&#x27;,
-    example: {
-      statusCode: 403,
-      message: &#x27;Usuario bloqueado.&#x27;,
-    },
-  })
-  @ApiNotFoundResponse({
-    description: &#x27;Usuario no encontrado.&#x27;,
-    example: {
-      statusCode: 404,
-      message: &#x27;Usuario no encontrado.&#x27;,
-    },
-  })
-  @ApiBadRequestResponse({
-    description:
-      &#x27;Solicitud mal formada, verifique los datos y/o parametros enviados.&#x27;,
-    example: {
-      statusCode: 400,
-      message:
-        &#x27;Solicitud mal formada, verifique los datos y/o parametros enviados.&#x27;,
-    },
-  })
-  @ApiInternalServerErrorResponse({
-    description: &#x27;Error interno del servidor al procesar la solicitud.&#x27;,
-    example: {
-      statusCode: 500,
-      message: &#x27;Error interno del servidor al procesar la solicitud.&#x27;,
-    },
-  })
-  @UseGuards(JwtAuthGuard)
+  @UseGuards(BasicAuthGuard)
+  @AuthDocs(&#x27;forgotPassword&#x27;)
   async forgotPassword(
-    @Body() dto: ForgotUserPasswordDto,
-  ): Promise&lt;{ success: boolean; message: string }&gt; {
-    return await this.authApiService.forgotPassword({
-      email: dto.email,
-      newPassword: dto.newPassword,
-      confirmPassword: dto.confirmPassword,
-    } as IForgotPasswordPayload);
+    @Body() dto: DTO.ForgotUserPasswordDTO,
+  ): Promise&lt;DTO.PasswordResponseDTO&gt; {
+    return await this.authApiService.forgotPassword(dto);
   }
 
   @Post(&#x27;refresh-token&#x27;)
-  @UseGuards(JwtAuthGuard, AuthGuard(&#x27;jwt-refresh&#x27;), BasicAuthGuard)
-  @ApiBearerAuth()
+  @UseGuards(AuthGuard(&#x27;jwt-refresh&#x27;), BasicAuthGuard)
   @Version(&#x27;1&#x27;)
-  @HttpCode(200)
-  @ApiOperation({
-    summary: &#x27;Refresca el token de acceso usando el token de refresco.&#x27;,
-    description:
-      &#x27;Endpoint para obtener un nuevo token de acceso a partir de un token de refresco válido. El token de refresco debe ser enviado en una cookie.&#x27;,
-  })
-  @ApiResponse({
-    status: 200,
-    description: &#x27;Tokens de acceso y refresco renovados con éxito.&#x27;,
-    example: {
-      accessToken:
-        &#x27;eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6ImRlbW8iLCJpYXQiOjE1MTYyMzkwMjJ9.SflKxwRJSMeKKF2gY-l-E0B1eEw-1rT1-a1Xz&#x27;,
-    },
-  })
-  @ApiUnauthorizedResponse({
-    description: &#x27;Token de refresco inválido o expirado.&#x27;,
-    type: UnauthorizedException,
-    example: {
-      statusCode: 401,
-      message: &#x27;Credenciales inválidas.&#x27;,
-    },
-  })
-  async refreshToken(@Req() req: IAuthenticatedRequest, @User() user: Users) {
-    const refreshToken &#x3D; req?.cookies?.refreshToken as string;
-    const userAgent &#x3D; req?.headers[&#x27;user-agent&#x27;] as string;
-    const { accessToken } &#x3D; await this.authApiService.refreshAccessToken({
-      email: user.email,
-      refreshToken,
-      userAgent,
-    });
+  @AuthDocs(&#x27;refreshToken&#x27;)
+  async refreshToken(
+    @Req() req: IAuthenticatedRequest,
+    @Res({ passthrough: true }) res: Response,
+  ): Promise&lt;DTO.RefreshTokenResponseDTO&gt; {
+    const refreshToken &#x3D; req.cookies?.refreshToken;
 
-    return { accessToken };
-  }
+    if (!refreshToken) {
+      throw new UnauthorizedException(&#x27;No se provee el token.&#x27;);
+    }
 
-  @Post(&#x27;logout&#x27;)
-  @UseGuards(JwtAuthGuard, AuthGuard(&#x27;jwt-refresh&#x27;))
-  @ApiBearerAuth()
-  @Version(&#x27;1&#x27;)
-  @HttpCode(200)
-  @ApiOperation({
-    summary: &#x27;Cierra la sesión del usuario.&#x27;,
-    description:
-      &#x27;Revoca el token de refresco, invalidando la sesión en el dispositivo actual. El token de refresco debe ser enviado en una cookie.&#x27;,
-  })
-  @ApiResponse({
-    status: 200,
-    description: &#x27;Sesión cerrada con éxito.&#x27;,
-    example: { message: &#x27;Sesión cerrada con éxito.&#x27; },
-  })
-  @ApiUnauthorizedResponse({
-    description: &#x27;Token de refresco inválido o expirado.&#x27;,
-    type: UnauthorizedException,
-    example: {
-      statusCode: 401,
-      message: &#x27;Credenciales inválidas.&#x27;,
-    },
-  })
-  async logout(@Req() req: IAuthenticatedRequest) {
-    const refreshToken &#x3D; req.cookies.refreshToken as string;
-    await this.authApiService.logout(refreshToken);
+    const { accessToken } &#x3D;
+      await this.authApiService.refreshAccessToken(refreshToken);
+    this.cookieService.setAccessToken(res, accessToken);
 
-    return { message: &#x27;Sesión cerrada con éxito.&#x27; };
+    return { message: &#x27;Token actualizado&#x27;, accessToken };
   }
 
   @Get(&#x27;scope&#x27;)
   @UseGuards(JwtAuthGuard)
   @ApiBearerAuth()
   @Version(&#x27;1&#x27;)
-  @HttpCode(200)
-  @ApiOperation({
-    summary: &#x27;Obtiene el scope del usuario.&#x27;,
-    description:
-      &#x27;Obtiene el scope del usuario, sus role, rolePermissions y userPermissions asignados.&#x27;,
-  })
-  @ApiOkResponse({
-    description: &#x27;Scope del usuario obtenido con éxito.&#x27;,
-    type: UserScopeResponseDto,
-  })
-  @ApiUnauthorizedResponse({
-    description: &#x27;Token de acceso inválido o expirado.&#x27;,
-    example: {
-      statusCode: 401,
-      message: &#x27;Token de acceso inválido o expirado.&#x27;,
-    },
-  })
-  @ApiNotFoundResponse({
-    description: &#x27;El usuario no tiene roles ni permisos asignados.&#x27;,
-    example: {
-      statusCode: 404,
-      message: &#x27;El usuario no tiene roles ni permisos asignados.&#x27;,
-    },
-  })
-  @ApiInternalServerErrorResponse({
-    description: &#x27;Error interno del servidor al procesar la solicitud.&#x27;,
-    example: {
-      statusCode: 500,
-      message: &#x27;Error interno del servidor al procesar la solicitud.&#x27;,
-    },
-  })
-  async scope(@User() user: Users) {
-    return await this.authApiService.scope(user);
+  @AuthDocs(&#x27;scope&#x27;)
+  async scope(@User() user: IUserDataOnJwt): Promise&lt;DTO.UserScopeResponseDTO&gt; {
+    return this.authApiService.scope(user);
   }
 
   @Get(&#x27;user-verify&#x27;)
   @UseGuards(JwtAuthGuard)
   @ApiBearerAuth()
   @Version(&#x27;1&#x27;)
-  @HttpCode(200)
-  @ApiOperation({
-    summary: &#x27;Verifica el email del usuario.&#x27;,
-    description:
-      &#x27;Verifica el email del usuario y lo activa para que asi tenga acceso a las acciones del sistema.&#x27;,
-  })
-  @ApiResponse({
-    status: 204,
-    description: &#x27;Usuario verificado con exito.&#x27;,
-  })
-  @ApiUnauthorizedResponse({
-    description: &#x27;Token temporal inválido o expirado.&#x27;,
-    example: {
-      statusCode: 401,
-      message: &#x27;Token temporal inválido o expirado.&#x27;,
-    },
-  })
-  @ApiNotFoundResponse({
-    description: &#x27;Usuario no encontrado.&#x27;,
-    example: {
-      statusCode: 404,
-      message: &#x27;Usuario no encontrado.&#x27;,
-    },
-  })
-  @ApiInternalServerErrorResponse({
-    description: &#x27;Error interno del servidor al procesar la solicitud.&#x27;,
-    example: {
-      statusCode: 500,
-      message: &#x27;Error interno del servidor al procesar la solicitud.&#x27;,
-    },
-  })
-  async userVerify(@User() user: Users) {
-    return await this.authApiService.userVerify(user);
+  @AuthDocs(&#x27;userVerify&#x27;)
+  async userVerify(@User() user: Users): Promise&lt;void&gt; {
+    return this.authApiService.userVerify(user);
   }
 
   @Get(&#x27;verification-status&#x27;)
   @Version(&#x27;1&#x27;)
   @ApiBasicAuth()
   @UseGuards(BasicAuthGuard, UserByEmailLoaderGuard)
-  @HttpCode(200)
-  @ApiOperation({
-    summary: &#x27;Consulta el estado de verificación del email del usuario.&#x27;,
-    description:
-      &#x27;Endpoint para consultar si un email ya ha sido verificado. Usado para polling en flujos de verificación cross-device.&#x27;,
-  })
-  @ApiOkResponse({
-    description: &#x27;Estado de verificación consultado exitosamente.&#x27;,
-    example: {
-      verified: true,
-      email: &#x27;user@example.com&#x27;,
-    },
-  })
-  @ApiBadRequestResponse({
-    description: &#x27;Email requerido.&#x27;,
-    example: {
-      statusCode: 400,
-      message: &#x27;Email es requerido.&#x27;,
-    },
-  })
-  @ApiNotFoundResponse({
-    description: &#x27;Usuario no encontrado.&#x27;,
-    example: {
-      statusCode: 404,
-      message: &#x27;Usuario no encontrado.&#x27;,
-    },
-  })
-  @ApiInternalServerErrorResponse({
-    description: &#x27;Error interno del servidor al procesar la solicitud.&#x27;,
-    example: {
-      statusCode: 500,
-      message: &#x27;Error interno del servidor al procesar la solicitud.&#x27;,
-    },
-  })
-  userVerificationStatus(
-    @Query(&#x27;email&#x27;) email: string,
+  @AuthDocs(&#x27;verificationStatus&#x27;)
+  async userVerificationStatus(
+    @Query() query: DTO.VerificationStatusQueryDTO,
     @User() user: Users,
-  ): { verified: boolean; email: string } {
-    this.logger.log(&#x60;Validación de usuario ${email}&#x60;);
-    return this.authApiService.userVerificationStatus(user);
+  ): Promise&lt;DTO.VerificationStatusResponseDTO&gt; {
+    return await this.authApiService.userVerificationStatus(user);
+  }
+
+  @Post(&#x27;email/send-verification&#x27;)
+  @Version(&#x27;1&#x27;)
+  @ApiBasicAuth()
+  @UseGuards(BasicAuthGuard, UserByEmailLoaderGuard)
+  @AuthDocs(&#x27;sendVerificationEmail&#x27;)
+  async sendVerificationEmail(
+    @Body() dto: DTO.EmailSendRequestDTO,
+    @User() user: Users,
+  ): Promise&lt;DTO.PasswordOnlyMessageResponseDTO&gt; {
+    await this.authApiService.sendVerificationEmail(dto.email, user);
+    return { message: &#x27;Email de verificación enviado correctamente.&#x27; };
+  }
+
+  @Post(&#x27;email/send-create-password&#x27;)
+  @Version(&#x27;1&#x27;)
+  @ApiBasicAuth()
+  @UseGuards(BasicAuthGuard, UserByEmailLoaderGuard)
+  @AuthDocs(&#x27;sendCreatePasswordEmail&#x27;)
+  async sendCreatePasswordEmail(
+    @Body() dto: DTO.EmailSendRequestDTO,
+    @User() user: Users,
+  ): Promise&lt;DTO.PasswordOnlyMessageResponseDTO&gt; {
+    await this.authApiService.sendPasswordCreationEmail(dto.email, user);
+    return {
+      message: &#x27;Email para creación de contraseña enviado correctamente.&#x27;,
+    };
+  }
+
+  @Post(&#x27;email/send-password-reset&#x27;)
+  @Version(&#x27;1&#x27;)
+  @ApiBasicAuth()
+  @UseGuards(BasicAuthGuard, UserByEmailLoaderGuard)
+  @AuthDocs(&#x27;sendPasswordResetEmail&#x27;)
+  async sendPasswordResetEmail(
+    @Body() dto: DTO.EmailSendRequestDTO,
+    @User() user: Users,
+  ): Promise&lt;DTO.PasswordOnlyMessageResponseDTO&gt; {
+    await this.authApiService.sendPasswordResetEmail(dto.email, user);
+    return {
+      message: &#x27;Email para recuperación de cuenta enviado correctamente.&#x27;,
+    };
   }
 }
 </code></pre>

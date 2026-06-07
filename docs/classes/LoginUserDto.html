@@ -113,7 +113,7 @@
 
 <ol class="breadcrumb">
   <li class="breadcrumb-item">Classes</li>
-  <li class="breadcrumb-item" >LoginUserDto</li>
+  <li class="breadcrumb-item" >LoginUserDTO</li>
 </ol>
 
 <ul class="nav nav-tabs" role="tablist">
@@ -137,7 +137,7 @@
             <h3>File</h3>
         </p>
         <p class="comment">
-            <code>src/api/auth/dtos/request/login-user.request.dto.ts</code>
+            <code>src/api/auth/dtos/request/login-user.dto.ts</code>
         </p>
 
 
@@ -165,7 +165,14 @@
                             <li>
                                     <span class="modifier"></span>
                                     <span class="modifier"></span>
-                                <a href="#password" >password</a>
+                                <a href="#encryptedPassword" >encryptedPassword</a>
+                            </li>
+                            <li>
+                                    <span class="modifier"></span>
+                                    <span class="modifier"></span>
+                                    <span class="modifier"></span>
+                                    <span class="modifier">Optional</span>
+                                <a href="#rememberMe" >rememberMe</a>
                             </li>
                         </ul>
                     </td>
@@ -216,7 +223,7 @@
                 </tr>
                     <tr>
                         <td class="col-md-4">
-                                <div class="io-line">Defined in <a href="" data-line="10" class="link-to-prism">src/api/auth/dtos/request/login-user.request.dto.ts:10</a></div>
+                                <div class="io-line">Defined in <a href="" data-line="10" class="link-to-prism">src/api/auth/dtos/request/login-user.dto.ts:10</a></div>
                         </td>
                     </tr>
 
@@ -227,12 +234,12 @@
         <tbody>
             <tr>
                 <td class="col-md-4">
-                    <a name="password"></a>
+                    <a name="encryptedPassword"></a>
                     <span class="name">
                             <span class="modifier"></span>
                             <span class="modifier"></span>
-                        <span ><b>password</b></span>
-                        <a href="#password"><span class="icon ion-ios-link"></span></a>
+                        <span ><b>encryptedPassword</b></span>
+                        <a href="#encryptedPassword"><span class="icon ion-ios-link"></span></a>
                     </span>
                 </td>
             </tr>
@@ -247,13 +254,52 @@
                         <b>Decorators : </b>
                         <br />
                         <code>
-                            @ApiProperty({example: &#x27;nkeRKUWeoJXxZgcE8GIBeXZzv5CPKPNDD7V39QrlLnhe+2xhNGLxlR6JalmOEmrRNgQx7hhe9AQ3O8kQ9BWEXgxkysON5eqL9T3CiYAw/QIbxoeMQLDRGXb878BmwUf33Nks0cW8TzVYQvvMRv8V6bYbUkdt5e3qfRURpiutsG35Nnrj957MtNT/eSMCwvfz5P8hryfwSQ0JWRuWtiDZMsuLdOGbs3Z+jzoZLx6gY3PiCkyqKTWqui2KQ6zt4cdTN5c5ghCDT6HL0zlpRAiMJk51J6CqOeZZwnCgj963pPpnoIllOtUi+4MRfi918gJItrIEcRM8ZaB8nNtjxsFx6w&#x3D;&#x3D;&#x27;, description: &#x27;Contraseña del usuario.&#x27;, format: &#x27;password&#x27;})<br />@IsString()<br />
+                            @ApiProperty({example: &#x27;hashedPassword123&#x27;, description: &#x27;Contraseña encriptada del usuario.&#x27;, format: &#x27;password&#x27;})<br />@IsString()<br />
                         </code>
                     </td>
                 </tr>
                     <tr>
                         <td class="col-md-4">
-                                <div class="io-line">Defined in <a href="" data-line="19" class="link-to-prism">src/api/auth/dtos/request/login-user.request.dto.ts:19</a></div>
+                                <div class="io-line">Defined in <a href="" data-line="18" class="link-to-prism">src/api/auth/dtos/request/login-user.dto.ts:18</a></div>
+                        </td>
+                    </tr>
+
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="rememberMe"></a>
+                    <span class="name">
+                            <span class="modifier"></span>
+                            <span class="modifier"></span>
+                            <span class="modifier"></span>
+                            <span class="modifier">Optional</span>
+                        <span ><b>rememberMe</b></span>
+                        <a href="#rememberMe"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>        <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/boolean" target="_blank" >boolean</a></code>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <b>Decorators : </b>
+                        <br />
+                        <code>
+                            @ApiProperty({example: true, description: &#x27;Mantener la sesion activa.&#x27;})<br />@IsOptional()<br />@IsBoolean()<br />
+                        </code>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="26" class="link-to-prism">src/api/auth/dtos/request/login-user.dto.ts:26</a></div>
                         </td>
                     </tr>
 
@@ -273,24 +319,31 @@
 
     <div class="tab-pane fade  tab-source-code" id="source">
         <pre class="line-numbers compodoc-sourcecode"><code class="language-typescript">import { ApiProperty } from &#x27;@nestjs/swagger&#x27;;
-import { IsEmail, IsString } from &#x27;class-validator&#x27;;
+import { IsBoolean, IsEmail, IsOptional, IsString } from &#x27;class-validator&#x27;;
 
-export class LoginUserDto {
+export class LoginUserDTO {
   @ApiProperty({
     example: &#x27;user@example.com&#x27;,
     description: &#x27;Email del usuario.&#x27;,
   })
   @IsEmail()
-  email: string;
+  email!: string;
 
   @ApiProperty({
-    example:
-      &#x27;nkeRKUWeoJXxZgcE8GIBeXZzv5CPKPNDD7V39QrlLnhe+2xhNGLxlR6JalmOEmrRNgQx7hhe9AQ3O8kQ9BWEXgxkysON5eqL9T3CiYAw/QIbxoeMQLDRGXb878BmwUf33Nks0cW8TzVYQvvMRv8V6bYbUkdt5e3qfRURpiutsG35Nnrj957MtNT/eSMCwvfz5P8hryfwSQ0JWRuWtiDZMsuLdOGbs3Z+jzoZLx6gY3PiCkyqKTWqui2KQ6zt4cdTN5c5ghCDT6HL0zlpRAiMJk51J6CqOeZZwnCgj963pPpnoIllOtUi+4MRfi918gJItrIEcRM8ZaB8nNtjxsFx6w&#x3D;&#x3D;&#x27;,
-    description: &#x27;Contraseña del usuario.&#x27;,
+    example: &#x27;hashedPassword123&#x27;,
+    description: &#x27;Contraseña encriptada del usuario.&#x27;,
     format: &#x27;password&#x27;,
   })
   @IsString()
-  password: string;
+  encryptedPassword!: string;
+
+  @ApiProperty({
+    example: true,
+    description: &#x27;Mantener la sesion activa.&#x27;,
+  })
+  @IsOptional()
+  @IsBoolean()
+  rememberMe?: boolean;
 }
 </code></pre>
     </div>
@@ -330,7 +383,7 @@ export class LoginUserDto {
        <script>
             var COMPODOC_CURRENT_PAGE_DEPTH = 1;
             var COMPODOC_CURRENT_PAGE_CONTEXT = 'class';
-            var COMPODOC_CURRENT_PAGE_URL = 'LoginUserDto.html';
+            var COMPODOC_CURRENT_PAGE_URL = 'LoginUserDTO.html';
             var MAX_SEARCH_RESULTS = 15;
        </script>
 

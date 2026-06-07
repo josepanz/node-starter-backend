@@ -38,11 +38,11 @@ spec:
         - image: host:port/ruta/node-starter-backend:1.0.0 
           resources:
             limits:
-              cpu: '800m'
-              memory: '400Mi'
+              cpu: 1000m
+              memory: 1024Mi
             requests:
-              cpu: 100m
-              memory: 100Mi
+              cpu: 250m
+              memory: 512Mi
           name: deploy-node-starter-backend
           imagePullPolicy: Always
           command:

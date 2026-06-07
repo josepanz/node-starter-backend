@@ -4,7 +4,7 @@
 
 Proyecto inicial para backend con NestJS y TypeScript
 
-Última actualización: <!-- LAST_UPDATE --> 22 de noviembre de 2025, 12:04 a. m.
+Última actualización: <!-- LAST_UPDATE --> 06 de junio de 2026, 11:56 p. m.
 
 ## 🗎 Documentación disponible en
 <!-- START:documentation -->
@@ -108,6 +108,8 @@ Para interactuar con la base de datos a través de **Prisma**, sigue estos pasos
 ## 📦 Dependencias
 <!-- START:dependencies -->
 - **@autotelic/pino-seq-transport** `^0.1.0`
+- **@aws-sdk/client-s3** `^3.1012.0`
+- **@aws-sdk/s3-request-presigner** `^3.1012.0`
 - **@nestjs/axios** `^4.0.0`
 - **@nestjs/common** `^11.0.1`
 - **@nestjs/config** `^4.0.1`
@@ -116,10 +118,13 @@ Para interactuar con la base de datos a través de **Prisma**, sigue estos pasos
 - **@nestjs/mapped-types** `^2.1.0`
 - **@nestjs/passport** `^11.0.5`
 - **@nestjs/platform-express** `^11.0.1`
-- **@nestjs/swagger** `^11.0.7`
 - **@nestjs/sequelize** `^11.0.0`
+- **@nestjs/swagger** `^11.0.7`
 - **@nestjs/terminus** `^11.0.0`
 - **@prisma/client** `6.18.0`
+- **@sequelize/core** `7.0.0-alpha.43`
+- **@sequelize/db2-ibmi** `7.0.0-alpha.43`
+- **@sequelize/postgres** `7.0.0-alpha.43`
 - **axios** `^1.9.0`
 - **bcrypt** `^6.0.0`
 - **class-transformer** `^0.5.1`
@@ -127,7 +132,11 @@ Para interactuar con la base de datos a través de **Prisma**, sigue estos pasos
 - **cookie-parser** `^1.4.7`
 - **date-fns** `^4.1.0`
 - **date-fns-tz** `^3.2.0`
+- **exceljs** `^4.4.0`
 - **express** `^5.1.0`
+- **fast-glob** `^3.3.3`
+- **handlebars** `^4.7.9`
+- **html-pdf-node** `^1.0.8`
 - **joi** `^17.13.3`
 - **jsonwebtoken** `^9.0.2`
 - **jwks-rsa** `^3.2.0`
@@ -137,13 +146,11 @@ Para interactuar con la base de datos a través de **Prisma**, sigue estos pasos
 - **nodemailer** `^7.0.6`
 - **passport** `^0.7.0`
 - **passport-jwt** `^4.0.1`
+- **pdfmake** `^0.3.9`
 - **pino-pretty** `^13.0.0`
 - **read-pkg-up** `^11.0.0`
 - **reflect-metadata** `^0.2.2`
 - **rxjs** `^7.8.1`
-- **@sequelize/core** `7.0.0-alpha.43`
-- **@sequelize/db2-ibmi** `7.0.0-alpha.43`
-- **@sequelize/postgres** `7.0.0-alpha.43`
 - **uuid** `^11.1.0`
 - **write-file-atomic** `^7.0.0`
 <!-- END:dependencies -->

@@ -1,7 +1,7 @@
 import { ApiProperty } from '@nestjs/swagger';
-import { IsEmail, IsString } from 'class-validator';
+import { IsBoolean, IsEmail, IsString } from 'class-validator';
 
-export class OnboardingUserRequestDto {
+export class OnboardingUserRequestDTO {
   @ApiProperty({
     example: 'John',
     description: 'El primer nombre del usuario.',
@@ -9,7 +9,10 @@ export class OnboardingUserRequestDto {
   @IsString()
   firstName: string;
 
-  @ApiProperty({ example: 'Doe', description: 'El apellido del usuario.' })
+  @ApiProperty({
+    example: 'Doe',
+    description: 'El apellido del usuario.',
+  })
   @IsString()
   lastName: string;
 
@@ -29,20 +32,26 @@ export class OnboardingUserRequestDto {
   phoneNumber: string;
 
   @ApiProperty({
-    example:
-      'nkeRKUWeoJXxZgcE8GIBeXZzv5CPKPNDD7V39QrlLnhe+2xhNGLxlR6JalmOEmrRNgQx7hhe9AQ3O8kQ9BWEXgxkysON5eqL9T3CiYAw/QIbxoeMQLDRGXb878BmwUf33Nks0cW8TzVYQvvMRv8V6bYbUkdt5e3qfRURpiutsG35Nnrj957MtNT/eSMCwvfz5P8hryfwSQ0JWRuWtiDZMsuLdOGbs3Z+jzoZLx6gY3PiCkyqKTWqui2KQ6zt4cdTN5c5ghCDT6HL0zlpRAiMJk51J6CqOeZZwnCgj963pPpnoIllOtUi+4MRfi918gJItrIEcRM8ZaB8nNtjxsFx6w==',
-    description: 'Contraseña del usuario.',
+    example: 'Base64EncodedEncryptedPassword==',
+    description: 'Contraseña del usuario (encriptada con RSA-OAEP).',
     format: 'password',
   })
   @IsString()
   password: string;
 
   @ApiProperty({
-    example:
-      'nkeRKUWeoJXxZgcE8GIBeXZzv5CPKPNDD7V39QrlLnhe+2xhNGLxlR6JalmOEmrRNgQx7hhe9AQ3O8kQ9BWEXgxkysON5eqL9T3CiYAw/QIbxoeMQLDRGXb878BmwUf33Nks0cW8TzVYQvvMRv8V6bYbUkdt5e3qfRURpiutsG35Nnrj957MtNT/eSMCwvfz5P8hryfwSQ0JWRuWtiDZMsuLdOGbs3Z+jzoZLx6gY3PiCkyqKTWqui2KQ6zt4cdTN5c5ghCDT6HL0zlpRAiMJk51J6CqOeZZwnCgj963pPpnoIllOtUi+4MRfi918gJItrIEcRM8ZaB8nNtjxsFx6w==',
-    description: 'Confirmación contraseña del usuario.',
+    example: 'Base64EncodedEncryptedPassword==',
+    description:
+      'Confirmación de contraseña del usuario (encriptada con RSA-OAEP).',
     format: 'password',
   })
   @IsString()
   confirmPassword: string;
+
+  @ApiProperty({
+    example: true,
+    description: 'Aceptación de términos y condiciones',
+  })
+  @IsBoolean()
+  acceptTerms: boolean;
 }

@@ -113,7 +113,7 @@
 
 <ol class="breadcrumb">
   <li class="breadcrumb-item">Classes</li>
-  <li class="breadcrumb-item" >UpdatePermissionRequestDto</li>
+  <li class="breadcrumb-item" >UpdatePermissionRequestDTO</li>
 </ol>
 
 <ul class="nav nav-tabs" role="tablist">
@@ -137,19 +137,11 @@
             <h3>File</h3>
         </p>
         <p class="comment">
-            <code>src/api/permissions/dtos/request/update-permission.request.dto.ts</code>
+            <code>src/api/roles-permission/dtos/request/update-permission.request.dto.ts</code>
         </p>
 
 
 
-            <p class="comment">
-                <h3>Extends</h3>
-            </p>
-            <p class="comment">
-                            <code><a href="../classes/CreatePermissionRequestDto.html" target="_self" >PartialType(
-  CreatePermissionRequestDto,
-)</a></code>
-            </p>
 
 
 
@@ -169,13 +161,9 @@
                                     <span class="modifier"></span>
                                     <span class="modifier"></span>
                                     <span class="modifier"></span>
+                                    <span class="modifier"></span>
                                     <span class="modifier">Optional</span>
-                                <a href="#changedReason" >changedReason</a>
-                            </li>
-                            <li>
-                                    <span class="modifier"></span>
-                                    <span class="modifier"></span>
-                                <a href="#id" >id</a>
+                                <a href="#description" >description</a>
                             </li>
                             <li>
                                     <span class="modifier"></span>
@@ -188,15 +176,9 @@
                                     <span class="modifier"></span>
                                     <span class="modifier"></span>
                                     <span class="modifier"></span>
-                                    <span class="modifier">Optional</span>
-                                <a href="#lastChangedAt" >lastChangedAt</a>
-                            </li>
-                            <li>
-                                    <span class="modifier"></span>
-                                    <span class="modifier"></span>
                                     <span class="modifier"></span>
                                     <span class="modifier">Optional</span>
-                                <a href="#lastChangedBy" >lastChangedBy</a>
+                                <a href="#name" >name</a>
                             </li>
                         </ul>
                     </td>
@@ -221,14 +203,15 @@
         <tbody>
             <tr>
                 <td class="col-md-4">
-                    <a name="changedReason"></a>
+                    <a name="description"></a>
                     <span class="name">
                             <span class="modifier"></span>
                             <span class="modifier"></span>
                             <span class="modifier"></span>
+                            <span class="modifier"></span>
                             <span class="modifier">Optional</span>
-                        <span ><b>changedReason</b></span>
-                        <a href="#changedReason"><span class="icon ion-ios-link"></span></a>
+                        <span ><b>description</b></span>
+                        <a href="#description"><span class="icon ion-ios-link"></span></a>
                     </span>
                 </td>
             </tr>
@@ -243,50 +226,13 @@
                         <b>Decorators : </b>
                         <br />
                         <code>
-                            @ApiProperty({description: &#x27;La razón del último cambio en el permiso.&#x27;, example: &#x27;Se actualizó el nombre del permiso.&#x27;, required: false})<br />@IsOptional()<br />@IsString()<br />
+                            @ApiProperty({example: &#x27;Permite leer información de clientes&#x27;, description: &#x27;Descripción del permiso&#x27;, required: false})<br />@IsString()<br />@IsOptional()<br />@MaxLength(255)<br />
                         </code>
                     </td>
                 </tr>
                     <tr>
                         <td class="col-md-4">
-                                <div class="io-line">Defined in <a href="" data-line="46" class="link-to-prism">src/api/permissions/dtos/request/update-permission.request.dto.ts:46</a></div>
-                        </td>
-                    </tr>
-
-
-        </tbody>
-    </table>
-    <table class="table table-sm table-bordered">
-        <tbody>
-            <tr>
-                <td class="col-md-4">
-                    <a name="id"></a>
-                    <span class="name">
-                            <span class="modifier"></span>
-                            <span class="modifier"></span>
-                        <span ><b>id</b></span>
-                        <a href="#id"><span class="icon ion-ios-link"></span></a>
-                    </span>
-                </td>
-            </tr>
-                <tr>
-                    <td class="col-md-4">
-                        <i>Type : </i>        <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/number" target="_blank" >number</a></code>
-
-                    </td>
-                </tr>
-                <tr>
-                    <td class="col-md-4">
-                        <b>Decorators : </b>
-                        <br />
-                        <code>
-                            @IsNumber()<br />@ApiProperty({description: &#x27;El ID único del rol.&#x27;, example: 1})<br />
-                        </code>
-                    </td>
-                </tr>
-                    <tr>
-                        <td class="col-md-4">
-                                <div class="io-line">Defined in <a href="" data-line="20" class="link-to-prism">src/api/permissions/dtos/request/update-permission.request.dto.ts:20</a></div>
+                                <div class="io-line">Defined in <a href="" data-line="23" class="link-to-prism">src/api/roles-permission/dtos/request/update-permission.request.dto.ts:23</a></div>
                         </td>
                     </tr>
 
@@ -319,13 +265,13 @@
                         <b>Decorators : </b>
                         <br />
                         <code>
-                            @ApiProperty({description: &#x27;Indica si el permiso está activo o inactivo.&#x27;, example: true, required: false})<br />@IsOptional()<br />@IsBoolean()<br />
+                            @ApiProperty({example: true, description: &#x27;Estado del permiso (activo/inactivo)&#x27;, required: false})<br />@IsBoolean()<br />@IsOptional()<br />
                         </code>
                     </td>
                 </tr>
                     <tr>
                         <td class="col-md-4">
-                                <div class="io-line">Defined in <a href="" data-line="55" class="link-to-prism">src/api/permissions/dtos/request/update-permission.request.dto.ts:55</a></div>
+                                <div class="io-line">Defined in <a href="" data-line="32" class="link-to-prism">src/api/roles-permission/dtos/request/update-permission.request.dto.ts:32</a></div>
                         </td>
                     </tr>
 
@@ -336,53 +282,15 @@
         <tbody>
             <tr>
                 <td class="col-md-4">
-                    <a name="lastChangedAt"></a>
+                    <a name="name"></a>
                     <span class="name">
                             <span class="modifier"></span>
                             <span class="modifier"></span>
                             <span class="modifier"></span>
-                            <span class="modifier">Optional</span>
-                        <span ><b>lastChangedAt</b></span>
-                        <a href="#lastChangedAt"><span class="icon ion-ios-link"></span></a>
-                    </span>
-                </td>
-            </tr>
-                <tr>
-                    <td class="col-md-4">
-                        <i>Type : </i>        <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Date" target="_blank" >Date</a></code>
-
-                    </td>
-                </tr>
-                <tr>
-                    <td class="col-md-4">
-                        <b>Decorators : </b>
-                        <br />
-                        <code>
-                            @ApiProperty({description: &#x27;Fecha del último cambio en el permiso.&#x27;, example: &#x27;2024-06-16T10:20:30Z&#x27;})<br />@IsOptional()<br />@IsDate()<br />
-                        </code>
-                    </td>
-                </tr>
-                    <tr>
-                        <td class="col-md-4">
-                                <div class="io-line">Defined in <a href="" data-line="28" class="link-to-prism">src/api/permissions/dtos/request/update-permission.request.dto.ts:28</a></div>
-                        </td>
-                    </tr>
-
-
-        </tbody>
-    </table>
-    <table class="table table-sm table-bordered">
-        <tbody>
-            <tr>
-                <td class="col-md-4">
-                    <a name="lastChangedBy"></a>
-                    <span class="name">
-                            <span class="modifier"></span>
-                            <span class="modifier"></span>
                             <span class="modifier"></span>
                             <span class="modifier">Optional</span>
-                        <span ><b>lastChangedBy</b></span>
-                        <a href="#lastChangedBy"><span class="icon ion-ios-link"></span></a>
+                        <span ><b>name</b></span>
+                        <a href="#name"><span class="icon ion-ios-link"></span></a>
                     </span>
                 </td>
             </tr>
@@ -397,13 +305,13 @@
                         <b>Decorators : </b>
                         <br />
                         <code>
-                            @ApiProperty({description: &#x27;El usuario que realizó el último cambio en el permiso.&#x27;, example: &#x27;admin@example.com&#x27;, required: false})<br />@IsOptional()<br />@IsString()<br />
+                            @ApiProperty({example: &#x27;customers:read&#x27;, description: &#x27;Nombre del permiso en formato resource:action&#x27;, required: false})<br />@IsString()<br />@IsOptional()<br />@MaxLength(100)<br />
                         </code>
                     </td>
                 </tr>
                     <tr>
                         <td class="col-md-4">
-                                <div class="io-line">Defined in <a href="" data-line="37" class="link-to-prism">src/api/permissions/dtos/request/update-permission.request.dto.ts:37</a></div>
+                                <div class="io-line">Defined in <a href="" data-line="13" class="link-to-prism">src/api/roles-permission/dtos/request/update-permission.request.dto.ts:13</a></div>
                         </td>
                     </tr>
 
@@ -423,59 +331,36 @@
 
     <div class="tab-pane fade  tab-source-code" id="source">
         <pre class="line-numbers compodoc-sourcecode"><code class="language-typescript">import { ApiProperty } from &#x27;@nestjs/swagger&#x27;;
-import { PartialType } from &#x27;@nestjs/swagger&#x27;;
-import { CreatePermissionRequestDto } from &#x27;./create-permission.request.dto&#x27;;
-import {
-  IsBoolean,
-  IsDate,
-  IsNumber,
-  IsOptional,
-  IsString,
-} from &#x27;class-validator&#x27;;
+import { IsString, IsOptional, MaxLength, IsBoolean } from &#x27;class-validator&#x27;;
 
-export class UpdatePermissionRequestDto extends PartialType(
-  CreatePermissionRequestDto,
-) {
-  @IsNumber()
+export class UpdatePermissionRequestDTO {
   @ApiProperty({
-    description: &#x27;El ID único del rol.&#x27;,
-    example: 1,
-  })
-  id: number;
-
-  @ApiProperty({
-    description: &#x27;Fecha del último cambio en el permiso.&#x27;,
-    example: &#x27;2024-06-16T10:20:30Z&#x27;,
-  })
-  @IsOptional()
-  @IsDate()
-  lastChangedAt?: Date;
-
-  @ApiProperty({
-    description: &#x27;El usuario que realizó el último cambio en el permiso.&#x27;,
-    example: &#x27;admin@example.com&#x27;,
+    example: &#x27;customers:read&#x27;,
+    description: &#x27;Nombre del permiso en formato resource:action&#x27;,
     required: false,
   })
-  @IsOptional()
   @IsString()
-  lastChangedBy?: string;
+  @IsOptional()
+  @MaxLength(100)
+  name?: string;
 
   @ApiProperty({
-    description: &#x27;La razón del último cambio en el permiso.&#x27;,
-    example: &#x27;Se actualizó el nombre del permiso.&#x27;,
+    example: &#x27;Permite leer información de clientes&#x27;,
+    description: &#x27;Descripción del permiso&#x27;,
     required: false,
   })
-  @IsOptional()
   @IsString()
-  changedReason?: string;
+  @IsOptional()
+  @MaxLength(255)
+  description?: string;
 
   @ApiProperty({
-    description: &#x27;Indica si el permiso está activo o inactivo.&#x27;,
     example: true,
+    description: &#x27;Estado del permiso (activo/inactivo)&#x27;,
     required: false,
   })
-  @IsOptional()
   @IsBoolean()
+  @IsOptional()
   isActive?: boolean;
 }
 </code></pre>
@@ -516,7 +401,7 @@ export class UpdatePermissionRequestDto extends PartialType(
        <script>
             var COMPODOC_CURRENT_PAGE_DEPTH = 1;
             var COMPODOC_CURRENT_PAGE_CONTEXT = 'class';
-            var COMPODOC_CURRENT_PAGE_URL = 'UpdatePermissionRequestDto.html';
+            var COMPODOC_CURRENT_PAGE_URL = 'UpdatePermissionRequestDTO.html';
             var MAX_SEARCH_RESULTS = 15;
        </script>
 

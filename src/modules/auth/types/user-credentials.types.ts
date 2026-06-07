@@ -6,9 +6,8 @@ export const userCredentialsWithUser =
       user: {
         include: {
           roles: true,
-          UserPermissions: true,
+          permissions: true,
           credentials: true,
-          refreshTokens: true,
         },
       },
     },

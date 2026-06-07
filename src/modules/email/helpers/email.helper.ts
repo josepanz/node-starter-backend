@@ -7,6 +7,7 @@ export class EmailHelper {
    * @param passwordCreationLink
    * @returns
    */
+
   public static createUserVerificationTemplate(
     firstName: string,
     link: string,
@@ -59,7 +60,7 @@ export class EmailHelper {
                                           <td valign="top" width="600">
                                               <div>
                                                   <a style="width: 30%; padding: 0;">
-                                                      <img width="160" src="https://eqwedi-api-auth-bucket.s3.us-east-2.amazonaws.com/auth/correo/img/dinelco.png" alt="Logo de Dinelco">
+                                                      <img width="160" src="https://eqwedi-api-auth-bucket.s3.us-east-2.amazonaws.com/auth/correo/img/prueba.png" alt="Logo de Prueba">
                                                   </a>
                                               </div>
                                           </td>
@@ -86,7 +87,7 @@ export class EmailHelper {
                                               <table>
                                                   <tr>
                                                       <td align="center" style="border-radius: 25px; background-color: #9B0042;">
-                                                          <a href="${link}" style="background-color:#9B0042;border-radius:25px;color:#FFFFFF;display:inline-block;font-family:'Gilroy Black';font-size:18px;height:45px;line-height:45px;text-align:center;text-decoration:none;width:200px;-webkit-text-size-adjust:none;">
+                                                          <a href="${link}" style="background-color:#9B0042;border-radius:25px;color:#FFFFFF;display:inline-block;font-size:18px;height:45px;line-height:45px;text-align:center;text-decoration:none;width:200px;-webkit-text-size-adjust:none;">
                                                               Verificar correo
                                                           </a>
                                                       </td>
@@ -182,7 +183,7 @@ export class EmailHelper {
                                               <div>
                                                   <a style="width: 30%; padding: 0;">
                                                       <!-- LOGO - Mantengo tu URL de S3, reemplázala si es necesario -->
-                                                      <img width="160" src="https://eqwedi-api-auth-bucket.s3.us-east-2.amazonaws.com/auth/correo/img/dinelco.png" alt="Logo de Dinelco">
+                                                      <img width="160" src="https://eqwedi-api-auth-bucket.s3.us-east-2.amazonaws.com/auth/correo/img/prueba.png" alt="Logo de Prueba">
                                                   </a>
                                               </div>
                                           </td>
@@ -227,6 +228,270 @@ export class EmailHelper {
                       </table>
 
                       <!-- FOOTER / INFORMACIÓN LEGAL -->
+                      <table width="100%" border="0" bgcolor="#F4F3F3" cellspacing="0" cellpadding="20" id="body_info_container">
+                          <tr>
+                              <td align="center" valign="top" class="body_info_content">
+                                  <table width="100%" border="0" cellspacing="0" cellpadding="10">
+                                      <tr>
+                                          <td valign="top">
+                                              <p style="color: #5F5D5D; font-size: 12px; line-height: 22px;">Este mensaje ha sido generado de forma automática; favor no respondas el mismo, ya que esta dirección no acepta correos electrónicos, por lo que no recibirás una respuesta. <strong>Si requerís asistencia, comunicate al CAC (Centro de Atención al Cliente) 021 620 6000.</strong></p>
+                                          </td>
+                                      </tr>
+                                  </table>
+                              </td>
+                          </tr>
+                      </table>
+                  </td>
+              </tr>
+          </table>
+      </body>
+      
+      </html>
+    `;
+  }
+
+  /**
+   * Genera el contenido HTML para el correo de creación de contraseña.
+   */
+  public static createPasswordCreationTemplate(
+    firstName: string,
+    link: string,
+  ): string {
+    return `
+      <!DOCTYPE html>
+      <html>
+      <head>
+          <meta charset="UTF-8">
+          <meta name="viewport" content="width=device-width, initial-scale=1.0">
+          <style type="text/css">
+              @font-face {
+                  font-family: 'Gilroy';
+                  src: url('https://cdn.jsdelivr.net/gh/repalash/gilroy-free-webfont@fonts/Gilroy-Extrabold.eot');
+                  src: local('Gilroy Extrabold'), local('Gilroy-Extrabold'),
+                  url('https://cdn.jsdelivr.net/gh/repalash/gilroy-free-webfont@fonts/Gilroy-Extrabold.eot?#iefix') format('embedded-opentype'),
+                  url('https://cdn.jsdelivr.net/gh/repalash/gilroy-free-webfont@fonts/Gilroy-Extrabold.woff') format('woff'),
+                  url('https://cdn.jsdelivr.net/gh/repalash/gilroy-free-webfont@fonts/Gilroy-Extrabold.ttf') format('truetype');
+                  font-weight: 600;
+                  font-style: normal;
+              }
+              @font-face {
+                  font-family: 'Gilroy';
+                  src: url('https://cdn.jsdelivr.net/gh/repalash/gilroy-free-webfont@fonts/Gilroy-Light.eot');
+                  src: local('Gilroy Light'), local('Gilroy-Light'),
+                  url('https://cdn.jsdelivr.net/gh/repalash/gilroy-free-webfont@fonts/Gilroy-Light.eot?#iefix') format('embedded-opentype'),
+                  url('https://cdn.jsdelivr.net/gh/repalash/gilroy-free-webfont@fonts/Gilroy-Light.woff') format('woff'),
+                  url('https://cdn.jsdelivr.net/gh/repalash/gilroy-free-webfont@fonts/Gilroy-Light.ttf') format('truetype');
+                  font-weight: 400;
+                  font-style: normal;
+              }
+              body {
+                  font-family: 'Gilroy', sans-serif;
+              }
+          </style>
+      </head>
+      <body style="margin: 0; padding: 0; width: 100%; -webkit-text-size-adjust: none; -webkit-font-smoothing: antialiased;">
+          <table width="100%" bgcolor="#FFFFFF" border="0" cellspacing="0" cellpadding="0" id="background" style="height: 100% !important; margin: 0; padding: 0; width: 100% !important; max-width: 700px;">
+              <tr>
+                  <td align="center" valign="top">
+                      <table width="100%" border="0" bgcolor="#8056B0" cellspacing="0" cellpadding="20" id="preheader">
+                          <tr>
+                              <td valign="top">
+                                  <table width="100%" border="0" cellspacing="0" cellpadding="0">
+                                      <tr>
+                                          <td valign="top" width="600">
+                                              <div>
+                                                  <a style="width: 30%; padding: 0;">
+                                                      <img width="160" src="https://eqwedi-api-auth-bucket.s3.us-east-2.amazonaws.com/auth/correo/img/prueba.png" alt="Logo de Prueba">
+                                                  </a>
+                                              </div>
+                                          </td>
+                                      </tr>
+                                  </table>
+                              </td>
+                          </tr>
+                      </table>
+                      <table width="600" border="0" cellspacing="0" cellpadding="20" id="body_container">
+                          <tr>
+                              <td align="center" valign="top" class="body_content">
+                                  <table width="100%" border="0" cellspacing="0" cellpadding="20">
+                                      <tr>
+                                          <td valign="top">
+                                              <h2 style="color: #5F5D5D; font-size: 22px; text-align: left;">¡Hola, ${firstName}!</h2>
+                                              <h3 style="color: #5F5D5D; font-size: 18px; text-align: left;">Necesitás crear tu contraseña.</h3>
+                                              <p style="color: #5F5D5D; font-size: 14px; line-height: 22px; text-align: left;">
+                                                  Detectamos que tu cuenta no tiene una contraseña configurada. <strong>Haz clic en el botón a continuación para crear tu contraseña</strong> y completar el acceso a tu cuenta.
+                                                  <br><br>
+                                                  Por motivos de seguridad, este enlace tendrá una vigencia de 1 hora.
+                                              </p>
+                                          </td>
+                                      </tr>
+                                      <tr>
+                                          <td align="center">
+                                              <table>
+                                                  <tr>
+                                                      <td align="center" style="border-radius: 25px; background-color: #9B0042;">
+                                                          <a href="${link}" style="background-color:#9B0042;border-radius:25px;color:#FFFFFF;display:inline-block;font-size:18px;height:45px;line-height:45px;text-align:center;text-decoration:none;width:200px;-webkit-text-size-adjust:none;">
+                                                              Crear Contraseña
+                                                          </a>
+                                                      </td>
+                                                  </tr>
+                                              </table>
+                                          </td>
+                                      </tr>
+                                  </table>
+                              </td>
+                          </tr>
+                      </table>
+                      <table width="100%" border="0" bgcolor="#F4F3F3" cellspacing="0" cellpadding="20" id="body_info_container">
+                          <tr>
+                              <td align="center" valign="top" class="body_info_content">
+                                  <table width="100%" border="0" cellspacing="0" cellpadding="10">
+                                      <tr>
+                                          <td valign="top">
+                                              <p style="color: #5F5D5D; font-size: 12px; line-height: 22px;">Este mensaje ha sido generado de forma automática; favor no respondas el mismo, ya que esta dirección no acepta correos electrónicos, por lo que no recibirás una respuesta. <strong>Si requerís asistencia, comunicate al CAC (Centro de Atención al Cliente) 021 620 6000.</strong></p>
+                                          </td>
+                                      </tr>
+                                  </table>
+                              </td>
+                          </tr>
+                      </table>
+                  </td>
+              </tr>
+          </table>
+      </body>
+      </html>
+    `;
+  }
+
+  /**
+   * Genera el contenido HTML para el correo de comprobante de pago.
+   * @param operationNumber Número de operación
+   * @param authorizationCode Código de autorización
+   * @param merchantName Nombre del comercio
+   * @param transactionDate Fecha de la transacción
+   * @param amount Monto del pago
+   * @param paymentMethod Forma de pago
+   * @param description Descripción del pago
+   * @returns Contenido HTML en string
+   */
+  public static createPaymentReceiptTemplate(
+    operationNumber: string,
+    authorizationCode: string,
+    merchantName: string,
+    transactionDate: string,
+    amount: number | string,
+    paymentMethod: string,
+    description: string,
+  ): string {
+    return `
+      <!DOCTYPE html>
+      <html>
+      
+      <head>
+          <meta charset="UTF-8">
+          <meta name="viewport" content="width=device-width, initial-scale=1.0">
+          <style type="text/css">
+              @font-face {
+                  font-family: 'Gilroy';
+                  src: url('https://cdn.jsdelivr.net/gh/repalash/gilroy-free-webfont@fonts/Gilroy-Extrabold.eot');
+                  src: local('Gilroy Extrabold'), local('Gilroy-Extrabold'),
+                  url('https://cdn.jsdelivr.net/gh/repalash/gilroy-free-webfont@fonts/Gilroy-Extrabold.eot?#iefix') format('embedded-opentype'),
+                  url('https://cdn.jsdelivr.net/gh/repalash/gilroy-free-webfont@fonts/Gilroy-Extrabold.woff') format('woff'),
+                  url('https://cdn.jsdelivr.net/gh/repalash/gilroy-free-webfont@fonts/Gilroy-Extrabold.ttf') format('truetype');
+                  font-weight: 600;
+                  font-style: normal;
+              }
+      
+              @font-face {
+                  font-family: 'Gilroy';
+                  src: url('https://cdn.jsdelivr.net/gh/repalash/gilroy-free-webfont@fonts/Gilroy-Light.eot');
+                  src: local('Gilroy Light'), local('Gilroy-Light'),
+                  url('https://cdn.jsdelivr.net/gh/repalash/gilroy-free-webfont@fonts/Gilroy-Light.eot?#iefix') format('embedded-opentype'),
+                  url('https://cdn.jsdelivr.net/gh/repalash/gilroy-free-webfont@fonts/Gilroy-Light.woff') format('woff'),
+                  url('https://cdn.jsdelivr.net/gh/repalash/gilroy-free-webfont@fonts/Gilroy-Light.ttf') format('truetype');
+                  font-weight: 400;
+                  font-style: normal;
+              }
+      
+              body {
+                  font-family: 'Gilroy', sans-serif;
+              }
+          </style>
+      </head>
+      
+      <body style="margin: 0; padding: 0; width: 100%; -webkit-text-size-adjust: none; -webkit-font-smoothing: antialiased;">
+          <table width="100%" bgcolor="#FFFFFF" border="0" cellspacing="0" cellpadding="0" id="background" style="height: 100% !important; margin: 0; padding: 0; width: 100% !important; max-width: 700px;">
+              <tr>
+                  <td align="center" valign="top">
+                      <table width="100%" border="0" bgcolor="#8056B0" cellspacing="0" cellpadding="20" id="preheader">
+                          <tr>
+                              <td valign="top">
+                                  <table width="100%" border="0" cellspacing="0" cellpadding="0">
+                                      <tr>
+                                          <td valign="top" width="600">
+                                              <div>
+                                                  <a style="width: 30%; padding: 0;">
+                                                      <img width="160" src="https://eqwedi-api-auth-bucket.s3.us-east-2.amazonaws.com/auth/correo/img/prueba.png" alt="Logo de Prueba">
+                                                  </a>
+                                              </div>
+                                          </td>
+                                      </tr>
+                                  </table>
+                              </td>
+                          </tr>
+                      </table>
+                      
+                      <table width="600" border="0" cellspacing="0" cellpadding="20" id="body_container">
+                          <tr>
+                              <td align="center" valign="top" class="body_content">
+                                  <table width="100%" border="0" cellspacing="0" cellpadding="20">
+                                      <tr>
+                                          <td valign="top">
+                                              <h2 style="color: #5F5D5D; font-size: 22px; text-align: left;">¡Gracias por tu pago!</h2>
+                                              <p style="color: #5F5D5D; font-size: 14px; line-height: 22px; text-align: left;">
+                                                  A continuación, te detallamos los datos del comprobante de tu transacción realizada a través del servicio de <strong>Link de Pagos</strong>:
+                                              </p>
+                                          </td>
+                                      </tr>
+                                      <tr>
+                                          <td valign="top">
+                                              <table width="100%" border="0" cellspacing="0" cellpadding="10" style="border: 1px solid #EAEAEA; border-radius: 8px; font-size: 14px; color: #5F5D5D;">
+                                                  <tr bgcolor="#F9F9F9">
+                                                      <td style="width: 40%; font-weight: bold; border-bottom: 1px solid #EAEAEA;">Operación Nro:</td>
+                                                      <td style="border-bottom: 1px solid #EAEAEA;">${operationNumber}</td>
+                                                  </tr>
+                                                  <tr>
+                                                      <td style="font-weight: bold; border-bottom: 1px solid #EAEAEA;">Cód. Autorización:</td>
+                                                      <td style="border-bottom: 1px solid #EAEAEA;">${authorizationCode}</td>
+                                                  </tr>
+                                                  <tr bgcolor="#F9F9F9">
+                                                      <td style="font-weight: bold; border-bottom: 1px solid #EAEAEA;">Comercio:</td>
+                                                      <td style="border-bottom: 1px solid #EAEAEA;">${merchantName}</td>
+                                                  </tr>
+                                                  <tr>
+                                                      <td style="font-weight: bold; border-bottom: 1px solid #EAEAEA;">Fecha:</td>
+                                                      <td style="border-bottom: 1px solid #EAEAEA;">${transactionDate}</td>
+                                                  </tr>
+                                                  <tr bgcolor="#F9F9F9">
+                                                      <td style="font-weight: bold; border-bottom: 1px solid #EAEAEA;">Forma de Pago:</td>
+                                                      <td style="border-bottom: 1px solid #EAEAEA;">${paymentMethod}</td>
+                                                  </tr>
+                                                  <tr>
+                                                      <td style="font-weight: bold; border-bottom: 1px solid #EAEAEA;">Descripción:</td>
+                                                      <td style="border-bottom: 1px solid #EAEAEA;">${description}</td>
+                                                  </tr>
+                                                  <tr bgcolor="#F4EBF1" style="font-size: 16px; color: #9B0042; font-weight: bold;">
+                                                      <td style="border-radius: 0 0 0 8px;">Monto Total:</td>
+                                                      <td style="border-radius: 0 0 8px 0;">${amount}</td>
+                                                  </tr>
+                                              </table>
+                                          </td>
+                                      </tr>
+                                  </table>
+                              </td>
+                          </tr>
+                      </table>
+
                       <table width="100%" border="0" bgcolor="#F4F3F3" cellspacing="0" cellpadding="20" id="body_info_container">
                           <tr>
                               <td align="center" valign="top" class="body_info_content">

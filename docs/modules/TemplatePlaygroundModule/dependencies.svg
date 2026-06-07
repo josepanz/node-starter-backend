@@ -24,13 +24,13 @@
 <title>cluster_TemplatePlaygroundModule</title>
 <polygon fill="none" stroke="black" stroke-dasharray="1,5" points="8,-70 8,-268 825,-268 825,-70 8,-70"/>
 </g>
-<g id="clust7" class="cluster">
-<title>cluster_TemplatePlaygroundModule_providers</title>
-<polygon fill="none" stroke="black" points="238,-78 238,-130 817,-130 817,-78 238,-78"/>
-</g>
 <g id="clust6" class="cluster">
 <title>cluster_TemplatePlaygroundModule_bootstrap</title>
 <polygon fill="none" stroke="black" points="316,-208 316,-260 534,-260 534,-208 316,-208"/>
+</g>
+<g id="clust7" class="cluster">
+<title>cluster_TemplatePlaygroundModule_providers</title>
+<polygon fill="none" stroke="black" points="238,-78 238,-130 817,-130 817,-78 238,-78"/>
 </g>
 <g id="clust2" class="cluster">
 <title>cluster_TemplatePlaygroundModule_declarations</title>

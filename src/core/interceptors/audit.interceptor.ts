@@ -4,83 +4,36 @@ import {
   Injectable,
   NestInterceptor,
 } from '@nestjs/common';
-import { PrismaDatasource } from '../database/services/prisma.service';
-import { Observable, tap } from 'rxjs';
-import { Request } from 'express';
 import { Reflector } from '@nestjs/core';
-import { OperationType } from '../middlewares/enums/operation-type.enum';
+import { auditStorage } from '../database/services/prisma.service';
+import { APPLICATION_NAME_KEY } from '@common/decorators/application-name.decorator';
+import { Observable } from 'rxjs';
 
 @Injectable()
 export class AuditInterceptor implements NestInterceptor {
-  constructor(
-    private readonly prisma: PrismaDatasource,
-    private readonly reflector: Reflector,
-  ) {}
+  constructor(private readonly reflector: Reflector) {}
 
   intercept(context: ExecutionContext, next: CallHandler): Observable<unknown> {
-    const request = context.switchToHttp().getRequest<Request>();
-    const user = request.user as { email?: string } | undefined; // Auth0 or JWT-authenticated user
-    const method = request.method;
-    const body = request.body as unknown;
+    const request = context.switchToHttp().getRequest();
 
-    const table = this.reflector.get<string>(
-      'audit:table',
-      context.getHandler(),
-    );
-    const operation = this.getOperationType(method);
+    const applicationName =
+      this.reflector.getAllAndOverride<string>(APPLICATION_NAME_KEY, [
+        context.getHandler(),
+        context.getClass(),
+      ]) ?? 'node-starter-backend';
 
-    return next.handle().pipe(
-      tap((result) => {
-        void (async () => {
-          if (!table || !user || !operation) return;
+    const store = {
+      userId:
+        request?.user?.email ??
+        request?.body?.userEmail ??
+        request?.query?.userEmail ??
+        request?.params?.userEmail ??
+        'system',
+      ip: request.ip || request.headers['x-forwarded-for'] || 'unknown',
+      userAgent: request.headers['user-agent'] || 'unknown',
+      applicationName,
+    };
 
-          const oldData: Record<string, unknown> | null =
-            (request['originalEntity'] as
-              | Record<string, unknown>
-              | undefined) ?? null;
-          const newData: Record<string, unknown> | null =
-            (result as Record<string, unknown>) ?? null;
-
-          await this.prisma.auditLogs.create({
-            data: {
-              tableName: table,
-              recordId:
-                result &&
-                typeof result === 'object' &&
-                result !== null &&
-                'id' in result &&
-                (result as Record<string, unknown>).id !== undefined
-                  ? String((result as { id: unknown }).id)
-                  : body &&
-                      typeof body === 'object' &&
-                      body !== null &&
-                      'id' in body &&
-                      (body as { id?: unknown }).id !== undefined
-                    ? String((body as { id: unknown }).id)
-                    : 'unknown',
-              operationType: operation,
-              oldData: oldData ? JSON.stringify(oldData) : undefined,
-              newData: newData ? JSON.stringify(newData) : undefined,
-              changedBy: user?.email || 'anonymous',
-            },
-          });
-        })();
-      }),
-    );
-  }
-
-  private getOperationType(method: string): string {
-    switch (method) {
-      case 'POST':
-        return OperationType.INSERT;
-      case 'PUT':
-        return OperationType.UPDATE;
-      case 'PATCH':
-        return OperationType.UPDATE;
-      case 'DELETE':
-        return OperationType.DELETE;
-      default:
-        return 'UNKNOWN';
-    }
+    return auditStorage.run(store, () => next.handle());
   }
 }

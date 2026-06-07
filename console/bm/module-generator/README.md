@@ -1,4 +1,4 @@
-# Generador de Módulos (BM - BEPSA Modules)
+# Generador de Módulos (BM - Modules)
 
 Aplicación de consola para generar módulos en el proyecto auth-backend con soporte para múltiples ORMs y configuraciones personalizadas.
 

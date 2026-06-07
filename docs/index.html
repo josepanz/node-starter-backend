@@ -100,7 +100,7 @@
 <h1>node-started-backend</h1>
 <p><a href="https://www.npmjs.com/package/node-started-backend"><img src="https://badge.fury.io/js/node-started-backend.svg" alt="npm" class="img-responsive"></a></p>
 <p>Proyecto inicial para backend con NestJS y TypeScript</p>
-<p>Última actualización: <!-- LAST_UPDATE --> 04 de noviembre de 2025, 04:50 p. m.</p>
+<p>Última actualización: <!-- LAST_UPDATE --> 06 de junio de 2026, 11:52 p. m.</p>
 <h2>🗎 Documentación disponible en</h2>
 <!-- START:documentation -->
 
@@ -179,6 +179,8 @@ Para sincronizar el esquema con la base de datos:</p>
 <!-- START:dependencies -->
 <ul>
 <li><strong>@autotelic/pino-seq-transport</strong> <code>^0.1.0</code></li>
+<li><strong>@aws-sdk/client-s3</strong> <code>^3.1012.0</code></li>
+<li><strong>@aws-sdk/s3-request-presigner</strong> <code>^3.1012.0</code></li>
 <li><strong>@nestjs/axios</strong> <code>^4.0.0</code></li>
 <li><strong>@nestjs/common</strong> <code>^11.0.1</code></li>
 <li><strong>@nestjs/config</strong> <code>^4.0.1</code></li>
@@ -187,9 +189,13 @@ Para sincronizar el esquema con la base de datos:</p>
 <li><strong>@nestjs/mapped-types</strong> <code>^2.1.0</code></li>
 <li><strong>@nestjs/passport</strong> <code>^11.0.5</code></li>
 <li><strong>@nestjs/platform-express</strong> <code>^11.0.1</code></li>
+<li><strong>@nestjs/sequelize</strong> <code>^11.0.0</code></li>
 <li><strong>@nestjs/swagger</strong> <code>^11.0.7</code></li>
 <li><strong>@nestjs/terminus</strong> <code>^11.0.0</code></li>
 <li><strong>@prisma/client</strong> <code>6.18.0</code></li>
+<li><strong>@sequelize/core</strong> <code>7.0.0-alpha.43</code></li>
+<li><strong>@sequelize/db2-ibmi</strong> <code>7.0.0-alpha.43</code></li>
+<li><strong>@sequelize/postgres</strong> <code>7.0.0-alpha.43</code></li>
 <li><strong>axios</strong> <code>^1.9.0</code></li>
 <li><strong>bcrypt</strong> <code>^6.0.0</code></li>
 <li><strong>class-transformer</strong> <code>^0.5.1</code></li>
@@ -197,7 +203,11 @@ Para sincronizar el esquema con la base de datos:</p>
 <li><strong>cookie-parser</strong> <code>^1.4.7</code></li>
 <li><strong>date-fns</strong> <code>^4.1.0</code></li>
 <li><strong>date-fns-tz</strong> <code>^3.2.0</code></li>
+<li><strong>exceljs</strong> <code>^4.4.0</code></li>
 <li><strong>express</strong> <code>^5.1.0</code></li>
+<li><strong>fast-glob</strong> <code>^3.3.3</code></li>
+<li><strong>handlebars</strong> <code>^4.7.9</code></li>
+<li><strong>html-pdf-node</strong> <code>^1.0.8</code></li>
 <li><strong>joi</strong> <code>^17.13.3</code></li>
 <li><strong>jsonwebtoken</strong> <code>^9.0.2</code></li>
 <li><strong>jwks-rsa</strong> <code>^3.2.0</code></li>
@@ -207,6 +217,7 @@ Para sincronizar el esquema con la base de datos:</p>
 <li><strong>nodemailer</strong> <code>^7.0.6</code></li>
 <li><strong>passport</strong> <code>^0.7.0</code></li>
 <li><strong>passport-jwt</strong> <code>^4.0.1</code></li>
+<li><strong>pdfmake</strong> <code>^0.3.9</code></li>
 <li><strong>pino-pretty</strong> <code>^13.0.0</code></li>
 <li><strong>read-pkg-up</strong> <code>^11.0.0</code></li>
 <li><strong>reflect-metadata</strong> <code>^0.2.2</code></li>
@@ -224,7 +235,7 @@ Para sincronizar el esquema con la base de datos:</p>
 <li><strong>start:debug</strong> → <code>nest start --debug --watch</code></li>
 <li><strong>start:prod</strong> → <code>node dist/main</code></li>
 <li><strong>lint</strong> → <code>eslint &quot;{src,apps,libs,test}/**/*.ts&quot; --quiet</code></li>
-<li><strong>check:types</strong> → <code>tsc --noEmit</code></li>
+<li><strong>check:types</strong> → <code>tsc --noEmit -p tsconfig.build.json</code></li>
 <li><strong>test</strong> → <code>jest</code></li>
 <li><strong>test:watch</strong> → <code>jest --watch</code></li>
 <li><strong>test:cov</strong> → <code>jest --coverage</code></li>
@@ -233,11 +244,12 @@ Para sincronizar el esquema con la base de datos:</p>
 <li><strong>prepare</strong> → <code>husky || true</code></li>
 <li><strong>seed</strong> → <code>ts-node prisma/seed.ts</code></li>
 <li><strong>docs:generate</strong> → <code>npx compodoc -p tsconfig.json -d docs</code></li>
-<li><strong>docs:json</strong> → <code>npx compodoc -p tsconfig.json -e json</code></li>
+<li><strong>docs:json</strong> → <code>npx compodoc -p tsconfig.json -d docs -e json</code></li>
 <li><strong>update:readme</strong> → <code>node scripts/update-readme.js</code></li>
 <li><strong>docs:serve</strong> → <code>npx compodoc -s -d docs</code></li>
 <li><strong>docs:rebuild</strong> → <code>pnpm run docs:generate &amp;&amp; pnpm run docs:serve</code></li>
-<li><strong>docs:update-readme</strong> → <code>pnpm run docs:json &amp;&amp; pnpm run update:readme</code><!-- END:scripts --></li>
+<li><strong>docs:update-readme</strong> → <code>pnpm run docs:json &amp;&amp; pnpm run update:readme</code></li>
+<li><strong>bm</strong> → <code>ts-node -r tsconfig-paths/register console/bm/index.ts</code><!-- END:scripts --></li>
 </ul>
 <h2>🏗️ Arquitectura</h2>
 <!-- START:architecture -->
@@ -270,24 +282,13 @@ Para sincronizar el esquema con la base de datos:</p>
 </ul>
 <!-- END:architecture -->
 
-<h2>🧩 Funcionalidades documentadas</h2>
 <!-- START:functionalities -->
-<p><em>Sin funcionalidades documentadas.</em></p>
+
 <!-- END:functionalities -->
 
-<h2>📦 Api Controllers</h2>
 <!-- START:api-controllers -->
-<ul>
-<li><strong>auth-api.controller</strong></li>
-<li><strong>email-api.controller</strong></li>
-<li><strong>example-api.controller</strong></li>
-<li><strong>onboarding.controller</strong></li>
-<li><strong>permissions-assignment.controller</strong></li>
-<li><strong>permissions.controller</strong></li>
-<li><strong>roles.controller</strong></li>
-<li><strong>users.controller</strong><!-- END:api-controllers --></li>
-</ul>
 
+<!-- END:api-controllers -->
 
 
 

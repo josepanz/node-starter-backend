@@ -139,21 +139,6 @@
             </p>
 
 
-                <p class="comment">
-                <h3>Description</h3>
-                </p>
-                <p class="comment">
-                    <p>export class BasicAuthGuard implements CanActivate {
-implementa la autenticación HTTP Basic (client_id:client_secret)
-validando las credenciales contra la base de datos.</p>
-<ul>
-<li><ul>
-<li>Espera el encabezado: Authorization: Basic &lt;base64(client_id:client_secret)&gt;</li>
-</ul>
-</li>
-</ul>
-
-                </p>
 
 
 
@@ -214,7 +199,7 @@ validando las credenciales contra la base de datos.</p>
                 </tr>
                         <tr>
                             <td class="col-md-4">
-                                <div class="io-line">Defined in <a href="" data-line="20" class="link-to-prism">src/modules/auth/guards/basic-auth.guard.ts:20</a></div>
+                                <div class="io-line">Defined in <a href="" data-line="14" class="link-to-prism">src/modules/auth/guards/basic-auth.guard.ts:14</a></div>
                             </td>
                         </tr>
 
@@ -279,8 +264,8 @@ validando las credenciales contra la base de datos.</p>
 
                     <tr>
                         <td class="col-md-4">
-                            <div class="io-line">Defined in <a href="" data-line="25"
-                                    class="link-to-prism">src/modules/auth/guards/basic-auth.guard.ts:25</a></div>
+                            <div class="io-line">Defined in <a href="" data-line="18"
+                                    class="link-to-prism">src/modules/auth/guards/basic-auth.guard.ts:18</a></div>
                         </td>
                     </tr>
 
@@ -339,27 +324,19 @@ validando las credenciales contra la base de datos.</p>
   ForbiddenException,
   Logger,
 } from &#x27;@nestjs/common&#x27;;
-import { PrismaDatasource } from &#x27;@core/database/prisma.service&#x27;;
+import { PrismaDatasource } from &#x27;@core/database/services/prisma.service&#x27;;
 import { ApiClientCredential } from &#x27;@prisma/client&#x27;;
 
-/**
- * export class BasicAuthGuard implements CanActivate {
- * implementa la autenticación HTTP Basic (client_id:client_secret)
- * validando las credenciales contra la base de datos.
- * * * Espera el encabezado: Authorization: Basic &lt;base64(client_id:client_secret)&gt;
- */
 @Injectable()
 export class BasicAuthGuard implements CanActivate {
   private readonly logger &#x3D; new Logger(BasicAuthGuard.name);
 
-  // Inyectamos el servicio de base de datos (Prisma)
   constructor(private readonly prisma: PrismaDatasource) {}
 
   async canActivate(context: ExecutionContext): Promise&lt;boolean&gt; {
     const request &#x3D; context.switchToHttp().getRequest();
     const authHeader &#x3D; request.headers[&#x27;authorization&#x27;];
 
-    // 1. Validar el formato de Basic Auth
     if (!authHeader || !authHeader.startsWith(&#x27;Basic &#x27;)) {
       throw new UnauthorizedException(&#x27;Se requiere Basic Authentication.&#x27;);
     }
@@ -368,7 +345,6 @@ export class BasicAuthGuard implements CanActivate {
     let decodedString: string;
 
     try {
-      // 2. Decodificar Base64
       decodedString &#x3D; Buffer.from(encodedCredentials, &#x27;base64&#x27;).toString(
         &#x27;utf8&#x27;,
       );
@@ -388,12 +364,12 @@ export class BasicAuthGuard implements CanActivate {
 
     const [clientId, clientSecret] &#x3D; credentials;
 
-    // 3. Buscar el cliente por ID
     let apiClientCredential: ApiClientCredential;
     try {
-      apiClientCredential &#x3D; (await this.prisma.apiClientCredential.findUnique({
-        where: { clientId: clientId },
-      })) as unknown as ApiClientCredential;
+      apiClientCredential &#x3D;
+        (await this.prisma.extended.apiClientCredential.findUnique({
+          where: { clientId: clientId },
+        })) as unknown as ApiClientCredential;
     } catch (error) {
       this.logger.error(
         &#x27;Error de base de datos al buscar credenciales:&#x27;,
@@ -404,12 +380,10 @@ export class BasicAuthGuard implements CanActivate {
       );
     }
 
-    // 4. Verificar si el cliente existe
     if (!apiClientCredential) {
       throw new UnauthorizedException(&#x27;Client ID incorrecto.&#x27;);
     }
 
-    // 5. Verificar si la cuenta está activa (por si se revoca el acceso)
     if (!apiClientCredential.isActive) {
       this.logger.warn(&#x60;Acceso denegado: Cliente ${clientId} inactivo.&#x60;);
       throw new ForbiddenException(
@@ -417,21 +391,18 @@ export class BasicAuthGuard implements CanActivate {
       );
     }
 
-    // 6. Comparar el secreto
     const isPasswordValid &#x3D; clientSecret &#x3D;&#x3D;&#x3D; apiClientCredential.secretKey;
 
     if (!isPasswordValid) {
-      // Usamos el mismo mensaje para no dar pistas sobre si falló el ID o el secreto
       throw new UnauthorizedException(&#x27;Secreto incorrecto.&#x27;);
     }
 
-    // Opcional: Adjuntar el objeto del cliente a la request para usarlo en el controlador
     request.apiClient &#x3D; {
       id: apiClientCredential.clientId,
       name: apiClientCredential.clientName,
     };
 
-    return true; // Autenticación exitosa
+    return true;
   }
 }
 </code></pre>

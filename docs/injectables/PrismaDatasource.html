@@ -133,7 +133,7 @@
             <h3>File</h3>
         </p>
         <p class="comment">
-            <code>src/core/database/prisma.service.ts</code>
+            <code>src/core/database/services/prisma.service.ts</code>
         </p>
 
 
@@ -158,6 +158,11 @@
                 <tr>
                     <td class="col-md-4">
                         <ul class="index-list">
+                            <li>
+                                    <span class="modifier">Public</span>
+                                    <span class="modifier">Readonly</span>
+                                <a href="#extended" >extended</a>
+                            </li>
                             <li>
                                     <span class="modifier">Public</span>
                                 <a href="#isConnected" >isConnected</a>
@@ -227,8 +232,8 @@
 
                     <tr>
                         <td class="col-md-4">
-                            <div class="io-line">Defined in <a href="" data-line="49"
-                                    class="link-to-prism">src/core/database/prisma.service.ts:49</a></div>
+                            <div class="io-line">Defined in <a href="" data-line="81"
+                                    class="link-to-prism">src/core/database/services/prisma.service.ts:81</a></div>
                         </td>
                     </tr>
 
@@ -266,8 +271,8 @@
 
                     <tr>
                         <td class="col-md-4">
-                            <div class="io-line">Defined in <a href="" data-line="37"
-                                    class="link-to-prism">src/core/database/prisma.service.ts:37</a></div>
+                            <div class="io-line">Defined in <a href="" data-line="69"
+                                    class="link-to-prism">src/core/database/services/prisma.service.ts:69</a></div>
                         </td>
                     </tr>
 
@@ -293,6 +298,84 @@
         <tbody>
             <tr>
                 <td class="col-md-4">
+                    <a name="extended"></a>
+                    <span class="name">
+                            <span class="modifier">Public</span>
+                            <span class="modifier">Readonly</span>
+                        <span ><b>extended</b></span>
+                        <a href="#extended"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>    <code>unknown</code>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Default value : </i><code>this.$extends({
+    query: {
+      $allModels: {
+        $allOperations: async ({ model, operation, args, query }) &#x3D;&gt; {
+          const writeOperations &#x3D; [
+            &#x27;create&#x27;,
+            &#x27;update&#x27;,
+            &#x27;upsert&#x27;,
+            &#x27;delete&#x27;,
+            &#x27;createMany&#x27;,
+            &#x27;updateMany&#x27;,
+            &#x27;deleteMany&#x27;,
+          ];
+
+          const context &#x3D; auditStorage.getStore();
+          const isReentrant &#x3D; auditTxActive.getStore();
+
+          if (
+            context &amp;&amp;
+            !isReentrant &amp;&amp;
+            writeOperations.includes(operation) &amp;&amp;
+            (model as string) !&#x3D;&#x3D; &#x27;AuditLogs&#x27;
+          ) {
+            const base &#x3D; this as unknown as PrismaClient;
+
+            return auditTxActive.run(true, () &#x3D;&gt;
+              base.$transaction(async (tx) &#x3D;&gt; {
+                // set_config con is_local&#x3D;true: aplica solo a esta transacción
+                // $executeRaw con template literals: parametrizado, sin riesgo de SQL injection
+                await tx.$executeRaw&#x60;SELECT set_config(&#x27;app.current_user_id&#x27;, ${context.userId}, true)&#x60;;
+                await tx.$executeRaw&#x60;SELECT set_config(&#x27;app.client_ip&#x27;, ${context.ip}, true)&#x60;;
+                await tx.$executeRaw&#x60;SELECT set_config(&#x27;app.user_agent&#x27;, ${context.userAgent}, true)&#x60;;
+                await tx.$executeRaw&#x60;SELECT set_config(&#x27;app.application_name&#x27;, ${context.applicationName}, true)&#x60;;
+
+                // Ejecutar la operación del modelo a través de tx (misma conexión/transacción)
+                // Así el trigger dispara dentro de la misma tx y lee las variables de sesión
+                return tx[model as string][operation](args) as Promise&lt;unknown&gt;;
+              }),
+            );
+          }
+
+          return query(args);
+        },
+      },
+    },
+  })</code>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="22" class="link-to-prism">src/core/database/services/prisma.service.ts:22</a></div>
+                        </td>
+                    </tr>
+
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
                     <a name="isConnected"></a>
                     <span class="name">
                             <span class="modifier">Public</span>
@@ -314,7 +397,7 @@
                 </tr>
                     <tr>
                         <td class="col-md-4">
-                                <div class="io-line">Defined in <a href="" data-line="11" class="link-to-prism">src/core/database/prisma.service.ts:11</a></div>
+                                <div class="io-line">Defined in <a href="" data-line="19" class="link-to-prism">src/core/database/services/prisma.service.ts:19</a></div>
                         </td>
                     </tr>
 
@@ -347,7 +430,7 @@
                 </tr>
                     <tr>
                         <td class="col-md-4">
-                                <div class="io-line">Defined in <a href="" data-line="12" class="link-to-prism">src/core/database/prisma.service.ts:12</a></div>
+                                <div class="io-line">Defined in <a href="" data-line="20" class="link-to-prism">src/core/database/services/prisma.service.ts:20</a></div>
                         </td>
                     </tr>
 
@@ -362,37 +445,69 @@
     <div class="tab-pane fade  tab-source-code" id="source">
         <pre class="line-numbers compodoc-sourcecode"><code class="language-typescript">import { Injectable, Logger, OnModuleInit } from &#x27;@nestjs/common&#x27;;
 import { PrismaClient } from &#x27;@prisma/client&#x27;;
+import { AsyncLocalStorage } from &#x27;async_hooks&#x27;;
 
-//import { REQUEST } from &#x27;@nestjs/core&#x27;;
-//import { TRACE_ID_HEADER } from &#x27;../middlewares/trace-id.middleware&#x27;;
+export const auditStorage &#x3D; new AsyncLocalStorage&lt;{
+  userId: string;
+  ip: string;
+  userAgent: string;
+  applicationName: string;
+}&gt;();
+
+// Guard: evita re-entrar a la lógica de auditoría cuando tx[model][operation] re-dispara la extensión
+const auditTxActive &#x3D; new AsyncLocalStorage&lt;boolean&gt;();
 
 @Injectable()
 export class PrismaDatasource extends PrismaClient implements OnModuleInit {
   public isConnected: boolean &#x3D; false;
   private readonly logger &#x3D; new Logger(PrismaDatasource.name);
 
-  /*constructor(@Inject(REQUEST) private readonly request: Request) {
-    super({
-      log: [
-        { emit: &#x27;event&#x27;, level: &#x27;query&#x27; },
-        { emit: &#x27;event&#x27;, level: &#x27;info&#x27; },
-        { emit: &#x27;event&#x27;, level: &#x27;warn&#x27; },
-        { emit: &#x27;event&#x27;, level: &#x27;error&#x27; },
-      ],
-    });
+  public readonly extended &#x3D; this.$extends({
+    query: {
+      $allModels: {
+        $allOperations: async ({ model, operation, args, query }) &#x3D;&gt; {
+          const writeOperations &#x3D; [
+            &#x27;create&#x27;,
+            &#x27;update&#x27;,
+            &#x27;upsert&#x27;,
+            &#x27;delete&#x27;,
+            &#x27;createMany&#x27;,
+            &#x27;updateMany&#x27;,
+            &#x27;deleteMany&#x27;,
+          ];
 
-    this.$on(&#x27;query&#x27; as never, (event: Prisma.QueryEvent) &#x3D;&gt;
-      this.handleDbQueryEvent(event),
-    );
+          const context &#x3D; auditStorage.getStore();
+          const isReentrant &#x3D; auditTxActive.getStore();
 
-    this.$on(&#x27;error&#x27; as never, (error: Prisma.PrismaClientKnownRequestError) &#x3D;&gt;
-      this.handleDbQueryError(error),
-    );
+          if (
+            context &amp;&amp;
+            !isReentrant &amp;&amp;
+            writeOperations.includes(operation) &amp;&amp;
+            (model as string) !&#x3D;&#x3D; &#x27;AuditLogs&#x27;
+          ) {
+            const base &#x3D; this as unknown as PrismaClient;
 
-    this.$on(&#x27;warn&#x27; as never, (warn: any) &#x3D;&gt; this.handleDbQueryWarn(warn));
+            return auditTxActive.run(true, () &#x3D;&gt;
+              base.$transaction(async (tx) &#x3D;&gt; {
+                // set_config con is_local&#x3D;true: aplica solo a esta transacción
+                // $executeRaw con template literals: parametrizado, sin riesgo de SQL injection
+                await tx.$executeRaw&#x60;SELECT set_config(&#x27;app.current_user_id&#x27;, ${context.userId}, true)&#x60;;
+                await tx.$executeRaw&#x60;SELECT set_config(&#x27;app.client_ip&#x27;, ${context.ip}, true)&#x60;;
+                await tx.$executeRaw&#x60;SELECT set_config(&#x27;app.user_agent&#x27;, ${context.userAgent}, true)&#x60;;
+                await tx.$executeRaw&#x60;SELECT set_config(&#x27;app.application_name&#x27;, ${context.applicationName}, true)&#x60;;
 
-    this.$on(&#x27;info&#x27; as never, (info: any) &#x3D;&gt; this.handleDbQueryInfo(info));
-  }*/
+                // Ejecutar la operación del modelo a través de tx (misma conexión/transacción)
+                // Así el trigger dispara dentro de la misma tx y lee las variables de sesión
+                return tx[model as string][operation](args) as Promise&lt;unknown&gt;;
+              }),
+            );
+          }
+
+          return query(args);
+        },
+      },
+    },
+  });
 
   async onModuleInit() {
     await this.$connect()

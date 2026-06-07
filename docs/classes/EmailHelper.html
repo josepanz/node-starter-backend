@@ -160,6 +160,14 @@
                         <ul class="index-list">
                             <li>
                                     <span class="modifier">Static</span>
+                                <a href="#createPasswordCreationTemplate" >createPasswordCreationTemplate</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Static</span>
+                                <a href="#createPaymentReceiptTemplate" >createPaymentReceiptTemplate</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Static</span>
                                 <a href="#createUserForgotPasswordTemplate" >createUserForgotPasswordTemplate</a>
                             </li>
                             <li>
@@ -189,6 +197,262 @@
         <tbody>
             <tr>
                 <td class="col-md-4">
+                    <a name="createPasswordCreationTemplate"></a>
+                    <span class="name">
+                            <span class="modifier">Static</span>
+                        <span ><b>createPasswordCreationTemplate</b></span>
+                        <a href="#createPasswordCreationTemplate"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                        <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>createPasswordCreationTemplate(firstName: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank">string</a>, link: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank">string</a>)</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="256"
+                                    class="link-to-prism">src/modules/email/helpers/email.helper.ts:256</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                        <div class="io-description"><p>Genera el contenido HTML para el correo de creación de contraseña.</p>
+</div>
+
+                            <div class="io-description">
+                                <b>Parameters :</b>
+                                
+                                <table class="params">
+                                    <thead>
+                                        <tr>
+                                            <td>Name</td>
+                                                <td>Type</td>
+                                            <td>Optional</td>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                                <td>firstName</td>
+                                            <td>
+                                                            <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
+                                            </td>
+
+                                            <td>
+                                                    No
+                                            </td>
+
+
+                                        </tr>
+                                        <tr>
+                                                <td>link</td>
+                                            <td>
+                                                            <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
+                                            </td>
+
+                                            <td>
+                                                    No
+                                            </td>
+
+
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        <div class="io-description">
+                            <b>Returns : </b>        <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
+
+                        </div>
+                            <div class="io-description">
+                                
+                            </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="createPaymentReceiptTemplate"></a>
+                    <span class="name">
+                            <span class="modifier">Static</span>
+                        <span ><b>createPaymentReceiptTemplate</b></span>
+                        <a href="#createPaymentReceiptTemplate"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                        <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>createPaymentReceiptTemplate(operationNumber: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank">string</a>, authorizationCode: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank">string</a>, merchantName: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank">string</a>, transactionDate: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank">string</a>, amount: number | string, paymentMethod: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank">string</a>, description: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank">string</a>)</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="377"
+                                    class="link-to-prism">src/modules/email/helpers/email.helper.ts:377</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                        <div class="io-description"><p>Genera el contenido HTML para el correo de comprobante de pago.</p>
+</div>
+
+                            <div class="io-description">
+                                <b>Parameters :</b>
+                                
+                                <table class="params">
+                                    <thead>
+                                        <tr>
+                                            <td>Name</td>
+                                                <td>Type</td>
+                                            <td>Optional</td>
+                                                <td>Description</td>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                                <td>operationNumber</td>
+                                            <td>
+                                                            <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
+                                            </td>
+
+                                            <td>
+                                                    No
+                                            </td>
+
+
+                                            <td>
+                                                    <p>Número de operación</p>
+
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                                <td>authorizationCode</td>
+                                            <td>
+                                                            <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
+                                            </td>
+
+                                            <td>
+                                                    No
+                                            </td>
+
+
+                                            <td>
+                                                    <p>Código de autorización</p>
+
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                                <td>merchantName</td>
+                                            <td>
+                                                            <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
+                                            </td>
+
+                                            <td>
+                                                    No
+                                            </td>
+
+
+                                            <td>
+                                                    <p>Nombre del comercio</p>
+
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                                <td>transactionDate</td>
+                                            <td>
+                                                            <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
+                                            </td>
+
+                                            <td>
+                                                    No
+                                            </td>
+
+
+                                            <td>
+                                                    <p>Fecha de la transacción</p>
+
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                                <td>amount</td>
+                                            <td>
+                                                        <code>number | string</code>
+                                            </td>
+
+                                            <td>
+                                                    No
+                                            </td>
+
+
+                                            <td>
+                                                    <p>Monto del pago</p>
+
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                                <td>paymentMethod</td>
+                                            <td>
+                                                            <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
+                                            </td>
+
+                                            <td>
+                                                    No
+                                            </td>
+
+
+                                            <td>
+                                                    <p>Forma de pago</p>
+
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                                <td>description</td>
+                                            <td>
+                                                            <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
+                                            </td>
+
+                                            <td>
+                                                    No
+                                            </td>
+
+
+                                            <td>
+                                                    <p>Descripción del pago</p>
+
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        <div class="io-description">
+                            <b>Returns : </b>        <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
+
+                        </div>
+                            <div class="io-description">
+                                <p>Contenido HTML en string</p>
+
+                            </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
                     <a name="createUserForgotPasswordTemplate"></a>
                     <span class="name">
                             <span class="modifier">Static</span>
@@ -207,8 +471,8 @@
 
                     <tr>
                         <td class="col-md-4">
-                            <div class="io-line">Defined in <a href="" data-line="131"
-                                    class="link-to-prism">src/modules/email/helpers/email.helper.ts:131</a></div>
+                            <div class="io-line">Defined in <a href="" data-line="132"
+                                    class="link-to-prism">src/modules/email/helpers/email.helper.ts:132</a></div>
                         </td>
                     </tr>
 
@@ -291,8 +555,8 @@ Este método crea una plantilla HTML simple para el correo electrónico de olvid
 
                     <tr>
                         <td class="col-md-4">
-                            <div class="io-line">Defined in <a href="" data-line="10"
-                                    class="link-to-prism">src/modules/email/helpers/email.helper.ts:10</a></div>
+                            <div class="io-line">Defined in <a href="" data-line="11"
+                                    class="link-to-prism">src/modules/email/helpers/email.helper.ts:11</a></div>
                         </td>
                     </tr>
 
@@ -372,6 +636,7 @@ Este método crea una plantilla HTML simple para el correo electrónico de verif
    * @param passwordCreationLink
    * @returns
    */
+
   public static createUserVerificationTemplate(
     firstName: string,
     link: string,
@@ -424,7 +689,7 @@ Este método crea una plantilla HTML simple para el correo electrónico de verif
                                           &lt;td valign&#x3D;&quot;top&quot; width&#x3D;&quot;600&quot;&gt;
                                               &lt;div&gt;
                                                   &lt;a style&#x3D;&quot;width: 30%; padding: 0;&quot;&gt;
-                                                      &lt;img width&#x3D;&quot;160&quot; src&#x3D;&quot;https://eqwedi-api-auth-bucket.s3.us-east-2.amazonaws.com/auth/correo/img/dinelco.png&quot; alt&#x3D;&quot;Logo de Dinelco&quot;&gt;
+                                                      &lt;img width&#x3D;&quot;160&quot; src&#x3D;&quot;https://eqwedi-api-auth-bucket.s3.us-east-2.amazonaws.com/auth/correo/img/prueba.png&quot; alt&#x3D;&quot;Logo de Prueba&quot;&gt;
                                                   &lt;/a&gt;
                                               &lt;/div&gt;
                                           &lt;/td&gt;
@@ -451,7 +716,7 @@ Este método crea una plantilla HTML simple para el correo electrónico de verif
                                               &lt;table&gt;
                                                   &lt;tr&gt;
                                                       &lt;td align&#x3D;&quot;center&quot; style&#x3D;&quot;border-radius: 25px; background-color: #9B0042;&quot;&gt;
-                                                          &lt;a href&#x3D;&quot;${link}&quot; style&#x3D;&quot;background-color:#9B0042;border-radius:25px;color:#FFFFFF;display:inline-block;font-family:&#x27;Gilroy Black&#x27;;font-size:18px;height:45px;line-height:45px;text-align:center;text-decoration:none;width:200px;-webkit-text-size-adjust:none;&quot;&gt;
+                                                          &lt;a href&#x3D;&quot;${link}&quot; style&#x3D;&quot;background-color:#9B0042;border-radius:25px;color:#FFFFFF;display:inline-block;font-size:18px;height:45px;line-height:45px;text-align:center;text-decoration:none;width:200px;-webkit-text-size-adjust:none;&quot;&gt;
                                                               Verificar correo
                                                           &lt;/a&gt;
                                                       &lt;/td&gt;
@@ -547,7 +812,7 @@ Este método crea una plantilla HTML simple para el correo electrónico de verif
                                               &lt;div&gt;
                                                   &lt;a style&#x3D;&quot;width: 30%; padding: 0;&quot;&gt;
                                                       &lt;!-- LOGO - Mantengo tu URL de S3, reemplázala si es necesario --&gt;
-                                                      &lt;img width&#x3D;&quot;160&quot; src&#x3D;&quot;https://eqwedi-api-auth-bucket.s3.us-east-2.amazonaws.com/auth/correo/img/dinelco.png&quot; alt&#x3D;&quot;Logo de Dinelco&quot;&gt;
+                                                      &lt;img width&#x3D;&quot;160&quot; src&#x3D;&quot;https://eqwedi-api-auth-bucket.s3.us-east-2.amazonaws.com/auth/correo/img/prueba.png&quot; alt&#x3D;&quot;Logo de Prueba&quot;&gt;
                                                   &lt;/a&gt;
                                               &lt;/div&gt;
                                           &lt;/td&gt;
@@ -592,6 +857,270 @@ Este método crea una plantilla HTML simple para el correo electrónico de verif
                       &lt;/table&gt;
 
                       &lt;!-- FOOTER / INFORMACIÓN LEGAL --&gt;
+                      &lt;table width&#x3D;&quot;100%&quot; border&#x3D;&quot;0&quot; bgcolor&#x3D;&quot;#F4F3F3&quot; cellspacing&#x3D;&quot;0&quot; cellpadding&#x3D;&quot;20&quot; id&#x3D;&quot;body_info_container&quot;&gt;
+                          &lt;tr&gt;
+                              &lt;td align&#x3D;&quot;center&quot; valign&#x3D;&quot;top&quot; class&#x3D;&quot;body_info_content&quot;&gt;
+                                  &lt;table width&#x3D;&quot;100%&quot; border&#x3D;&quot;0&quot; cellspacing&#x3D;&quot;0&quot; cellpadding&#x3D;&quot;10&quot;&gt;
+                                      &lt;tr&gt;
+                                          &lt;td valign&#x3D;&quot;top&quot;&gt;
+                                              &lt;p style&#x3D;&quot;color: #5F5D5D; font-size: 12px; line-height: 22px;&quot;&gt;Este mensaje ha sido generado de forma automática; favor no respondas el mismo, ya que esta dirección no acepta correos electrónicos, por lo que no recibirás una respuesta. &lt;strong&gt;Si requerís asistencia, comunicate al CAC (Centro de Atención al Cliente) 021 620 6000.&lt;/strong&gt;&lt;/p&gt;
+                                          &lt;/td&gt;
+                                      &lt;/tr&gt;
+                                  &lt;/table&gt;
+                              &lt;/td&gt;
+                          &lt;/tr&gt;
+                      &lt;/table&gt;
+                  &lt;/td&gt;
+              &lt;/tr&gt;
+          &lt;/table&gt;
+      &lt;/body&gt;
+      
+      &lt;/html&gt;
+    &#x60;;
+  }
+
+  /**
+   * Genera el contenido HTML para el correo de creación de contraseña.
+   */
+  public static createPasswordCreationTemplate(
+    firstName: string,
+    link: string,
+  ): string {
+    return &#x60;
+      &lt;!DOCTYPE html&gt;
+      &lt;html&gt;
+      &lt;head&gt;
+          &lt;meta charset&#x3D;&quot;UTF-8&quot;&gt;
+          &lt;meta name&#x3D;&quot;viewport&quot; content&#x3D;&quot;width&#x3D;device-width, initial-scale&#x3D;1.0&quot;&gt;
+          &lt;style type&#x3D;&quot;text/css&quot;&gt;
+              @font-face {
+                  font-family: &#x27;Gilroy&#x27;;
+                  src: url(&#x27;https://cdn.jsdelivr.net/gh/repalash/gilroy-free-webfont@fonts/Gilroy-Extrabold.eot&#x27;);
+                  src: local(&#x27;Gilroy Extrabold&#x27;), local(&#x27;Gilroy-Extrabold&#x27;),
+                  url(&#x27;https://cdn.jsdelivr.net/gh/repalash/gilroy-free-webfont@fonts/Gilroy-Extrabold.eot?#iefix&#x27;) format(&#x27;embedded-opentype&#x27;),
+                  url(&#x27;https://cdn.jsdelivr.net/gh/repalash/gilroy-free-webfont@fonts/Gilroy-Extrabold.woff&#x27;) format(&#x27;woff&#x27;),
+                  url(&#x27;https://cdn.jsdelivr.net/gh/repalash/gilroy-free-webfont@fonts/Gilroy-Extrabold.ttf&#x27;) format(&#x27;truetype&#x27;);
+                  font-weight: 600;
+                  font-style: normal;
+              }
+              @font-face {
+                  font-family: &#x27;Gilroy&#x27;;
+                  src: url(&#x27;https://cdn.jsdelivr.net/gh/repalash/gilroy-free-webfont@fonts/Gilroy-Light.eot&#x27;);
+                  src: local(&#x27;Gilroy Light&#x27;), local(&#x27;Gilroy-Light&#x27;),
+                  url(&#x27;https://cdn.jsdelivr.net/gh/repalash/gilroy-free-webfont@fonts/Gilroy-Light.eot?#iefix&#x27;) format(&#x27;embedded-opentype&#x27;),
+                  url(&#x27;https://cdn.jsdelivr.net/gh/repalash/gilroy-free-webfont@fonts/Gilroy-Light.woff&#x27;) format(&#x27;woff&#x27;),
+                  url(&#x27;https://cdn.jsdelivr.net/gh/repalash/gilroy-free-webfont@fonts/Gilroy-Light.ttf&#x27;) format(&#x27;truetype&#x27;);
+                  font-weight: 400;
+                  font-style: normal;
+              }
+              body {
+                  font-family: &#x27;Gilroy&#x27;, sans-serif;
+              }
+          &lt;/style&gt;
+      &lt;/head&gt;
+      &lt;body style&#x3D;&quot;margin: 0; padding: 0; width: 100%; -webkit-text-size-adjust: none; -webkit-font-smoothing: antialiased;&quot;&gt;
+          &lt;table width&#x3D;&quot;100%&quot; bgcolor&#x3D;&quot;#FFFFFF&quot; border&#x3D;&quot;0&quot; cellspacing&#x3D;&quot;0&quot; cellpadding&#x3D;&quot;0&quot; id&#x3D;&quot;background&quot; style&#x3D;&quot;height: 100% !important; margin: 0; padding: 0; width: 100% !important; max-width: 700px;&quot;&gt;
+              &lt;tr&gt;
+                  &lt;td align&#x3D;&quot;center&quot; valign&#x3D;&quot;top&quot;&gt;
+                      &lt;table width&#x3D;&quot;100%&quot; border&#x3D;&quot;0&quot; bgcolor&#x3D;&quot;#8056B0&quot; cellspacing&#x3D;&quot;0&quot; cellpadding&#x3D;&quot;20&quot; id&#x3D;&quot;preheader&quot;&gt;
+                          &lt;tr&gt;
+                              &lt;td valign&#x3D;&quot;top&quot;&gt;
+                                  &lt;table width&#x3D;&quot;100%&quot; border&#x3D;&quot;0&quot; cellspacing&#x3D;&quot;0&quot; cellpadding&#x3D;&quot;0&quot;&gt;
+                                      &lt;tr&gt;
+                                          &lt;td valign&#x3D;&quot;top&quot; width&#x3D;&quot;600&quot;&gt;
+                                              &lt;div&gt;
+                                                  &lt;a style&#x3D;&quot;width: 30%; padding: 0;&quot;&gt;
+                                                      &lt;img width&#x3D;&quot;160&quot; src&#x3D;&quot;https://eqwedi-api-auth-bucket.s3.us-east-2.amazonaws.com/auth/correo/img/prueba.png&quot; alt&#x3D;&quot;Logo de Prueba&quot;&gt;
+                                                  &lt;/a&gt;
+                                              &lt;/div&gt;
+                                          &lt;/td&gt;
+                                      &lt;/tr&gt;
+                                  &lt;/table&gt;
+                              &lt;/td&gt;
+                          &lt;/tr&gt;
+                      &lt;/table&gt;
+                      &lt;table width&#x3D;&quot;600&quot; border&#x3D;&quot;0&quot; cellspacing&#x3D;&quot;0&quot; cellpadding&#x3D;&quot;20&quot; id&#x3D;&quot;body_container&quot;&gt;
+                          &lt;tr&gt;
+                              &lt;td align&#x3D;&quot;center&quot; valign&#x3D;&quot;top&quot; class&#x3D;&quot;body_content&quot;&gt;
+                                  &lt;table width&#x3D;&quot;100%&quot; border&#x3D;&quot;0&quot; cellspacing&#x3D;&quot;0&quot; cellpadding&#x3D;&quot;20&quot;&gt;
+                                      &lt;tr&gt;
+                                          &lt;td valign&#x3D;&quot;top&quot;&gt;
+                                              &lt;h2 style&#x3D;&quot;color: #5F5D5D; font-size: 22px; text-align: left;&quot;&gt;¡Hola, ${firstName}!&lt;/h2&gt;
+                                              &lt;h3 style&#x3D;&quot;color: #5F5D5D; font-size: 18px; text-align: left;&quot;&gt;Necesitás crear tu contraseña.&lt;/h3&gt;
+                                              &lt;p style&#x3D;&quot;color: #5F5D5D; font-size: 14px; line-height: 22px; text-align: left;&quot;&gt;
+                                                  Detectamos que tu cuenta no tiene una contraseña configurada. &lt;strong&gt;Haz clic en el botón a continuación para crear tu contraseña&lt;/strong&gt; y completar el acceso a tu cuenta.
+                                                  &lt;br&gt;&lt;br&gt;
+                                                  Por motivos de seguridad, este enlace tendrá una vigencia de 1 hora.
+                                              &lt;/p&gt;
+                                          &lt;/td&gt;
+                                      &lt;/tr&gt;
+                                      &lt;tr&gt;
+                                          &lt;td align&#x3D;&quot;center&quot;&gt;
+                                              &lt;table&gt;
+                                                  &lt;tr&gt;
+                                                      &lt;td align&#x3D;&quot;center&quot; style&#x3D;&quot;border-radius: 25px; background-color: #9B0042;&quot;&gt;
+                                                          &lt;a href&#x3D;&quot;${link}&quot; style&#x3D;&quot;background-color:#9B0042;border-radius:25px;color:#FFFFFF;display:inline-block;font-size:18px;height:45px;line-height:45px;text-align:center;text-decoration:none;width:200px;-webkit-text-size-adjust:none;&quot;&gt;
+                                                              Crear Contraseña
+                                                          &lt;/a&gt;
+                                                      &lt;/td&gt;
+                                                  &lt;/tr&gt;
+                                              &lt;/table&gt;
+                                          &lt;/td&gt;
+                                      &lt;/tr&gt;
+                                  &lt;/table&gt;
+                              &lt;/td&gt;
+                          &lt;/tr&gt;
+                      &lt;/table&gt;
+                      &lt;table width&#x3D;&quot;100%&quot; border&#x3D;&quot;0&quot; bgcolor&#x3D;&quot;#F4F3F3&quot; cellspacing&#x3D;&quot;0&quot; cellpadding&#x3D;&quot;20&quot; id&#x3D;&quot;body_info_container&quot;&gt;
+                          &lt;tr&gt;
+                              &lt;td align&#x3D;&quot;center&quot; valign&#x3D;&quot;top&quot; class&#x3D;&quot;body_info_content&quot;&gt;
+                                  &lt;table width&#x3D;&quot;100%&quot; border&#x3D;&quot;0&quot; cellspacing&#x3D;&quot;0&quot; cellpadding&#x3D;&quot;10&quot;&gt;
+                                      &lt;tr&gt;
+                                          &lt;td valign&#x3D;&quot;top&quot;&gt;
+                                              &lt;p style&#x3D;&quot;color: #5F5D5D; font-size: 12px; line-height: 22px;&quot;&gt;Este mensaje ha sido generado de forma automática; favor no respondas el mismo, ya que esta dirección no acepta correos electrónicos, por lo que no recibirás una respuesta. &lt;strong&gt;Si requerís asistencia, comunicate al CAC (Centro de Atención al Cliente) 021 620 6000.&lt;/strong&gt;&lt;/p&gt;
+                                          &lt;/td&gt;
+                                      &lt;/tr&gt;
+                                  &lt;/table&gt;
+                              &lt;/td&gt;
+                          &lt;/tr&gt;
+                      &lt;/table&gt;
+                  &lt;/td&gt;
+              &lt;/tr&gt;
+          &lt;/table&gt;
+      &lt;/body&gt;
+      &lt;/html&gt;
+    &#x60;;
+  }
+
+  /**
+   * Genera el contenido HTML para el correo de comprobante de pago.
+   * @param operationNumber Número de operación
+   * @param authorizationCode Código de autorización
+   * @param merchantName Nombre del comercio
+   * @param transactionDate Fecha de la transacción
+   * @param amount Monto del pago
+   * @param paymentMethod Forma de pago
+   * @param description Descripción del pago
+   * @returns Contenido HTML en string
+   */
+  public static createPaymentReceiptTemplate(
+    operationNumber: string,
+    authorizationCode: string,
+    merchantName: string,
+    transactionDate: string,
+    amount: number | string,
+    paymentMethod: string,
+    description: string,
+  ): string {
+    return &#x60;
+      &lt;!DOCTYPE html&gt;
+      &lt;html&gt;
+      
+      &lt;head&gt;
+          &lt;meta charset&#x3D;&quot;UTF-8&quot;&gt;
+          &lt;meta name&#x3D;&quot;viewport&quot; content&#x3D;&quot;width&#x3D;device-width, initial-scale&#x3D;1.0&quot;&gt;
+          &lt;style type&#x3D;&quot;text/css&quot;&gt;
+              @font-face {
+                  font-family: &#x27;Gilroy&#x27;;
+                  src: url(&#x27;https://cdn.jsdelivr.net/gh/repalash/gilroy-free-webfont@fonts/Gilroy-Extrabold.eot&#x27;);
+                  src: local(&#x27;Gilroy Extrabold&#x27;), local(&#x27;Gilroy-Extrabold&#x27;),
+                  url(&#x27;https://cdn.jsdelivr.net/gh/repalash/gilroy-free-webfont@fonts/Gilroy-Extrabold.eot?#iefix&#x27;) format(&#x27;embedded-opentype&#x27;),
+                  url(&#x27;https://cdn.jsdelivr.net/gh/repalash/gilroy-free-webfont@fonts/Gilroy-Extrabold.woff&#x27;) format(&#x27;woff&#x27;),
+                  url(&#x27;https://cdn.jsdelivr.net/gh/repalash/gilroy-free-webfont@fonts/Gilroy-Extrabold.ttf&#x27;) format(&#x27;truetype&#x27;);
+                  font-weight: 600;
+                  font-style: normal;
+              }
+      
+              @font-face {
+                  font-family: &#x27;Gilroy&#x27;;
+                  src: url(&#x27;https://cdn.jsdelivr.net/gh/repalash/gilroy-free-webfont@fonts/Gilroy-Light.eot&#x27;);
+                  src: local(&#x27;Gilroy Light&#x27;), local(&#x27;Gilroy-Light&#x27;),
+                  url(&#x27;https://cdn.jsdelivr.net/gh/repalash/gilroy-free-webfont@fonts/Gilroy-Light.eot?#iefix&#x27;) format(&#x27;embedded-opentype&#x27;),
+                  url(&#x27;https://cdn.jsdelivr.net/gh/repalash/gilroy-free-webfont@fonts/Gilroy-Light.woff&#x27;) format(&#x27;woff&#x27;),
+                  url(&#x27;https://cdn.jsdelivr.net/gh/repalash/gilroy-free-webfont@fonts/Gilroy-Light.ttf&#x27;) format(&#x27;truetype&#x27;);
+                  font-weight: 400;
+                  font-style: normal;
+              }
+      
+              body {
+                  font-family: &#x27;Gilroy&#x27;, sans-serif;
+              }
+          &lt;/style&gt;
+      &lt;/head&gt;
+      
+      &lt;body style&#x3D;&quot;margin: 0; padding: 0; width: 100%; -webkit-text-size-adjust: none; -webkit-font-smoothing: antialiased;&quot;&gt;
+          &lt;table width&#x3D;&quot;100%&quot; bgcolor&#x3D;&quot;#FFFFFF&quot; border&#x3D;&quot;0&quot; cellspacing&#x3D;&quot;0&quot; cellpadding&#x3D;&quot;0&quot; id&#x3D;&quot;background&quot; style&#x3D;&quot;height: 100% !important; margin: 0; padding: 0; width: 100% !important; max-width: 700px;&quot;&gt;
+              &lt;tr&gt;
+                  &lt;td align&#x3D;&quot;center&quot; valign&#x3D;&quot;top&quot;&gt;
+                      &lt;table width&#x3D;&quot;100%&quot; border&#x3D;&quot;0&quot; bgcolor&#x3D;&quot;#8056B0&quot; cellspacing&#x3D;&quot;0&quot; cellpadding&#x3D;&quot;20&quot; id&#x3D;&quot;preheader&quot;&gt;
+                          &lt;tr&gt;
+                              &lt;td valign&#x3D;&quot;top&quot;&gt;
+                                  &lt;table width&#x3D;&quot;100%&quot; border&#x3D;&quot;0&quot; cellspacing&#x3D;&quot;0&quot; cellpadding&#x3D;&quot;0&quot;&gt;
+                                      &lt;tr&gt;
+                                          &lt;td valign&#x3D;&quot;top&quot; width&#x3D;&quot;600&quot;&gt;
+                                              &lt;div&gt;
+                                                  &lt;a style&#x3D;&quot;width: 30%; padding: 0;&quot;&gt;
+                                                      &lt;img width&#x3D;&quot;160&quot; src&#x3D;&quot;https://eqwedi-api-auth-bucket.s3.us-east-2.amazonaws.com/auth/correo/img/prueba.png&quot; alt&#x3D;&quot;Logo de Prueba&quot;&gt;
+                                                  &lt;/a&gt;
+                                              &lt;/div&gt;
+                                          &lt;/td&gt;
+                                      &lt;/tr&gt;
+                                  &lt;/table&gt;
+                              &lt;/td&gt;
+                          &lt;/tr&gt;
+                      &lt;/table&gt;
+                      
+                      &lt;table width&#x3D;&quot;600&quot; border&#x3D;&quot;0&quot; cellspacing&#x3D;&quot;0&quot; cellpadding&#x3D;&quot;20&quot; id&#x3D;&quot;body_container&quot;&gt;
+                          &lt;tr&gt;
+                              &lt;td align&#x3D;&quot;center&quot; valign&#x3D;&quot;top&quot; class&#x3D;&quot;body_content&quot;&gt;
+                                  &lt;table width&#x3D;&quot;100%&quot; border&#x3D;&quot;0&quot; cellspacing&#x3D;&quot;0&quot; cellpadding&#x3D;&quot;20&quot;&gt;
+                                      &lt;tr&gt;
+                                          &lt;td valign&#x3D;&quot;top&quot;&gt;
+                                              &lt;h2 style&#x3D;&quot;color: #5F5D5D; font-size: 22px; text-align: left;&quot;&gt;¡Gracias por tu pago!&lt;/h2&gt;
+                                              &lt;p style&#x3D;&quot;color: #5F5D5D; font-size: 14px; line-height: 22px; text-align: left;&quot;&gt;
+                                                  A continuación, te detallamos los datos del comprobante de tu transacción realizada a través del servicio de &lt;strong&gt;Link de Pagos&lt;/strong&gt;:
+                                              &lt;/p&gt;
+                                          &lt;/td&gt;
+                                      &lt;/tr&gt;
+                                      &lt;tr&gt;
+                                          &lt;td valign&#x3D;&quot;top&quot;&gt;
+                                              &lt;table width&#x3D;&quot;100%&quot; border&#x3D;&quot;0&quot; cellspacing&#x3D;&quot;0&quot; cellpadding&#x3D;&quot;10&quot; style&#x3D;&quot;border: 1px solid #EAEAEA; border-radius: 8px; font-size: 14px; color: #5F5D5D;&quot;&gt;
+                                                  &lt;tr bgcolor&#x3D;&quot;#F9F9F9&quot;&gt;
+                                                      &lt;td style&#x3D;&quot;width: 40%; font-weight: bold; border-bottom: 1px solid #EAEAEA;&quot;&gt;Operación Nro:&lt;/td&gt;
+                                                      &lt;td style&#x3D;&quot;border-bottom: 1px solid #EAEAEA;&quot;&gt;${operationNumber}&lt;/td&gt;
+                                                  &lt;/tr&gt;
+                                                  &lt;tr&gt;
+                                                      &lt;td style&#x3D;&quot;font-weight: bold; border-bottom: 1px solid #EAEAEA;&quot;&gt;Cód. Autorización:&lt;/td&gt;
+                                                      &lt;td style&#x3D;&quot;border-bottom: 1px solid #EAEAEA;&quot;&gt;${authorizationCode}&lt;/td&gt;
+                                                  &lt;/tr&gt;
+                                                  &lt;tr bgcolor&#x3D;&quot;#F9F9F9&quot;&gt;
+                                                      &lt;td style&#x3D;&quot;font-weight: bold; border-bottom: 1px solid #EAEAEA;&quot;&gt;Comercio:&lt;/td&gt;
+                                                      &lt;td style&#x3D;&quot;border-bottom: 1px solid #EAEAEA;&quot;&gt;${merchantName}&lt;/td&gt;
+                                                  &lt;/tr&gt;
+                                                  &lt;tr&gt;
+                                                      &lt;td style&#x3D;&quot;font-weight: bold; border-bottom: 1px solid #EAEAEA;&quot;&gt;Fecha:&lt;/td&gt;
+                                                      &lt;td style&#x3D;&quot;border-bottom: 1px solid #EAEAEA;&quot;&gt;${transactionDate}&lt;/td&gt;
+                                                  &lt;/tr&gt;
+                                                  &lt;tr bgcolor&#x3D;&quot;#F9F9F9&quot;&gt;
+                                                      &lt;td style&#x3D;&quot;font-weight: bold; border-bottom: 1px solid #EAEAEA;&quot;&gt;Forma de Pago:&lt;/td&gt;
+                                                      &lt;td style&#x3D;&quot;border-bottom: 1px solid #EAEAEA;&quot;&gt;${paymentMethod}&lt;/td&gt;
+                                                  &lt;/tr&gt;
+                                                  &lt;tr&gt;
+                                                      &lt;td style&#x3D;&quot;font-weight: bold; border-bottom: 1px solid #EAEAEA;&quot;&gt;Descripción:&lt;/td&gt;
+                                                      &lt;td style&#x3D;&quot;border-bottom: 1px solid #EAEAEA;&quot;&gt;${description}&lt;/td&gt;
+                                                  &lt;/tr&gt;
+                                                  &lt;tr bgcolor&#x3D;&quot;#F4EBF1&quot; style&#x3D;&quot;font-size: 16px; color: #9B0042; font-weight: bold;&quot;&gt;
+                                                      &lt;td style&#x3D;&quot;border-radius: 0 0 0 8px;&quot;&gt;Monto Total:&lt;/td&gt;
+                                                      &lt;td style&#x3D;&quot;border-radius: 0 0 8px 0;&quot;&gt;${amount}&lt;/td&gt;
+                                                  &lt;/tr&gt;
+                                              &lt;/table&gt;
+                                          &lt;/td&gt;
+                                      &lt;/tr&gt;
+                                  &lt;/table&gt;
+                              &lt;/td&gt;
+                          &lt;/tr&gt;
+                      &lt;/table&gt;
+
                       &lt;table width&#x3D;&quot;100%&quot; border&#x3D;&quot;0&quot; bgcolor&#x3D;&quot;#F4F3F3&quot; cellspacing&#x3D;&quot;0&quot; cellpadding&#x3D;&quot;20&quot; id&#x3D;&quot;body_info_container&quot;&gt;
                           &lt;tr&gt;
                               &lt;td align&#x3D;&quot;center&quot; valign&#x3D;&quot;top&quot; class&#x3D;&quot;body_info_content&quot;&gt;

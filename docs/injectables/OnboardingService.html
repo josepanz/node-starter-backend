@@ -133,10 +133,18 @@
             <h3>File</h3>
         </p>
         <p class="comment">
-            <code>src/api/onboarding/services/onboarding.service.ts</code>
+            <code>src/modules/onboarding/services/onboarding.service.ts</code>
         </p>
 
 
+            <p class="comment">
+                <h3>Description</h3>
+            </p>
+            <p class="comment">
+                <p>Servicio de Onboarding - Lógica de Negocio
+Maneja el registro público de nuevos usuarios</p>
+
+            </p>
 
 
 
@@ -171,7 +179,7 @@
                         <ul class="index-list">
                             <li>
                                     <span class="modifier">Async</span>
-                                <a href="#onboarding" >onboarding</a>
+                                <a href="#registerUser" >registerUser</a>
                             </li>
                         </ul>
                     </td>
@@ -191,12 +199,12 @@
             <tbody>
                 <tr>
                     <td class="col-md-4">
-<code>constructor(emailService: <a href="../injectables/EmailService.html" target="_self">EmailService</a>, authService: <a href="../injectables/AuthService.html" target="_self">AuthService</a>, prisma: <a href="../injectables/PrismaDatasource.html" target="_self">PrismaDatasource</a>)</code>
+<code>constructor(usersRepository: <a href="../injectables/UsersDBService.html" target="_self">UsersDBService</a>, passwordService: <a href="../injectables/AuthPasswordService.html" target="_self">AuthPasswordService</a>, emailService: <a href="../injectables/EmailService.html" target="_self">EmailService</a>)</code>
                     </td>
                 </tr>
                         <tr>
                             <td class="col-md-4">
-                                <div class="io-line">Defined in <a href="" data-line="15" class="link-to-prism">src/api/onboarding/services/onboarding.service.ts:15</a></div>
+                                <div class="io-line">Defined in <a href="" data-line="16" class="link-to-prism">src/modules/onboarding/services/onboarding.service.ts:16</a></div>
                             </td>
                         </tr>
 
@@ -214,34 +222,34 @@
                                         </thead>
                                         <tbody>
                                                 <tr>
+                                                        <td>usersRepository</td>
+                                                  
+                                                        <td>
+                                                                        <code><a href="../injectables/UsersDBService.html" target="_self" >UsersDBService</a></code>
+                                                        </td>
+                                                  
+                                                    <td>
+                                                            No
+                                                    </td>
+                                                    
+                                                </tr>
+                                                <tr>
+                                                        <td>passwordService</td>
+                                                  
+                                                        <td>
+                                                                        <code><a href="../injectables/AuthPasswordService.html" target="_self" >AuthPasswordService</a></code>
+                                                        </td>
+                                                  
+                                                    <td>
+                                                            No
+                                                    </td>
+                                                    
+                                                </tr>
+                                                <tr>
                                                         <td>emailService</td>
                                                   
                                                         <td>
                                                                         <code><a href="../injectables/EmailService.html" target="_self" >EmailService</a></code>
-                                                        </td>
-                                                  
-                                                    <td>
-                                                            No
-                                                    </td>
-                                                    
-                                                </tr>
-                                                <tr>
-                                                        <td>authService</td>
-                                                  
-                                                        <td>
-                                                                        <code><a href="../injectables/AuthService.html" target="_self" >AuthService</a></code>
-                                                        </td>
-                                                  
-                                                    <td>
-                                                            No
-                                                    </td>
-                                                    
-                                                </tr>
-                                                <tr>
-                                                        <td>prisma</td>
-                                                  
-                                                        <td>
-                                                                        <code><a href="../injectables/PrismaDatasource.html" target="_self" >PrismaDatasource</a></code>
                                                         </td>
                                                   
                                                     <td>
@@ -267,35 +275,33 @@
         <tbody>
             <tr>
                 <td class="col-md-4">
-                    <a name="onboarding"></a>
+                    <a name="registerUser"></a>
                     <span class="name">
                             <span class="modifier">Async</span>
-                        <span ><b>onboarding</b></span>
-                        <a href="#onboarding"><span class="icon ion-ios-link"></span></a>
+                        <span ><b>registerUser</b></span>
+                        <a href="#registerUser"><span class="icon ion-ios-link"></span></a>
                     </span>
                 </td>
             </tr>
             <tr>
                 <td class="col-md-4">
                         <span class="modifier-icon icon ion-ios-reset"></span>
-                    <code>onboarding(dto: <a href="../classes/OnboardingUserRequestDto.html" target="_self">OnboardingUserRequestDto</a>)</code>
+                    <code>registerUser(data: literal type)</code>
                 </td>
             </tr>
 
 
                     <tr>
                         <td class="col-md-4">
-                            <div class="io-line">Defined in <a href="" data-line="31"
-                                    class="link-to-prism">src/api/onboarding/services/onboarding.service.ts:31</a></div>
+                            <div class="io-line">Defined in <a href="" data-line="27"
+                                    class="link-to-prism">src/modules/onboarding/services/onboarding.service.ts:27</a></div>
                         </td>
                     </tr>
 
 
             <tr>
                 <td class="col-md-4">
-                        <div class="io-description"><p>Onboarding de un nuevo usuario.
-Genera un token temporal para la creación de contraseña y construye un enlace temporal para verificación de usuario.
-Envía el correo electrónico con el enlace.</p>
+                        <div class="io-description"><p>Registra un nuevo usuario en el sistema</p>
 </div>
 
                             <div class="io-description">
@@ -307,14 +313,13 @@ Envía el correo electrónico con el enlace.</p>
                                             <td>Name</td>
                                                 <td>Type</td>
                                             <td>Optional</td>
-                                                <td>Description</td>
                                         </tr>
                                     </thead>
                                     <tbody>
                                         <tr>
-                                                <td>dto</td>
+                                                <td>data</td>
                                             <td>
-                                                            <code><a href="../classes/OnboardingUserRequestDto.html" target="_self" >OnboardingUserRequestDto</a></code>
+                                                        <code>literal type</code>
                                             </td>
 
                                             <td>
@@ -322,21 +327,16 @@ Envía el correo electrónico con el enlace.</p>
                                             </td>
 
 
-                                            <td>
-                                                    <p>Datos del usuario a crear.</p>
-
-                                            </td>
                                         </tr>
                                     </tbody>
                                 </table>
                             </div>
                         <div class="io-description">
-                            <b>Returns : </b>        <code><a href="../classes/UserResponseDto.html" target="_self" >Promise&lt;UserResponseDto | undefined&gt;</a></code>
+                            <b>Returns : </b>        <code><a href="../miscellaneous/variables.html#User" target="_self" >Promise&lt;Users&gt;</a></code>
 
                         </div>
                             <div class="io-description">
-                                <p>Usuario creado.</p>
-
+                                
                             </div>
                 </td>
             </tr>
@@ -374,7 +374,7 @@ Envía el correo electrónico con el enlace.</p>
                 </tr>
                     <tr>
                         <td class="col-md-4">
-                                <div class="io-line">Defined in <a href="" data-line="15" class="link-to-prism">src/api/onboarding/services/onboarding.service.ts:15</a></div>
+                                <div class="io-line">Defined in <a href="" data-line="16" class="link-to-prism">src/modules/onboarding/services/onboarding.service.ts:16</a></div>
                         </td>
                     </tr>
 
@@ -387,68 +387,74 @@ Envía el correo electrónico con el enlace.</p>
 
 
     <div class="tab-pane fade  tab-source-code" id="source">
-        <pre class="line-numbers compodoc-sourcecode"><code class="language-typescript">import { UserResponseDto } from &#x27;@api/users/dtos/response/user.response.dto&#x27;;
-import { UserHelper } from &#x27;@common/helpers/user.helper&#x27;;
-import { PrismaDatasource } from &#x27;@core/database/prisma.service&#x27;;
-import { CryptoHelper } from &#x27;@common/helpers/crypto-helpers&#x27;;
-import { OnboardingUserRequestDto } from &#x27;@api/onboarding/dto/request/onboarding-user.request.dto&#x27;;
-import { AuthService } from &#x27;@modules/auth/services/auth.service&#x27;;
-import { EmailService } from &#x27;@modules/email/services/email.service&#x27;;
-import { ConflictException, Injectable, Logger } from &#x27;@nestjs/common&#x27;;
-import { UserStatus } from &#x27;@prisma/client&#x27;;
-import { PrismaErrorCodes } from &#x27;@common/enum/prisma-error-codes.enum&#x27;;
-import { EmailTypeEnum } from &#x27;@modules/email/enum/email-type.enum&#x27;;
+        <pre class="line-numbers compodoc-sourcecode"><code class="language-typescript">import { Prisma, UserStatus, UserProfileStatus, Users } from &#x27;@prisma/client&#x27;;
+import { Injectable, Logger, ConflictException } from &#x27;@nestjs/common&#x27;;
 
+import { UsersDBService } from &#x27;@modules/users-db/services/users-db.service&#x27;;
+import { AuthPasswordService } from &#x27;@modules/auth/services/auth-password.service&#x27;;
+import { EmailService } from &#x27;@modules/email/services/email.service&#x27;;
+import { EmailTypeEnum } from &#x27;@modules/email/enum/email-type.enum&#x27;;
+import { PrismaErrorCodes } from &#x27;@common/enum/prisma-error-codes.enum&#x27;;
+
+/**
+ * Servicio de Onboarding - Lógica de Negocio
+ * Maneja el registro público de nuevos usuarios
+ */
 @Injectable()
 export class OnboardingService {
   private readonly logger &#x3D; new Logger(OnboardingService.name);
 
   constructor(
+    private readonly usersRepository: UsersDBService,
+    private readonly passwordService: AuthPasswordService,
     private readonly emailService: EmailService,
-    private readonly authService: AuthService,
-    private readonly prisma: PrismaDatasource,
   ) {}
 
   /**
-   * Onboarding de un nuevo usuario.
-   * @param dto Datos del usuario a crear.
-   * @returns Usuario creado.
-   * @remarks Crea un usuario en estado pendiente de verificación y envía un correo de verificación.
-   * Genera un token temporal para la creación de contraseña y construye un enlace temporal para verificación de usuario.
-   * Envía el correo electrónico con el enlace.
+   * Registra un nuevo usuario en el sistema
    */
-  async onboarding(
-    dto: OnboardingUserRequestDto,
-  ): Promise&lt;UserResponseDto | undefined&gt; {
+  async registerUser(data: {
+    firstName: string;
+    lastName: string;
+    email: string;
+    phoneNumber: string;
+    password: string;
+    acceptedTerms: boolean;
+  }): Promise&lt;Users&gt; {
     try {
-      const createdUser &#x3D; await this.prisma.users.create({
-        data: {
-          firstName: dto.firstName,
-          lastName: dto.lastName,
-          email: dto.email,
-          phoneNumber: dto.phoneNumber,
-          createdBy: dto.email,
-          status: UserStatus.PENDING_VERIFICATION,
-        },
+      // 1. Crear usuario
+      const createdUser &#x3D; await this.usersRepository.create({
+        firstName: data.firstName,
+        lastName: data.lastName,
+        email: data.email,
+        phoneNumber: data.phoneNumber,
+        createdBy: data.email,
+        status: UserStatus.PENDING_VERIFICATION,
+        profileStatus: UserProfileStatus.DOCUMENT_PENDING,
+        isEmployee: false,
+        isLdap: false,
+        acceptedTermsAt: data.acceptedTerms ? new Date() : null,
       });
 
-      await this.prisma.userCredentials.create({
-        data: {
-          userId: createdUser.id,
-          passwordHash: CryptoHelper.hashValue(dto.password),
-          isActive: true,
-        },
-      });
+      // 2. Crear credenciales (reutilizar lógica de passwords)
+      await this.passwordService.createOrUpdatePassword(
+        createdUser.id,
+        data.password,
+      );
 
-      this.emailService.sendEmailByType(
-        dto.email,
+      // 3. Enviar email de verificación (sin esperar)
+      void this.emailService.sendEmailByType(
+        data.email,
         EmailTypeEnum.VERIFICATION,
         createdUser,
       );
 
-      return UserHelper.mapUserToResponse(createdUser);
+      return createdUser;
     } catch (error) {
-      if (error.code &#x3D;&#x3D;&#x3D; PrismaErrorCodes.UniqueConstraintFailed) {
+      if (
+        error instanceof Prisma.PrismaClientKnownRequestError &amp;&amp;
+        error.code &#x3D;&#x3D;&#x3D; (PrismaErrorCodes.UniqueConstraintFailed as string)
+      ) {
         throw new ConflictException(&#x27;Usuario ya existe.&#x27;);
       }
       throw error;

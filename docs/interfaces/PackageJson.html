@@ -238,7 +238,7 @@ import { DocumentBuilder, SwaggerModule } from &#x27;@nestjs/swagger&#x27;;
 import { Logger } from &#x27;nestjs-pino&#x27;;
 import * as path from &#x27;path&#x27;;
 import * as fs from &#x27;fs&#x27;;
-import * as cookieParser from &#x27;cookie-parser&#x27;;
+import cookieParser from &#x27;cookie-parser&#x27;;
 import { APP_CONFIG, AppConfigType } from &#x27;@core/config/config-loader&#x27;;
 import { AppModule } from &#x27;./app.module&#x27;;
 import { ObservabilityInterceptor } from &#x27;@core/observability/observability.interceptor&#x27;;
@@ -279,9 +279,11 @@ async function bootstrap() {
   const config: ConfigType&lt;AppConfigType&gt; &#x3D; app.get(APP_CONFIG.KEY);
 
   const swaggerConfig &#x3D; new DocumentBuilder()
-    .setTitle(config.project.name!)
-    .setDescription(config.project.description!)
+    .setTitle(config.project.name)
+    .setDescription(config.project.description)
     .setVersion(packageJson.version)
+    .addBearerAuth()
+    .addBasicAuth()
     .build();
 
   const document &#x3D; SwaggerModule.createDocument(app, swaggerConfig);
@@ -298,14 +300,15 @@ async function bootstrap() {
   // 2. Verificar si la carpeta de documentación existe
   if (fs.existsSync(docsPath)) {
     // Si existe, configuramos el middleware para servirla
-    app.use(
-      &#x27;/node-starter-backend/api/docs&#x27;,
-      express.static(docsPath),
+    app.use(&#x27;/node-starter-backend/api/docs&#x27;, express.static(docsPath));
+    console.log(
+      &#x60;✅ Documentación de Compodoc servida en /node-starter-backend/api/docs&#x60;,
     );
-    console.log(&#x60;✅ Documentación de Compodoc servida en /node-starter-backend/api/docs&#x60;);
   } else {
     // Si no existe, solo mostramos un aviso y continuamos
-    console.warn(&#x60;⚠️ Directorio de docs no encontrado en ${docsPath}. La documentación de Compodoc no se servirá.&#x60;);
+    console.warn(
+      &#x60;⚠️ Directorio de docs no encontrado en ${docsPath}. La documentación de Compodoc no se servirá.&#x60;,
+    );
   }
 
   await app.listen(config.apiconfig.port);

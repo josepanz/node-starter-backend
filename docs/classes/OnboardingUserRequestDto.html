@@ -113,7 +113,7 @@
 
 <ol class="breadcrumb">
   <li class="breadcrumb-item">Classes</li>
-  <li class="breadcrumb-item" >OnboardingUserRequestDto</li>
+  <li class="breadcrumb-item" >OnboardingUserRequestDTO</li>
 </ol>
 
 <ul class="nav nav-tabs" role="tablist">
@@ -157,6 +157,11 @@
                 <tr>
                     <td class="col-md-4">
                         <ul class="index-list">
+                            <li>
+                                    <span class="modifier"></span>
+                                    <span class="modifier"></span>
+                                <a href="#acceptTerms" >acceptTerms</a>
+                            </li>
                             <li>
                                     <span class="modifier"></span>
                                     <span class="modifier"></span>
@@ -210,6 +215,43 @@
         <tbody>
             <tr>
                 <td class="col-md-4">
+                    <a name="acceptTerms"></a>
+                    <span class="name">
+                            <span class="modifier"></span>
+                            <span class="modifier"></span>
+                        <span ><b>acceptTerms</b></span>
+                        <a href="#acceptTerms"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>        <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/boolean" target="_blank" >boolean</a></code>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <b>Decorators : </b>
+                        <br />
+                        <code>
+                            @ApiProperty({example: true, description: &#x27;Aceptación de términos y condiciones&#x27;})<br />@IsBoolean()<br />
+                        </code>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="56" class="link-to-prism">src/api/onboarding/dto/request/onboarding-user.request.dto.ts:56</a></div>
+                        </td>
+                    </tr>
+
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
                     <a name="confirmPassword"></a>
                     <span class="name">
                             <span class="modifier"></span>
@@ -230,13 +272,13 @@
                         <b>Decorators : </b>
                         <br />
                         <code>
-                            @ApiProperty({example: &#x27;nkeRKUWeoJXxZgcE8GIBeXZzv5CPKPNDD7V39QrlLnhe+2xhNGLxlR6JalmOEmrRNgQx7hhe9AQ3O8kQ9BWEXgxkysON5eqL9T3CiYAw/QIbxoeMQLDRGXb878BmwUf33Nks0cW8TzVYQvvMRv8V6bYbUkdt5e3qfRURpiutsG35Nnrj957MtNT/eSMCwvfz5P8hryfwSQ0JWRuWtiDZMsuLdOGbs3Z+jzoZLx6gY3PiCkyqKTWqui2KQ6zt4cdTN5c5ghCDT6HL0zlpRAiMJk51J6CqOeZZwnCgj963pPpnoIllOtUi+4MRfi918gJItrIEcRM8ZaB8nNtjxsFx6w&#x3D;&#x3D;&#x27;, description: &#x27;Confirmación contraseña del usuario.&#x27;, format: &#x27;password&#x27;})<br />@IsString()<br />
+                            @ApiProperty({example: &#x27;Base64EncodedEncryptedPassword&#x3D;&#x3D;&#x27;, description: &#x27;Confirmación de contraseña del usuario (encriptada con RSA-OAEP).&#x27;, format: &#x27;password&#x27;})<br />@IsString()<br />
                         </code>
                     </td>
                 </tr>
                     <tr>
                         <td class="col-md-4">
-                                <div class="io-line">Defined in <a href="" data-line="47" class="link-to-prism">src/api/onboarding/dto/request/onboarding-user.request.dto.ts:47</a></div>
+                                <div class="io-line">Defined in <a href="" data-line="49" class="link-to-prism">src/api/onboarding/dto/request/onboarding-user.request.dto.ts:49</a></div>
                         </td>
                     </tr>
 
@@ -273,7 +315,7 @@
                 </tr>
                     <tr>
                         <td class="col-md-4">
-                                <div class="io-line">Defined in <a href="" data-line="22" class="link-to-prism">src/api/onboarding/dto/request/onboarding-user.request.dto.ts:22</a></div>
+                                <div class="io-line">Defined in <a href="" data-line="25" class="link-to-prism">src/api/onboarding/dto/request/onboarding-user.request.dto.ts:25</a></div>
                         </td>
                     </tr>
 
@@ -347,7 +389,7 @@
                 </tr>
                     <tr>
                         <td class="col-md-4">
-                                <div class="io-line">Defined in <a href="" data-line="14" class="link-to-prism">src/api/onboarding/dto/request/onboarding-user.request.dto.ts:14</a></div>
+                                <div class="io-line">Defined in <a href="" data-line="17" class="link-to-prism">src/api/onboarding/dto/request/onboarding-user.request.dto.ts:17</a></div>
                         </td>
                     </tr>
 
@@ -378,13 +420,13 @@
                         <b>Decorators : </b>
                         <br />
                         <code>
-                            @ApiProperty({example: &#x27;nkeRKUWeoJXxZgcE8GIBeXZzv5CPKPNDD7V39QrlLnhe+2xhNGLxlR6JalmOEmrRNgQx7hhe9AQ3O8kQ9BWEXgxkysON5eqL9T3CiYAw/QIbxoeMQLDRGXb878BmwUf33Nks0cW8TzVYQvvMRv8V6bYbUkdt5e3qfRURpiutsG35Nnrj957MtNT/eSMCwvfz5P8hryfwSQ0JWRuWtiDZMsuLdOGbs3Z+jzoZLx6gY3PiCkyqKTWqui2KQ6zt4cdTN5c5ghCDT6HL0zlpRAiMJk51J6CqOeZZwnCgj963pPpnoIllOtUi+4MRfi918gJItrIEcRM8ZaB8nNtjxsFx6w&#x3D;&#x3D;&#x27;, description: &#x27;Contraseña del usuario.&#x27;, format: &#x27;password&#x27;})<br />@IsString()<br />
+                            @ApiProperty({example: &#x27;Base64EncodedEncryptedPassword&#x3D;&#x3D;&#x27;, description: &#x27;Contraseña del usuario (encriptada con RSA-OAEP).&#x27;, format: &#x27;password&#x27;})<br />@IsString()<br />
                         </code>
                     </td>
                 </tr>
                     <tr>
                         <td class="col-md-4">
-                                <div class="io-line">Defined in <a href="" data-line="38" class="link-to-prism">src/api/onboarding/dto/request/onboarding-user.request.dto.ts:38</a></div>
+                                <div class="io-line">Defined in <a href="" data-line="40" class="link-to-prism">src/api/onboarding/dto/request/onboarding-user.request.dto.ts:40</a></div>
                         </td>
                     </tr>
 
@@ -421,7 +463,7 @@
                 </tr>
                     <tr>
                         <td class="col-md-4">
-                                <div class="io-line">Defined in <a href="" data-line="29" class="link-to-prism">src/api/onboarding/dto/request/onboarding-user.request.dto.ts:29</a></div>
+                                <div class="io-line">Defined in <a href="" data-line="32" class="link-to-prism">src/api/onboarding/dto/request/onboarding-user.request.dto.ts:32</a></div>
                         </td>
                     </tr>
 
@@ -441,9 +483,9 @@
 
     <div class="tab-pane fade  tab-source-code" id="source">
         <pre class="line-numbers compodoc-sourcecode"><code class="language-typescript">import { ApiProperty } from &#x27;@nestjs/swagger&#x27;;
-import { IsEmail, IsString } from &#x27;class-validator&#x27;;
+import { IsBoolean, IsEmail, IsString } from &#x27;class-validator&#x27;;
 
-export class OnboardingUserRequestDto {
+export class OnboardingUserRequestDTO {
   @ApiProperty({
     example: &#x27;John&#x27;,
     description: &#x27;El primer nombre del usuario.&#x27;,
@@ -451,7 +493,10 @@ export class OnboardingUserRequestDto {
   @IsString()
   firstName: string;
 
-  @ApiProperty({ example: &#x27;Doe&#x27;, description: &#x27;El apellido del usuario.&#x27; })
+  @ApiProperty({
+    example: &#x27;Doe&#x27;,
+    description: &#x27;El apellido del usuario.&#x27;,
+  })
   @IsString()
   lastName: string;
 
@@ -471,22 +516,28 @@ export class OnboardingUserRequestDto {
   phoneNumber: string;
 
   @ApiProperty({
-    example:
-      &#x27;nkeRKUWeoJXxZgcE8GIBeXZzv5CPKPNDD7V39QrlLnhe+2xhNGLxlR6JalmOEmrRNgQx7hhe9AQ3O8kQ9BWEXgxkysON5eqL9T3CiYAw/QIbxoeMQLDRGXb878BmwUf33Nks0cW8TzVYQvvMRv8V6bYbUkdt5e3qfRURpiutsG35Nnrj957MtNT/eSMCwvfz5P8hryfwSQ0JWRuWtiDZMsuLdOGbs3Z+jzoZLx6gY3PiCkyqKTWqui2KQ6zt4cdTN5c5ghCDT6HL0zlpRAiMJk51J6CqOeZZwnCgj963pPpnoIllOtUi+4MRfi918gJItrIEcRM8ZaB8nNtjxsFx6w&#x3D;&#x3D;&#x27;,
-    description: &#x27;Contraseña del usuario.&#x27;,
+    example: &#x27;Base64EncodedEncryptedPassword&#x3D;&#x3D;&#x27;,
+    description: &#x27;Contraseña del usuario (encriptada con RSA-OAEP).&#x27;,
     format: &#x27;password&#x27;,
   })
   @IsString()
   password: string;
 
   @ApiProperty({
-    example:
-      &#x27;nkeRKUWeoJXxZgcE8GIBeXZzv5CPKPNDD7V39QrlLnhe+2xhNGLxlR6JalmOEmrRNgQx7hhe9AQ3O8kQ9BWEXgxkysON5eqL9T3CiYAw/QIbxoeMQLDRGXb878BmwUf33Nks0cW8TzVYQvvMRv8V6bYbUkdt5e3qfRURpiutsG35Nnrj957MtNT/eSMCwvfz5P8hryfwSQ0JWRuWtiDZMsuLdOGbs3Z+jzoZLx6gY3PiCkyqKTWqui2KQ6zt4cdTN5c5ghCDT6HL0zlpRAiMJk51J6CqOeZZwnCgj963pPpnoIllOtUi+4MRfi918gJItrIEcRM8ZaB8nNtjxsFx6w&#x3D;&#x3D;&#x27;,
-    description: &#x27;Confirmación contraseña del usuario.&#x27;,
+    example: &#x27;Base64EncodedEncryptedPassword&#x3D;&#x3D;&#x27;,
+    description:
+      &#x27;Confirmación de contraseña del usuario (encriptada con RSA-OAEP).&#x27;,
     format: &#x27;password&#x27;,
   })
   @IsString()
   confirmPassword: string;
+
+  @ApiProperty({
+    example: true,
+    description: &#x27;Aceptación de términos y condiciones&#x27;,
+  })
+  @IsBoolean()
+  acceptTerms: boolean;
 }
 </code></pre>
     </div>
@@ -526,7 +577,7 @@ export class OnboardingUserRequestDto {
        <script>
             var COMPODOC_CURRENT_PAGE_DEPTH = 1;
             var COMPODOC_CURRENT_PAGE_CONTEXT = 'class';
-            var COMPODOC_CURRENT_PAGE_URL = 'OnboardingUserRequestDto.html';
+            var COMPODOC_CURRENT_PAGE_URL = 'OnboardingUserRequestDTO.html';
             var MAX_SEARCH_RESULTS = 15;
        </script>
 
