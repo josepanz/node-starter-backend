@@ -602,16 +602,10 @@ customElements.define('compodoc-menu', class extends HTMLElement {
                                 <a href="classes/AsyncManager.html" data-type="entity-link" >AsyncManager</a>
                             </li>
                             <li class="link">
-                                <a href="classes/BankDataDTO.html" data-type="entity-link" >BankDataDTO</a>
-                            </li>
-                            <li class="link">
                                 <a href="classes/BlockUserRequestDTO.html" data-type="entity-link" >BlockUserRequestDTO</a>
                             </li>
                             <li class="link">
                                 <a href="classes/CardHelper.html" data-type="entity-link" >CardHelper</a>
-                            </li>
-                            <li class="link">
-                                <a href="classes/CommercialDataDTO.html" data-type="entity-link" >CommercialDataDTO</a>
                             </li>
                             <li class="link">
                                 <a href="classes/CreateExampleRequestDto.html" data-type="entity-link" >CreateExampleRequestDto</a>
@@ -642,9 +636,6 @@ customElements.define('compodoc-menu', class extends HTMLElement {
                             </li>
                             <li class="link">
                                 <a href="classes/DeleteStorageRequestDTO.html" data-type="entity-link" >DeleteStorageRequestDTO</a>
-                            </li>
-                            <li class="link">
-                                <a href="classes/DocumentsDataDTO.html" data-type="entity-link" >DocumentsDataDTO</a>
                             </li>
                             <li class="link">
                                 <a href="classes/DocumentValidationDTO.html" data-type="entity-link" >DocumentValidationDTO</a>
@@ -716,9 +707,6 @@ customElements.define('compodoc-menu', class extends HTMLElement {
                                 <a href="classes/ListUsersRequestDTO.html" data-type="entity-link" >ListUsersRequestDTO</a>
                             </li>
                             <li class="link">
-                                <a href="classes/LocationDataDTO.html" data-type="entity-link" >LocationDataDTO</a>
-                            </li>
-                            <li class="link">
                                 <a href="classes/LoginUserDTO.html" data-type="entity-link" >LoginUserDTO</a>
                             </li>
                             <li class="link">
@@ -728,19 +716,7 @@ customElements.define('compodoc-menu', class extends HTMLElement {
                                 <a href="classes/MaxCommaSeparatedConstraint.html" data-type="entity-link" >MaxCommaSeparatedConstraint</a>
                             </li>
                             <li class="link">
-                                <a href="classes/MerchantApplicationRequestDTO.html" data-type="entity-link" >MerchantApplicationRequestDTO</a>
-                            </li>
-                            <li class="link">
-                                <a href="classes/MerchantApplicationResponseDTO.html" data-type="entity-link" >MerchantApplicationResponseDTO</a>
-                            </li>
-                            <li class="link">
                                 <a href="classes/NotExpiredConstraint.html" data-type="entity-link" >NotExpiredConstraint</a>
-                            </li>
-                            <li class="link">
-                                <a href="classes/OnboardingMerchantActivationResponseDTO.html" data-type="entity-link" >OnboardingMerchantActivationResponseDTO</a>
-                            </li>
-                            <li class="link">
-                                <a href="classes/OnboardingSetApplicationStatusDTO.html" data-type="entity-link" >OnboardingSetApplicationStatusDTO</a>
                             </li>
                             <li class="link">
                                 <a href="classes/OnboardingUserRequestDTO.html" data-type="entity-link" >OnboardingUserRequestDTO</a>
@@ -840,9 +816,6 @@ customElements.define('compodoc-menu', class extends HTMLElement {
                             </li>
                             <li class="link">
                                 <a href="classes/RoleWithPermissionsResponseDTO.html" data-type="entity-link" >RoleWithPermissionsResponseDTO</a>
-                            </li>
-                            <li class="link">
-                                <a href="classes/StepDTO.html" data-type="entity-link" >StepDTO</a>
                             </li>
                             <li class="link">
                                 <a href="classes/StorageHelper.html" data-type="entity-link" >StorageHelper</a>

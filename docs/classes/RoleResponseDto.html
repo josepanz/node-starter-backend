@@ -137,7 +137,7 @@
             <h3>File</h3>
         </p>
         <p class="comment">
-            <code>src/api/roles-permission/dtos/response/role.response.dto.ts</code>
+            <code>src/api/users/dtos/response/user.response.dto.ts</code>
         </p>
 
 
@@ -159,36 +159,16 @@
                         <ul class="index-list">
                             <li>
                                     <span class="modifier"></span>
-                                <a href="#createdAt" >createdAt</a>
-                            </li>
-                            <li>
-                                    <span class="modifier"></span>
-                                <a href="#createdBy" >createdBy</a>
-                            </li>
-                            <li>
-                                    <span class="modifier"></span>
+                                    <span class="modifier">Optional</span>
                                 <a href="#description" >description</a>
                             </li>
                             <li>
                                     <span class="modifier"></span>
-                                    <span class="modifier">Optional</span>
                                 <a href="#displayName" >displayName</a>
                             </li>
                             <li>
                                     <span class="modifier"></span>
                                 <a href="#id" >id</a>
-                            </li>
-                            <li>
-                                    <span class="modifier"></span>
-                                <a href="#isActive" >isActive</a>
-                            </li>
-                            <li>
-                                    <span class="modifier"></span>
-                                <a href="#lastChangedAt" >lastChangedAt</a>
-                            </li>
-                            <li>
-                                    <span class="modifier"></span>
-                                <a href="#lastChangedBy" >lastChangedBy</a>
                             </li>
                             <li>
                                     <span class="modifier"></span>
@@ -217,81 +197,10 @@
         <tbody>
             <tr>
                 <td class="col-md-4">
-                    <a name="createdAt"></a>
-                    <span class="name">
-                            <span class="modifier"></span>
-                        <span ><b>createdAt</b></span>
-                        <a href="#createdAt"><span class="icon ion-ios-link"></span></a>
-                    </span>
-                </td>
-            </tr>
-                <tr>
-                    <td class="col-md-4">
-                        <i>Type : </i>        <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Date" target="_blank" >Date</a></code>
-
-                    </td>
-                </tr>
-                <tr>
-                    <td class="col-md-4">
-                        <b>Decorators : </b>
-                        <br />
-                        <code>
-                            @ApiProperty({example: &#x27;2024-01-15T10:30:00Z&#x27;, description: &#x27;Fecha de creación&#x27;})<br />
-                        </code>
-                    </td>
-                </tr>
-                    <tr>
-                        <td class="col-md-4">
-                                <div class="io-line">Defined in <a href="" data-line="39" class="link-to-prism">src/api/roles-permission/dtos/response/role.response.dto.ts:39</a></div>
-                        </td>
-                    </tr>
-
-
-        </tbody>
-    </table>
-    <table class="table table-sm table-bordered">
-        <tbody>
-            <tr>
-                <td class="col-md-4">
-                    <a name="createdBy"></a>
-                    <span class="name">
-                            <span class="modifier"></span>
-                        <span ><b>createdBy</b></span>
-                        <a href="#createdBy"><span class="icon ion-ios-link"></span></a>
-                    </span>
-                </td>
-            </tr>
-                <tr>
-                    <td class="col-md-4">
-                        <i>Type : </i>        <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
-
-                    </td>
-                </tr>
-                <tr>
-                    <td class="col-md-4">
-                        <b>Decorators : </b>
-                        <br />
-                        <code>
-                            @ApiProperty({example: &#x27;admin@correo.com.py&#x27;, description: &#x27;Usuario que creó el rol&#x27;})<br />
-                        </code>
-                    </td>
-                </tr>
-                    <tr>
-                        <td class="col-md-4">
-                                <div class="io-line">Defined in <a href="" data-line="45" class="link-to-prism">src/api/roles-permission/dtos/response/role.response.dto.ts:45</a></div>
-                        </td>
-                    </tr>
-
-
-        </tbody>
-    </table>
-    <table class="table table-sm table-bordered">
-        <tbody>
-            <tr>
-                <td class="col-md-4">
                     <a name="description"></a>
                     <span class="name">
                             <span class="modifier"></span>
+                            <span class="modifier">Optional</span>
                         <span ><b>description</b></span>
                         <a href="#description"><span class="icon ion-ios-link"></span></a>
                     </span>
@@ -308,13 +217,13 @@
                         <b>Decorators : </b>
                         <br />
                         <code>
-                            @ApiProperty({example: &#x27;Administrador del comercio con acceso completo&#x27;, description: &#x27;Descripción del rol&#x27;, nullable: true})<br />
+                            @ApiProperty({example: &#x27;Acceso completo al sistema&#x27;, required: false})<br />
                         </code>
                     </td>
                 </tr>
                     <tr>
                         <td class="col-md-4">
-                                <div class="io-line">Defined in <a href="" data-line="27" class="link-to-prism">src/api/roles-permission/dtos/response/role.response.dto.ts:27</a></div>
+                                <div class="io-line">Defined in <a href="" data-line="76" class="link-to-prism">src/api/users/dtos/response/user.response.dto.ts:76</a></div>
                         </td>
                     </tr>
 
@@ -328,7 +237,6 @@
                     <a name="displayName"></a>
                     <span class="name">
                             <span class="modifier"></span>
-                            <span class="modifier">Optional</span>
                         <span ><b>displayName</b></span>
                         <a href="#displayName"><span class="icon ion-ios-link"></span></a>
                     </span>
@@ -336,7 +244,7 @@
             </tr>
                 <tr>
                     <td class="col-md-4">
-                        <i>Type : </i>    <code>string | null</code>
+                        <i>Type : </i>        <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
 
                     </td>
                 </tr>
@@ -345,13 +253,13 @@
                         <b>Decorators : </b>
                         <br />
                         <code>
-                            @ApiProperty({example: &#x27;Administrador de comercio&#x27;, description: &#x27;Nombre en pantalla del rol&#x27;})<br />
+                            @ApiProperty({example: &#x27;Leer clientes&#x27;, description: &#x27;Nombre para mostrar del permiso&#x27;})<br />
                         </code>
                     </td>
                 </tr>
                     <tr>
                         <td class="col-md-4">
-                                <div class="io-line">Defined in <a href="" data-line="20" class="link-to-prism">src/api/roles-permission/dtos/response/role.response.dto.ts:20</a></div>
+                                <div class="io-line">Defined in <a href="" data-line="73" class="link-to-prism">src/api/users/dtos/response/user.response.dto.ts:73</a></div>
                         </td>
                     </tr>
 
@@ -381,121 +289,13 @@
                         <b>Decorators : </b>
                         <br />
                         <code>
-                            @ApiProperty({example: 1, description: &#x27;ID del rol&#x27;})<br />
+                            @ApiProperty({example: 1})<br />
                         </code>
                     </td>
                 </tr>
                     <tr>
                         <td class="col-md-4">
-                                <div class="io-line">Defined in <a href="" data-line="8" class="link-to-prism">src/api/roles-permission/dtos/response/role.response.dto.ts:8</a></div>
-                        </td>
-                    </tr>
-
-
-        </tbody>
-    </table>
-    <table class="table table-sm table-bordered">
-        <tbody>
-            <tr>
-                <td class="col-md-4">
-                    <a name="isActive"></a>
-                    <span class="name">
-                            <span class="modifier"></span>
-                        <span ><b>isActive</b></span>
-                        <a href="#isActive"><span class="icon ion-ios-link"></span></a>
-                    </span>
-                </td>
-            </tr>
-                <tr>
-                    <td class="col-md-4">
-                        <i>Type : </i>        <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/boolean" target="_blank" >boolean</a></code>
-
-                    </td>
-                </tr>
-                <tr>
-                    <td class="col-md-4">
-                        <b>Decorators : </b>
-                        <br />
-                        <code>
-                            @ApiProperty({example: true, description: &#x27;Estado del rol&#x27;})<br />
-                        </code>
-                    </td>
-                </tr>
-                    <tr>
-                        <td class="col-md-4">
-                                <div class="io-line">Defined in <a href="" data-line="33" class="link-to-prism">src/api/roles-permission/dtos/response/role.response.dto.ts:33</a></div>
-                        </td>
-                    </tr>
-
-
-        </tbody>
-    </table>
-    <table class="table table-sm table-bordered">
-        <tbody>
-            <tr>
-                <td class="col-md-4">
-                    <a name="lastChangedAt"></a>
-                    <span class="name">
-                            <span class="modifier"></span>
-                        <span ><b>lastChangedAt</b></span>
-                        <a href="#lastChangedAt"><span class="icon ion-ios-link"></span></a>
-                    </span>
-                </td>
-            </tr>
-                <tr>
-                    <td class="col-md-4">
-                        <i>Type : </i>    <code>Date | null</code>
-
-                    </td>
-                </tr>
-                <tr>
-                    <td class="col-md-4">
-                        <b>Decorators : </b>
-                        <br />
-                        <code>
-                            @ApiProperty({example: &#x27;2024-01-20T14:45:00Z&#x27;, description: &#x27;Fecha de última modificación&#x27;, nullable: true})<br />
-                        </code>
-                    </td>
-                </tr>
-                    <tr>
-                        <td class="col-md-4">
-                                <div class="io-line">Defined in <a href="" data-line="52" class="link-to-prism">src/api/roles-permission/dtos/response/role.response.dto.ts:52</a></div>
-                        </td>
-                    </tr>
-
-
-        </tbody>
-    </table>
-    <table class="table table-sm table-bordered">
-        <tbody>
-            <tr>
-                <td class="col-md-4">
-                    <a name="lastChangedBy"></a>
-                    <span class="name">
-                            <span class="modifier"></span>
-                        <span ><b>lastChangedBy</b></span>
-                        <a href="#lastChangedBy"><span class="icon ion-ios-link"></span></a>
-                    </span>
-                </td>
-            </tr>
-                <tr>
-                    <td class="col-md-4">
-                        <i>Type : </i>    <code>string | null</code>
-
-                    </td>
-                </tr>
-                <tr>
-                    <td class="col-md-4">
-                        <b>Decorators : </b>
-                        <br />
-                        <code>
-                            @ApiProperty({example: &#x27;admin@correo.com.py&#x27;, description: &#x27;Usuario que modificó por última vez&#x27;, nullable: true})<br />
-                        </code>
-                    </td>
-                </tr>
-                    <tr>
-                        <td class="col-md-4">
-                                <div class="io-line">Defined in <a href="" data-line="59" class="link-to-prism">src/api/roles-permission/dtos/response/role.response.dto.ts:59</a></div>
+                                <div class="io-line">Defined in <a href="" data-line="64" class="link-to-prism">src/api/users/dtos/response/user.response.dto.ts:64</a></div>
                         </td>
                     </tr>
 
@@ -525,13 +325,13 @@
                         <b>Decorators : </b>
                         <br />
                         <code>
-                            @ApiProperty({example: &#x27;MerchantAdmin&#x27;, description: &#x27;Nombre del rol&#x27;})<br />
+                            @ApiProperty({example: &#x27;Administrador&#x27;})<br />
                         </code>
                     </td>
                 </tr>
                     <tr>
                         <td class="col-md-4">
-                                <div class="io-line">Defined in <a href="" data-line="14" class="link-to-prism">src/api/roles-permission/dtos/response/role.response.dto.ts:14</a></div>
+                                <div class="io-line">Defined in <a href="" data-line="67" class="link-to-prism">src/api/users/dtos/response/user.response.dto.ts:67</a></div>
                         </td>
                     </tr>
 
@@ -551,64 +351,128 @@
 
     <div class="tab-pane fade  tab-source-code" id="source">
         <pre class="line-numbers compodoc-sourcecode"><code class="language-typescript">import { ApiProperty } from &#x27;@nestjs/swagger&#x27;;
+import { UserStatus } from &#x27;@prisma/client&#x27;;
+import { IsOptional, IsString } from &#x27;class-validator&#x27;;
 
-export class RoleResponseDTO {
-  @ApiProperty({
-    example: 1,
-    description: &#x27;ID del rol&#x27;,
-  })
+export class UserResponseDTO {
+  @ApiProperty({ example: 1 })
   id!: number;
 
-  @ApiProperty({
-    example: &#x27;MerchantAdmin&#x27;,
-    description: &#x27;Nombre del rol&#x27;,
-  })
+  @ApiProperty({ example: &#x27;a1b2c3d4-e5f6-7890-abcd-ef1234567890&#x27; })
+  referenceId!: string;
+
+  @ApiProperty({ example: &#x27;user@example.com&#x27; })
+  email!: string;
+
+  @ApiProperty({ example: &#x27;ACTIVE&#x27;, enum: UserStatus })
+  status!: UserStatus;
+
+  @ApiProperty({ example: &#x27;John&#x27; })
+  firstName!: string;
+
+  @ApiProperty({ example: &#x27;Doe&#x27; })
+  lastName!: string;
+
+  @ApiProperty({ example: &#x27;12345678&#x27;, required: false })
+  @IsString()
+  @IsOptional()
+  documentNumber?: string | null;
+
+  @ApiProperty({ example: &#x27;+595991234567&#x27;, required: false })
+  @IsString()
+  @IsOptional()
+  phoneNumber?: string | null;
+
+  @ApiProperty({ example: true })
+  isEmployee!: boolean;
+
+  @ApiProperty({ example: false })
+  isLdap!: boolean;
+
+  @ApiProperty({ example: &#x27;2024-06-16T10:20:30Z&#x27; })
+  lastLogin!: Date;
+
+  @ApiProperty({ example: &#x27;admin@example.com&#x27;, required: false })
+  createdBy?: string;
+
+  @ApiProperty({ example: &#x27;2024-06-17T14:00:00Z&#x27; })
+  createdAt!: Date;
+
+  @ApiProperty({ example: &#x27;editor@example.com&#x27;, required: false })
+  lastChangedBy?: string;
+
+  @ApiProperty({ example: &#x27;2024-06-17T14:30:00Z&#x27;, required: false })
+  lastChangedAt?: Date;
+
+  @ApiProperty({ example: &#x27;user+alt@example.com&#x27;, required: false })
+  unverifiedEmail?: string;
+
+  @ApiProperty({ example: &#x27;Updated profile picture&#x27;, required: false })
+  changedReason?: string;
+}
+
+export class RoleResponseDTO {
+  @ApiProperty({ example: 1 })
+  id!: number;
+
+  @ApiProperty({ example: &#x27;Administrador&#x27; })
   name!: string;
 
   @ApiProperty({
-    example: &#x27;Administrador de comercio&#x27;,
-    description: &#x27;Nombre en pantalla del rol&#x27;,
+    example: &#x27;Leer clientes&#x27;,
+    description: &#x27;Nombre para mostrar del permiso&#x27;,
   })
-  displayName?: string | null;
+  displayName!: string;
+
+  @ApiProperty({ example: &#x27;Acceso completo al sistema&#x27;, required: false })
+  description?: string | null;
+}
+
+export class PermissionResponseDTO {
+  @ApiProperty({ example: 1 })
+  id!: number;
+
+  @ApiProperty({ example: &#x27;users:read&#x27; })
+  name!: string;
 
   @ApiProperty({
-    example: &#x27;Administrador del comercio con acceso completo&#x27;,
-    description: &#x27;Descripción del rol&#x27;,
-    nullable: true,
+    example: &#x27;Leer clientes&#x27;,
+    description: &#x27;Nombre para mostrar del permiso&#x27;,
   })
-  description!: string | null;
+  displayName!: string;
 
-  @ApiProperty({
-    example: true,
-    description: &#x27;Estado del rol&#x27;,
-  })
-  isActive!: boolean;
+  @ApiProperty({ example: &#x27;Permite leer usuarios&#x27;, required: false })
+  description?: string | null;
+}
 
-  @ApiProperty({
-    example: &#x27;2024-01-15T10:30:00Z&#x27;,
-    description: &#x27;Fecha de creación&#x27;,
-  })
-  createdAt!: Date;
+export class UserDetailResponseDTO extends UserResponseDTO {
+  @ApiProperty({ type: [RoleResponseDTO] })
+  roles!: RoleResponseDTO[];
 
-  @ApiProperty({
-    example: &#x27;admin@correo.com.py&#x27;,
-    description: &#x27;Usuario que creó el rol&#x27;,
-  })
-  createdBy!: string;
+  @ApiProperty({ type: [PermissionResponseDTO] })
+  permissions!: PermissionResponseDTO[];
+}
 
-  @ApiProperty({
-    example: &#x27;2024-01-20T14:45:00Z&#x27;,
-    description: &#x27;Fecha de última modificación&#x27;,
-    nullable: true,
-  })
-  lastChangedAt!: Date | null;
+export class PaginationMetaDTO {
+  @ApiProperty({ example: 100 })
+  total!: number;
 
-  @ApiProperty({
-    example: &#x27;admin@correo.com.py&#x27;,
-    description: &#x27;Usuario que modificó por última vez&#x27;,
-    nullable: true,
-  })
-  lastChangedBy!: string | null;
+  @ApiProperty({ example: 1 })
+  page!: number;
+
+  @ApiProperty({ example: 10 })
+  pageSize!: number;
+
+  @ApiProperty({ example: 10 })
+  totalPages!: number;
+}
+
+export class UsersListResponseDTO {
+  @ApiProperty({ type: [UserResponseDTO] })
+  data!: UserResponseDTO[];
+
+  @ApiProperty({ type: PaginationMetaDTO })
+  pagination!: PaginationMetaDTO;
 }
 </code></pre>
     </div>
