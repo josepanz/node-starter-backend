@@ -5,7 +5,7 @@ import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
 import { Logger } from 'nestjs-pino';
 import * as path from 'path';
 import * as fs from 'fs';
-import * as cookieParser from 'cookie-parser';
+import cookieParser from 'cookie-parser';
 import { APP_CONFIG, AppConfigType } from '@core/config/config-loader';
 import { AppModule } from './app.module';
 import { ObservabilityInterceptor } from '@core/observability/observability.interceptor';
@@ -49,6 +49,8 @@ async function bootstrap() {
     .setTitle(config.project.name)
     .setDescription(config.project.description)
     .setVersion(packageJson.version)
+    .addBearerAuth()
+    .addBasicAuth()
     .build();
 
   const document = SwaggerModule.createDocument(app, swaggerConfig);

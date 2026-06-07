@@ -137,7 +137,7 @@
             <h3>File</h3>
         </p>
         <p class="comment">
-            <code>src/common/helpers/user.helper.ts</code>
+            <code>src/api/users/helpers/user.helper.ts</code>
         </p>
 
 
@@ -158,6 +158,10 @@
                 <tr>
                     <td class="col-md-4">
                         <ul class="index-list">
+                            <li>
+                                    <span class="modifier">Static</span>
+                                <a href="#mapUserToDetailResponse" >mapUserToDetailResponse</a>
+                            </li>
                             <li>
                                     <span class="modifier">Static</span>
                                 <a href="#mapUserToResponse" >mapUserToResponse</a>
@@ -185,6 +189,75 @@
         <tbody>
             <tr>
                 <td class="col-md-4">
+                    <a name="mapUserToDetailResponse"></a>
+                    <span class="name">
+                            <span class="modifier">Static</span>
+                        <span ><b>mapUserToDetailResponse</b></span>
+                        <a href="#mapUserToDetailResponse"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                        <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>mapUserToDetailResponse(user: <a href="../undefineds/UserWithDetail.html" target="_self">UserWithDetail</a>)</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="27"
+                                    class="link-to-prism">src/api/users/helpers/user.helper.ts:27</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                            <div class="io-description">
+                                <b>Parameters :</b>
+                                
+                                <table class="params">
+                                    <thead>
+                                        <tr>
+                                            <td>Name</td>
+                                                <td>Type</td>
+                                            <td>Optional</td>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                                <td>user</td>
+                                            <td>
+                                                            <code><a href="../miscellaneous/typealiases.html#UserWithDetail" target="_self" >UserWithDetail</a></code>
+                                            </td>
+
+                                            <td>
+                                                    No
+                                            </td>
+
+
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        <div class="io-description">
+                            <b>Returns : </b>        <code><a href="../classes/UserDetailResponseDTO.html" target="_self" >UserDetailResponseDTO</a></code>
+
+                        </div>
+                            <div class="io-description">
+                                
+                            </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
                     <a name="mapUserToResponse"></a>
                     <span class="name">
                             <span class="modifier">Static</span>
@@ -203,16 +276,14 @@
 
                     <tr>
                         <td class="col-md-4">
-                            <div class="io-line">Defined in <a href="" data-line="10"
-                                    class="link-to-prism">src/common/helpers/user.helper.ts:10</a></div>
+                            <div class="io-line">Defined in <a href="" data-line="5"
+                                    class="link-to-prism">src/api/users/helpers/user.helper.ts:5</a></div>
                         </td>
                     </tr>
 
 
             <tr>
                 <td class="col-md-4">
-                        <div class="io-description"><p>Mapea el objeto de usuario a su DTO de respuesta para estandarizar los retornos.</p>
-</div>
 
                             <div class="io-description">
                                 <b>Parameters :</b>
@@ -223,7 +294,6 @@
                                             <td>Name</td>
                                                 <td>Type</td>
                                             <td>Optional</td>
-                                                <td>Description</td>
                                         </tr>
                                     </thead>
                                     <tbody>
@@ -238,21 +308,16 @@
                                             </td>
 
 
-                                            <td>
-                                                    <p>Objeto de usuario de Prisma.</p>
-
-                                            </td>
                                         </tr>
                                     </tbody>
                                 </table>
                             </div>
                         <div class="io-description">
-                            <b>Returns : </b>        <code><a href="../classes/UserResponseDto.html" target="_self" >UserResponseDto</a></code>
+                            <b>Returns : </b>        <code><a href="../classes/UserResponseDTO.html" target="_self" >UserResponseDTO</a></code>
 
                         </div>
                             <div class="io-description">
-                                <p>DTO de respuesta.</p>
-
+                                
                             </div>
                 </td>
             </tr>
@@ -268,30 +333,47 @@
 
 
     <div class="tab-pane fade  tab-source-code" id="source">
-        <pre class="line-numbers compodoc-sourcecode"><code class="language-typescript">import { UserResponseDto } from &#x27;@api/users/dtos/response/user.response.dto&#x27;;
-import { Users } from &#x27;@prisma/client&#x27;;
-
+        <pre class="line-numbers compodoc-sourcecode"><code class="language-typescript">import { Users } from &#x27;@prisma/client&#x27;;
+import { UserDetailResponseDTO, UserResponseDTO } from &#x27;../dtos&#x27;;
+import { UserWithDetail } from &#x27;@modules/users-db/types/users-db.type&#x27;;
 export class UserHelper {
-  /**
-   * Mapea el objeto de usuario a su DTO de respuesta para estandarizar los retornos.
-   * @param user Objeto de usuario de Prisma.
-   * @returns DTO de respuesta.
-   */
-  public static mapUserToResponse(user: Users): UserResponseDto {
+  static mapUserToResponse(user: Users): UserResponseDTO {
     return {
       id: user.id,
-      email: user.email ?? &#x27;&#x27;,
+      referenceId: user.referenceId,
+      email: user.email,
       status: user.status,
       firstName: user.firstName,
       lastName: user.lastName,
       documentNumber: user.documentNumber,
+      phoneNumber: user.phoneNumber,
+      isEmployee: user.isEmployee,
+      isLdap: user.isLdap,
       lastLogin: user.lastLogin ?? new Date(0),
       createdBy: user.createdBy ?? undefined,
       createdAt: user.createdAt,
       lastChangedBy: user.lastChangedBy ?? undefined,
       lastChangedAt: user.lastChangedAt ?? undefined,
-      verifiedEmail: user.verifiedEmail ?? undefined,
+      unverifiedEmail: user.unverifiedEmail ?? undefined,
       changedReason: user.changedReason ?? undefined,
+    };
+  }
+
+  static mapUserToDetailResponse(user: UserWithDetail): UserDetailResponseDTO {
+    return {
+      ...this.mapUserToResponse(user),
+      roles: user.roles.map((ur) &#x3D;&gt; ({
+        id: ur.role.id,
+        name: ur.role.name,
+        displayName: ur?.role?.displayName ?? &#x27;&#x27;,
+        description: ur.role.description,
+      })),
+      permissions: user.permissions.map((up) &#x3D;&gt; ({
+        id: up.permission.id,
+        name: up.permission.name,
+        displayName: up?.permission?.displayName ?? &#x27;&#x27;,
+        description: up.permission.description,
+      })),
     };
   }
 }

@@ -163,13 +163,6 @@
                                     <span class="modifier"></span>
                                     <span class="modifier"></span>
                                     <span class="modifier"></span>
-                                    <span class="modifier"></span>
-                                    <span class="modifier"></span>
-                                    <span class="modifier"></span>
-                                    <span class="modifier"></span>
-                                    <span class="modifier"></span>
-                                    <span class="modifier"></span>
-                                    <span class="modifier"></span>
                                     <span class="modifier">Async</span>
                                 <a href="#onboarding" >onboarding</a>
                             </li>
@@ -201,13 +194,6 @@
                             <span class="modifier"></span>
                             <span class="modifier"></span>
                             <span class="modifier"></span>
-                            <span class="modifier"></span>
-                            <span class="modifier"></span>
-                            <span class="modifier"></span>
-                            <span class="modifier"></span>
-                            <span class="modifier"></span>
-                            <span class="modifier"></span>
-                            <span class="modifier"></span>
                             <span class="modifier">Async</span>
                         <span ><b>onboarding</b></span>
                         <a href="#onboarding"><span class="icon ion-ios-link"></span></a>
@@ -217,7 +203,7 @@
             <tr>
                 <td class="col-md-4">
                         <span class="modifier-icon icon ion-ios-reset"></span>
-                    <code>onboarding(dto: <a href="../classes/OnboardingUserRequestDto.html" target="_self">OnboardingUserRequestDto</a>)</code>
+                    <code>onboarding(dto: <a href="../classes/OnboardingUserRequestDTO.html" target="_self">DTO.OnboardingUserRequestDTO</a>)</code>
                 </td>
             </tr>
 
@@ -225,14 +211,14 @@
                 <td class="col-md-4">
                     <b>Decorators : </b>
                     <br />
-                    <code>@Post(&#x27;&#x27;)<br />@Version(&#x27;1&#x27;)<br />@Audit(&#x27;users&#x27;)<br />@ApiBasicAuth()<br />@UseInterceptors(AuditInterceptor)<br />@ApiOperation({summary: &#x27;Onboarding de un nuevo usuario&#x27;, description: &#x27;Registrar un nuevo usuario con datos proveidos&#x27;})<br />@ApiCreatedResponse({description: &#x27;Usuario creado satisfactoriamente&#x27;, type: UserResponseDto})<br />@ApiBadRequestResponse({description: &#x27;Solicitud mal formada, verifique los datos y/o parametros enviados.&#x27;, example: undefined})<br />@ApiUnauthorizedResponse({description: &#x27;Credenciales inválidas.&#x27;, type: UnauthorizedException, example: undefined})<br />@ApiForbiddenResponse({description: &#x27;Usuario bloqueado.&#x27;, example: undefined})<br />@ApiInternalServerErrorResponse({description: &#x27;Error interno del servidor al procesar la solicitud.&#x27;, example: undefined})<br />@UseGuards(BasicAuthGuard)<br /></code>
+                    <code>@Post()<br />@Version(&#x27;1&#x27;)<br />@ApiBasicAuth()<br />@UseGuards(BasicAuthGuard)<br />@OnboardingDocs(&#x27;onboarding&#x27;)<br /></code>
                 </td>
             </tr>
 
                     <tr>
                         <td class="col-md-4">
-                            <div class="io-line">Defined in <a href="" data-line="77"
-                                    class="link-to-prism">src/api/onboarding/controllers/onboarding.controller.ts:77</a></div>
+                            <div class="io-line">Defined in <a href="" data-line="18"
+                                    class="link-to-prism">src/api/onboarding/controllers/onboarding.controller.ts:18</a></div>
                         </td>
                     </tr>
 
@@ -255,7 +241,7 @@
                                         <tr>
                                                 <td>dto</td>
                                             <td>
-                                                            <code><a href="../classes/OnboardingUserRequestDto.html" target="_self" >OnboardingUserRequestDto</a></code>
+                                                            <code><a href="../classes/OnboardingUserRequestDTO.html" target="_self" >DTO.OnboardingUserRequestDTO</a></code>
                                             </td>
 
                                             <td>
@@ -268,7 +254,7 @@
                                 </table>
                             </div>
                         <div class="io-description">
-                            <b>Returns : </b>        <code><a href="../classes/UserResponseDto.html" target="_self" >Promise&lt;UserResponseDto | undefined&gt;</a></code>
+                            <b>Returns : </b>        <code><a href="../miscellaneous/variables.html#User" target="_self" >Promise&lt;DTO.OnboardingUserResponseDTO&gt;</a></code>
 
                         </div>
                             <div class="io-description">
@@ -282,86 +268,27 @@
 
 
     <div class="tab-pane fade  tab-source-code" id="source">
-        <pre class="line-numbers compodoc-sourcecode"><code class="language-typescript">import { OnboardingService } from &#x27;@api/onboarding/services/onboarding.service&#x27;;
-import { UserResponseDto } from &#x27;@api/users/dtos/response/user.response.dto&#x27;;
-import { Audit } from &#x27;@core/middlewares/decorators/audit.decorator&#x27;;
-import { AuditInterceptor } from &#x27;@core/middlewares/interceptors/audit.interceptor&#x27;;
-import {
-  Controller,
-  Post,
-  Version,
-  UseInterceptors,
-  UnauthorizedException,
-  Body,
-  UseGuards,
-} from &#x27;@nestjs/common&#x27;;
-import {
-  ApiTags,
-  ApiOperation,
-  ApiCreatedResponse,
-  ApiBadRequestResponse,
-  ApiUnauthorizedResponse,
-  ApiForbiddenResponse,
-  ApiInternalServerErrorResponse,
-  ApiBasicAuth,
-} from &#x27;@nestjs/swagger&#x27;;
+        <pre class="line-numbers compodoc-sourcecode"><code class="language-typescript">import { Controller, Post, Version, Body, UseGuards } from &#x27;@nestjs/common&#x27;;
+import { ApiTags, ApiBasicAuth } from &#x27;@nestjs/swagger&#x27;;
 import { BasicAuthGuard } from &#x27;@modules/auth/guards/basic-auth.guard&#x27;;
-import { OnboardingUserRequestDto } from &#x27;../dto/request/onboarding-user.request.dto&#x27;;
+import * as DTO from &#x27;@api/onboarding/dto&#x27;;
+import { OnboardingDocs } from &#x27;@api/onboarding/docs/onboarding-api.docs&#x27;;
+import { OnboardingApiService } from &#x27;@api/onboarding/services/onboarding-api.service&#x27;;
 
 @ApiTags(&#x27;Onboarding&#x27;)
 @Controller(&#x27;onboarding&#x27;)
 export class OnboardingController {
-  constructor(private readonly onboardingService: OnboardingService) {}
+  constructor(private readonly onboardingApiService: OnboardingApiService) {}
 
-  @Post(&#x27;&#x27;)
+  @Post()
   @Version(&#x27;1&#x27;)
-  @Audit(&#x27;users&#x27;)
   @ApiBasicAuth()
-  @UseInterceptors(AuditInterceptor)
-  @ApiOperation({
-    summary: &#x27;Onboarding de un nuevo usuario&#x27;,
-    description: &#x27;Registrar un nuevo usuario con datos proveidos&#x27;,
-  })
-  @ApiCreatedResponse({
-    description: &#x27;Usuario creado satisfactoriamente&#x27;,
-    type: UserResponseDto,
-  })
-  @ApiBadRequestResponse({
-    description:
-      &#x27;Solicitud mal formada, verifique los datos y/o parametros enviados.&#x27;,
-    example: {
-      statusCode: 400,
-      message:
-        &#x27;Solicitud mal formada, verifique los datos y/o parametros enviados.&#x27;,
-    },
-  })
-  @ApiUnauthorizedResponse({
-    description: &#x27;Credenciales inválidas.&#x27;,
-    type: UnauthorizedException,
-    example: {
-      statusCode: 401,
-      message: &#x27;Credenciales inválidas.&#x27;,
-    },
-  })
-  @ApiForbiddenResponse({
-    description: &#x27;Usuario bloqueado.&#x27;,
-    example: {
-      statusCode: 403,
-      message: &#x27;Usuario bloqueado.&#x27;,
-    },
-  })
-  @ApiInternalServerErrorResponse({
-    description: &#x27;Error interno del servidor al procesar la solicitud.&#x27;,
-    example: {
-      statusCode: 500,
-      message: &#x27;Error interno del servidor al procesar la solicitud.&#x27;,
-    },
-  })
   @UseGuards(BasicAuthGuard)
+  @OnboardingDocs(&#x27;onboarding&#x27;)
   async onboarding(
-    @Body() dto: OnboardingUserRequestDto,
-  ): Promise&lt;UserResponseDto | undefined&gt; {
-    return await this.onboardingService.onboarding(dto);
+    @Body() dto: DTO.OnboardingUserRequestDTO,
+  ): Promise&lt;DTO.OnboardingUserResponseDTO&gt; {
+    return await this.onboardingApiService.onboarding(dto);
   }
 }
 </code></pre>

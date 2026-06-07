@@ -1,12 +1,13 @@
 import { Inject, Injectable, UnauthorizedException } from '@nestjs/common';
 import { PassportStrategy } from '@nestjs/passport';
-import { ExtractJwt, Strategy } from 'passport-jwt';
+import { Strategy } from 'passport-jwt';
 import { Request } from 'express';
-import { APP_CONFIG, AppConfigType } from '@core/config/config-loader';
 import { ConfigType } from '@nestjs/config';
+
+import { UsersDBService } from '@modules/users-db/services/users-db.service';
+import { IJwtPayload } from '@api/auth/interfaces';
+import { APP_CONFIG, AppConfigType } from '@core/config/config-loader';
 import { UserWithSecurities } from '@modules/auth/types/user.types';
-import { UsersService } from '@modules/users/users.service';
-import { IJwtPayload } from '../interfaces/jwt-payload.interface';
 
 @Injectable()
 export class JwtRefreshStrategy extends PassportStrategy(
@@ -14,26 +15,28 @@ export class JwtRefreshStrategy extends PassportStrategy(
   'jwt-refresh',
 ) {
   constructor(
-    private readonly usersService: UsersService,
+    private readonly usersService: UsersDBService,
     @Inject(APP_CONFIG.KEY)
     readonly configService: ConfigType<AppConfigType>,
   ) {
     super({
-      jwtFromRequest: ExtractJwt.fromExtractors([
-        (req: Request) => {
-          return req?.cookies?.refreshToken as string;
-        },
-      ]),
+      jwtFromRequest: (req: Request): string | null => {
+        const token = req.cookies?.['refreshToken'];
+        return typeof token === 'string' ? token : null;
+      },
+      passReqToCallback: false,
       ignoreExpiration: false,
       secretOrKey: configService.authentication.publicKey,
     });
   }
 
-  async validate(payload: IJwtPayload): Promise<UserWithSecurities | null> {
+  async validate(payload: IJwtPayload): Promise<UserWithSecurities> {
     const user = await this.usersService.findActiveUserByEmail(payload.email);
+
     if (!user) {
-      throw new UnauthorizedException();
+      throw new UnauthorizedException('Usuario no encontrado o inactivo.');
     }
+
     return user;
   }
 }

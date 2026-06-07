@@ -1,32 +1,59 @@
-import { UserResponseDto } from '@api/users/dtos/response/user.response.dto';
 import { ApiProperty } from '@nestjs/swagger';
-import { Roles, Users } from '@prisma/client';
-import { IsArray, IsObject, IsOptional } from 'class-validator';
+import { AccessLevel } from '@prisma/client';
+import { IsArray, IsObject, IsOptional, IsString } from 'class-validator';
 
-export class UserScopeResponseDto {
+export class RoleScopeDTO {
+  @ApiProperty({ example: 'merchant-admin' })
+  @IsString()
+  name: string;
+
+  @ApiProperty({ example: 'Administrador del comercio', nullable: true })
+  @IsString()
+  @IsOptional()
+  description?: string | null;
+}
+
+export class PermissionScopeDTO {
+  @ApiProperty({ example: 'dashboard:read' })
+  @IsString()
+  name: string;
+}
+
+export class UserScopeResponseDTO {
   @ApiProperty({
-    type: UserResponseDto,
-    description: 'Datos del usuario.',
+    example: {
+      id: '123e4567-e89b-12d3-a456-426614174000',
+      email: 'user@example.com',
+      firstName: 'John',
+      lastName: 'Doe',
+      status: 'ACTIVE',
+      profileStatus: 'COMPLETE',
+      isEmployee: false,
+      documentType: 'CI',
+      documentNumber: '12345678',
+      phoneNumber: '+595981234567',
+    },
   })
   @IsObject()
-  user: Users;
+  user: {
+    id: string;
+    email: string;
+    phoneNumber: string | null;
+    firstName: string;
+    lastName: string;
+    status: string;
+    profileStatus: string;
+    isEmployee: boolean;
+    currentAccessLevel: AccessLevel;
+  };
 
-  @ApiProperty({
-    example: ['admin', 'user'],
-    description: 'Roles del usuario.',
-  })
+  @ApiProperty({ type: [RoleScopeDTO] })
   @IsArray()
   @IsOptional()
-  roles?: Roles[];
+  roles?: RoleScopeDTO[];
 
-  @ApiProperty({
-    example: [
-      { code: 'user:create', name: 'Crear usuarios' },
-      { code: 'admin:all', name: 'Administrador de sistema' },
-    ],
-    description: 'Permisos del usuario.',
-  })
+  @ApiProperty({ type: [PermissionScopeDTO] })
   @IsArray()
   @IsOptional()
-  permissions?: Permissions[];
+  permissions?: PermissionScopeDTO[];
 }

@@ -184,12 +184,12 @@
             <tbody>
                 <tr>
                     <td class="col-md-4">
-<code>constructor(usersService: <a href="../injectables/UsersService.html" target="_self">UsersService</a>, configService: <a href="../undefineds/AppConfigType.html" target="_self">ConfigType&lt;AppConfigType&gt;</a>)</code>
+<code>constructor(usersService: <a href="../injectables/UsersDBService.html" target="_self">UsersDBService</a>, configService: <a href="../undefineds/AppConfigType.html" target="_self">ConfigType&lt;AppConfigType&gt;</a>)</code>
                     </td>
                 </tr>
                         <tr>
                             <td class="col-md-4">
-                                <div class="io-line">Defined in <a href="" data-line="15" class="link-to-prism">src/modules/auth/strategies/jwt-refresh.strategy.ts:15</a></div>
+                                <div class="io-line">Defined in <a href="" data-line="16" class="link-to-prism">src/modules/auth/strategies/jwt-refresh.strategy.ts:16</a></div>
                             </td>
                         </tr>
 
@@ -210,7 +210,7 @@
                                                         <td>usersService</td>
                                                   
                                                         <td>
-                                                                        <code><a href="../injectables/UsersService.html" target="_self" >UsersService</a></code>
+                                                                        <code><a href="../injectables/UsersDBService.html" target="_self" >UsersDBService</a></code>
                                                         </td>
                                                   
                                                     <td>
@@ -266,8 +266,8 @@
 
                     <tr>
                         <td class="col-md-4">
-                            <div class="io-line">Defined in <a href="" data-line="32"
-                                    class="link-to-prism">src/modules/auth/strategies/jwt-refresh.strategy.ts:32</a></div>
+                            <div class="io-line">Defined in <a href="" data-line="33"
+                                    class="link-to-prism">src/modules/auth/strategies/jwt-refresh.strategy.ts:33</a></div>
                         </td>
                     </tr>
 
@@ -303,7 +303,7 @@
                                 </table>
                             </div>
                         <div class="io-description">
-                            <b>Returns : </b>        <code><a href="../miscellaneous/variables.html#User" target="_self" >Promise&lt;UserWithSecurities | null&gt;</a></code>
+                            <b>Returns : </b>        <code><a href="../miscellaneous/variables.html#User" target="_self" >Promise&lt;UserWithSecurities&gt;</a></code>
 
                         </div>
                             <div class="io-description">
@@ -321,13 +321,14 @@
     <div class="tab-pane fade  tab-source-code" id="source">
         <pre class="line-numbers compodoc-sourcecode"><code class="language-typescript">import { Inject, Injectable, UnauthorizedException } from &#x27;@nestjs/common&#x27;;
 import { PassportStrategy } from &#x27;@nestjs/passport&#x27;;
-import { ExtractJwt, Strategy } from &#x27;passport-jwt&#x27;;
+import { Strategy } from &#x27;passport-jwt&#x27;;
 import { Request } from &#x27;express&#x27;;
-import { APP_CONFIG, AppConfigType } from &#x27;@core/config/config-loader&#x27;;
 import { ConfigType } from &#x27;@nestjs/config&#x27;;
+
+import { UsersDBService } from &#x27;@modules/users-db/services/users-db.service&#x27;;
+import { IJwtPayload } from &#x27;@api/auth/interfaces&#x27;;
+import { APP_CONFIG, AppConfigType } from &#x27;@core/config/config-loader&#x27;;
 import { UserWithSecurities } from &#x27;@modules/auth/types/user.types&#x27;;
-import { UsersService } from &#x27;@modules/users/users.service&#x27;;
-import { IJwtPayload } from &#x27;../interfaces/jwt-payload.interface&#x27;;
 
 @Injectable()
 export class JwtRefreshStrategy extends PassportStrategy(
@@ -335,26 +336,28 @@ export class JwtRefreshStrategy extends PassportStrategy(
   &#x27;jwt-refresh&#x27;,
 ) {
   constructor(
-    private readonly usersService: UsersService,
+    private readonly usersService: UsersDBService,
     @Inject(APP_CONFIG.KEY)
     readonly configService: ConfigType&lt;AppConfigType&gt;,
   ) {
     super({
-      jwtFromRequest: ExtractJwt.fromExtractors([
-        (req: Request) &#x3D;&gt; {
-          return req?.cookies?.refreshToken as string;
-        },
-      ]),
+      jwtFromRequest: (req: Request): string | null &#x3D;&gt; {
+        const token &#x3D; req.cookies?.[&#x27;refreshToken&#x27;];
+        return typeof token &#x3D;&#x3D;&#x3D; &#x27;string&#x27; ? token : null;
+      },
+      passReqToCallback: false,
       ignoreExpiration: false,
       secretOrKey: configService.authentication.publicKey,
     });
   }
 
-  async validate(payload: IJwtPayload): Promise&lt;UserWithSecurities | null&gt; {
+  async validate(payload: IJwtPayload): Promise&lt;UserWithSecurities&gt; {
     const user &#x3D; await this.usersService.findActiveUserByEmail(payload.email);
+
     if (!user) {
-      throw new UnauthorizedException();
+      throw new UnauthorizedException(&#x27;Usuario no encontrado o inactivo.&#x27;);
     }
+
     return user;
   }
 }

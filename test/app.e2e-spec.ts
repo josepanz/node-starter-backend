@@ -1,25 +1,70 @@
+/* eslint-disable */
 import { Test, TestingModule } from '@nestjs/testing';
-import { INestApplication } from '@nestjs/common';
-import * as request from 'supertest';
+import {
+  INestApplication,
+  ValidationPipe,
+  VersioningType,
+} from '@nestjs/common';
+import request = require('supertest');
 import { App } from 'supertest/types';
+import cookieParser from 'cookie-parser';
+import { MemoryHealthIndicator, PrismaHealthIndicator } from '@nestjs/terminus';
 import { AppModule } from './../src/app.module';
+import { PrismaDatasource } from './../src/core/database/services/prisma.service';
+
+const mockPingCheck = jest
+  .fn()
+  .mockResolvedValue({ database: { status: 'up' } });
+
+const mockPrisma = {
+  $queryRaw: jest.fn().mockResolvedValue([{ '?column?': 1 }]),
+  isConnected: true,
+  extended: {},
+};
 
 describe('AppController (e2e)', () => {
   let app: INestApplication<App>;
 
-  beforeEach(async () => {
+  beforeAll(async () => {
     const moduleFixture: TestingModule = await Test.createTestingModule({
       imports: [AppModule],
-    }).compile();
+    })
+      .overrideProvider(PrismaDatasource)
+      .useValue(mockPrisma)
+      .overrideProvider(PrismaHealthIndicator)
+      .useValue({ pingCheck: mockPingCheck })
+      .overrideProvider(MemoryHealthIndicator)
+      .useValue({
+        checkHeap: jest
+          .fn()
+          .mockResolvedValue({ memory_heap: { status: 'up' } }),
+      })
+      .compile();
 
     app = moduleFixture.createNestApplication();
+    app.use(cookieParser());
+    app.useGlobalPipes(
+      new ValidationPipe({
+        transform: true,
+        validationError: { target: false },
+        whitelist: true,
+        forbidNonWhitelisted: true,
+      }),
+    );
+    app.enableVersioning({ type: VersioningType.URI });
+    app.setGlobalPrefix('/node-starter-backend/api');
     await app.init();
   });
 
-  it('/ (GET)', () => {
+  afterAll(async () => {
+    await app.close();
+  });
+
+  afterEach(() => jest.clearAllMocks());
+
+  it('/node-starter-backend/api/v1/healthcheck (GET)', () => {
     return request(app.getHttpServer())
-      .get('/')
-      .expect(200)
-      .expect('Hello World!');
+      .get('/node-starter-backend/api/v1/healthcheck')
+      .expect(200);
   });
 });

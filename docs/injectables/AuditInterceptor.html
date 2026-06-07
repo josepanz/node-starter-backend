@@ -133,7 +133,7 @@
             <h3>File</h3>
         </p>
         <p class="comment">
-            <code>src/core/middlewares/interceptors/audit.interceptor.ts</code>
+            <code>src/core/interceptors/audit.interceptor.ts</code>
         </p>
 
 
@@ -153,10 +153,6 @@
                 <tr>
                     <td class="col-md-4">
                         <ul class="index-list">
-                            <li>
-                                    <span class="modifier">Private</span>
-                                <a href="#getOperationType" >getOperationType</a>
-                            </li>
                             <li>
                                 <a href="#intercept" >intercept</a>
                             </li>
@@ -178,12 +174,12 @@
             <tbody>
                 <tr>
                     <td class="col-md-4">
-<code>constructor(prisma: <a href="../injectables/PrismaDatasource.html" target="_self">PrismaDatasource</a>, reflector: Reflector)</code>
+<code>constructor(reflector: Reflector)</code>
                     </td>
                 </tr>
                         <tr>
                             <td class="col-md-4">
-                                <div class="io-line">Defined in <a href="" data-line="14" class="link-to-prism">src/core/middlewares/interceptors/audit.interceptor.ts:14</a></div>
+                                <div class="io-line">Defined in <a href="" data-line="13" class="link-to-prism">src/core/interceptors/audit.interceptor.ts:13</a></div>
                             </td>
                         </tr>
 
@@ -200,18 +196,6 @@
                                             </tr>
                                         </thead>
                                         <tbody>
-                                                <tr>
-                                                        <td>prisma</td>
-                                                  
-                                                        <td>
-                                                                        <code><a href="../injectables/PrismaDatasource.html" target="_self" >PrismaDatasource</a></code>
-                                                        </td>
-                                                  
-                                                    <td>
-                                                            No
-                                                    </td>
-                                                    
-                                                </tr>
                                                 <tr>
                                                         <td>reflector</td>
                                                   
@@ -242,75 +226,6 @@
         <tbody>
             <tr>
                 <td class="col-md-4">
-                    <a name="getOperationType"></a>
-                    <span class="name">
-                            <span class="modifier">Private</span>
-                        <span ><b>getOperationType</b></span>
-                        <a href="#getOperationType"><span class="icon ion-ios-link"></span></a>
-                    </span>
-                </td>
-            </tr>
-            <tr>
-                <td class="col-md-4">
-                        <span class="modifier-icon icon ion-ios-reset"></span>
-                    <code>getOperationType(method: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank">string</a>)</code>
-                </td>
-            </tr>
-
-
-                    <tr>
-                        <td class="col-md-4">
-                            <div class="io-line">Defined in <a href="" data-line="72"
-                                    class="link-to-prism">src/core/middlewares/interceptors/audit.interceptor.ts:72</a></div>
-                        </td>
-                    </tr>
-
-
-            <tr>
-                <td class="col-md-4">
-
-                            <div class="io-description">
-                                <b>Parameters :</b>
-                                
-                                <table class="params">
-                                    <thead>
-                                        <tr>
-                                            <td>Name</td>
-                                                <td>Type</td>
-                                            <td>Optional</td>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        <tr>
-                                                <td>method</td>
-                                            <td>
-                                                            <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
-                                            </td>
-
-                                            <td>
-                                                    No
-                                            </td>
-
-
-                                        </tr>
-                                    </tbody>
-                                </table>
-                            </div>
-                        <div class="io-description">
-                            <b>Returns : </b>        <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
-
-                        </div>
-                            <div class="io-description">
-                                
-                            </div>
-                </td>
-            </tr>
-        </tbody>
-    </table>
-    <table class="table table-sm table-bordered">
-        <tbody>
-            <tr>
-                <td class="col-md-4">
                     <a name="intercept"></a>
                     <span class="name">
                         <span ><b>intercept</b></span>
@@ -327,8 +242,8 @@
 
                     <tr>
                         <td class="col-md-4">
-                            <div class="io-line">Defined in <a href="" data-line="20"
-                                    class="link-to-prism">src/core/middlewares/interceptors/audit.interceptor.ts:20</a></div>
+                            <div class="io-line">Defined in <a href="" data-line="16"
+                                    class="link-to-prism">src/core/interceptors/audit.interceptor.ts:16</a></div>
                         </td>
                     </tr>
 
@@ -398,84 +313,37 @@
   Injectable,
   NestInterceptor,
 } from &#x27;@nestjs/common&#x27;;
-import { PrismaDatasource } from &#x27;../../database/prisma.service&#x27;;
-import { Observable, tap } from &#x27;rxjs&#x27;;
-import { Request } from &#x27;express&#x27;;
 import { Reflector } from &#x27;@nestjs/core&#x27;;
-import { OperationType } from &#x27;../enums/operation-type.enum&#x27;;
+import { auditStorage } from &#x27;../database/services/prisma.service&#x27;;
+import { APPLICATION_NAME_KEY } from &#x27;@common/decorators/application-name.decorator&#x27;;
+import { Observable } from &#x27;rxjs&#x27;;
 
 @Injectable()
 export class AuditInterceptor implements NestInterceptor {
-  constructor(
-    private readonly prisma: PrismaDatasource,
-    private readonly reflector: Reflector,
-  ) {}
+  constructor(private readonly reflector: Reflector) {}
 
   intercept(context: ExecutionContext, next: CallHandler): Observable&lt;unknown&gt; {
-    const request &#x3D; context.switchToHttp().getRequest&lt;Request&gt;();
-    const user &#x3D; request.user as { email?: string } | undefined; // Auth0 or JWT-authenticated user
-    const method &#x3D; request.method;
-    const body &#x3D; request.body as unknown;
+    const request &#x3D; context.switchToHttp().getRequest();
 
-    const table &#x3D; this.reflector.get&lt;string&gt;(
-      &#x27;audit:table&#x27;,
-      context.getHandler(),
-    );
-    const operation &#x3D; this.getOperationType(method);
+    const applicationName &#x3D;
+      this.reflector.getAllAndOverride&lt;string&gt;(APPLICATION_NAME_KEY, [
+        context.getHandler(),
+        context.getClass(),
+      ]) ?? &#x27;node-starter-backend&#x27;;
 
-    return next.handle().pipe(
-      tap((result) &#x3D;&gt; {
-        void (async () &#x3D;&gt; {
-          if (!table || !user || !operation) return;
+    const store &#x3D; {
+      userId:
+        request?.user?.email ??
+        request?.body?.userEmail ??
+        request?.query?.userEmail ??
+        request?.params?.userEmail ??
+        &#x27;system&#x27;,
+      ip: request.ip || request.headers[&#x27;x-forwarded-for&#x27;] || &#x27;unknown&#x27;,
+      userAgent: request.headers[&#x27;user-agent&#x27;] || &#x27;unknown&#x27;,
+      applicationName,
+    };
 
-          const oldData: Record&lt;string, unknown&gt; | null &#x3D;
-            (request[&#x27;originalEntity&#x27;] as
-              | Record&lt;string, unknown&gt;
-              | undefined) ?? null;
-          const newData: Record&lt;string, unknown&gt; | null &#x3D;
-            (result as Record&lt;string, unknown&gt;) ?? null;
-
-          await this.prisma.auditLogs.create({
-            data: {
-              tableName: table,
-              recordId:
-                result &amp;&amp;
-                typeof result &#x3D;&#x3D;&#x3D; &#x27;object&#x27; &amp;&amp;
-                result !&#x3D;&#x3D; null &amp;&amp;
-                &#x27;id&#x27; in result &amp;&amp;
-                (result as Record&lt;string, unknown&gt;).id !&#x3D;&#x3D; undefined
-                  ? String((result as { id: unknown }).id)
-                  : body &amp;&amp;
-                      typeof body &#x3D;&#x3D;&#x3D; &#x27;object&#x27; &amp;&amp;
-                      body !&#x3D;&#x3D; null &amp;&amp;
-                      &#x27;id&#x27; in body &amp;&amp;
-                      (body as { id?: unknown }).id !&#x3D;&#x3D; undefined
-                    ? String((body as { id: unknown }).id)
-                    : &#x27;unknown&#x27;,
-              operationType: operation,
-              oldData: oldData ? JSON.stringify(oldData) : undefined,
-              newData: newData ? JSON.stringify(newData) : undefined,
-              changedBy: user?.email || &#x27;anonymous&#x27;,
-            },
-          });
-        })();
-      }),
-    );
-  }
-
-  private getOperationType(method: string): string {
-    switch (method) {
-      case &#x27;POST&#x27;:
-        return OperationType.INSERT;
-      case &#x27;PUT&#x27;:
-        return OperationType.UPDATE;
-      case &#x27;PATCH&#x27;:
-        return OperationType.UPDATE;
-      case &#x27;DELETE&#x27;:
-        return OperationType.DELETE;
-      default:
-        return &#x27;UNKNOWN&#x27;;
-    }
+    return auditStorage.run(store, () &#x3D;&gt; next.handle());
   }
 }
 </code></pre>

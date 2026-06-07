@@ -146,19 +146,180 @@
             </p>
 
 
+            <section data-compodoc="block-index">
+    <h3 id="index">Index</h3>
+    <table class="table table-sm table-bordered index-table">
+        <tbody>
+
+                <tr>
+                    <td class="col-md-4">
+                        <h6><b>Methods</b></h6>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <ul class="index-list">
+                            <li>
+                                <a href="#handleRequest" >handleRequest</a>
+                            </li>
+                        </ul>
+                    </td>
+                </tr>
 
 
 
+
+
+        </tbody>
+    </table>
+</section>
+
+
+            <section data-compodoc="block-methods">
+    
+    <h3 id="methods">
+        Methods
+    </h3>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="handleRequest"></a>
+                    <span class="name">
+                        <span ><b>handleRequest</b></span>
+                        <a href="#handleRequest"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>handleRequest(err: unknown, user: unknown, info: unknown)</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="8"
+                                    class="link-to-prism">src/modules/auth/guards/jwt-auth.guard.ts:8</a></div>
+                        </td>
+                    </tr>
+
+                    <tr>
+                        <td class="col-md-4">
+                            <b>Type parameters :</b>
+                            <ul class="type-parameters">
+                                    <li>TUser</li>
+                            </ul>
+                        </td>
+                    </tr>
+
+            <tr>
+                <td class="col-md-4">
+
+                            <div class="io-description">
+                                <b>Parameters :</b>
+                                
+                                <table class="params">
+                                    <thead>
+                                        <tr>
+                                            <td>Name</td>
+                                                <td>Type</td>
+                                            <td>Optional</td>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                                <td>err</td>
+                                            <td>
+                                                        <code>unknown</code>
+                                            </td>
+
+                                            <td>
+                                                    No
+                                            </td>
+
+
+                                        </tr>
+                                        <tr>
+                                                <td>user</td>
+                                            <td>
+                                                        <code>unknown</code>
+                                            </td>
+
+                                            <td>
+                                                    No
+                                            </td>
+
+
+                                        </tr>
+                                        <tr>
+                                                <td>info</td>
+                                            <td>
+                                                        <code>unknown</code>
+                                            </td>
+
+                                            <td>
+                                                    No
+                                            </td>
+
+
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        <div class="io-description">
+                            <b>Returns : </b>        <code><a href="../miscellaneous/variables.html#User" target="_self" >TUser</a></code>
+
+                        </div>
+                            <div class="io-description">
+                                
+                            </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</section>
 
     </div>
 
 
     <div class="tab-pane fade  tab-source-code" id="source">
-        <pre class="line-numbers compodoc-sourcecode"><code class="language-typescript">import { Injectable } from &#x27;@nestjs/common&#x27;;
+        <pre class="line-numbers compodoc-sourcecode"><code class="language-typescript">import { Injectable, UnauthorizedException } from &#x27;@nestjs/common&#x27;;
 import { AuthGuard } from &#x27;@nestjs/passport&#x27;;
+import { TokenExpiredError } from &#x27;jsonwebtoken&#x27;;
+import { UserWithSecurities } from &#x27;../types/user.types&#x27;;
 
 @Injectable()
-export class JwtAuthGuard extends AuthGuard(&#x27;jwt&#x27;) {}
+export class JwtAuthGuard extends AuthGuard(&#x27;jwt&#x27;) {
+  handleRequest&lt;TUser &#x3D; UserWithSecurities&gt;(
+    err: unknown,
+    user: unknown,
+    info: unknown,
+  ): TUser {
+    // Token expirado
+    if (info instanceof TokenExpiredError) {
+      throw new UnauthorizedException({
+        statusCode: 401,
+        message: &#x27;Access token expired&#x27;,
+        error: &#x27;Unauthorized&#x27;,
+        code: &#x27;TOKEN_EXPIRED&#x27;,
+      });
+    }
+
+    // Token inválido / usuario inexistente
+    if (err || !user) {
+      throw new UnauthorizedException({
+        statusCode: 401,
+        message: &#x27;Invalid access token&#x27;,
+        error: &#x27;Unauthorized&#x27;,
+        code: &#x27;INVALID_TOKEN&#x27;,
+      });
+    }
+
+    return user as TUser;
+  }
+}
 </code></pre>
     </div>
 

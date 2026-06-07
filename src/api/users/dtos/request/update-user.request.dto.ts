@@ -1,8 +1,8 @@
 import { ApiProperty, PartialType } from '@nestjs/swagger';
 import { IsISO8601, IsOptional, IsString } from 'class-validator';
-import { CreateUserRequestDto } from './create-user.request.dto';
+import { CreateUserRequestDTO } from './create-user.request.dto';
 
-export class UpdateUserRequestDto extends PartialType(CreateUserRequestDto) {
+export class UpdateUserRequestDTO extends PartialType(CreateUserRequestDTO) {
   @ApiProperty({
     example: '2024-06-16T10:20:30Z',
     required: false,

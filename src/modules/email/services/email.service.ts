@@ -9,11 +9,12 @@ import * as nodemailer from 'nodemailer';
 import { Transporter } from 'nodemailer';
 import { EmailHelper } from '@modules/email/helpers/email.helper';
 import { ISendEmailOptions } from '@modules/email/interfaces/email.interface';
+import { CryptoHelper } from '@common/helpers/crypto-helpers';
 import { APP_CONFIG, AppConfigType } from '@core/config/config-loader';
 import { ConfigType } from '@nestjs/config';
+import { UserResponseDTO } from '@api/users/dtos/response/user.response.dto';
 import { Users } from '@prisma/client';
 import { EmailTypeEnum } from '@modules/email/enum/email-type.enum';
-import { CryptoHelper } from '@common/helpers/crypto-helpers';
 
 @Injectable()
 export class EmailService {
@@ -65,9 +66,11 @@ export class EmailService {
       };
 
       await this.transporter.sendMail(mailOptions);
-      this.logger.log(`Correo de creación de contraseña enviado a: ${to}`);
+      this.logger.log(`Correo enviado a: ${to}`);
     } catch (error) {
-      this.logger.error(`Error al enviar el correo a ${to}: ${error.message}`);
+      const errorMessage =
+        error instanceof Error ? error.message : 'Error desconocido';
+      this.logger.error(`Error al enviar el correo a ${to}: ${errorMessage}`);
       throw new InternalServerErrorException(
         'Error al enviar el correo de creación de contraseña.',
       );
@@ -91,8 +94,15 @@ export class EmailService {
   async sendEmailByType(
     to: string,
     emailType: EmailTypeEnum,
-    user: Users,
+    user?: Users,
+    tokenExpiresOverride?: string,
+    extraData?: { dto: Record<string, unknown>; description: string },
   ): Promise<void> {
+    if (extraData) {
+      this.logger.debug(
+        `Datos adicionales para el correo: ${extraData.description} - ${JSON.stringify(extraData.dto)}`,
+      );
+    }
     switch (emailType) {
       case EmailTypeEnum.VERIFICATION: {
         if (!user) {
@@ -105,16 +115,16 @@ export class EmailService {
           {
             sub: String(user.id),
             email: user.email,
-            user: user,
+            user: user as UserResponseDTO,
           },
           'RS256',
           this.configService.authentication.tempTokenExpires,
         );
 
-        const userVerificationLink = `${this.configService.baseUrl}/verify-email?email=${to}&token=${tempToken}`;
+        const userVerificationLink = `${this.configService.baseUrl}/auth/verify-email/confirm?email=${to}&token=${tempToken}`;
         await this.send({
           to,
-          subject: 'Verificación de correo - Portal de comercios DINELCO',
+          subject: 'Verificación de correo',
           content: EmailHelper.createUserVerificationTemplate(
             user.firstName + ' ' + user.lastName,
             userVerificationLink,
@@ -133,16 +143,17 @@ export class EmailService {
           {
             sub: String(user.id),
             email: user.email,
-            user: user,
+            action: 'forgotPassword',
           },
           'RS256',
-          this.configService.authentication.tempTokenExpires,
+          tokenExpiresOverride ??
+            this.configService.authentication.tempTokenExpires,
         );
 
-        const forgotPasswordLink = `${this.configService.baseUrl}/forgot-password?email=${to}&token=${tempToken}`;
+        const forgotPasswordLink = `${this.configService.baseUrl}/auth/reset-password?token=${tempToken}&email=${encodeURIComponent(to)}`;
         await this.send({
           to,
-          subject: 'Olvide mi contraseña - Portal de comercios DINELCO',
+          subject: 'Olvide mi contraseña',
           content: EmailHelper.createUserForgotPasswordTemplate(
             user.firstName + ' ' + user.lastName,
             forgotPasswordLink,
@@ -150,6 +161,35 @@ export class EmailService {
         });
         break;
       }
+      case EmailTypeEnum.CREATE_PASSWORD: {
+        if (!user) {
+          this.logger.warn(`Usuario con email ${to} no encontrado o inactivo.`);
+          throw new NotFoundException('Usuario no encontrado o inactivo.');
+        }
+
+        const tempToken = CryptoHelper.generateToken(
+          'tempToken',
+          {
+            sub: String(user.id),
+            email: user.email,
+          },
+          'RS256',
+          this.configService.authentication.tempTokenExpires,
+        );
+
+        const createPasswordLink = `${this.configService.baseUrl}/auth/set-password?email=${to}&token=${tempToken}`;
+
+        await this.send({
+          to,
+          subject: 'Creá tu contraseña',
+          content: EmailHelper.createPasswordCreationTemplate(
+            user.firstName + ' ' + user.lastName,
+            createPasswordLink,
+          ),
+        });
+        break;
+      }
+
       default: {
         this.logger.warn(`Tipo de email no reconocido`);
         throw new InternalServerErrorException('Tipo de email no reconocido.');

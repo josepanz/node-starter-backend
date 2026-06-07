@@ -133,13 +133,49 @@
                             <a href="#AppConfigType" title="src/core/config/config-loader.ts" ><b>AppConfigType</b>&nbsp;&nbsp;&nbsp;(src/.../config-loader.ts)</a>
                         </li>
                         <li>
-                            <a href="#PrismaModelDelegate" title="src/core/database/prisma.type.ts" ><b>PrismaModelDelegate</b>&nbsp;&nbsp;&nbsp;(src/.../prisma.type.ts)</a>
+                            <a href="#DeleteFileTarget" title="src/modules/storage/types/storage.types.ts" ><b>DeleteFileTarget</b>&nbsp;&nbsp;&nbsp;(src/.../storage.types.ts)</a>
+                        </li>
+                        <li>
+                            <a href="#ExportFormat" title="src/core/interceptors/file-download.interceptor.ts" ><b>ExportFormat</b>&nbsp;&nbsp;&nbsp;(src/.../file-download.interceptor.ts)</a>
+                        </li>
+                        <li>
+                            <a href="#IPdfEngine" title="src/modules/report/domain/types/report.type.ts" ><b>IPdfEngine</b>&nbsp;&nbsp;&nbsp;(src/.../report.type.ts)</a>
+                        </li>
+                        <li>
+                            <a href="#IRawQueryOptions" title="src/core/database/base/sequelize/raw-query-executor.service.ts" ><b>IRawQueryOptions</b>&nbsp;&nbsp;&nbsp;(src/.../raw-query-executor.service.ts)</a>
+                        </li>
+                        <li>
+                            <a href="#IReportFormat" title="src/modules/report/domain/types/report.type.ts" ><b>IReportFormat</b>&nbsp;&nbsp;&nbsp;(src/.../report.type.ts)</a>
+                        </li>
+                        <li>
+                            <a href="#ISequelizeRepositoryOptions" title="src/core/database/base/sequelize/sequelize-base.repository.ts" ><b>ISequelizeRepositoryOptions</b>&nbsp;&nbsp;&nbsp;(src/.../sequelize-base.repository.ts)</a>
+                        </li>
+                        <li>
+                            <a href="#PermissionType" title="src/common/enum/permissions.enum.ts" ><b>PermissionType</b>&nbsp;&nbsp;&nbsp;(src/.../permissions.enum.ts)</a>
+                        </li>
+                        <li>
+                            <a href="#PresignedUrlTarget" title="src/modules/storage/types/storage.types.ts" ><b>PresignedUrlTarget</b>&nbsp;&nbsp;&nbsp;(src/.../storage.types.ts)</a>
+                        </li>
+                        <li>
+                            <a href="#PrismaModelDelegate" title="src/core/database/types/prisma.type.ts" ><b>PrismaModelDelegate</b>&nbsp;&nbsp;&nbsp;(src/.../prisma.type.ts)</a>
+                        </li>
+                        <li>
+                            <a href="#SortDirection" title="src/common/validators/is-order-by-format.validator.ts" ><b>SortDirection</b>&nbsp;&nbsp;&nbsp;(src/.../is-order-by-format.validator.ts)</a>
+                        </li>
+                        <li>
+                            <a href="#StoragePresignedUrlInput" title="src/modules/storage/types/storage.types.ts" ><b>StoragePresignedUrlInput</b>&nbsp;&nbsp;&nbsp;(src/.../storage.types.ts)</a>
                         </li>
                         <li>
                             <a href="#UserCredentialsWithUser" title="src/modules/auth/types/user-credentials.types.ts" ><b>UserCredentialsWithUser</b>&nbsp;&nbsp;&nbsp;(src/.../user-credentials.types.ts)</a>
                         </li>
                         <li>
+                            <a href="#UserWithDetail" title="src/modules/users-db/types/users-db.type.ts" ><b>UserWithDetail</b>&nbsp;&nbsp;&nbsp;(src/.../users-db.type.ts)</a>
+                        </li>
+                        <li>
                             <a href="#UserWithSecurities" title="src/modules/auth/types/user.types.ts" ><b>UserWithSecurities</b>&nbsp;&nbsp;&nbsp;(src/.../user.types.ts)</a>
+                        </li>
+                        <li>
+                            <a href="#UserWithSecuritiesExtended" title="src/modules/auth/types/user.types.ts" ><b>UserWithSecuritiesExtended</b>&nbsp;&nbsp;&nbsp;(src/.../user.types.ts)</a>
                         </li>
                     </ul>
                 </td>
@@ -166,7 +202,175 @@
             </tr>
         </tbody>
     </table>
-</section>    <h3>src/core/database/prisma.type.ts</h3>
+</section>    <h3>src/modules/storage/types/storage.types.ts</h3>
+    <section data-compodoc="block-typealias">
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="DeleteFileTarget"></a>
+                    <span class="name "><b>DeleteFileTarget</b><a href="#DeleteFileTarget"><span class="icon ion-ios-link"></span></a></span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                    <code>    <code>string | literal type</code>
+</code>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="PresignedUrlTarget"></a>
+                    <span class="name "><b>PresignedUrlTarget</b><a href="#PresignedUrlTarget"><span class="icon ion-ios-link"></span></a></span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                    <code>        <code><a href="../interfaces/StoragePresignedUrlInput.html" target="_self" >string | StoragePresignedUrlInput</a></code>
+</code>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="StoragePresignedUrlInput"></a>
+                    <span class="name "><b>StoragePresignedUrlInput</b><a href="#StoragePresignedUrlInput"><span class="icon ion-ios-link"></span></a></span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                    <code>    <code>literal type</code>
+</code>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</section>    <h3>src/core/interceptors/file-download.interceptor.ts</h3>
+    <section data-compodoc="block-typealias">
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="ExportFormat"></a>
+                    <span class="name "><b>ExportFormat</b><a href="#ExportFormat"><span class="icon ion-ios-link"></span></a></span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                    <code>    <code>&quot;xlsx&quot; | &quot;pdf&quot; | &quot;csv&quot;</code>
+</code>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</section>    <h3>src/modules/report/domain/types/report.type.ts</h3>
+    <section data-compodoc="block-typealias">
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="IPdfEngine"></a>
+                    <span class="name "><b>IPdfEngine</b><a href="#IPdfEngine"><span class="icon ion-ios-link"></span></a></span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                    <code>    <code>&quot;html&quot; | &quot;native&quot;</code>
+</code>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="IReportFormat"></a>
+                    <span class="name "><b>IReportFormat</b><a href="#IReportFormat"><span class="icon ion-ios-link"></span></a></span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                    <code>    <code>&quot;pdf&quot; | &quot;xlsx&quot; | &quot;csv&quot;</code>
+</code>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</section>    <h3>src/core/database/base/sequelize/raw-query-executor.service.ts</h3>
+    <section data-compodoc="block-typealias">
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="IRawQueryOptions"></a>
+                    <span class="name "><b>IRawQueryOptions</b><a href="#IRawQueryOptions"><span class="icon ion-ios-link"></span></a></span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-description"><p>Interfaz para las opciones de consulta que acepta el método query de Sequelize.</p>
+</div>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                    <code>    <code>literal type</code>
+</code>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</section>    <h3>src/core/database/base/sequelize/sequelize-base.repository.ts</h3>
+    <section data-compodoc="block-typealias">
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="ISequelizeRepositoryOptions"></a>
+                    <span class="name "><b>ISequelizeRepositoryOptions</b><a href="#ISequelizeRepositoryOptions"><span class="icon ion-ios-link"></span></a></span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-description"><p>Opciones reutilizables para los métodos del repositorio.</p>
+</div>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                    <code>    <code>literal type</code>
+</code>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</section>    <h3>src/common/enum/permissions.enum.ts</h3>
+    <section data-compodoc="block-typealias">
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="PermissionType"></a>
+                    <span class="name "><b>PermissionType</b><a href="#PermissionType"><span class="icon ion-ios-link"></span></a></span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                    <code>    <code>unknown</code>
+</code>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</section>    <h3>src/core/database/types/prisma.type.ts</h3>
     <section data-compodoc="block-typealias">
     <table class="table table-sm table-bordered">
         <tbody>
@@ -179,6 +383,24 @@
             <tr>
                 <td class="col-md-4">
                     <code>    <code>literal type</code>
+</code>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</section>    <h3>src/common/validators/is-order-by-format.validator.ts</h3>
+    <section data-compodoc="block-typealias">
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="SortDirection"></a>
+                    <span class="name "><b>SortDirection</b><a href="#SortDirection"><span class="icon ion-ios-link"></span></a></span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                    <code>    <code>&quot;desc&quot; | &quot;asc&quot;</code>
 </code>
                 </td>
             </tr>
@@ -202,6 +424,24 @@
             </tr>
         </tbody>
     </table>
+</section>    <h3>src/modules/users-db/types/users-db.type.ts</h3>
+    <section data-compodoc="block-typealias">
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="UserWithDetail"></a>
+                    <span class="name "><b>UserWithDetail</b><a href="#UserWithDetail"><span class="icon ion-ios-link"></span></a></span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                    <code>        <code><a href="../miscellaneous/variables.html#User" target="_self" >Prisma.UsersGetPayload&lt;literal type&gt;</a></code>
+</code>
+                </td>
+            </tr>
+        </tbody>
+    </table>
 </section>    <h3>src/modules/auth/types/user.types.ts</h3>
     <section data-compodoc="block-typealias">
     <table class="table table-sm table-bordered">
@@ -210,6 +450,22 @@
                 <td class="col-md-4">
                     <a name="UserWithSecurities"></a>
                     <span class="name "><b>UserWithSecurities</b><a href="#UserWithSecurities"><span class="icon ion-ios-link"></span></a></span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                    <code>        <code><a href="../miscellaneous/variables.html#User" target="_self" >Prisma.UsersGetPayload&lt;unknown&gt;</a></code>
+</code>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="UserWithSecuritiesExtended"></a>
+                    <span class="name "><b>UserWithSecuritiesExtended</b><a href="#UserWithSecuritiesExtended"><span class="icon ion-ios-link"></span></a></span>
                 </td>
             </tr>
             <tr>

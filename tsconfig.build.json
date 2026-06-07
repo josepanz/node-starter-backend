@@ -1,4 +1,18 @@
 {
   "extends": "./tsconfig.json",
-  "exclude": ["node_modules", "test", "dist", "**/*spec.ts", "prisma/seed.ts", "docs", "console"]
+  "exclude": [
+    "node_modules",
+    "test",
+    "dist",
+    "**/*spec.ts",
+    "prisma/seed.ts",
+    "docs",
+    "console",
+    "**/*.spec.ts",
+    "**/*.e2e-spec.ts",
+    "jest.config.ts",
+    "jest.config.d.ts",
+    "jest.config.js",
+    "jest.config.js.map"
+  ]
 }

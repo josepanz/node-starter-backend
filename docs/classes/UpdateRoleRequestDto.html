@@ -113,7 +113,7 @@
 
 <ol class="breadcrumb">
   <li class="breadcrumb-item">Classes</li>
-  <li class="breadcrumb-item" >UpdateRoleRequestDto</li>
+  <li class="breadcrumb-item" >UpdateRoleRequestDTO</li>
 </ol>
 
 <ul class="nav nav-tabs" role="tablist">
@@ -137,17 +137,11 @@
             <h3>File</h3>
         </p>
         <p class="comment">
-            <code>src/api/roles/dtos/request/update-role.request.dto.ts</code>
+            <code>src/api/roles-permission/dtos/request/update-role.request.dto.ts</code>
         </p>
 
 
 
-            <p class="comment">
-                <h3>Extends</h3>
-            </p>
-            <p class="comment">
-                            <code><a href="../classes/CreateRoleRequestDto.html" target="_self" >PartialType(CreateRoleRequestDto)</a></code>
-            </p>
 
 
 
@@ -166,7 +160,25 @@
                             <li>
                                     <span class="modifier"></span>
                                     <span class="modifier"></span>
-                                <a href="#id" >id</a>
+                                    <span class="modifier"></span>
+                                    <span class="modifier"></span>
+                                    <span class="modifier">Optional</span>
+                                <a href="#description" >description</a>
+                            </li>
+                            <li>
+                                    <span class="modifier"></span>
+                                    <span class="modifier"></span>
+                                    <span class="modifier"></span>
+                                    <span class="modifier">Optional</span>
+                                <a href="#isActive" >isActive</a>
+                            </li>
+                            <li>
+                                    <span class="modifier"></span>
+                                    <span class="modifier"></span>
+                                    <span class="modifier"></span>
+                                    <span class="modifier"></span>
+                                    <span class="modifier">Optional</span>
+                                <a href="#name" >name</a>
                             </li>
                         </ul>
                     </td>
@@ -191,18 +203,21 @@
         <tbody>
             <tr>
                 <td class="col-md-4">
-                    <a name="id"></a>
+                    <a name="description"></a>
                     <span class="name">
                             <span class="modifier"></span>
                             <span class="modifier"></span>
-                        <span ><b>id</b></span>
-                        <a href="#id"><span class="icon ion-ios-link"></span></a>
+                            <span class="modifier"></span>
+                            <span class="modifier"></span>
+                            <span class="modifier">Optional</span>
+                        <span ><b>description</b></span>
+                        <a href="#description"><span class="icon ion-ios-link"></span></a>
                     </span>
                 </td>
             </tr>
                 <tr>
                     <td class="col-md-4">
-                        <i>Type : </i>        <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/number" target="_blank" >number</a></code>
+                        <i>Type : </i>        <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
 
                     </td>
                 </tr>
@@ -211,13 +226,92 @@
                         <b>Decorators : </b>
                         <br />
                         <code>
-                            @IsNumber()<br />@ApiProperty({description: &#x27;El ID único del rol.&#x27;, example: 1})<br />
+                            @ApiProperty({example: &#x27;Administrador del comercio con acceso completo&#x27;, description: &#x27;Descripción del rol&#x27;, required: false})<br />@IsString()<br />@IsOptional()<br />@MaxLength(255)<br />
                         </code>
                     </td>
                 </tr>
                     <tr>
                         <td class="col-md-4">
-                                <div class="io-line">Defined in <a href="" data-line="11" class="link-to-prism">src/api/roles/dtos/request/update-role.request.dto.ts:11</a></div>
+                                <div class="io-line">Defined in <a href="" data-line="23" class="link-to-prism">src/api/roles-permission/dtos/request/update-role.request.dto.ts:23</a></div>
+                        </td>
+                    </tr>
+
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="isActive"></a>
+                    <span class="name">
+                            <span class="modifier"></span>
+                            <span class="modifier"></span>
+                            <span class="modifier"></span>
+                            <span class="modifier">Optional</span>
+                        <span ><b>isActive</b></span>
+                        <a href="#isActive"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>        <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/boolean" target="_blank" >boolean</a></code>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <b>Decorators : </b>
+                        <br />
+                        <code>
+                            @ApiProperty({example: true, description: &#x27;Estado del rol (activo/inactivo)&#x27;, required: false})<br />@IsBoolean()<br />@IsOptional()<br />
+                        </code>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="32" class="link-to-prism">src/api/roles-permission/dtos/request/update-role.request.dto.ts:32</a></div>
+                        </td>
+                    </tr>
+
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="name"></a>
+                    <span class="name">
+                            <span class="modifier"></span>
+                            <span class="modifier"></span>
+                            <span class="modifier"></span>
+                            <span class="modifier"></span>
+                            <span class="modifier">Optional</span>
+                        <span ><b>name</b></span>
+                        <a href="#name"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>        <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <b>Decorators : </b>
+                        <br />
+                        <code>
+                            @ApiProperty({example: &#x27;MerchantAdmin&#x27;, description: &#x27;Nombre del rol (formato PascalCase)&#x27;, required: false})<br />@IsString()<br />@IsOptional()<br />@MaxLength(100)<br />
+                        </code>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="13" class="link-to-prism">src/api/roles-permission/dtos/request/update-role.request.dto.ts:13</a></div>
                         </td>
                     </tr>
 
@@ -236,17 +330,38 @@
 
 
     <div class="tab-pane fade  tab-source-code" id="source">
-        <pre class="line-numbers compodoc-sourcecode"><code class="language-typescript">import { IsNumber } from &#x27;class-validator&#x27;;
-import { ApiProperty, PartialType } from &#x27;@nestjs/swagger&#x27;;
-import { CreateRoleRequestDto } from &#x27;@api/roles/dtos/request/create-role.request.dto&#x27;;
+        <pre class="line-numbers compodoc-sourcecode"><code class="language-typescript">import { ApiProperty } from &#x27;@nestjs/swagger&#x27;;
+import { IsString, IsOptional, MaxLength, IsBoolean } from &#x27;class-validator&#x27;;
 
-export class UpdateRoleRequestDto extends PartialType(CreateRoleRequestDto) {
-  @IsNumber()
+export class UpdateRoleRequestDTO {
   @ApiProperty({
-    description: &#x27;El ID único del rol.&#x27;,
-    example: 1,
+    example: &#x27;MerchantAdmin&#x27;,
+    description: &#x27;Nombre del rol (formato PascalCase)&#x27;,
+    required: false,
   })
-  id: number;
+  @IsString()
+  @IsOptional()
+  @MaxLength(100)
+  name?: string;
+
+  @ApiProperty({
+    example: &#x27;Administrador del comercio con acceso completo&#x27;,
+    description: &#x27;Descripción del rol&#x27;,
+    required: false,
+  })
+  @IsString()
+  @IsOptional()
+  @MaxLength(255)
+  description?: string;
+
+  @ApiProperty({
+    example: true,
+    description: &#x27;Estado del rol (activo/inactivo)&#x27;,
+    required: false,
+  })
+  @IsBoolean()
+  @IsOptional()
+  isActive?: boolean;
 }
 </code></pre>
     </div>
@@ -286,7 +401,7 @@ export class UpdateRoleRequestDto extends PartialType(CreateRoleRequestDto) {
        <script>
             var COMPODOC_CURRENT_PAGE_DEPTH = 1;
             var COMPODOC_CURRENT_PAGE_CONTEXT = 'class';
-            var COMPODOC_CURRENT_PAGE_URL = 'UpdateRoleRequestDto.html';
+            var COMPODOC_CURRENT_PAGE_URL = 'UpdateRoleRequestDTO.html';
             var MAX_SEARCH_RESULTS = 15;
        </script>
 

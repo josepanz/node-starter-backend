@@ -1,4 +1,3 @@
-import { UsersService } from '@modules/users/users.service';
 import {
   Injectable,
   CanActivate,
@@ -6,11 +5,12 @@ import {
   BadRequestException,
   NotFoundException,
 } from '@nestjs/common';
+import { UsersDBService } from '@modules/users-db/services/users-db.service';
 import { Users } from '@prisma/client';
 
 @Injectable()
 export class UserByEmailLoaderGuard implements CanActivate {
-  constructor(private readonly usersService: UsersService) {}
+  constructor(private readonly usersService: UsersDBService) {}
 
   async canActivate(context: ExecutionContext): Promise<boolean> {
     const request = context.switchToHttp().getRequest();

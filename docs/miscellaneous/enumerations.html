@@ -130,16 +130,22 @@
                 <td class="col-md-4">
                     <ul class="index-list">
                         <li>
+                            <a href="#AccessLevel" title="src/api/users/enum/access-level.enum.ts" ><b>AccessLevel</b>&nbsp;&nbsp;&nbsp;(src/.../access-level.enum.ts)</a>
+                        </li>
+                        <li>
                             <a href="#AuditUserEnum" title="src/common/enum/audit-user.enum.ts" ><b>AuditUserEnum</b>&nbsp;&nbsp;&nbsp;(src/.../audit-user.enum.ts)</a>
+                        </li>
+                        <li>
+                            <a href="#DatabaseConnections" title="src/core/database/enum/database.enum.ts" ><b>DatabaseConnections</b>&nbsp;&nbsp;&nbsp;(src/.../database.enum.ts)</a>
+                        </li>
+                        <li>
+                            <a href="#DocumentTypeEnum" title="src/api/storage/const/storage-api.enum.ts" ><b>DocumentTypeEnum</b>&nbsp;&nbsp;&nbsp;(src/.../storage-api.enum.ts)</a>
                         </li>
                         <li>
                             <a href="#EmailTypeEnum" title="src/modules/email/enum/email-type.enum.ts" ><b>EmailTypeEnum</b>&nbsp;&nbsp;&nbsp;(src/.../email-type.enum.ts)</a>
                         </li>
                         <li>
                             <a href="#OperationType" title="src/core/middlewares/enums/operation-type.enum.ts" ><b>OperationType</b>&nbsp;&nbsp;&nbsp;(src/.../operation-type.enum.ts)</a>
-                        </li>
-                        <li>
-                            <a href="#PermissionsEnum" title="src/common/enum/permissions.enum.ts" ><b>PermissionsEnum</b>&nbsp;&nbsp;&nbsp;(src/.../permissions.enum.ts)</a>
                         </li>
                         <li>
                             <a href="#PrismaErrorCodes" title="src/common/enum/prisma-error-codes.enum.ts" ><b>PrismaErrorCodes</b>&nbsp;&nbsp;&nbsp;(src/.../prisma-error-codes.enum.ts)</a>
@@ -151,6 +157,49 @@
     </table>
 </section>
 
+    <h3>src/api/users/enum/access-level.enum.ts</h3>
+    <section data-compodoc="block-enums">
+        <table class="table table-sm table-bordered">
+            <tbody>
+                <tr>
+                    <td class="col-md-4">
+                        <a name="AccessLevel"></a>
+                        <span class="name "><b>AccessLevel</b><a href="#AccessLevel"><span class="icon ion-ios-link"></span></a></span>
+                    </td>
+                </tr>
+                        <tr>
+                            <td class="col-md-4">
+                                &nbsp;COMMERCE
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="col-md-4">
+                                <i>Value : </i><code>COMMERCE</code>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="col-md-4">
+                                &nbsp;GROUP
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="col-md-4">
+                                <i>Value : </i><code>GROUP</code>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="col-md-4">
+                                &nbsp;BRANCH
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="col-md-4">
+                                <i>Value : </i><code>BRANCH</code>
+                            </td>
+                        </tr>
+            </tbody>
+        </table>
+</section>
     <h3>src/common/enum/audit-user.enum.ts</h3>
     <section data-compodoc="block-enums">
         <table class="table table-sm table-bordered">
@@ -194,6 +243,77 @@
             </tbody>
         </table>
 </section>
+    <h3>src/core/database/enum/database.enum.ts</h3>
+    <section data-compodoc="block-enums">
+        <table class="table table-sm table-bordered">
+            <tbody>
+                <tr>
+                    <td class="col-md-4">
+                        <a name="DatabaseConnections"></a>
+                        <span class="name "><b>DatabaseConnections</b><a href="#DatabaseConnections"><span class="icon ion-ios-link"></span></a></span>
+                    </td>
+                </tr>
+                        <tr>
+                            <td class="col-md-4">
+                                &nbsp;DEFAULT
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="col-md-4">
+                                <i>Value : </i><code>DEFAULT_DB</code>
+                            </td>
+                        </tr>
+            </tbody>
+        </table>
+</section>
+    <h3>src/api/storage/const/storage-api.enum.ts</h3>
+    <section data-compodoc="block-enums">
+        <table class="table table-sm table-bordered">
+            <tbody>
+                <tr>
+                    <td class="col-md-4">
+                        <a name="DocumentTypeEnum"></a>
+                        <span class="name "><b>DocumentTypeEnum</b><a href="#DocumentTypeEnum"><span class="icon ion-ios-link"></span></a></span>
+                    </td>
+                </tr>
+                        <tr>
+                            <td class="col-md-4">
+                                &nbsp;PAS
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="col-md-4">
+                                &nbsp;CAD
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="col-md-4">
+                                &nbsp;CIP
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="col-md-4">
+                                &nbsp;CIE
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="col-md-4">
+                                &nbsp;DNI
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="col-md-4">
+                                &nbsp;RUC
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="col-md-4">
+                                &nbsp;CRC
+                            </td>
+                        </tr>
+            </tbody>
+        </table>
+</section>
     <h3>src/modules/email/enum/email-type.enum.ts</h3>
     <section data-compodoc="block-enums">
         <table class="table table-sm table-bordered">
@@ -222,6 +342,26 @@
                         <tr>
                             <td class="col-md-4">
                                 <i>Value : </i><code>FORGOT-PASSWORD</code>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="col-md-4">
+                                &nbsp;CREATE_PASSWORD
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="col-md-4">
+                                <i>Value : </i><code>CREATE-PASSWORD</code>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="col-md-4">
+                                &nbsp;PAYMENT_RECEIPT
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="col-md-4">
+                                <i>Value : </i><code>PAYMENT-RECEIPT</code>
                             </td>
                         </tr>
             </tbody>
@@ -265,220 +405,6 @@
                         <tr>
                             <td class="col-md-4">
                                 <i>Value : </i><code>DELETE</code>
-                            </td>
-                        </tr>
-            </tbody>
-        </table>
-</section>
-    <h3>src/common/enum/permissions.enum.ts</h3>
-    <section data-compodoc="block-enums">
-        <table class="table table-sm table-bordered">
-            <tbody>
-                <tr>
-                    <td class="col-md-4">
-                        <a name="PermissionsEnum"></a>
-                        <span class="name "><b>PermissionsEnum</b><a href="#PermissionsEnum"><span class="icon ion-ios-link"></span></a></span>
-                    </td>
-                </tr>
-                    <tr>
-                        <td class="col-md-4">
-                            <div class="io-description"><p>Enum que define todos los códigos de permisos utilizados en el sistema.</p>
-<ul>
-<li>Usar un enum (o un objeto const) garantiza la seguridad de tipos y
-proporciona autocompletado en el código, evitando errores por
-escribir mal las cadenas de texto (magic strings).</li>
-</ul>
-</div>
-                        </td>
-                    </tr>
-                        <tr>
-                            <td class="col-md-4">
-                                &nbsp;ADMIN_ALL
-                            </td>
-                        </tr>
-                        <tr>
-                            <td class="col-md-4">
-                                <i>Value : </i><code>admin:all</code>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td class="col-md-4">
-                                &nbsp;USER_CREATE
-                            </td>
-                        </tr>
-                        <tr>
-                            <td class="col-md-4">
-                                <i>Value : </i><code>user:create</code>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td class="col-md-4">
-                                &nbsp;USER_PASSWORD_CREATE
-                            </td>
-                        </tr>
-                        <tr>
-                            <td class="col-md-4">
-                                <i>Value : </i><code>user.password:create</code>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td class="col-md-4">
-                                &nbsp;USER_UPDATE
-                            </td>
-                        </tr>
-                        <tr>
-                            <td class="col-md-4">
-                                <i>Value : </i><code>user:update</code>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td class="col-md-4">
-                                &nbsp;USER_PASSWORD_UPDATE
-                            </td>
-                        </tr>
-                        <tr>
-                            <td class="col-md-4">
-                                <i>Value : </i><code>user.password:update</code>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td class="col-md-4">
-                                &nbsp;USER_READ
-                            </td>
-                        </tr>
-                        <tr>
-                            <td class="col-md-4">
-                                <i>Value : </i><code>user:read</code>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td class="col-md-4">
-                                &nbsp;USER_DELETE
-                            </td>
-                        </tr>
-                        <tr>
-                            <td class="col-md-4">
-                                <i>Value : </i><code>user:delete</code>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td class="col-md-4">
-                                &nbsp;ROLE_CREATE
-                            </td>
-                        </tr>
-                        <tr>
-                            <td class="col-md-4">
-                                <i>Value : </i><code>role:create</code>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td class="col-md-4">
-                                &nbsp;ROLE_UPDATE
-                            </td>
-                        </tr>
-                        <tr>
-                            <td class="col-md-4">
-                                <i>Value : </i><code>role:update</code>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td class="col-md-4">
-                                &nbsp;ROLE_READ
-                            </td>
-                        </tr>
-                        <tr>
-                            <td class="col-md-4">
-                                <i>Value : </i><code>role:read</code>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td class="col-md-4">
-                                &nbsp;ROLE_DELETE
-                            </td>
-                        </tr>
-                        <tr>
-                            <td class="col-md-4">
-                                <i>Value : </i><code>role:delete</code>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td class="col-md-4">
-                                &nbsp;PERMISSION_CREATE
-                            </td>
-                        </tr>
-                        <tr>
-                            <td class="col-md-4">
-                                <i>Value : </i><code>permission:create</code>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td class="col-md-4">
-                                &nbsp;PERMISSION_UPDATE
-                            </td>
-                        </tr>
-                        <tr>
-                            <td class="col-md-4">
-                                <i>Value : </i><code>permission:update</code>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td class="col-md-4">
-                                &nbsp;PERMISSION_READ
-                            </td>
-                        </tr>
-                        <tr>
-                            <td class="col-md-4">
-                                <i>Value : </i><code>permission:read</code>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td class="col-md-4">
-                                &nbsp;PERMISSION_DELETE
-                            </td>
-                        </tr>
-                        <tr>
-                            <td class="col-md-4">
-                                <i>Value : </i><code>permission:delete</code>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td class="col-md-4">
-                                &nbsp;ROLE_PERMISSION_ASSIGNMENT_CREATE
-                            </td>
-                        </tr>
-                        <tr>
-                            <td class="col-md-4">
-                                <i>Value : </i><code>role.permission.assignment:create</code>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td class="col-md-4">
-                                &nbsp;USER_PERMISSION_ASSIGNMENT_CREATE
-                            </td>
-                        </tr>
-                        <tr>
-                            <td class="col-md-4">
-                                <i>Value : </i><code>user.permission.assignment:create</code>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td class="col-md-4">
-                                &nbsp;USER_PERMISSION_UNASSIGNMENT_DELETE
-                            </td>
-                        </tr>
-                        <tr>
-                            <td class="col-md-4">
-                                <i>Value : </i><code>user.permission.unassignment:delete</code>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td class="col-md-4">
-                                &nbsp;ROLE_PERMISSION_UNASSIGNMENT_DELETE
-                            </td>
-                        </tr>
-                        <tr>
-                            <td class="col-md-4">
-                                <i>Value : </i><code>role.permission.unassignment:delete</code>
                             </td>
                         </tr>
             </tbody>
