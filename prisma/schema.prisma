@@ -266,6 +266,7 @@ model UserCredentials {
   createdAt    DateTime  @default(now()) @map("created_at")
   expiredAt    DateTime? @map("expired_at")
   attempts     Int       @default(0) @map("attempts")
+  lockedUntil  DateTime? @map("locked_until")
 
   user Users @relation(fields: [userId], references: [id], onDelete: Cascade)
 
