@@ -8,6 +8,7 @@ import {
 } from '@nestjs/terminus';
 import { toZonedTime } from 'date-fns-tz';
 import { PrismaDatasource } from '@core/database/services/prisma.service';
+import { RedisHealthIndicator } from '@core/redis/redis.health-indicator';
 import { SmtpHealthIndicator } from '@modules/email/health/smtp.health-indicator';
 import * as path from 'path';
 import * as fs from 'fs';
@@ -30,6 +31,7 @@ export class HealthController {
     private prismaDataSource: PrismaDatasource,
     private db: PrismaHealthIndicator,
     private smtp: SmtpHealthIndicator,
+    private redis: RedisHealthIndicator,
   ) {}
 
   @Get()
@@ -46,6 +48,7 @@ export class HealthController {
       info: healthCheck,
       // Informativo: no participa del chequeo agregado (un SMTP caído no baja el estado general)
       smtp: this.smtp.check(),
+      redis: await this.redis.check(),
       version: packageJson.version,
     };
   }

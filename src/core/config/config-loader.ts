@@ -67,9 +67,58 @@ export const APP_CONFIG = registerAs('config', () => {
       authType: process.env.UPSTREAM_EXAMPLE_AUTH_TYPE ?? 'none',
       authUser: process.env.UPSTREAM_EXAMPLE_AUTH_USER ?? '',
       authSecret: process.env.UPSTREAM_EXAMPLE_AUTH_SECRET ?? '',
+      signingSecret: process.env.UPSTREAM_EXAMPLE_SIGNING_SECRET ?? '',
       authHeader: process.env.UPSTREAM_EXAMPLE_AUTH_HEADER ?? 'X-Api-Key',
       retryAttempts: num(process.env.UPSTREAM_EXAMPLE_RETRY_ATTEMPTS, 2),
       retryDelayMs: num(process.env.UPSTREAM_EXAMPLE_RETRY_DELAY_MS, 200),
+    },
+    redis: {
+      url: text(process.env.REDIS_URL),
+      keyPrefix: text(process.env.REDIS_KEY_PREFIX, 'starter:'),
+      connectTimeoutMs: num(process.env.REDIS_CONNECT_TIMEOUT_MS, 3000),
+    },
+    rateLimit: {
+      enabled: bool(process.env.RATE_LIMIT_ENABLED, true),
+      // TTL en segundos (se convierte a ms al armar el ThrottlerModule)
+      limiters: {
+        default: {
+          limit: num(process.env.RATE_LIMIT_DEFAULT_LIMIT, 100),
+          ttlSeconds: num(process.env.RATE_LIMIT_DEFAULT_TTL_SECONDS, 60),
+        },
+        auth: {
+          limit: num(process.env.RATE_LIMIT_AUTH_LIMIT, 10),
+          ttlSeconds: num(process.env.RATE_LIMIT_AUTH_TTL_SECONDS, 60),
+        },
+        upload: {
+          limit: num(process.env.RATE_LIMIT_UPLOAD_LIMIT, 20),
+          ttlSeconds: num(process.env.RATE_LIMIT_UPLOAD_TTL_SECONDS, 60),
+        },
+        search: {
+          limit: num(process.env.RATE_LIMIT_SEARCH_LIMIT, 60),
+          ttlSeconds: num(process.env.RATE_LIMIT_SEARCH_TTL_SECONDS, 60),
+        },
+      },
+      clientDefaultPerMinute: num(
+        process.env.RATE_LIMIT_CLIENT_DEFAULT_PER_MINUTE,
+        60,
+      ),
+    },
+    cache: {
+      defaultTtlSeconds: num(process.env.CACHE_DEFAULT_TTL_SECONDS, 300),
+      maxItems: num(process.env.CACHE_MAX_ITEMS, 1000),
+      permissionsTtlSeconds: num(process.env.PERMISSIONS_CACHE_TTL_SECONDS, 60),
+    },
+    nonce: {
+      ttlSeconds: num(process.env.NONCE_TTL_SECONDS, 120),
+      loginRequired: bool(process.env.LOGIN_NONCE_REQUIRED, false),
+    },
+    apiClients: {
+      bcryptRounds: num(process.env.API_CLIENT_BCRYPT_ROUNDS, 10),
+      hmacTimestampWindowSeconds: num(
+        process.env.HMAC_TIMESTAMP_WINDOW_SECONDS,
+        300,
+      ),
+      hmacNonceRequired: bool(process.env.HMAC_NONCE_REQUIRED, false),
     },
     email: {
       host: process.env.EMAIL_HOST,

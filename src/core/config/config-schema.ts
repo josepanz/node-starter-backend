@@ -57,10 +57,11 @@ export const configSchema = Joi.object({
   UPSTREAM_EXAMPLE_BASE_URL: Joi.string().uri().default('https://httpbin.org'),
   UPSTREAM_EXAMPLE_TIMEOUT_MS: Joi.number().integer().min(1).default(5000),
   UPSTREAM_EXAMPLE_AUTH_TYPE: Joi.string()
-    .valid('none', 'basic', 'api-key', 'bearer')
+    .valid('none', 'basic', 'api-key', 'bearer', 'hmac')
     .default('none'),
   UPSTREAM_EXAMPLE_AUTH_USER: Joi.string().allow('').optional(),
   UPSTREAM_EXAMPLE_AUTH_SECRET: Joi.string().allow('').optional(),
+  UPSTREAM_EXAMPLE_SIGNING_SECRET: Joi.string().allow('').optional(),
   UPSTREAM_EXAMPLE_AUTH_HEADER: Joi.string().default('X-Api-Key'),
   UPSTREAM_EXAMPLE_RETRY_ATTEMPTS: Joi.number().integer().min(0).default(2),
   UPSTREAM_EXAMPLE_RETRY_DELAY_MS: Joi.number().integer().min(0).default(200),
@@ -108,4 +109,38 @@ export const configSchema = Joi.object({
   VAPID_PUBLIC_KEY: Joi.string().allow('').optional(),
   VAPID_PRIVATE_KEY: Joi.string().allow('').optional(),
   VAPID_SUBJECT: Joi.string().allow('').optional(),
+
+  // REDIS (opcional): sin REDIS_URL no se crea cliente y cache/throttler/nonces usan memoria
+  REDIS_URL: Joi.string().allow('').optional(),
+  REDIS_KEY_PREFIX: Joi.string().default('starter:'),
+  REDIS_CONNECT_TIMEOUT_MS: Joi.number().integer().min(100).default(3000),
+
+  // RATE LIMITING (@nestjs/throttler): limiters nombrados; TTL en segundos
+  RATE_LIMIT_ENABLED: Joi.boolean().default(true),
+  RATE_LIMIT_DEFAULT_LIMIT: Joi.number().integer().min(1).default(100),
+  RATE_LIMIT_DEFAULT_TTL_SECONDS: Joi.number().integer().min(1).default(60),
+  RATE_LIMIT_AUTH_LIMIT: Joi.number().integer().min(1).default(10),
+  RATE_LIMIT_AUTH_TTL_SECONDS: Joi.number().integer().min(1).default(60),
+  RATE_LIMIT_UPLOAD_LIMIT: Joi.number().integer().min(1).default(20),
+  RATE_LIMIT_UPLOAD_TTL_SECONDS: Joi.number().integer().min(1).default(60),
+  RATE_LIMIT_SEARCH_LIMIT: Joi.number().integer().min(1).default(60),
+  RATE_LIMIT_SEARCH_TTL_SECONDS: Joi.number().integer().min(1).default(60),
+  RATE_LIMIT_CLIENT_DEFAULT_PER_MINUTE: Joi.number()
+    .integer()
+    .min(1)
+    .default(60),
+
+  // CACHE (@nestjs/cache-manager): 0 en PERMISSIONS_CACHE_TTL_SECONDS desactiva ese cache
+  CACHE_DEFAULT_TTL_SECONDS: Joi.number().integer().min(1).default(300),
+  CACHE_MAX_ITEMS: Joi.number().integer().min(1).default(1000),
+  PERMISSIONS_CACHE_TTL_SECONDS: Joi.number().integer().min(0).default(60),
+
+  // NONCE (anti-replay / tokens de un solo uso)
+  NONCE_TTL_SECONDS: Joi.number().integer().min(1).default(120),
+  LOGIN_NONCE_REQUIRED: Joi.boolean().default(false),
+
+  // API CLIENTS M2M
+  API_CLIENT_BCRYPT_ROUNDS: Joi.number().integer().min(4).max(15).default(10),
+  HMAC_TIMESTAMP_WINDOW_SECONDS: Joi.number().integer().min(1).default(300),
+  HMAC_NONCE_REQUIRED: Joi.boolean().default(false),
 });
