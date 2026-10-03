@@ -24,6 +24,11 @@ export abstract class ScheduledJob {
   protected readonly logger = new Logger(this.constructor.name);
   private running = false;
 
+  /** Hook opcional: `false` evita registrar el cron (p. ej. feature apagada por config). */
+  isEnabled(): boolean {
+    return true;
+  }
+
   /** Trabajo del job. Puede lanzar: `execute` lo captura y lo loguea. */
   abstract run(): Promise<void>;
 

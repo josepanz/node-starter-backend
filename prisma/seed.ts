@@ -1,6 +1,7 @@
 /**
  * Seed idempotente (upsert) con datos DEMO del dominio genérico `orders`:
  * permisos order:*, un rol, un usuario demo y 3 órdenes en distintos estados.
+ * Además el rol ADMIN_DEMO con permisos job:*, message:* y notification:*.
  * No crea credenciales: el usuario demo se activa por el flujo normal de contraseña.
  * Uso: `pnpm seed`
  */
@@ -10,6 +11,20 @@ const prisma = new PrismaClient();
 const SEED_USER = 'seed';
 
 const ORDER_PERMISSIONS = ['order:create', 'order:read', 'order:update'];
+
+// Cola de jobs, mensajería y notificaciones (rol ADMIN_DEMO)
+const ADMIN_DEMO_PERMISSIONS = [
+  'job:create',
+  'job:read',
+  'job:requeue',
+  'message:send',
+  'message:read',
+  'message.content:read',
+  'message.content:verify',
+  'notification:create',
+  'notification:read',
+  'notification:update',
+];
 
 const DEMO_ORDERS = [
   {
@@ -90,6 +105,54 @@ async function main(): Promise<void> {
     where: { userId_roleId: { userId: user.id, roleId: role.id } },
     update: {},
     create: { userId: user.id, roleId: role.id, createdBy: SEED_USER },
+  });
+
+  const adminPermissions = await Promise.all(
+    ADMIN_DEMO_PERMISSIONS.map((name) =>
+      prisma.permissions.upsert({
+        where: { name },
+        update: {},
+        create: {
+          name,
+          description: `Demo jobs/mensajería/notificaciones: ${name}`,
+          createdBy: SEED_USER,
+        },
+      }),
+    ),
+  );
+
+  const adminRole = await prisma.roles.upsert({
+    where: { name: 'ADMIN_DEMO' },
+    update: {},
+    create: {
+      name: 'ADMIN_DEMO',
+      displayName: 'Admin demo',
+      description: 'Jobs, mensajería y notificaciones (demo)',
+      createdBy: SEED_USER,
+    },
+  });
+
+  for (const permission of adminPermissions) {
+    await prisma.rolePermissions.upsert({
+      where: {
+        roleId_permissionId: {
+          roleId: adminRole.id,
+          permissionId: permission.id,
+        },
+      },
+      update: {},
+      create: {
+        roleId: adminRole.id,
+        permissionId: permission.id,
+        createdBy: SEED_USER,
+      },
+    });
+  }
+
+  await prisma.userRoles.upsert({
+    where: { userId_roleId: { userId: user.id, roleId: adminRole.id } },
+    update: {},
+    create: { userId: user.id, roleId: adminRole.id, createdBy: SEED_USER },
   });
 
   for (const order of DEMO_ORDERS) {

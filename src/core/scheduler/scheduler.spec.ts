@@ -164,6 +164,18 @@ describe('JobSchedulerService', () => {
     expect(addCronJob).not.toHaveBeenCalled();
   });
 
+  it('isEnabled() en false evita el registro', () => {
+    const disabled = new TestJob(null, () => Promise.resolve());
+    jest.spyOn(disabled, 'isEnabled').mockReturnValue(false);
+
+    build(disabled, {
+      enabled: true,
+      crons: { jobsWorker: '*/5 * * * * *' },
+    }).onApplicationBootstrap();
+
+    expect(addCronJob).not.toHaveBeenCalled();
+  });
+
   it('SCHEDULER_ENABLED=false no registra nada', () => {
     build(job, {
       enabled: false,

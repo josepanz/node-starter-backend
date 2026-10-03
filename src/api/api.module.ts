@@ -6,6 +6,8 @@ import { RolesApiModule } from './roles-permission/roles-permission.module';
 import { OrdersApiModule } from '@api/orders/orders-api.module';
 import { OnboardingApiModule } from '@api/onboarding/onboarding-api.module';
 import { JobsApiModule } from '@api/jobs/jobs-api.module';
+import { MessagesApiModule } from '@api/messages/messages-api.module';
+import { NotificationsApiModule } from '@api/notifications/notifications-api.module';
 
 @Module({
   imports: [
@@ -16,6 +18,8 @@ import { JobsApiModule } from '@api/jobs/jobs-api.module';
     OnboardingApiModule,
     OrdersApiModule,
     JobsApiModule,
+    MessagesApiModule,
+    NotificationsApiModule,
   ],
 })
 export class ApiModule {}

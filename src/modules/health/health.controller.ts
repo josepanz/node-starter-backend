@@ -8,6 +8,7 @@ import {
 } from '@nestjs/terminus';
 import { toZonedTime } from 'date-fns-tz';
 import { PrismaDatasource } from '@core/database/services/prisma.service';
+import { SmtpHealthIndicator } from '@modules/email/health/smtp.health-indicator';
 import * as path from 'path';
 import * as fs from 'fs';
 
@@ -28,6 +29,7 @@ export class HealthController {
     private memory: MemoryHealthIndicator,
     private prismaDataSource: PrismaDatasource,
     private db: PrismaHealthIndicator,
+    private smtp: SmtpHealthIndicator,
   ) {}
 
   @Get()
@@ -42,6 +44,8 @@ export class HealthController {
     return {
       date: toZonedTime(new Date(), 'America/Asuncion'),
       info: healthCheck,
+      // Informativo: no participa del chequeo agregado (un SMTP caído no baja el estado general)
+      smtp: this.smtp.check(),
       version: packageJson.version,
     };
   }

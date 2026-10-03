@@ -56,6 +56,11 @@ export class JobSchedulerService
   }
 
   private register(job: ScheduledJob): void {
+    if (!job.isEnabled()) {
+      this.logger.log(`Job "${job.name}" deshabilitado por su feature`);
+      return;
+    }
+
     const expression = this.config.scheduler.crons[job.cronConfigKey];
 
     if (!expression || expression.toLowerCase() === CRON_OFF) {
