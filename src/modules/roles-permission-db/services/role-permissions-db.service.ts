@@ -1,12 +1,16 @@
 import { Injectable, Logger } from '@nestjs/common';
 import { PrismaDatasource } from '@core/database/services/prisma.service';
+import { PermissionsCacheService } from '@core/cache/permissions-cache.service';
 import { RolePermissions } from '@prisma/client';
 
 @Injectable()
 export class RolePermissionsDBService {
   private readonly logger = new Logger(RolePermissionsDBService.name);
 
-  constructor(private readonly prisma: PrismaDatasource) {}
+  constructor(
+    private readonly prisma: PrismaDatasource,
+    private readonly permissionsCache: PermissionsCacheService,
+  ) {}
 
   // ─── Assign ──────────────────────────────────────────────────────────────
 
@@ -15,7 +19,7 @@ export class RolePermissionsDBService {
     permissionIds: number[];
     createdBy: string;
   }): Promise<RolePermissions[]> {
-    return await this.prisma.extended.$transaction(async (tx) => {
+    const result = await this.prisma.extended.$transaction(async (tx) => {
       const oldPermissions = await tx.rolePermissions.findMany({
         where: { roleId: data.roleId },
         include: { permission: true },
@@ -50,6 +54,8 @@ export class RolePermissionsDBService {
         include: { permission: true },
       });
     });
+    await this.permissionsCache.invalidateAll();
+    return result;
   }
 
   // ─── Read ─────────────────────────────────────────────────────────────────
@@ -98,5 +104,6 @@ export class RolePermissionsDBService {
 
       await tx.rolePermissions.deleteMany({ where: { roleId, permissionId } });
     });
+    await this.permissionsCache.invalidateAll();
   }
 }

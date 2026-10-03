@@ -6,12 +6,14 @@ import { APP_CONFIG, AppConfigType } from '@core/config/config-loader';
 import { ConfigType } from '@nestjs/config';
 import { IJwtPayload } from '@api/auth/interfaces';
 import { UserWithSecuritiesExtended } from '../types/user.types';
+import { PermissionsCacheService } from '@core/cache/permissions-cache.service';
 import { IUserDataOnJwt } from '../interfaces/user-data-on-jwt.interface';
 
 @Injectable()
 export class JwtStrategy extends PassportStrategy(Strategy, 'jwt') {
   constructor(
     private readonly usersService: UsersDBService,
+    private readonly permissionsCache: PermissionsCacheService,
     @Inject(APP_CONFIG.KEY)
     private readonly configService: ConfigType<AppConfigType>,
   ) {
@@ -22,7 +24,17 @@ export class JwtStrategy extends PassportStrategy(Strategy, 'jwt') {
     });
   }
 
+  /**
+   * Resuelve usuario + roles + permisos con cache-aside por `sub` (referenceId). Se invalida
+   * entero ante cambios de roles/permisos/estado (ver PermissionsCacheService).
+   */
   async validate(payload: IJwtPayload): Promise<IUserDataOnJwt> {
+    return await this.permissionsCache.getOrLoad(payload.sub, () =>
+      this.resolveUser(payload),
+    );
+  }
+
+  private async resolveUser(payload: IJwtPayload): Promise<IUserDataOnJwt> {
     const user: UserWithSecuritiesExtended | null =
       await this.usersService.findActiveUserByEmailWithPermissions(
         payload.email,

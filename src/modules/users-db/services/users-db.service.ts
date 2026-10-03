@@ -13,6 +13,7 @@ import {
   UserStatus,
 } from '@prisma/client';
 import { PrismaDatasource } from '@core/database/services/prisma.service';
+import { PermissionsCacheService } from '@core/cache/permissions-cache.service';
 import { UserCredentialsWithUser } from '@modules/auth/types';
 import {
   UserWithSecurities,
@@ -34,6 +35,7 @@ export class UsersDBService {
     private readonly prisma: PrismaDatasource,
     private readonly emailService: EmailService,
     private readonly userRolesDBService: UserRolesDBService,
+    private readonly permissionsCache: PermissionsCacheService,
   ) {}
 
   // ─── Create ──────────────────────────────────────────────────────────────
@@ -395,7 +397,12 @@ export class UsersDBService {
   // ─── Update ──────────────────────────────────────────────────────────────
 
   async update(id: number, data: Prisma.UsersUpdateInput): Promise<Users> {
-    return await this.prisma.extended.users.update({ where: { id }, data });
+    const updated = await this.prisma.extended.users.update({
+      where: { id },
+      data,
+    });
+    await this.permissionsCache.invalidateAll();
+    return updated;
   }
 
   async updateUser(
@@ -439,6 +446,7 @@ export class UsersDBService {
       where: { id: userId },
       data: { status },
     });
+    await this.permissionsCache.invalidateAll();
   }
 
   async verifyUser(userId: number): Promise<void> {
@@ -457,6 +465,7 @@ export class UsersDBService {
         changedReason: reason,
       },
     });
+    await this.permissionsCache.invalidateAll();
   }
 
   async inactivate(id: number, deletedBy: string): Promise<void> {
@@ -469,6 +478,7 @@ export class UsersDBService {
         changedReason: `Eliminado por ${deletedBy}`,
       },
     });
+    await this.permissionsCache.invalidateAll();
   }
 
   async inactivateUser(id: number, deletedBy: string): Promise<void> {

@@ -7,6 +7,7 @@ import {
 } from '@nestjs/common';
 import { Roles, Prisma } from '@prisma/client';
 import { PrismaDatasource } from '@core/database/services/prisma.service';
+import { PermissionsCacheService } from '@core/cache/permissions-cache.service';
 import { GetRoleListQueryDTO } from '@api/roles-permission/dtos/request/get-role.request';
 import { RolePermissionsDBService } from './role-permissions-db.service';
 
@@ -17,6 +18,7 @@ export class RolesDBService {
   constructor(
     private readonly prisma: PrismaDatasource,
     private readonly rolePermissionsDBService: RolePermissionsDBService,
+    private readonly permissionsCache: PermissionsCacheService,
   ) {}
 
   // ─── Raw DB ───────────────────────────────────────────────────────────────
@@ -79,7 +81,7 @@ export class RolesDBService {
       changedReason?: string;
     },
   ): Promise<Roles> {
-    return await this.prisma.extended.roles.update({
+    const updated = await this.prisma.extended.roles.update({
       where: { id },
       data: {
         name: data.name,
@@ -90,6 +92,8 @@ export class RolesDBService {
         changedReason: data.changedReason,
       },
     });
+    await this.permissionsCache.invalidateAll();
+    return updated;
   }
 
   async softDelete(
@@ -97,7 +101,7 @@ export class RolesDBService {
     deletedBy: string,
     reason?: string,
   ): Promise<Roles> {
-    return await this.prisma.extended.roles.update({
+    const updated = await this.prisma.extended.roles.update({
       where: { id },
       data: {
         isActive: false,
@@ -106,6 +110,8 @@ export class RolesDBService {
         changedReason: reason || 'Rol eliminado',
       },
     });
+    await this.permissionsCache.invalidateAll();
+    return updated;
   }
 
   async hardDelete(id: number): Promise<Roles> {

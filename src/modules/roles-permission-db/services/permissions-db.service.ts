@@ -7,13 +7,17 @@ import {
 } from '@nestjs/common';
 import { Permissions, Prisma } from '@prisma/client';
 import { PrismaDatasource } from '@core/database/services/prisma.service';
+import { PermissionsCacheService } from '@core/cache/permissions-cache.service';
 import { GetPermissionListQueryDTO } from '@api/roles-permission/dtos/request';
 
 @Injectable()
 export class PermissionsDBService {
   private readonly logger = new Logger(PermissionsDBService.name);
 
-  constructor(private readonly prisma: PrismaDatasource) {}
+  constructor(
+    private readonly prisma: PrismaDatasource,
+    private readonly permissionsCache: PermissionsCacheService,
+  ) {}
 
   // ─── Raw DB ───────────────────────────────────────────────────────────────
 
@@ -76,7 +80,7 @@ export class PermissionsDBService {
       changedReason?: string;
     },
   ): Promise<Permissions> {
-    return await this.prisma.extended.permissions.update({
+    const updated = await this.prisma.extended.permissions.update({
       where: { id },
       data: {
         name: data.name,
@@ -87,6 +91,8 @@ export class PermissionsDBService {
         changedReason: data.changedReason,
       },
     });
+    await this.permissionsCache.invalidateAll();
+    return updated;
   }
 
   async softDelete(
@@ -94,7 +100,7 @@ export class PermissionsDBService {
     deletedBy: string,
     reason?: string,
   ): Promise<Permissions> {
-    return await this.prisma.extended.permissions.update({
+    const updated = await this.prisma.extended.permissions.update({
       where: { id },
       data: {
         isActive: false,
@@ -103,6 +109,8 @@ export class PermissionsDBService {
         changedReason: reason || 'Permiso eliminado',
       },
     });
+    await this.permissionsCache.invalidateAll();
+    return updated;
   }
 
   async hardDelete(id: number): Promise<Permissions> {
