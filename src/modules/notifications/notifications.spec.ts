@@ -188,6 +188,7 @@ describe('NotificationsService.notify', () => {
   const mockMarkAccepted = jest.fn();
   const mockMarkFailed = jest.fn();
   const mockSend = jest.fn();
+  const mockEmit = jest.fn();
   let service: NotificationsService;
 
   const sub = (id: number) => ({
@@ -209,6 +210,7 @@ describe('NotificationsService.notify', () => {
         markAccepted: mockMarkAccepted,
         markFailed: mockMarkFailed,
       } as never,
+      { emit: mockEmit } as never,
     );
     mockCreateNotification.mockResolvedValue({ referenceId: 'n-1' });
     mockCreatePending.mockResolvedValue({ id: 99 });
@@ -222,6 +224,20 @@ describe('NotificationsService.notify', () => {
 
     expect(result).toMatchObject({ sent: 0, gone: 0, failed: 0 });
     expect(mockCreatePending).not.toHaveBeenCalled();
+  });
+
+  it('publica notification.created con el userId para el tiempo real', async () => {
+    mockFindActive.mockResolvedValue([]);
+
+    await service.notify(4, { title: 't', body: 'b' });
+
+    expect(mockEmit).toHaveBeenCalledWith(
+      'notification.created',
+      expect.objectContaining({
+        userId: 4,
+        notification: expect.objectContaining({ referenceId: 'n-1' }),
+      }),
+    );
   });
 
   it('fan-out: SENT / GONE / FAILED, ledger por entrega y GONE desactiva', async () => {

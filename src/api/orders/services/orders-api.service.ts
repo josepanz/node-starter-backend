@@ -1,4 +1,9 @@
 import { Injectable, Logger } from '@nestjs/common';
+import { EventEmitter2 } from '@nestjs/event-emitter';
+import {
+  DOMAIN_EVENTS,
+  OrderStatusChangedEvent,
+} from '@common/events/domain-events';
 import { OrdersDBService } from '@modules/orders-db/services/orders-db.service';
 import { FeeCalculator } from '@modules/orders-db/helpers/fee-calculator';
 import { IUserDataOnJwt } from '@modules/auth/interfaces/user-data-on-jwt.interface';
@@ -29,6 +34,7 @@ export class OrdersApiService {
   constructor(
     private readonly ordersDBService: OrdersDBService,
     private readonly feeCalculator: FeeCalculator,
+    private readonly events: EventEmitter2,
   ) {}
 
   async create(
@@ -91,6 +97,13 @@ export class OrdersApiService {
     const order = await this.ordersDBService.findByReferenceOrFail(referenceId);
     assertOwnership(order, user);
     const updated = await this.ordersDBService.transition(order, dto.status);
+    const changed: OrderStatusChangedEvent = {
+      orderReferenceId: updated.referenceId,
+      ownerId: updated.ownerId,
+      from: order.status,
+      to: updated.status,
+    };
+    this.events.emit(DOMAIN_EVENTS.ORDER_STATUS_CHANGED, changed);
     return OrderResponseDTO.fromEntity(updated);
   }
 }

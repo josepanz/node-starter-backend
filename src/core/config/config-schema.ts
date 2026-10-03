@@ -143,4 +143,9 @@ export const configSchema = Joi.object({
   API_CLIENT_BCRYPT_ROUNDS: Joi.number().integer().min(4).max(15).default(10),
   HMAC_TIMESTAMP_WINDOW_SECONDS: Joi.number().integer().min(1).default(300),
   HMAC_NONCE_REQUIRED: Joi.boolean().default(false),
+
+  // REALTIME (socket.io): throttle por socket (ventana deslizante en memoria). El adapter Redis
+  // se activa solo si hay REDIS_URL.
+  WS_THROTTLE_LIMIT: Joi.number().integer().min(1).default(20),
+  WS_THROTTLE_WINDOW_SECONDS: Joi.number().integer().min(1).default(10),
 });

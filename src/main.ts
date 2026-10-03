@@ -1,5 +1,6 @@
 import { NestFactory } from '@nestjs/core';
 import { NestExpressApplication } from '@nestjs/platform-express';
+import { IoAdapter } from '@nestjs/platform-socket.io';
 import { Logger as NestLogger, ValidationPipe } from '@nestjs/common';
 import { ConfigType } from '@nestjs/config';
 import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
@@ -13,6 +14,7 @@ import { ObservabilityInterceptor } from '@core/observability/observability.inte
 import { AllExceptionsFilter } from '@core/global-filters/http-exception.filter';
 import { TransientConnectionExceptionFilter } from '@common/filters/transient-connection-exception.filter';
 import * as express from 'express';
+import { RedisIoAdapter } from '@modules/realtime/redis-io.adapter';
 import { join } from 'path';
 
 interface PackageJson {
@@ -49,6 +51,16 @@ async function bootstrap() {
     }),
   );
   app.enableCors({ origin: true, credentials: true });
+
+  // Realtime: adapter Redis solo si REDIS_URL (varias instancias); si no, in-memory.
+  const wsAdapter = new RedisIoAdapter(app);
+  const redisUrl = app.get<ConfigType<AppConfigType>>(APP_CONFIG.KEY).redis.url;
+  if (redisUrl && (await wsAdapter.connect(redisUrl))) {
+    app.useWebSocketAdapter(wsAdapter);
+    logger.log('Socket.io usa el adapter Redis');
+  } else {
+    app.useWebSocketAdapter(new IoAdapter(app));
+  }
 
   app.enableVersioning();
   app.setGlobalPrefix('/node-starter-backend/api');

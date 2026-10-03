@@ -16,6 +16,7 @@ import { AppCacheModule } from '@core/cache/cache.module';
 import { RateLimitModule } from '@core/rate-limit/rate-limit.module';
 import { NonceModule } from '@modules/nonce/nonce.module';
 import { ApiClientsDBModule } from '@modules/api-clients-db/api-clients-db.module';
+import { AppEventsModule } from '@core/events/app-events.module';
 import { I18nModule } from 'nestjs-i18n';
 import { i18nOptions } from '@core/i18n/i18n.config';
 import { registerUppercaseHooks } from '@core/database/helpers/sequelize-register-uppercase-hooks';
@@ -24,6 +25,7 @@ import { registerUppercaseHooks } from '@core/database/helpers/sequelize-registe
   imports: [
     ConfigModule.forRoot(configOptions),
     I18nModule.forRoot(i18nOptions),
+    AppEventsModule,
     RedisModule,
     AppCacheModule,
     RateLimitModule,

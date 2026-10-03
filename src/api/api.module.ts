@@ -10,6 +10,7 @@ import { MessagesApiModule } from '@api/messages/messages-api.module';
 import { NotificationsApiModule } from '@api/notifications/notifications-api.module';
 import { ApiClientsApiModule } from '@api/api-clients/api-clients-api.module';
 import { M2mApiModule } from '@api/m2m/m2m-api.module';
+import { EventsApiModule } from '@api/events/events-api.module';
 
 @Module({
   imports: [
@@ -24,6 +25,7 @@ import { M2mApiModule } from '@api/m2m/m2m-api.module';
     NotificationsApiModule,
     ApiClientsApiModule,
     M2mApiModule,
+    EventsApiModule,
   ],
 })
 export class ApiModule {}

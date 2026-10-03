@@ -1,5 +1,10 @@
 import { Injectable, Logger } from '@nestjs/common';
+import { EventEmitter2 } from '@nestjs/event-emitter';
 import { Notification, Prisma, PushSubscription } from '@prisma/client';
+import {
+  DOMAIN_EVENTS,
+  NotificationCreatedEvent,
+} from '@common/events/domain-events';
 import { MessageDBService } from '@modules/message-db/services/message-db.service';
 import {
   IPushPayload,
@@ -39,6 +44,7 @@ export class NotificationsService {
     private readonly subscriptions: PushSubscriptionsDBService,
     private readonly registry: PushProviderRegistry,
     private readonly messages: MessageDBService,
+    private readonly events: EventEmitter2,
   ) {}
 
   async notify(userId: number, input: INotifyInput): Promise<INotifyResult> {
@@ -49,6 +55,20 @@ export class NotificationsService {
       data: input.data as Prisma.InputJsonValue | undefined,
       requiresAction: input.requiresAction,
     });
+
+    // Observer: el tiempo real (y cualquier otro interesado) reacciona sin que este servicio lo conozca.
+    const created: NotificationCreatedEvent = {
+      userId,
+      notification: {
+        referenceId: notification.referenceId,
+        title: notification.title,
+        body: notification.body,
+        data: notification.data,
+        requiresAction: notification.requiresAction,
+        createdAt: notification.createdAt,
+      },
+    };
+    this.events.emit(DOMAIN_EVENTS.NOTIFICATION_CREATED, created);
 
     const active = await this.subscriptions.findActiveByUser(userId);
     const payload: IPushPayload = {

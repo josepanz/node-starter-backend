@@ -198,6 +198,10 @@ export const APP_CONFIG = registerAs('config', () => {
         subject: text(process.env.VAPID_SUBJECT),
       },
     },
+    realtime: {
+      throttleLimit: num(process.env.WS_THROTTLE_LIMIT, 20),
+      throttleWindowSeconds: num(process.env.WS_THROTTLE_WINDOW_SECONDS, 10),
+    },
     database: {
       connectionString: process.env.DATABASE_CONNECTION_STRING,
     },

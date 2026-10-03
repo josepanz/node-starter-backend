@@ -31,6 +31,6 @@ import { AuthMigrationService } from '@api/auth/services/auth-migration.service'
     JwtStrategy,
     JwtRefreshStrategy,
   ],
-  exports: [AuthApiService],
+  exports: [AuthApiService, JwtStrategy],
 })
 export class AuthApiModule {}

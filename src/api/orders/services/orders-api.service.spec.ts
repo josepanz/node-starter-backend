@@ -8,6 +8,7 @@ const mockList = jest.fn();
 const mockFindByReferenceOrFail = jest.fn();
 const mockTransition = jest.fn();
 const mockCalculate = jest.fn();
+const mockEmit = jest.fn();
 
 const buildOrder = (overrides: Partial<Order> = {}): Order =>
   ({
@@ -40,6 +41,7 @@ describe('OrdersApiService', () => {
         transition: mockTransition,
       } as never,
       { calculate: mockCalculate } as never,
+      { emit: mockEmit } as never,
     );
   });
 
@@ -103,5 +105,12 @@ describe('OrdersApiService', () => {
       user(3),
     );
     expect(result.status).toBe(OrderStatus.CONFIRMED);
+    expect(mockEmit).toHaveBeenCalledTimes(1);
+    expect(mockEmit).toHaveBeenCalledWith('order.status-changed', {
+      orderReferenceId: 'ref-1',
+      ownerId: 3,
+      from: OrderStatus.PENDING,
+      to: OrderStatus.CONFIRMED,
+    });
   });
 });
