@@ -7,6 +7,7 @@ import { DatabaseModule } from '@core/database/database.module';
 import { TraceIdMiddleware } from '@core/middlewares/trace-id.middleware';
 import { HttpClientModule } from '@modules/http-client/http-client.module';
 import { ApiModule } from './api/api.module';
+import { SchedulerModule } from '@core/scheduler/scheduler.module';
 import { ObservabilityInterceptor } from '@core/observability/observability.interceptor';
 import { AppConfigType, APP_CONFIG } from '@core/config/config-loader';
 import { DatabaseHelper } from '@core/database/helpers/database.helper';
@@ -41,6 +42,7 @@ import { registerUppercaseHooks } from '@core/database/helpers/sequelize-registe
     }),
     ApiModule,
     HttpClientModule,
+    SchedulerModule,
     ObservabilityModule,
   ],
   controllers: [],

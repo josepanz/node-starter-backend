@@ -10,6 +10,9 @@ const num = (value: string | undefined, fallback: number): number => {
 const bool = (value: string | undefined, fallback: boolean): boolean =>
   value === undefined || value === '' ? fallback : value === 'true';
 
+const text = (value: string | undefined, fallback = ''): string =>
+  value === undefined || value.trim() === '' ? fallback : value.trim();
+
 export const APP_CONFIG = registerAs('config', () => {
   return {
     env: process.env.NODE_ENV,
@@ -74,6 +77,77 @@ export const APP_CONFIG = registerAs('config', () => {
       user: process.env.EMAIL_USER,
       password: process.env.EMAIL_PASSWORD,
       dir: process.env.EMAIL_DIR,
+      secure:
+        process.env.EMAIL_SECURE === undefined ||
+        process.env.EMAIL_SECURE === ''
+          ? undefined
+          : process.env.EMAIL_SECURE === 'true',
+      timeoutMs: num(process.env.EMAIL_TIMEOUT_MS, 10000),
+    },
+    scheduler: {
+      enabled: bool(process.env.SCHEDULER_ENABLED, true),
+      timezone: text(process.env.SCHEDULER_TIMEZONE, 'UTC'),
+      // Un valor `off` deshabilita el job (ver JobSchedulerService)
+      crons: {
+        jobsWorker: text(process.env.JOBS_WORKER_CRON, '*/15 * * * * *'),
+        idempotencyPurge: text(
+          process.env.IDEMPOTENCY_PURGE_CRON,
+          '0 30 3 * * *',
+        ),
+        messagePurge: text(process.env.MESSAGE_PURGE_CRON, '0 0 4 * * *'),
+        smsDeliveryPoll: text(
+          process.env.SMS_DELIVERY_POLL_CRON,
+          '0 */2 * * * *',
+        ),
+      },
+    },
+    jobs: {
+      batchSize: num(process.env.JOBS_BATCH_SIZE, 10),
+      maxAttempts: num(process.env.JOBS_MAX_ATTEMPTS, 3),
+      backoffBaseSeconds: num(process.env.JOBS_BACKOFF_BASE_SECONDS, 30),
+      backoffMaxSeconds: num(process.env.JOBS_BACKOFF_MAX_SECONDS, 3600),
+      visibilityTimeoutMinutes: num(
+        process.env.JOBS_VISIBILITY_TIMEOUT_MINUTES,
+        15,
+      ),
+    },
+    messages: {
+      contentPolicy: text(process.env.MESSAGE_CONTENT_POLICY, 'NONE') as
+        | 'NONE'
+        | 'AUDIT',
+      contentRetentionDays: num(process.env.MESSAGE_CONTENT_RETENTION_DAYS, 30),
+      retentionDays: num(process.env.MESSAGE_RETENTION_DAYS, 0),
+      purgeBatchSize: num(process.env.MESSAGE_PURGE_BATCH_SIZE, 500),
+    },
+    sms: {
+      provider: text(process.env.SMS_PROVIDER, 'console') as
+        | 'infobip'
+        | 'console',
+      infobipBaseUrl: text(process.env.INFOBIP_BASE_URL),
+      infobipApiKey: text(process.env.INFOBIP_API_KEY),
+      from: text(process.env.SMS_FROM),
+      timeoutMs: num(process.env.SMS_TIMEOUT_MS, 10000),
+      deliverySource: text(process.env.SMS_DELIVERY_SOURCE, 'off') as
+        | 'reports'
+        | 'logs'
+        | 'off',
+      deliveryPollLimit: num(process.env.SMS_DELIVERY_POLL_LIMIT, 100),
+      phoneDefaultCountryCode: text(process.env.PHONE_DEFAULT_COUNTRY_CODE),
+    },
+    push: {
+      firebase: {
+        projectId: text(process.env.FIREBASE_PROJECT_ID),
+        clientEmail: text(process.env.FIREBASE_CLIENT_EMAIL),
+        privateKey: text(process.env.FIREBASE_PRIVATE_KEY).replace(
+          /\\n/g,
+          '\n',
+        ),
+      },
+      webPush: {
+        publicKey: text(process.env.VAPID_PUBLIC_KEY),
+        privateKey: text(process.env.VAPID_PRIVATE_KEY),
+        subject: text(process.env.VAPID_SUBJECT),
+      },
     },
     database: {
       connectionString: process.env.DATABASE_CONNECTION_STRING,

@@ -21,11 +21,14 @@ export const configSchema = Joi.object({
   DATABASE_URL: Joi.string().required(),
   DATABASE_CONNECTION_STRING: Joi.string().required(),
 
-  EMAIL_HOST: Joi.string().required(),
-  EMAIL_PORT: Joi.number().required(),
-  EMAIL_USER: Joi.string().required(),
-  EMAIL_PASSWORD: Joi.string().required(),
-  EMAIL_DIR: Joi.string().email().required(),
+  // EMAIL: sin EMAIL_HOST se usa ConsoleEmailSender (solo loguea, no envía)
+  EMAIL_HOST: Joi.string().allow('').optional(),
+  EMAIL_PORT: Joi.number().default(25),
+  EMAIL_USER: Joi.string().allow('').optional(),
+  EMAIL_PASSWORD: Joi.string().allow('').optional(),
+  EMAIL_DIR: Joi.string().email().allow('').optional(),
+  EMAIL_SECURE: Joi.boolean().optional(),
+  EMAIL_TIMEOUT_MS: Joi.number().integer().min(1).default(10000),
 
   // SECURITY: lockout / password policy (todas opcionales, con default)
   MAX_LOGIN_ATTEMPTS: Joi.number().integer().min(1).default(5),
@@ -61,4 +64,48 @@ export const configSchema = Joi.object({
   UPSTREAM_EXAMPLE_AUTH_HEADER: Joi.string().default('X-Api-Key'),
   UPSTREAM_EXAMPLE_RETRY_ATTEMPTS: Joi.number().integer().min(0).default(2),
   UPSTREAM_EXAMPLE_RETRY_DELAY_MS: Joi.number().integer().min(0).default(200),
+
+  // SCHEDULER: cron de 6 campos (con segundos). El valor `off` deshabilita ese job.
+  SCHEDULER_ENABLED: Joi.boolean().default(true),
+  SCHEDULER_TIMEZONE: Joi.string().default('UTC'),
+  JOBS_WORKER_CRON: Joi.string().default('*/15 * * * * *'),
+  IDEMPOTENCY_PURGE_CRON: Joi.string().default('0 30 3 * * *'),
+  MESSAGE_PURGE_CRON: Joi.string().default('0 0 4 * * *'),
+  SMS_DELIVERY_POLL_CRON: Joi.string().default('0 */2 * * * *'),
+
+  // COLA DE JOBS (Postgres)
+  JOBS_BATCH_SIZE: Joi.number().integer().min(1).default(10),
+  JOBS_MAX_ATTEMPTS: Joi.number().integer().min(1).default(3),
+  JOBS_BACKOFF_BASE_SECONDS: Joi.number().min(0).default(30),
+  JOBS_BACKOFF_MAX_SECONDS: Joi.number().min(0).default(3600),
+  JOBS_VISIBILITY_TIMEOUT_MINUTES: Joi.number().min(1).default(15),
+
+  // LEDGER DE MENSAJES
+  MESSAGE_CONTENT_POLICY: Joi.string().valid('NONE', 'AUDIT').default('NONE'), // AUDIT requiere ENCRYPTION_KEYS
+  MESSAGE_CONTENT_RETENTION_DAYS: Joi.number().integer().min(1).default(30),
+  MESSAGE_RETENTION_DAYS: Joi.number().integer().min(0).default(0), // 0 = no se borran filas
+  MESSAGE_PURGE_BATCH_SIZE: Joi.number().integer().min(1).default(500),
+
+  // SMS: SMS_PROVIDER=infobip sin credenciales cae a console
+  SMS_PROVIDER: Joi.string().valid('infobip', 'console').default('console'),
+  INFOBIP_BASE_URL: Joi.string().allow('').optional(),
+  INFOBIP_API_KEY: Joi.string().allow('').optional(),
+  SMS_FROM: Joi.string().allow('').optional(),
+  SMS_TIMEOUT_MS: Joi.number().integer().min(1).default(10000),
+  SMS_DELIVERY_SOURCE: Joi.string()
+    .valid('reports', 'logs', 'off')
+    .default('off'),
+  SMS_DELIVERY_POLL_LIMIT: Joi.number().integer().min(1).default(100),
+  PHONE_DEFAULT_COUNTRY_CODE: Joi.string()
+    .pattern(/^\d{1,3}$/)
+    .allow('')
+    .optional(),
+
+  // PUSH (opcionales; sin credenciales el proveedor del canal es Noop)
+  FIREBASE_PROJECT_ID: Joi.string().allow('').optional(),
+  FIREBASE_CLIENT_EMAIL: Joi.string().allow('').optional(),
+  FIREBASE_PRIVATE_KEY: Joi.string().allow('').optional(),
+  VAPID_PUBLIC_KEY: Joi.string().allow('').optional(),
+  VAPID_PRIVATE_KEY: Joi.string().allow('').optional(),
+  VAPID_SUBJECT: Joi.string().allow('').optional(),
 });
