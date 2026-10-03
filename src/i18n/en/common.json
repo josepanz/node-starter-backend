@@ -1,0 +1,6 @@
+{
+  "INTERNAL_SERVER_ERROR": "Internal server error.",
+  "SERVICE_UNAVAILABLE": "Service temporarily unavailable, please retry in a few seconds.",
+  "NOT_FOUND": "Resource not found.",
+  "VALIDATION_FAILED": "The submitted data is not valid."
+}

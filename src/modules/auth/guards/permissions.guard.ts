@@ -13,6 +13,7 @@ import {
   PermissionsMode,
 } from '@common/decorators/permissions.decorator';
 import { PERMISSIONS } from '@common/enum/permissions.enum';
+import { t } from '@common/i18n/i18n.helper';
 
 interface IRequestUser {
   id?: string | number;
@@ -67,7 +68,7 @@ export class PermissionsGuard implements CanActivate {
       this.logger.warn(
         `Acceso denegado userId=${user?.id ?? user?.userId ?? 'anonymous'} requeridos=[${required.join(',')}] modo=${mode}`,
       );
-      throw new ForbiddenException('Permisos insuficientes.');
+      throw new ForbiddenException(t('auth.INSUFFICIENT_PERMISSIONS'));
     }
 
     return true;

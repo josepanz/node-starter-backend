@@ -1,0 +1,8 @@
+{
+  "PHONE_INVALID": "{property} must be a valid phone number (international format +<country><number>)",
+  "START_DATE_REQUIRED": "startDate is required",
+  "END_DATE_AFTER_START": "endDate must be after startDate",
+  "END_DATE_INVALID": "endDate is invalid",
+  "DATE_RANGE_MAX_SIX_MONTHS": "The date range cannot exceed 6 months.",
+  "PAYLOAD_INVALID": "Invalid payload: {details}"
+}

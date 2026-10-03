@@ -1,0 +1,6 @@
+{
+  "INTERNAL_SERVER_ERROR": "Error interno del servidor.",
+  "SERVICE_UNAVAILABLE": "Servicio temporalmente no disponible, reintente en unos segundos.",
+  "NOT_FOUND": "Recurso no encontrado.",
+  "VALIDATION_FAILED": "Los datos enviados no son válidos."
+}

@@ -18,6 +18,7 @@ import {
   readIdempotencyKey,
 } from '../helpers/idempotency.helper';
 import { IDEMPOTENT_KEY, IdempotentOptions } from '../idempotency.types';
+import { t } from '@common/i18n/i18n.helper';
 
 export const IDEMPOTENT_REPLAYED_HEADER = 'Idempotent-Replayed';
 
@@ -50,7 +51,7 @@ export class IdempotencyInterceptor implements NestInterceptor {
     const key = readIdempotencyKey(req.headers);
     if (!key) {
       if (options.required === false) return next.handle();
-      throw new BadRequestException('El header Idempotency-Key es requerido.');
+      throw new BadRequestException(t('errors.IDEMPOTENCY_KEY_REQUIRED'));
     }
 
     const routePath =
@@ -74,17 +75,11 @@ export class IdempotencyInterceptor implements NestInterceptor {
             return of(resolution.responseBody);
           case 'CONFLICT':
             return throwError(
-              () =>
-                new ConflictException(
-                  'La Idempotency-Key ya se usó con un contenido distinto.',
-                ),
+              () => new ConflictException(t('errors.IDEMPOTENCY_KEY_REUSED')),
             );
           case 'IN_PROGRESS':
             return throwError(
-              () =>
-                new ConflictException(
-                  'Existe una solicitud en curso con esta Idempotency-Key.',
-                ),
+              () => new ConflictException(t('errors.IDEMPOTENCY_IN_PROGRESS')),
             );
           case 'NEW':
             return next.handle().pipe(

@@ -6,6 +6,7 @@ import {
 } from '@nestjs/throttler';
 import { RequestContext } from '@common/context/request-context';
 import { CLIENT_LIMITER } from './rate-limit.constants';
+import { t } from '@common/i18n/i18n.helper';
 
 /**
  * Patrón: Template Method sobre `ThrottlerGuard`. Centraliza lo común a los guards de rate
@@ -36,7 +37,9 @@ export abstract class BaseThrottlerGuard extends ThrottlerGuard {
     this.logger.warn(
       `429 ${request.method ?? ''} ${request.originalUrl ?? ''} traceId=${traceId} tracker=${detail.tracker} limit=${detail.limit} retryAfter=${detail.timeToBlockExpire}s`,
     );
-    return Promise.reject(new ThrottlerException());
+    return Promise.reject(
+      new ThrottlerException(t('errors.TOO_MANY_REQUESTS')),
+    );
   }
 }
 

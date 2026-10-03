@@ -1,0 +1,7 @@
+{
+  "UNAUTHORIZED": "No autenticado.",
+  "TOO_MANY_REQUESTS": "Demasiadas solicitudes, intente más tarde.",
+  "IDEMPOTENCY_KEY_REQUIRED": "El header Idempotency-Key es requerido.",
+  "IDEMPOTENCY_KEY_REUSED": "La Idempotency-Key ya se usó con un contenido distinto.",
+  "IDEMPOTENCY_IN_PROGRESS": "Existe una solicitud en curso con esta Idempotency-Key."
+}

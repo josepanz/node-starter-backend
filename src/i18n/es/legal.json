@@ -1,0 +1,8 @@
+{
+  "CONSENT_REQUIRED": "Debe aceptar la versión vigente del documento legal para continuar.",
+  "VERSION_NOT_FOUND": "Versión de documento legal no encontrada.",
+  "VERSION_NOT_ACTIVE": "Solo se puede aceptar la versión activa del documento.",
+  "ALREADY_ACCEPTED": "Esta versión ya fue aceptada.",
+  "CONSENT_NOT_FOUND": "No hay un consentimiento vigente para revocar.",
+  "VERSION_DUPLICATED": "Ya existe esa versión para el tipo de documento."
+}

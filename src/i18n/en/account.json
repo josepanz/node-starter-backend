@@ -1,0 +1,8 @@
+{
+  "DELETION_ALREADY_REQUESTED": "An account deletion request is already in progress.",
+  "DELETION_NOT_REQUESTED": "There is no deletion request to cancel.",
+  "NOTIFICATION_REQUESTED_TITLE": "Deletion request registered",
+  "NOTIFICATION_REQUESTED_BODY": "Your account will be anonymized on {scheduledAt}. You can cancel the request until then.",
+  "NOTIFICATION_CANCELLED_TITLE": "Deletion request cancelled",
+  "NOTIFICATION_CANCELLED_BODY": "Your account remains active."
+}

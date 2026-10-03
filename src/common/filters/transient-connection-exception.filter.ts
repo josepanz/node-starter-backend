@@ -8,6 +8,7 @@ import {
 } from '@nestjs/common';
 import { Response } from 'express';
 import { TransientConnectionErrorHelper } from '@common/helpers/transient-connection-error.helper';
+import { t } from '@common/i18n/i18n.helper';
 
 /**
  * Patrón: decorator de filtros (chain of responsibility). Captura fallas transitorias de
@@ -41,8 +42,7 @@ export class TransientConnectionExceptionFilter implements ExceptionFilter {
       .setHeader('Retry-After', String(this.retryAfterSeconds))
       .json({
         statusCode: HttpStatus.SERVICE_UNAVAILABLE,
-        message:
-          'Servicio temporalmente no disponible, reintente en unos segundos.',
+        message: t('common.SERVICE_UNAVAILABLE'),
       });
   }
 }

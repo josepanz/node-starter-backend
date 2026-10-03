@@ -1,6 +1,7 @@
 import { registerDecorator, ValidationOptions } from 'class-validator';
 import { APP_CONFIG } from '@core/config/config-loader';
 import { PhoneHelper } from '@common/helpers/phone.helper';
+import { t } from '@common/i18n/i18n.helper';
 
 /**
  * Valida que el valor sea un teléfono normalizable a E.164. Si hay `PHONE_DEFAULT_COUNTRY_CODE`
@@ -13,8 +14,7 @@ export function IsPhoneNumber(options?: ValidationOptions): PropertyDecorator {
       target: target.constructor,
       propertyName: propertyName as string,
       options: {
-        message: ({ property }) =>
-          `${property} debe ser un teléfono válido (formato internacional +<país><número>)`,
+        message: ({ property }) => t('validation.PHONE_INVALID', { property }),
         ...options,
       },
       validator: {

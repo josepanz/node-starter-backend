@@ -24,6 +24,7 @@ import { CryptoHelper } from '@common/helpers/crypto-helpers';
 import { UserCredentialsWithUser } from '@modules/auth/types';
 import { CredentialsRepository } from '@modules/auth/repositories';
 import { UsersDBService } from '@modules/users-db/services/users-db.service';
+import { t } from '@common/i18n/i18n.helper';
 
 @Injectable()
 export class AuthPasswordService {
@@ -47,7 +48,9 @@ export class AuthPasswordService {
     if (!valid) {
       throw new BadRequestException({
         statusCode: 400,
-        message: `La contraseña no cumple la política: ${violations.join('; ')}.`,
+        message: t('auth.PASSWORD_POLICY_VIOLATION', {
+          violations: violations.join('; '),
+        }),
         code: 'PASSWORD_POLICY_VIOLATION',
       });
     }
@@ -61,7 +64,11 @@ export class AuthPasswordService {
       throw new HttpException(
         {
           statusCode: HttpStatus.LOCKED,
-          message: `Cuenta bloqueada temporalmente. Reintente en ${remainingLockoutMinutes(userCredential.lockedUntil as Date)} minuto(s).`,
+          message: t('auth.ACCOUNT_LOCKED', {
+            minutes: remainingLockoutMinutes(
+              userCredential.lockedUntil as Date,
+            ),
+          }),
           code: 'ACCOUNT_LOCKED',
         },
         HttpStatus.LOCKED,
@@ -76,7 +83,7 @@ export class AuthPasswordService {
     if (isPasswordExpired(userCredential.expiredAt)) {
       throw new ForbiddenException({
         statusCode: 403,
-        message: 'La contraseña expiró, debe restablecerla.',
+        message: t('auth.PASSWORD_EXPIRED'),
         code: 'PASSWORD_EXPIRED',
       });
     }
