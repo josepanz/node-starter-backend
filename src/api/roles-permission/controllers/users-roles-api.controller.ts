@@ -28,7 +28,7 @@ export class UsersRolesApiController {
   @Post(':userId/roles')
   @Version('1')
   @UserRolesDocs('assignRolesToUser')
-  @Permissions(PERMISSIONS.ASSIGNMENT.ROLE_PERMISSION, PERMISSIONS.ADMIN.ALL)
+  @Permissions(PERMISSIONS.ASSIGNMENT.ROLE_PERMISSION)
   async assignRolesToUser(
     @Param() paramDTO: RequestDTO.GetUserRoleParamDTO,
     @Body() dto: RequestDTO.AssignRolesToUserRequestDTO,
@@ -43,11 +43,7 @@ export class UsersRolesApiController {
   @Get(':userId/roles')
   @Version('1')
   @UserRolesDocs('getUserWithRoles')
-  @Permissions(
-    PERMISSIONS.USER.READ,
-    PERMISSIONS.ROLE.READ,
-    PERMISSIONS.ADMIN.ALL,
-  )
+  @Permissions(PERMISSIONS.USER.READ, PERMISSIONS.ROLE.READ)
   async getUserWithRoles(
     @Param() paramDTO: RequestDTO.GetUserRoleParamDTO,
   ): Promise<ResponseDTO.UserWithRolesResponseDTO> {
@@ -57,7 +53,7 @@ export class UsersRolesApiController {
   @Post(':userId/permissions')
   @Version('1')
   @UserRolesDocs('assignPermissionsToUser')
-  @Permissions(PERMISSIONS.ASSIGNMENT.USER_PERMISSION, PERMISSIONS.ADMIN.ALL)
+  @Permissions(PERMISSIONS.ASSIGNMENT.USER_PERMISSION)
   async assignPermissionsToUser(
     @Param() paramDTO: RequestDTO.GetUserRoleParamDTO,
     @Body() dto: RequestDTO.AssignPermissionsToUserRequestDTO,

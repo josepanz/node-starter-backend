@@ -43,7 +43,7 @@ export class UsersController {
   @Get()
   @Version('1')
   @UseGuards(MerchantContextGuard)
-  @Permissions(PERMISSIONS.USER.READ, PERMISSIONS.ADMIN.ALL)
+  @Permissions(PERMISSIONS.USER.READ)
   @UsersDocs('findAll')
   async findAll(
     @Query() query: DTO.ListUsersRequestDTO,
@@ -56,7 +56,7 @@ export class UsersController {
   @Get('reference/:referenceId/edit-context')
   @Version('1')
   @UseGuards(MerchantContextGuard)
-  @Permissions(PERMISSIONS.USER.READ, PERMISSIONS.ADMIN.ALL)
+  @Permissions(PERMISSIONS.USER.READ)
   @UsersDocs('getEditContext')
   async getEditContext(
     @Param('referenceId') referenceId: string,
@@ -67,7 +67,7 @@ export class UsersController {
   @Put('reference/:referenceId/edit-context')
   @Version('1')
   @UseGuards(MerchantContextGuard)
-  @Permissions(PERMISSIONS.USER.UPDATE, PERMISSIONS.ADMIN.ALL)
+  @Permissions(PERMISSIONS.USER.UPDATE)
   @UsersDocs('updateEditContext')
   async updateEditContext(
     @Param('referenceId') referenceId: string,
@@ -84,7 +84,7 @@ export class UsersController {
   @Get('reference/:referenceId')
   @Version('1')
   @UseGuards(MerchantContextGuard)
-  @Permissions(PERMISSIONS.USER.READ, PERMISSIONS.ADMIN.ALL)
+  @Permissions(PERMISSIONS.USER.READ)
   @UsersDocs('findOneByReference')
   async findOneByReference(
     @Param('referenceId') referenceId: string,
@@ -94,7 +94,7 @@ export class UsersController {
 
   @Put('reference/:referenceId')
   @Version('1')
-  @Permissions(PERMISSIONS.USER.UPDATE, PERMISSIONS.ADMIN.ALL)
+  @Permissions(PERMISSIONS.USER.UPDATE)
   @UsersDocs('updateByReference')
   async updateByReference(
     @Param('referenceId') referenceId: string,
@@ -110,7 +110,7 @@ export class UsersController {
 
   @Delete('reference/:referenceId')
   @Version('1')
-  @Permissions(PERMISSIONS.USER.DELETE, PERMISSIONS.ADMIN.ALL)
+  @Permissions(PERMISSIONS.USER.DELETE)
   @UsersDocs('deleteByReference')
   async deleteByReference(
     @Param('referenceId') referenceId: string,
@@ -122,7 +122,7 @@ export class UsersController {
   @Get(':id')
   @Version('1')
   @UseGuards(MerchantContextGuard)
-  @Permissions(PERMISSIONS.USER.READ, PERMISSIONS.ADMIN.ALL)
+  @Permissions(PERMISSIONS.USER.READ)
   @UsersDocs('findOne')
   async findOne(
     @Param('id', ParseIntPipe) id: number,
@@ -132,7 +132,7 @@ export class UsersController {
 
   @Put(':id')
   @Version('1')
-  @Permissions(PERMISSIONS.USER.UPDATE, PERMISSIONS.ADMIN.ALL)
+  @Permissions(PERMISSIONS.USER.UPDATE)
   @UsersDocs('update')
   async update(
     @Param('id', ParseIntPipe) id: number,
@@ -144,7 +144,7 @@ export class UsersController {
 
   @Patch(':id/block')
   @Version('1')
-  @Permissions(PERMISSIONS.USER.UPDATE, PERMISSIONS.ADMIN.ALL)
+  @Permissions(PERMISSIONS.USER.UPDATE)
   @UsersDocs('block')
   async block(
     @Param('id', ParseIntPipe) id: number,
@@ -156,7 +156,7 @@ export class UsersController {
 
   @Patch(':id/unblock')
   @Version('1')
-  @Permissions(PERMISSIONS.USER.UPDATE, PERMISSIONS.ADMIN.ALL)
+  @Permissions(PERMISSIONS.USER.UPDATE)
   @UsersDocs('unblock')
   async unblock(
     @Param('id', ParseIntPipe) id: number,

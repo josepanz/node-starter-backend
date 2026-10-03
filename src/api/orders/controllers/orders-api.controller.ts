@@ -52,9 +52,7 @@ export class OrdersApiController {
 
   @Get()
   @Version('1')
-  @WithPermissions([PERMISSIONS.ORDER.READ, PERMISSIONS.ADMIN.ALL], {
-    mode: 'any',
-  })
+  @WithPermissions([PERMISSIONS.ORDER.READ])
   @OrdersApiDocs.list
   async list(
     @Query() query: ListOrdersRequestDTO,
@@ -65,9 +63,7 @@ export class OrdersApiController {
 
   @Get(':referenceId')
   @Version('1')
-  @WithPermissions([PERMISSIONS.ORDER.READ, PERMISSIONS.ADMIN.ALL], {
-    mode: 'any',
-  })
+  @WithPermissions([PERMISSIONS.ORDER.READ])
   @OrdersApiDocs.findOne
   async findOne(
     @Param('referenceId', ParseUUIDPipe) referenceId: string,
@@ -78,9 +74,7 @@ export class OrdersApiController {
 
   @Patch(':referenceId/status')
   @Version('1')
-  @WithPermissions([PERMISSIONS.ORDER.UPDATE, PERMISSIONS.ADMIN.ALL], {
-    mode: 'any',
-  })
+  @WithPermissions([PERMISSIONS.ORDER.UPDATE])
   @OrdersApiDocs.updateStatus
   async updateStatus(
     @Param('referenceId', ParseUUIDPipe) referenceId: string,

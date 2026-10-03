@@ -9,15 +9,16 @@ import { WithPermissions } from './with-permissions.decorator';
 
 class Sample {
   @WithPermissions(['a:read', 'b:read'])
-  all() {}
-
-  @WithPermissions(['a:read', 'b:read'], { mode: 'any' })
   any() {}
+
+  @WithPermissions(['a:read', 'b:read'], { mode: 'all' })
+  all() {}
 }
 
 const ctxFor = (handler: () => void, permissions: string[]) =>
   ({
     getHandler: () => handler,
+    getClass: () => Sample,
     switchToHttp: () => ({ getRequest: () => ({ user: { permissions } }) }),
   }) as unknown as ExecutionContext;
 
@@ -28,7 +29,7 @@ describe('WithPermissions', () => {
       .value as () => void;
 
   it('registra JwtAuthGuard + PermissionsGuard y la metadata de permisos', () => {
-    const handler = handlerOf('all');
+    const handler = handlerOf('any');
     expect(Reflect.getMetadata(GUARDS_METADATA, handler)).toEqual([
       JwtAuthGuard,
       PermissionsGuard,
@@ -37,7 +38,16 @@ describe('WithPermissions', () => {
       'a:read',
       'b:read',
     ]);
-    expect(Reflect.getMetadata(PERMISSIONS_MODE_KEY, handler)).toBe('all');
+    expect(Reflect.getMetadata(PERMISSIONS_MODE_KEY, handler)).toBe('any');
+  });
+
+  it('el default es any y all es opt-in', () => {
+    expect(Reflect.getMetadata(PERMISSIONS_MODE_KEY, handlerOf('any'))).toBe(
+      'any',
+    );
+    expect(Reflect.getMetadata(PERMISSIONS_MODE_KEY, handlerOf('all'))).toBe(
+      'all',
+    );
   });
 
   it('modo all exige todos los permisos', () => {

@@ -16,7 +16,7 @@ import {
  * Patrón: decorador compuesto (applyDecorators). Un solo `@WithPermissions([...])` cablea
  * autenticación JWT + autorización por permisos + metadata Swagger, evitando repetir
  * `@UseGuards(JwtAuthGuard, PermissionsGuard) @Permissions(...)` en cada endpoint.
- * Por defecto exige TODOS los permisos (`mode: 'any'` para exigir al menos uno).
+ * Por defecto exige AL MENOS UN permiso (`mode: 'all'` para exigir todos).
  */
 export const WithPermissions = (
   permissions: string[],
@@ -25,7 +25,7 @@ export const WithPermissions = (
   applyDecorators(
     UseGuards(JwtAuthGuard, PermissionsGuard),
     Permissions(...permissions),
-    SetMetadata(PERMISSIONS_MODE_KEY, options.mode ?? 'all'),
+    SetMetadata(PERMISSIONS_MODE_KEY, options.mode ?? 'any'),
     ApiBearerAuth(),
     ApiUnauthorizedResponse({ description: 'Token ausente o inválido.' }),
     ApiForbiddenResponse({ description: 'Permisos insuficientes.' }),

@@ -90,7 +90,7 @@ export class AuthApiController {
   @ApiBearerAuth()
   @Version('1')
   @UseGuards(JwtAuthGuard, PermissionsGuard)
-  @Permissions(PERMISSIONS.USER.PASSWORD.UPDATE, PERMISSIONS.ADMIN.ALL)
+  @Permissions(PERMISSIONS.USER.PASSWORD.UPDATE)
   @AuthDocs('changePassword')
   async changePassword(
     @Body() dto: DTO.UpdateUserPasswordDTO,
