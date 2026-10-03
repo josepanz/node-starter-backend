@@ -5,6 +5,7 @@ import { configOptions } from '@core/config/config-options';
 import { ObservabilityModule } from '@core/observability/observability.module';
 import { DatabaseModule } from '@core/database/database.module';
 import { TraceIdMiddleware } from '@core/middlewares/trace-id.middleware';
+import { HttpClientModule } from '@modules/http-client/http-client.module';
 import { ApiModule } from './api/api.module';
 import { ObservabilityInterceptor } from '@core/observability/observability.interceptor';
 import { AppConfigType, APP_CONFIG } from '@core/config/config-loader';
@@ -39,6 +40,7 @@ import { registerUppercaseHooks } from '@core/database/helpers/sequelize-registe
       inject: [APP_CONFIG.KEY, DatabaseHelper],
     }),
     ApiModule,
+    HttpClientModule,
     ObservabilityModule,
   ],
   controllers: [],
