@@ -11,6 +11,12 @@ export const PERMISSIONS = {
     ALL: 'admin:all',
   },
   DASHBOARD: 'dashboard:read',
+  // DEMO de dominio genérico (orders)
+  ORDER: {
+    CREATE: 'order:create',
+    READ: 'order:read',
+    UPDATE: 'order:update',
+  },
   USER: {
     CREATE: 'user:create',
     READ: 'user:read',

@@ -1,3 +1,4 @@
+import { ConflictException } from '@nestjs/common';
 import { PrismaDatasource } from '../../services/prisma.service';
 import { PrismaModelDelegate } from '../../types/prisma.type';
 
@@ -37,6 +38,39 @@ export class PrismaBaseRepository<T> {
 
   async updateMany(params: unknown): Promise<{ count: number }> {
     return await this.model.updateMany(params);
+  }
+
+  /**
+   * Update condicional anti-TOCTOU: el chequeo de estado y la escritura son UNA sola
+   * sentencia (`UPDATE ... WHERE id AND status IN (...)`), así dos requests concurrentes
+   * no pueden ambos "ganar" una transición. Si no matchea ninguna fila, el estado cambió
+   * (o el registro no existe) y se lanza 409.
+   * @param expectedStatuses Estados desde los que la transición es válida
+   */
+  async updateWhereStatus<S>(
+    id: number | string,
+    expectedStatuses: readonly S[],
+    data: unknown,
+    options: {
+      idField?: string;
+      statusField?: string;
+      conflictMessage?: string;
+    } = {},
+  ): Promise<void> {
+    const {
+      idField = 'id',
+      statusField = 'status',
+      conflictMessage = 'El recurso cambió de estado, recargue e intente nuevamente.',
+    } = options;
+
+    const { count } = await this.model.updateMany({
+      where: { [idField]: id, [statusField]: { in: [...expectedStatuses] } },
+      data,
+    });
+
+    if (count === 0) {
+      throw new ConflictException(conflictMessage);
+    }
   }
 
   async upsert(params: unknown): Promise<T> {

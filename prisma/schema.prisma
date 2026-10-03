@@ -112,6 +112,7 @@ model Users {
   roles       UserRoles[]
   permissions UserPermissions[]
   credentials UserCredentials[]
+  orders      Order[]
 
   @@unique([documentType, documentNumber, email], name: "UK_users_document")
   @@map("users")
@@ -290,4 +291,53 @@ model ApiClientCredential {
   changeSignature String? @map("change_signature")
 
   @@map("api_client_credential")
+}
+
+// Idempotencia genérica: un registro por (scope, key). requestHash = HMAC del request.
+enum IdempotencyStatus {
+  IN_PROGRESS
+  COMPLETED
+}
+
+model IdempotencyRecord {
+  id           Int               @id @default(autoincrement())
+  key          String            @db.VarChar(128)
+  scope        String            @db.VarChar(255)
+  requestHash  String            @map("request_hash")
+  status       IdempotencyStatus @default(IN_PROGRESS)
+  responseCode Int?              @map("response_code")
+  responseBody Json?             @map("response_body")
+  expiresAt    DateTime          @map("expires_at")
+  createdAt    DateTime          @default(now()) @map("created_at")
+  updatedAt    DateTime          @default(now()) @updatedAt @map("updated_at")
+
+  @@unique([scope, key])
+  @@index([expiresAt])
+  @@map("idempotency_records")
+}
+
+// DEMO de dominio genérico: órdenes con máquina de estados.
+enum OrderStatus {
+  PENDING
+  CONFIRMED
+  CANCELLED
+  COMPLETED
+}
+
+model Order {
+  id          Int         @id @default(autoincrement())
+  referenceId String      @unique @default(uuid()) @map("reference_id")
+  ownerId     Int         @map("owner_id")
+  description String?     @db.VarChar(255)
+  amount      Decimal     @db.Decimal(18, 2)
+  fee         Decimal     @db.Decimal(18, 2)
+  currency    String      @default("USD") @db.VarChar(3)
+  status      OrderStatus @default(PENDING)
+  createdAt   DateTime    @default(now()) @map("created_at")
+  updatedAt   DateTime    @default(now()) @updatedAt @map("updated_at")
+
+  owner Users @relation(fields: [ownerId], references: [id], onDelete: Restrict)
+
+  @@index([ownerId, status])
+  @@map("orders")
 }
