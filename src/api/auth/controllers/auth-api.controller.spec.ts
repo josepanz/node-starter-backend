@@ -20,6 +20,7 @@ const passGuard = { canActivate: jest.fn().mockReturnValue(true) };
 
 // Mock functions independientes — evitan @typescript-eslint/unbound-method
 const mockHandleLogin = jest.fn();
+const mockIssueLoginNonce = jest.fn();
 const mockCreatePasswordWithToken = jest.fn();
 const mockUpdatePassword = jest.fn();
 const mockForgotPassword = jest.fn();
@@ -48,6 +49,7 @@ describe('AuthApiController', () => {
           provide: AuthApiService,
           useValue: {
             handleLogin: mockHandleLogin,
+            issueLoginNonce: mockIssueLoginNonce,
             createPasswordWithToken: mockCreatePasswordWithToken,
             updatePassword: mockUpdatePassword,
             forgotPassword: mockForgotPassword,
@@ -85,6 +87,22 @@ describe('AuthApiController', () => {
   });
 
   afterEach(() => jest.clearAllMocks());
+
+  // ── nonce ──────────────────────────────────────────────────────────────────
+
+  describe('nonce', () => {
+    it('delega en el servicio la emisión del nonce de login', async () => {
+      mockIssueLoginNonce.mockResolvedValue({
+        nonce: 'abc',
+        expiresInSeconds: 120,
+      });
+
+      await expect(controller.nonce()).resolves.toEqual({
+        nonce: 'abc',
+        expiresInSeconds: 120,
+      });
+    });
+  });
 
   // ── login ──────────────────────────────────────────────────────────────────
 

@@ -1,4 +1,5 @@
 import { Body, Controller, Post, UseGuards, Version } from '@nestjs/common';
+import { RateLimit } from '@core/rate-limit/rate-limit.decorators';
 import { StorageApiService } from './storage-api.service';
 import { JwtAuthGuard } from '@modules/auth/guards';
 import { DocumentValidationDTO } from './dto/document-validation.dto';
@@ -23,6 +24,7 @@ export class StorageController {
   constructor(private readonly storageApiService: StorageApiService) {}
 
   @Post('upload')
+  @RateLimit('upload')
   @Version('1')
   @FileUploader({
     fields: MERCHANT_DOC_FIELDS,

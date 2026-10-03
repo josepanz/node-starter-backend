@@ -14,6 +14,7 @@ import {
 } from '@nestjs/common';
 import { ApiTags, ApiBearerAuth } from '@nestjs/swagger';
 
+import { RateLimit } from '@core/rate-limit/rate-limit.decorators';
 import { UsersApiService } from '@api/users/services/users-api.service';
 import * as DTO from '@api/users/dtos';
 import { UsersDocs } from '@api/users/docs/users-api.docs';
@@ -42,6 +43,7 @@ export class UsersController {
 
   @Get()
   @Version('1')
+  @RateLimit('search')
   @UseGuards(MerchantContextGuard)
   @Permissions(PERMISSIONS.USER.READ)
   @UsersDocs('findAll')
