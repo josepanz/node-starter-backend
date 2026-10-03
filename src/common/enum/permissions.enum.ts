@@ -34,6 +34,13 @@ export const PERMISSIONS = {
     READ: 'notification:read',
     UPDATE: 'notification:update',
   },
+  // Credenciales M2M (api-clients)
+  API_CLIENT: {
+    CREATE: 'api-client:create',
+    READ: 'api-client:read',
+    UPDATE: 'api-client:update',
+    ROTATE_SECRET: 'api-client.secret:rotate',
+  },
   USER: {
     CREATE: 'user:create',
     READ: 'user:read',

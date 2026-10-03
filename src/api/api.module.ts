@@ -8,6 +8,8 @@ import { OnboardingApiModule } from '@api/onboarding/onboarding-api.module';
 import { JobsApiModule } from '@api/jobs/jobs-api.module';
 import { MessagesApiModule } from '@api/messages/messages-api.module';
 import { NotificationsApiModule } from '@api/notifications/notifications-api.module';
+import { ApiClientsApiModule } from '@api/api-clients/api-clients-api.module';
+import { M2mApiModule } from '@api/m2m/m2m-api.module';
 
 @Module({
   imports: [
@@ -20,6 +22,8 @@ import { NotificationsApiModule } from '@api/notifications/notifications-api.mod
     JobsApiModule,
     MessagesApiModule,
     NotificationsApiModule,
+    ApiClientsApiModule,
+    M2mApiModule,
   ],
 })
 export class ApiModule {}

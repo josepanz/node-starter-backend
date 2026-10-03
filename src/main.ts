@@ -26,7 +26,10 @@ const packageJson = JSON.parse(
 
 async function bootstrap() {
   const logger = new NestLogger('Bootstrap');
-  const app = await NestFactory.create<NestExpressApplication>(AppModule);
+  const app = await NestFactory.create<NestExpressApplication>(AppModule, {
+    // rawBody: bytes originales del request, necesarios para validar firmas HMAC.
+    rawBody: true,
+  });
   // Express 5 usa 'simple' por defecto; 'extended' (qs) soporta arrays y objetos anidados en query.
   app.set('query parser', 'extended');
   app.use(cookieParser());

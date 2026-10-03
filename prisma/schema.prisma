@@ -277,21 +277,38 @@ model UserCredentials {
   @@map("user_credentials")
 }
 
+// Credencial M2M: el secret se guarda como hash bcrypt (se muestra una sola vez al crear/rotar).
+// `scopes` = permisos de integración (no confundir con roles/permisos de usuario).
+// `signingSecretEnc` = secreto HMAC cifrado con AES-256-GCM (solo si hmacEnabled).
+enum ApiClientStatus {
+  ACTIVE
+  INACTIVE
+}
+
 model ApiClientCredential {
-  id            Int       @id @default(autoincrement())
-  clientId      String    @unique @map("client_id")
-  clientName    String?   @map("client_name")
-  secretKey     String    @unique @map("secret_key")
-  isActive      Boolean   @default(true) @map("is_active")
-  createdAt     DateTime  @default(now()) @map("created_at")
-  lastChangedAt DateTime? @map("last_changed_at")
-  createdBy     String?   @map("created_by")
-  lastChangedBy String?   @map("last_changed_by")
-  changedReason String?   @map("changed_reason")
+  id                 Int             @id @default(autoincrement())
+  referenceId        String          @unique @default(uuid()) @map("reference_id")
+  clientId           String          @unique @map("client_id")
+  clientName         String?         @map("client_name")
+  secretHash         String          @map("secret_hash")
+  status             ApiClientStatus @default(ACTIVE)
+  scopes             String[]        @default([])
+  rateLimitPerMinute Int?            @map("rate_limit_per_minute")
+  allowedIps         String[]        @default([]) @map("allowed_ips")
+  hmacEnabled        Boolean         @default(false) @map("hmac_enabled")
+  signingSecretEnc   String?         @map("signing_secret_enc")
+  lastUsedAt         DateTime?       @map("last_used_at")
+  secretRotatedAt    DateTime?       @map("secret_rotated_at")
+  createdAt          DateTime        @default(now()) @map("created_at")
+  lastChangedAt      DateTime?       @map("last_changed_at")
+  createdBy          String?         @map("created_by")
+  lastChangedBy      String?         @map("last_changed_by")
+  changedReason      String?         @map("changed_reason")
 
   checksum        String? @map("checksum")
   changeSignature String? @map("change_signature")
 
+  @@index([status])
   @@map("api_client_credential")
 }
 

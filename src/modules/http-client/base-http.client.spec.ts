@@ -6,12 +6,15 @@ import {
 import { of, throwError } from 'rxjs';
 import type { AxiosError } from 'axios';
 import { RequestContext } from '@common/context/request-context';
+import { verifyRequestSignature } from '@common/helpers/crypto/request-signature.helper';
 import { BaseHttpClient } from './base-http.client';
 import {
   ApiKeyHeaderStrategy,
   BasicAuthStrategy,
   BearerAuthStrategy,
+  CompositeAuthStrategy,
   createAuthStrategy,
+  HmacAuthStrategy,
   NoAuthStrategy,
 } from './auth/http-auth-strategy';
 
@@ -164,5 +167,75 @@ describe('auth strategies', () => {
     expect(
       createAuthStrategy({ type: 'basic', user: 'u', secret: 's' }),
     ).toBeInstanceOf(BasicAuthStrategy);
+  });
+});
+
+describe('HmacAuthStrategy', () => {
+  const now = () => 1_760_000_000_000;
+
+  it('firma method, path con query, timestamp y body serializado', async () => {
+    const config = await new HmacAuthStrategy('sign-secret', { now }).apply({
+      method: 'POST',
+      baseURL: 'http://upstream.test/api',
+      url: '/v1/echo',
+      params: { a: '1' },
+      data: { x: 1 },
+    });
+
+    const headers = config.headers as Record<string, string>;
+    expect(config.data).toBe('{"x":1}');
+    expect(headers['x-timestamp']).toBe('1760000000');
+    expect(headers['Content-Type']).toBe('application/json');
+    expect(headers['x-nonce']).toBeUndefined();
+    expect(
+      verifyRequestSignature(
+        'sign-secret',
+        {
+          method: 'POST',
+          path: '/api/v1/echo?a=1',
+          timestamp: '1760000000',
+          body: '{"x":1}',
+        },
+        headers['x-signature'],
+      ),
+    ).toBe(true);
+  });
+
+  it('agrega X-Nonce firmado cuando se habilita', async () => {
+    const config = await new HmacAuthStrategy('k', { now, nonce: true }).apply({
+      method: 'GET',
+      baseURL: 'http://upstream.test',
+      url: '/ping',
+    });
+
+    const headers = config.headers as Record<string, string>;
+    expect(headers['x-nonce']).toHaveLength(36);
+    expect(
+      verifyRequestSignature(
+        'k',
+        {
+          method: 'GET',
+          path: '/ping',
+          timestamp: '1760000000',
+          nonce: headers['x-nonce'],
+        },
+        headers['x-signature'],
+      ),
+    ).toBe(true);
+  });
+
+  it('la factory arma hmac (solo o con Basic) y cae a none sin signingSecret', () => {
+    expect(createAuthStrategy({ type: 'hmac' })).toBeInstanceOf(NoAuthStrategy);
+    expect(
+      createAuthStrategy({ type: 'hmac', signingSecret: 's' }),
+    ).toBeInstanceOf(HmacAuthStrategy);
+    expect(
+      createAuthStrategy({
+        type: 'hmac',
+        user: 'u',
+        secret: 'p',
+        signingSecret: 's',
+      }),
+    ).toBeInstanceOf(CompositeAuthStrategy);
   });
 });

@@ -31,6 +31,7 @@ export class ExampleUpstreamClient extends BaseHttpClient {
         type: upstream.authType as HttpAuthType,
         user: upstream.authUser,
         secret: upstream.authSecret,
+        signingSecret: upstream.signingSecret,
         headerName: upstream.authHeader,
       }),
       retry: {

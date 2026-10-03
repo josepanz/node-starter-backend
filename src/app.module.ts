@@ -11,11 +11,21 @@ import { SchedulerModule } from '@core/scheduler/scheduler.module';
 import { ObservabilityInterceptor } from '@core/observability/observability.interceptor';
 import { AppConfigType, APP_CONFIG } from '@core/config/config-loader';
 import { DatabaseHelper } from '@core/database/helpers/database.helper';
+import { RedisModule } from '@core/redis/redis.module';
+import { AppCacheModule } from '@core/cache/cache.module';
+import { RateLimitModule } from '@core/rate-limit/rate-limit.module';
+import { NonceModule } from '@modules/nonce/nonce.module';
+import { ApiClientsDBModule } from '@modules/api-clients-db/api-clients-db.module';
 import { registerUppercaseHooks } from '@core/database/helpers/sequelize-register-uppercase-hooks';
 
 @Module({
   imports: [
     ConfigModule.forRoot(configOptions),
+    RedisModule,
+    AppCacheModule,
+    RateLimitModule,
+    NonceModule,
+    ApiClientsDBModule,
     HealthModule,
     DatabaseModule,
     DatabaseModule.forRootAsync({

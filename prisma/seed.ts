@@ -1,11 +1,13 @@
 /**
  * Seed idempotente (upsert) con datos DEMO del dominio genérico `orders`:
  * permisos order:*, un rol, un usuario demo y 3 órdenes en distintos estados.
- * Además el rol ADMIN_DEMO con permisos job:*, message:* y notification:*.
+ * Además el rol ADMIN_DEMO con permisos job:*, message:*, notification:* y api-client:*,
+ * y una credencial M2M demo (ver DEMO_API_CLIENT).
  * No crea credenciales: el usuario demo se activa por el flujo normal de contraseña.
  * Uso: `pnpm seed`
  */
-import { OrderStatus, PrismaClient } from '@prisma/client';
+import { ApiClientStatus, OrderStatus, PrismaClient } from '@prisma/client';
+import * as bcrypt from 'bcrypt';
 
 const prisma = new PrismaClient();
 const SEED_USER = 'seed';
@@ -24,7 +26,21 @@ const ADMIN_DEMO_PERMISSIONS = [
   'notification:create',
   'notification:read',
   'notification:update',
+  'api-client:create',
+  'api-client:read',
+  'api-client:update',
+  'api-client.secret:rotate',
 ];
+
+// Credencial M2M DEMO. El secret de abajo es SOLO para desarrollo local (se guarda hasheado);
+// en cualquier otro entorno crear credenciales con POST /api-clients y rotar el secret.
+const DEMO_API_CLIENT = {
+  clientId: 'demo-m2m-client',
+  clientName: 'Cliente M2M demo',
+  secret: 'demo-m2m-secret-dev-only',
+  scopes: ['demo:read', 'demo:write'],
+  rateLimitPerMinute: 30,
+};
 
 const DEMO_ORDERS = [
   {
@@ -155,6 +171,21 @@ async function main(): Promise<void> {
     create: { userId: user.id, roleId: adminRole.id, createdBy: SEED_USER },
   });
 
+  // update vacío: el seed no pisa la rotación/edición manual de una credencial ya creada.
+  await prisma.apiClientCredential.upsert({
+    where: { clientId: DEMO_API_CLIENT.clientId },
+    update: {},
+    create: {
+      clientId: DEMO_API_CLIENT.clientId,
+      clientName: DEMO_API_CLIENT.clientName,
+      secretHash: await bcrypt.hash(DEMO_API_CLIENT.secret, 10),
+      status: ApiClientStatus.ACTIVE,
+      scopes: DEMO_API_CLIENT.scopes,
+      rateLimitPerMinute: DEMO_API_CLIENT.rateLimitPerMinute,
+      createdBy: SEED_USER,
+    },
+  });
+
   for (const order of DEMO_ORDERS) {
     await prisma.order.upsert({
       where: { referenceId: order.referenceId },
@@ -164,7 +195,7 @@ async function main(): Promise<void> {
   }
 
   console.log(
-    `Seed OK: usuario ${user.email}, ${DEMO_ORDERS.length} órdenes demo`,
+    `Seed OK: usuario ${user.email}, ${DEMO_ORDERS.length} órdenes demo, cliente M2M ${DEMO_API_CLIENT.clientId}`,
   );
 }
 
