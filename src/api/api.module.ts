@@ -5,6 +5,7 @@ import { UsersDBModule } from '@modules/users-db/users-db.module';
 import { RolesApiModule } from './roles-permission/roles-permission.module';
 import { OrdersApiModule } from '@api/orders/orders-api.module';
 import { OnboardingApiModule } from '@api/onboarding/onboarding-api.module';
+import { JobsApiModule } from '@api/jobs/jobs-api.module';
 
 @Module({
   imports: [
@@ -14,6 +15,7 @@ import { OnboardingApiModule } from '@api/onboarding/onboarding-api.module';
     RolesApiModule,
     OnboardingApiModule,
     OrdersApiModule,
+    JobsApiModule,
   ],
 })
 export class ApiModule {}

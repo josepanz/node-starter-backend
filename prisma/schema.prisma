@@ -109,10 +109,12 @@ model Users {
   checksum        String? @map("checksum")
   changeSignature String? @map("change_signature")
 
-  roles       UserRoles[]
-  permissions UserPermissions[]
-  credentials UserCredentials[]
-  orders      Order[]
+  roles            UserRoles[]
+  permissions      UserPermissions[]
+  credentials      UserCredentials[]
+  orders           Order[]
+  PushSubscription PushSubscription[]
+  Notification     Notification[]
 
   @@unique([documentType, documentNumber, email], name: "UK_users_document")
   @@map("users")
@@ -340,4 +342,133 @@ model Order {
 
   @@index([ownerId, status])
   @@map("orders")
+}
+
+// Cola de jobs genérica sobre Postgres. Los workers toman lotes con FOR UPDATE SKIP LOCKED.
+enum BackgroundJobStatus {
+  PENDING
+  RUNNING
+  COMPLETED
+  FAILED
+}
+
+model BackgroundJob {
+  id          Int                 @id @default(autoincrement())
+  referenceId String              @unique @default(uuid()) @map("reference_id")
+  type        String              @db.VarChar(100)
+  payload     Json
+  status      BackgroundJobStatus @default(PENDING)
+  attempts    Int                 @default(0)
+  maxAttempts Int                 @default(3) @map("max_attempts")
+  nextRunAt   DateTime            @default(now()) @map("next_run_at")
+  lastError   String?             @map("last_error")
+  result      Json?
+  createdBy   Int?                @map("created_by")
+  startedAt   DateTime?           @map("started_at")
+  finishedAt  DateTime?           @map("finished_at")
+  createdAt   DateTime            @default(now()) @map("created_at")
+  updatedAt   DateTime            @default(now()) @updatedAt @map("updated_at")
+
+  @@index([status, nextRunAt])
+  @@index([type])
+  @@map("background_jobs")
+}
+
+// Ledger de mensajes salientes (SMS / EMAIL / PUSH). Se escribe PENDING antes de llamar al proveedor.
+enum MessageChannel {
+  SMS
+  EMAIL
+  PUSH
+}
+
+enum MessageStatus {
+  PENDING
+  ACCEPTED
+  DELIVERED
+  UNDELIVERED
+  EXPIRED
+  REJECTED
+  UNAVAILABLE
+}
+
+enum MessageContentPolicy {
+  NONE
+  AUDIT
+}
+
+model Message {
+  id                Int                  @id @default(autoincrement())
+  referenceId       String               @unique @default(uuid()) @map("reference_id")
+  channel           MessageChannel
+  provider          String               @db.VarChar(50)
+  recipient         String               @db.VarChar(255) // siempre enmascarado
+  status            MessageStatus        @default(PENDING)
+  providerMessageId String?              @map("provider_message_id") @db.VarChar(128)
+  providerStatus    String?              @map("provider_status") @db.VarChar(64)
+  providerErrorCode String?              @map("provider_error_code") @db.VarChar(128)
+  attempts          Int                  @default(0)
+  nextAttemptAt     DateTime?            @map("next_attempt_at")
+  resentFromId      Int?                 @map("resent_from_id")
+  traceId           String?              @map("trace_id") @db.VarChar(64)
+  callerIp          String?              @map("caller_ip") @db.VarChar(64)
+  callerUserAgent   String?              @map("caller_user_agent") @db.VarChar(256)
+  sourceService     String?              @map("source_service") @db.VarChar(128)
+  createdBy         Int?                 @map("created_by")
+  contentEncrypted  String?              @map("content_encrypted")
+  contentHmac       String?              @map("content_hmac") @db.VarChar(64)
+  contentPolicy     MessageContentPolicy @default(NONE) @map("content_policy")
+  contentExpiresAt  DateTime?            @map("content_expires_at")
+  idempotencyKey    String?              @map("idempotency_key") @db.VarChar(128)
+  createdAt         DateTime             @default(now()) @map("created_at")
+  updatedAt         DateTime             @default(now()) @updatedAt @map("updated_at")
+
+  resentFrom Message?  @relation("MessageResend", fields: [resentFromId], references: [id], onDelete: SetNull)
+  resends    Message[] @relation("MessageResend")
+
+  @@index([channel, status])
+  @@index([providerMessageId])
+  @@index([contentPolicy, contentExpiresAt])
+  @@index([createdAt])
+  @@map("messages")
+}
+
+// Push: suscripciones por usuario y bandeja de notificaciones in-app.
+enum PushChannel {
+  FCM
+  WEBPUSH
+}
+
+model PushSubscription {
+  id        Int         @id @default(autoincrement())
+  userId    Int         @map("user_id")
+  channel   PushChannel
+  token     String      @db.VarChar(512) // token FCM o endpoint Web Push
+  p256dh    String?     @db.VarChar(255)
+  auth      String?     @db.VarChar(255)
+  active    Boolean     @default(true)
+  createdAt DateTime    @default(now()) @map("created_at")
+  updatedAt DateTime    @default(now()) @updatedAt @map("updated_at")
+
+  user Users @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@unique([channel, token])
+  @@index([userId, active])
+  @@map("push_subscriptions")
+}
+
+model Notification {
+  id             Int       @id @default(autoincrement())
+  referenceId    String    @unique @default(uuid()) @map("reference_id")
+  userId         Int       @map("user_id")
+  title          String    @db.VarChar(255)
+  body           String
+  data           Json?
+  requiresAction Boolean   @default(false) @map("requires_action")
+  readAt         DateTime? @map("read_at")
+  createdAt      DateTime  @default(now()) @map("created_at")
+
+  user Users @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@index([userId, readAt])
+  @@map("notifications")
 }

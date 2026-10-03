@@ -17,6 +17,23 @@ export const PERMISSIONS = {
     READ: 'order:read',
     UPDATE: 'order:update',
   },
+  // DEMO cola de jobs, mensajería y notificaciones
+  JOB: {
+    CREATE: 'job:create',
+    READ: 'job:read',
+    REQUEUE: 'job:requeue',
+  },
+  MESSAGE: {
+    SEND: 'message:send',
+    READ: 'message:read',
+    READ_CONTENT: 'message.content:read',
+    VERIFY: 'message.content:verify',
+  },
+  NOTIFICATION: {
+    CREATE: 'notification:create',
+    READ: 'notification:read',
+    UPDATE: 'notification:update',
+  },
   USER: {
     CREATE: 'user:create',
     READ: 'user:read',
