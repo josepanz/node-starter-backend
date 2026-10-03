@@ -6,7 +6,11 @@ import {
 } from '@nestjs/common';
 import { Reflector } from '@nestjs/core';
 
-const PERMISSIONS_KEY = 'permissions';
+import {
+  PERMISSIONS_KEY,
+  PERMISSIONS_MODE_KEY,
+  PermissionsMode,
+} from '@common/decorators/permissions.decorator';
 
 @Injectable()
 export class PermissionsGuard implements CanActivate {
@@ -28,9 +32,17 @@ export class PermissionsGuard implements CanActivate {
       throw new ForbiddenException(`Usuario sin permisos asignados.`);
     }
 
-    const hasPermission = requiredPermissions.some((permission) =>
-      user.permissions.includes(permission),
-    );
+    const mode =
+      this.reflector.get<PermissionsMode | undefined>(
+        PERMISSIONS_MODE_KEY,
+        context.getHandler(),
+      ) ?? 'any';
+    const granted = user.permissions as string[];
+    const check = (permission: string) => granted.includes(permission);
+    const hasPermission =
+      mode === 'all'
+        ? requiredPermissions.every(check)
+        : requiredPermissions.some(check);
 
     if (!hasPermission) {
       throw new ForbiddenException(

@@ -9,37 +9,10 @@ import { TRACE_ID_HEADER } from '../middlewares/trace-id.middleware';
 import { IncomingMessage } from 'http';
 import { Request } from 'express';
 import { format } from 'date-fns';
+import { formatPayload } from './payload-formatter';
+import { REDACT_PATHS, REDACTED } from './redaction';
 
-const MAX_PAYLOAD_SIZE_BYTES = 1024 * 1024;
-
-const sanitizePayload = (payload: any): any => {
-  if (!payload) return null;
-  if (typeof payload === 'object') {
-    const sanitized = { ...payload };
-    if (sanitized.password) sanitized.password = '***SANITIZED***';
-    return sanitized;
-  }
-  return payload;
-};
-
-const METADATA_PAYLOAD = (
-  contentLength: number,
-  contentType = 'application/json',
-) => ({
-  contentType,
-  contentLength,
-  bodyLogged: false,
-});
-
-export function formatPayload(payload: unknown): any {
-  if (!payload) return null;
-  const jsonString = JSON.stringify(payload);
-  const contentLength = Buffer.byteLength(jsonString, 'utf8');
-  if (contentLength > MAX_PAYLOAD_SIZE_BYTES) {
-    return METADATA_PAYLOAD(contentLength);
-  }
-  return sanitizePayload(payload);
-}
+export { formatPayload };
 
 @Module({
   imports: [
@@ -70,6 +43,7 @@ export function formatPayload(payload: unknown): any {
               service: configService.project.name,
               timestamp: `${format(new Date().toISOString(), 'yyyy-MM-dd HH:ss.sss')}`,
             },
+            redact: { paths: REDACT_PATHS, censor: REDACTED },
             levelKey: 'level',
             messageKey: 'message',
             wrapSerializers: true,
