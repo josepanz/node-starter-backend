@@ -14,6 +14,17 @@ export const configSchema = Joi.object({
   ACCESS_TOKEN_EXPIRES: Joi.string().required(),
   TEMP_TOKEN_EXPIRES: Joi.string().required(),
   REFRESH_TOKEN_EXPIRES: Joi.string().required(),
+  REFRESH_TOKEN_SHORT_EXPIRES: Joi.string().default('12h'),
+
+  // STORAGE S3 (opcional)
+  S3_ACCESS_KEY_ID: Joi.string().allow('').optional(),
+  S3_SECRET_ACCESS_KEY: Joi.string().allow('').optional(),
+  S3_BUCKET_NAME: Joi.string().allow('').optional(),
+  S3_REGION: Joi.string().allow('').optional(),
+  S3_MAX_CONCURRENCY: Joi.number().integer().min(1).default(5),
+  S3_RETRY_ATTEMPTS: Joi.number().integer().min(0).default(0),
+  S3_RETRY_DELAY_MS: Joi.number().integer().min(0).default(250),
+  S3_PRESIGNED_URL_EXPIRES_IN: Joi.number().integer().min(1).default(900),
 
   SEQ_ENABLED: Joi.boolean().required().allow('true', 'false').default('false'),
   SEQ_URL: Joi.string().uri().required(),
@@ -27,7 +38,7 @@ export const configSchema = Joi.object({
   EMAIL_USER: Joi.string().allow('').optional(),
   EMAIL_PASSWORD: Joi.string().allow('').optional(),
   EMAIL_DIR: Joi.string().email().allow('').optional(),
-  EMAIL_SECURE: Joi.boolean().optional(),
+  EMAIL_SECURE: Joi.boolean().allow('').optional(),
   EMAIL_TIMEOUT_MS: Joi.number().integer().min(1).default(10000),
 
   // SECURITY: lockout / password policy (todas opcionales, con default)
