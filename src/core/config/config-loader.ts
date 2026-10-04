@@ -215,6 +215,13 @@ export const APP_CONFIG = registerAs('config', () => {
         | 403
         | 451,
     },
+    mongo: {
+      uri: text(process.env.MONGO_URI),
+      maxPoolSize: num(process.env.MONGO_MAX_POOL_SIZE, 10),
+    },
+    activityLog: {
+      ttlDays: num(process.env.ACTIVITY_LOG_TTL_DAYS, 90),
+    },
     observability: {
       sentryDsn: text(process.env.SENTRY_DSN),
       sentryDedupeWindowSeconds: num(

@@ -19,6 +19,7 @@ import { ApiClientsDBModule } from '@modules/api-clients-db/api-clients-db.modul
 import { AppEventsModule } from '@core/events/app-events.module';
 import { I18nModule } from 'nestjs-i18n';
 import { i18nOptions } from '@core/i18n/i18n.config';
+import { MongoModule } from '@core/mongo/mongo.module';
 import { registerUppercaseHooks } from '@core/database/helpers/sequelize-register-uppercase-hooks';
 
 @Module({
@@ -27,6 +28,8 @@ import { registerUppercaseHooks } from '@core/database/helpers/sequelize-registe
     I18nModule.forRoot(i18nOptions),
     AppEventsModule,
     RedisModule,
+    // Mongo opcional (solo se registra con MONGO_URI)
+    MongoModule.register(),
     AppCacheModule,
     RateLimitModule,
     NonceModule,

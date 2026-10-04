@@ -1,6 +1,8 @@
 # Servicios de apoyo opcionales para desarrollo local (no se levantan automáticamente).
 # Redis habilita cache, rate limiting y nonces compartidos entre instancias:
 #   docker compose up -d redis   y   REDIS_URL=redis://localhost:6379/0
+# Mongo habilita el ActivityLog persistente (TTL):
+#   docker compose up -d mongo   y   MONGO_URI=mongodb://localhost:27017/starter
 services:
   redis:
     image: redis:7.4-alpine
@@ -16,5 +18,19 @@ services:
       timeout: 3s
       retries: 5
 
+  mongo:
+    image: mongo:7.0
+    container_name: node-starter-mongo
+    ports:
+      - '27017:27017'
+    volumes:
+      - mongo-data:/data/db
+    healthcheck:
+      test: ['CMD', 'mongosh', '--quiet', '--eval', "db.adminCommand('ping').ok"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
 volumes:
   redis-data:
+  mongo-data:

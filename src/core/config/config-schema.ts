@@ -150,6 +150,12 @@ export const configSchema = Joi.object({
   ACCOUNT_ANONYMIZATION_BATCH_SIZE: Joi.number().integer().min(1).default(100),
   CONSENT_REQUIRED_STATUS: Joi.number().valid(403, 451).default(403),
 
+  // MONGO (opcional): sin MONGO_URI no se registra @nestjs/mongoose y el ActivityLog usa el store noop
+  MONGO_URI: Joi.string().allow('').optional(),
+  MONGO_MAX_POOL_SIZE: Joi.number().integer().min(1).default(10),
+  // TTL del ActivityLog en Mongo (días; 0 = sin expiración)
+  ACTIVITY_LOG_TTL_DAYS: Joi.number().integer().min(0).default(90),
+
   // SENTRY (opcional): sin SENTRY_DSN no se inicializa el SDK ni se reporta nada
   SENTRY_DSN: Joi.string().allow('').optional(),
   SENTRY_DEDUPE_WINDOW_SECONDS: Joi.number().integer().min(0).default(60),
