@@ -6,4 +6,5 @@ export enum AdvisoryLockId {
   IdempotencyPurge = 910001,
   MessagePurge = 910002,
   SmsDeliveryPoll = 910003,
+  AccountAnonymization = 910004,
 }

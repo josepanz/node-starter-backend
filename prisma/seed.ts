@@ -1,12 +1,20 @@
 /**
  * Seed idempotente (upsert) con datos DEMO del dominio genérico `orders`:
  * permisos order:*, un rol, un usuario demo y 3 órdenes en distintos estados.
- * Además el rol ADMIN_DEMO con permisos job:*, message:*, notification:* y api-client:*,
+ * Además el rol ADMIN_DEMO con permisos job:*, message:*, notification:*, api-client:*,
+ * audit-log:read, legal:* y ai-disclosure:*, documentos legales TERMS/PRIVACY v1 activos,
+ * políticas de retención demo,
  * y una credencial M2M demo (ver DEMO_API_CLIENT).
  * No crea credenciales: el usuario demo se activa por el flujo normal de contraseña.
  * Uso: `pnpm seed`
  */
-import { ApiClientStatus, OrderStatus, PrismaClient } from '@prisma/client';
+import {
+  ApiClientStatus,
+  LegalDocumentType,
+  OrderStatus,
+  PrismaClient,
+  RetentionAction,
+} from '@prisma/client';
 import * as bcrypt from 'bcrypt';
 
 const prisma = new PrismaClient();
@@ -30,6 +38,47 @@ const ADMIN_DEMO_PERMISSIONS = [
   'api-client:read',
   'api-client:update',
   'api-client.secret:rotate',
+  // Cumplimiento: bitácora, documentos legales/retención y transparencia de IA
+  'audit-log:read',
+  'legal:read',
+  'legal:create',
+  'legal:update',
+  'ai-disclosure:create',
+  'ai-disclosure:read',
+  'ai-disclosure:update',
+];
+
+// Documentos legales v1 (texto DEMO; reemplazar por el real y publicar versiones vía API).
+const LEGAL_DOCUMENTS = [
+  {
+    type: LegalDocumentType.TERMS,
+    title: 'Términos y condiciones',
+    content: 'Texto demo de los términos y condiciones (v1).',
+  },
+  {
+    type: LegalDocumentType.PRIVACY,
+    title: 'Política de privacidad',
+    content: 'Texto demo de la política de privacidad (v1).',
+  },
+];
+
+// Retención demo sobre datos de usuarios anonimizados (ver DataRetentionExecutorService).
+const RETENTION_POLICIES = [
+  {
+    entity: 'notifications',
+    retentionDays: 30,
+    action: RetentionAction.DELETE,
+  },
+  {
+    entity: 'user_consents',
+    retentionDays: 365,
+    action: RetentionAction.ANONYMIZE,
+  },
+  {
+    entity: 'audit_logs.users',
+    retentionDays: 90,
+    action: RetentionAction.ANONYMIZE,
+  },
 ];
 
 // Credencial M2M DEMO. El secret de abajo es SOLO para desarrollo local (se guarda hasheado);
@@ -191,6 +240,22 @@ async function main(): Promise<void> {
       where: { referenceId: order.referenceId },
       update: {},
       create: { ...order, ownerId: user.id },
+    });
+  }
+
+  for (const doc of LEGAL_DOCUMENTS) {
+    await prisma.legalDocumentVersion.upsert({
+      where: { type_version: { type: doc.type, version: '1' } },
+      update: {},
+      create: { ...doc, version: '1', isActive: true, createdBy: SEED_USER },
+    });
+  }
+
+  for (const policy of RETENTION_POLICIES) {
+    await prisma.dataRetentionPolicy.upsert({
+      where: { entity: policy.entity },
+      update: {},
+      create: { ...policy, createdBy: SEED_USER },
     });
   }
 

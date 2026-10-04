@@ -11,6 +11,9 @@ import { NotificationsApiModule } from '@api/notifications/notifications-api.mod
 import { ApiClientsApiModule } from '@api/api-clients/api-clients-api.module';
 import { M2mApiModule } from '@api/m2m/m2m-api.module';
 import { EventsApiModule } from '@api/events/events-api.module';
+import { LegalApiModule } from '@api/legal/legal-api.module';
+import { AccountApiModule } from '@api/account/account-api.module';
+import { AiDisclosureApiModule } from '@api/ai-disclosure/ai-disclosure-api.module';
 
 @Module({
   imports: [
@@ -26,6 +29,9 @@ import { EventsApiModule } from '@api/events/events-api.module';
     ApiClientsApiModule,
     M2mApiModule,
     EventsApiModule,
+    LegalApiModule,
+    AccountApiModule,
+    AiDisclosureApiModule,
   ],
 })
 export class ApiModule {}

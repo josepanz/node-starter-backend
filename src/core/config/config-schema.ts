@@ -73,6 +73,7 @@ export const configSchema = Joi.object({
   IDEMPOTENCY_PURGE_CRON: Joi.string().default('0 30 3 * * *'),
   MESSAGE_PURGE_CRON: Joi.string().default('0 0 4 * * *'),
   SMS_DELIVERY_POLL_CRON: Joi.string().default('0 */2 * * * *'),
+  ACCOUNT_ANONYMIZATION_CRON: Joi.string().default('0 0 5 * * *'),
 
   // COLA DE JOBS (Postgres)
   JOBS_BATCH_SIZE: Joi.number().integer().min(1).default(10),
@@ -143,6 +144,11 @@ export const configSchema = Joi.object({
   API_CLIENT_BCRYPT_ROUNDS: Joi.number().integer().min(4).max(15).default(10),
   HMAC_TIMESTAMP_WINDOW_SECONDS: Joi.number().integer().min(1).default(300),
   HMAC_NONCE_REQUIRED: Joi.boolean().default(false),
+
+  // CUMPLIMIENTO: baja de cuenta (derecho al olvido) y consentimiento versionado
+  ACCOUNT_DELETION_GRACE_DAYS: Joi.number().integer().min(0).default(30),
+  ACCOUNT_ANONYMIZATION_BATCH_SIZE: Joi.number().integer().min(1).default(100),
+  CONSENT_REQUIRED_STATUS: Joi.number().valid(403, 451).default(403),
 
   // REALTIME (socket.io): throttle por socket (ventana deslizante en memoria). El adapter Redis
   // se activa solo si hay REDIS_URL.

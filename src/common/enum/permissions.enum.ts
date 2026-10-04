@@ -41,6 +41,20 @@ export const PERMISSIONS = {
     UPDATE: 'api-client:update',
     ROTATE_SECRET: 'api-client.secret:rotate',
   },
+  // Cumplimiento: documentos legales y retención (admin), bitácora y transparencia de IA
+  LEGAL: {
+    READ: 'legal:read',
+    CREATE: 'legal:create',
+    UPDATE: 'legal:update',
+  },
+  AUDIT_LOG: {
+    READ: 'audit-log:read',
+  },
+  AI_DISCLOSURE: {
+    CREATE: 'ai-disclosure:create',
+    READ: 'ai-disclosure:read',
+    UPDATE: 'ai-disclosure:update',
+  },
   USER: {
     CREATE: 'user:create',
     READ: 'user:read',

@@ -148,6 +148,10 @@ export const APP_CONFIG = registerAs('config', () => {
           process.env.SMS_DELIVERY_POLL_CRON,
           '0 */2 * * * *',
         ),
+        accountAnonymization: text(
+          process.env.ACCOUNT_ANONYMIZATION_CRON,
+          '0 0 5 * * *',
+        ),
       },
     },
     jobs: {
@@ -197,6 +201,19 @@ export const APP_CONFIG = registerAs('config', () => {
         privateKey: text(process.env.VAPID_PRIVATE_KEY),
         subject: text(process.env.VAPID_SUBJECT),
       },
+    },
+    compliance: {
+      accountDeletionGraceDays: num(
+        process.env.ACCOUNT_DELETION_GRACE_DAYS,
+        30,
+      ),
+      anonymizationBatchSize: num(
+        process.env.ACCOUNT_ANONYMIZATION_BATCH_SIZE,
+        100,
+      ),
+      consentRequiredStatus: num(process.env.CONSENT_REQUIRED_STATUS, 403) as
+        | 403
+        | 451,
     },
     realtime: {
       throttleLimit: num(process.env.WS_THROTTLE_LIMIT, 20),
