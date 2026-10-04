@@ -3,6 +3,7 @@
 import { Injectable, Logger, OnModuleInit } from '@nestjs/common';
 import { PrismaClient } from '@prisma/client';
 import { AsyncLocalStorage } from 'async_hooks';
+import { RequestContext } from '@common/context/request-context';
 
 export const auditStorage = new AsyncLocalStorage<{
   userId: string;
@@ -52,6 +53,8 @@ export class PrismaDatasource extends PrismaClient implements OnModuleInit {
                 await tx.$executeRaw`SELECT set_config('app.client_ip', ${context.ip}, true)`;
                 await tx.$executeRaw`SELECT set_config('app.user_agent', ${context.userAgent}, true)`;
                 await tx.$executeRaw`SELECT set_config('app.application_name', ${context.applicationName}, true)`;
+                // traceId de la request: el trigger lo guarda en audit_logs.extra_data para correlacionar
+                await tx.$executeRaw`SELECT set_config('app.trace_id', ${RequestContext.getTraceId() ?? ''}, true)`;
 
                 // Ejecutar la operación del modelo a través de tx (misma conexión/transacción)
                 // Así el trigger dispara dentro de la misma tx y lee las variables de sesión

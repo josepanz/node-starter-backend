@@ -14,6 +14,7 @@ import { EventsApiModule } from '@api/events/events-api.module';
 import { LegalApiModule } from '@api/legal/legal-api.module';
 import { AccountApiModule } from '@api/account/account-api.module';
 import { AiDisclosureApiModule } from '@api/ai-disclosure/ai-disclosure-api.module';
+import { AuditLogsApiModule } from '@api/audit-logs/audit-logs-api.module';
 
 @Module({
   imports: [
@@ -32,6 +33,7 @@ import { AiDisclosureApiModule } from '@api/ai-disclosure/ai-disclosure-api.modu
     LegalApiModule,
     AccountApiModule,
     AiDisclosureApiModule,
+    AuditLogsApiModule,
   ],
 })
 export class ApiModule {}

@@ -215,6 +215,9 @@ export const APP_CONFIG = registerAs('config', () => {
         | 403
         | 451,
     },
+    audit: {
+      exportBatchSize: num(process.env.AUDIT_EXPORT_BATCH_SIZE, 500),
+    },
     realtime: {
       throttleLimit: num(process.env.WS_THROTTLE_LIMIT, 20),
       throttleWindowSeconds: num(process.env.WS_THROTTLE_WINDOW_SECONDS, 10),

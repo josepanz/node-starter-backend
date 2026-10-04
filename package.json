@@ -26,6 +26,7 @@
     "test:e2e": "jest --config ./test/jest-e2e.json",
     "prepare": "husky || true",
     "seed": "ts-node prisma/seed.ts",
+    "db:verify-audit-triggers": "ts-node prisma/verify-audit-triggers.ts",
     "docs:generate": "npx compodoc -p tsconfig.json -d docs",
     "docs:json": "npx compodoc -p tsconfig.json -d docs -e json",
     "update:readme": "node scripts/update-readme.js",
