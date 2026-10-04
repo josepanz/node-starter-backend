@@ -215,6 +215,13 @@ export const APP_CONFIG = registerAs('config', () => {
         | 403
         | 451,
     },
+    observability: {
+      sentryDsn: text(process.env.SENTRY_DSN),
+      sentryDedupeWindowSeconds: num(
+        process.env.SENTRY_DEDUPE_WINDOW_SECONDS,
+        60,
+      ),
+    },
     audit: {
       exportBatchSize: num(process.env.AUDIT_EXPORT_BATCH_SIZE, 500),
     },

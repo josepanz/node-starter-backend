@@ -11,6 +11,7 @@ import { Request } from 'express';
 import { format } from 'date-fns';
 import { formatPayload } from './payload-formatter';
 import { REDACT_PATHS, REDACTED } from './redaction';
+import { SentryReporterService } from './sentry-reporter.service';
 
 export { formatPayload };
 
@@ -111,5 +112,7 @@ export { formatPayload };
       inject: [APP_CONFIG.KEY],
     }),
   ],
+  providers: [SentryReporterService],
+  exports: [SentryReporterService],
 })
 export class ObservabilityModule {}

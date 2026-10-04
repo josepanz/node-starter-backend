@@ -12,6 +12,7 @@ import { APP_CONFIG, AppConfigType } from '@core/config/config-loader';
 import { AppModule } from './app.module';
 import { ObservabilityInterceptor } from '@core/observability/observability.interceptor';
 import { AllExceptionsFilter } from '@core/global-filters/http-exception.filter';
+import { SentryReporterService } from '@core/observability/sentry-reporter.service';
 import { TransientConnectionExceptionFilter } from '@common/filters/transient-connection-exception.filter';
 import * as express from 'express';
 import { RedisIoAdapter } from '@modules/realtime/redis-io.adapter';
@@ -39,7 +40,9 @@ async function bootstrap() {
 
   app.useGlobalInterceptors(app.get(ObservabilityInterceptor));
   app.useGlobalFilters(
-    new TransientConnectionExceptionFilter(new AllExceptionsFilter()),
+    new TransientConnectionExceptionFilter(
+      new AllExceptionsFilter(app.get(SentryReporterService)),
+    ),
   );
 
   app.useGlobalPipes(

@@ -150,6 +150,10 @@ export const configSchema = Joi.object({
   ACCOUNT_ANONYMIZATION_BATCH_SIZE: Joi.number().integer().min(1).default(100),
   CONSENT_REQUIRED_STATUS: Joi.number().valid(403, 451).default(403),
 
+  // SENTRY (opcional): sin SENTRY_DSN no se inicializa el SDK ni se reporta nada
+  SENTRY_DSN: Joi.string().allow('').optional(),
+  SENTRY_DEDUPE_WINDOW_SECONDS: Joi.number().integer().min(0).default(60),
+
   // BITÁCORA: tamaño de lote del cursor Prisma en el export JSON streaming de audit-logs
   AUDIT_EXPORT_BATCH_SIZE: Joi.number().integer().min(1).max(5000).default(500),
 
