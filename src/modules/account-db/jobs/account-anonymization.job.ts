@@ -1,8 +1,13 @@
 import { Inject, Injectable } from '@nestjs/common';
 import { ConfigType } from '@nestjs/config';
+import { EventEmitter2 } from '@nestjs/event-emitter';
 import { APP_CONFIG, AppConfigType } from '@core/config/config-loader';
 import { AdvisoryLockId } from '@core/scheduler/advisory-lock-id.enum';
 import { ScheduledJob, SchedulerCronKey } from '@core/scheduler/scheduled-job';
+import {
+  AccountAnonymizedEvent,
+  DOMAIN_EVENTS,
+} from '@common/events/domain-events';
 import { AccountDeletionDBService } from '../services/account-deletion-db.service';
 import { DataRetentionExecutorService } from '../services/data-retention-executor.service';
 
@@ -23,6 +28,7 @@ export class AccountAnonymizationJob extends ScheduledJob {
   constructor(
     private readonly deletion: AccountDeletionDBService,
     private readonly retention: DataRetentionExecutorService,
+    private readonly events: EventEmitter2,
     @Inject(APP_CONFIG.KEY)
     private readonly config: ConfigType<AppConfigType>,
   ) {
@@ -40,6 +46,8 @@ export class AccountAnonymizationJob extends ScheduledJob {
         try {
           if (await this.deletion.anonymize(user)) {
             anonymized++;
+            const event: AccountAnonymizedEvent = { userId: user.id };
+            this.events.emit(DOMAIN_EVENTS.ACCOUNT_ANONYMIZED, event);
             processed++;
           }
         } catch (error) {

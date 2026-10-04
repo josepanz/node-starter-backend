@@ -4,10 +4,12 @@ import { AccountApiService } from './services/account-api.service';
 describe('AccountApiService', () => {
   const deletion = { request: jest.fn(), cancel: jest.fn(), status: jest.fn() };
   const notifications = { notify: jest.fn() };
+  const events = { emit: jest.fn() };
   const config = { compliance: { accountDeletionGraceDays: 15 } } as never;
   const service = new AccountApiService(
     deletion as never,
     notifications as never,
+    events as never,
     config,
   );
 
@@ -23,6 +25,10 @@ describe('AccountApiService', () => {
     const result = await service.requestDeletion(3);
 
     expect(deletion.request).toHaveBeenCalledWith(3, 15);
+    expect(events.emit).toHaveBeenCalledWith('account.deletion-requested', {
+      userId: 3,
+      scheduledAt,
+    });
     expect(result.scheduledAt).toBe(scheduledAt);
     expect(notifications.notify).toHaveBeenCalledWith(
       3,
@@ -45,12 +51,16 @@ describe('AccountApiService', () => {
 
     await expect(service.requestDeletion(3)).rejects.toThrow(ConflictException);
     expect(notifications.notify).not.toHaveBeenCalled();
+    expect(events.emit).not.toHaveBeenCalled();
   });
 
   it('cancelDeletion: cancela y notifica', async () => {
     await service.cancelDeletion(3);
 
     expect(deletion.cancel).toHaveBeenCalledWith(3);
+    expect(events.emit).toHaveBeenCalledWith('account.deletion-cancelled', {
+      userId: 3,
+    });
     expect(notifications.notify).toHaveBeenCalledTimes(1);
   });
 });

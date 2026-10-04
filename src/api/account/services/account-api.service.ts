@@ -1,6 +1,12 @@
 import { Inject, Injectable, Logger } from '@nestjs/common';
 import { ConfigType } from '@nestjs/config';
+import { EventEmitter2 } from '@nestjs/event-emitter';
 import { APP_CONFIG, AppConfigType } from '@core/config/config-loader';
+import {
+  AccountDeletionCancelledEvent,
+  AccountDeletionRequestedEvent,
+  DOMAIN_EVENTS,
+} from '@common/events/domain-events';
 import { t } from '@common/i18n/i18n.helper';
 import { AccountDeletionDBService } from '@modules/account-db/services/account-deletion-db.service';
 import { NotificationsService } from '@modules/notifications/services/notifications.service';
@@ -14,6 +20,7 @@ export class AccountApiService {
   constructor(
     private readonly deletion: AccountDeletionDBService,
     private readonly notifications: NotificationsService,
+    private readonly events: EventEmitter2,
     @Inject(APP_CONFIG.KEY)
     private readonly config: ConfigType<AppConfigType>,
   ) {}
@@ -23,12 +30,16 @@ export class AccountApiService {
       userId,
       this.config.compliance.accountDeletionGraceDays,
     );
+    const requested: AccountDeletionRequestedEvent = { userId, scheduledAt };
+    this.events.emit(DOMAIN_EVENTS.ACCOUNT_DELETION_REQUESTED, requested);
     await this.notify(userId, 'REQUESTED', { scheduledAt });
     return { requestedAt, scheduledAt, anonymizedAt: null };
   }
 
   async cancelDeletion(userId: number): Promise<void> {
     await this.deletion.cancel(userId);
+    const cancelled: AccountDeletionCancelledEvent = { userId };
+    this.events.emit(DOMAIN_EVENTS.ACCOUNT_DELETION_CANCELLED, cancelled);
     await this.notify(userId, 'CANCELLED');
   }
 

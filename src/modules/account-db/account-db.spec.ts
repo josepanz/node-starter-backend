@@ -164,10 +164,12 @@ describe('DataRetentionExecutorService', () => {
 describe('AccountAnonymizationJob', () => {
   const deletion = { findDue: jest.fn(), anonymize: jest.fn() };
   const retention = { run: jest.fn() };
+  const events = { emit: jest.fn() };
   const config = { compliance: { anonymizationBatchSize: 2 } } as never;
   const job = new AccountAnonymizationJob(
     deletion as never,
     retention as never,
+    events as never,
     config,
   );
 
@@ -185,6 +187,9 @@ describe('AccountAnonymizationJob', () => {
     await job.run();
 
     expect(deletion.anonymize).toHaveBeenCalledTimes(3);
+    expect(events.emit).toHaveBeenCalledWith('account.anonymized', {
+      userId: 3,
+    });
     expect(retention.run).toHaveBeenCalledTimes(1);
   });
 
