@@ -19,9 +19,17 @@ describe('UsersRolesApiController', () => {
     service.assignRolesToUser.mockResolvedValue({ success: true });
     const dto = { roles: [{ id: 1 }] };
     await expect(
-      controller.assignRolesToUser({ userId: 7 } as never, dto as never),
+      controller.assignRolesToUser(
+        { userId: 7 } as never,
+        dto as never,
+        'admin@x.com',
+      ),
     ).resolves.toEqual({ success: true });
-    expect(service.assignRolesToUser).toHaveBeenCalledWith(7, dto, 'system');
+    expect(service.assignRolesToUser).toHaveBeenCalledWith(
+      7,
+      dto,
+      'admin@x.com',
+    );
   });
 
   it('getUserWithRoles delega userId', async () => {
@@ -34,15 +42,20 @@ describe('UsersRolesApiController', () => {
     await controller.assignPermissionsToUser(
       { userId: 7 } as never,
       dto as never,
+      'admin@x.com',
     );
     expect(service.assignPermissionsToUser).toHaveBeenCalledWith(
       7,
       dto,
-      'system',
+      'admin@x.com',
     );
     service.assignPermissionsToUser.mockRejectedValue(new Error('x'));
     await expect(
-      controller.assignPermissionsToUser({ userId: 7 } as never, dto as never),
+      controller.assignPermissionsToUser(
+        { userId: 7 } as never,
+        dto as never,
+        'admin@x.com',
+      ),
     ).rejects.toThrow('x');
   });
 

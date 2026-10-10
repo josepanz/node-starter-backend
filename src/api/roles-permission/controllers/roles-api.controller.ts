@@ -67,7 +67,8 @@ export class RolesApiController {
   async updateRole(
     @Param() paramDTO: RequestDTO.GetRoleParamDTO,
     @Body() dto: RequestDTO.UpdateRoleRequestDTO,
+    @GetUser('email') userEmail: string,
   ): Promise<ResponseDTO.RoleResponseDTO> {
-    return await this.rolesApiService.updateRole(paramDTO.id, dto, 'system');
+    return await this.rolesApiService.updateRole(paramDTO.id, dto, userEmail);
   }
 }

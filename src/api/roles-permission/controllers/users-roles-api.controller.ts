@@ -15,6 +15,7 @@ import * as ResponseDTO from '@api/roles-permission/dtos/response';
 import { RolesApiService } from '@api/roles-permission/services/roles-permission-api.service';
 import { UserRolesDocs } from '@api/roles-permission/docs';
 import { JwtAuthGuard } from '@modules/auth/guards';
+import { GetUser } from '@modules/auth/decorators';
 import { PERMISSIONS } from '@common/enum/permissions.enum';
 import { Permissions } from '@common/decorators/permissions.decorator';
 
@@ -32,11 +33,12 @@ export class UsersRolesApiController {
   async assignRolesToUser(
     @Param() paramDTO: RequestDTO.GetUserRoleParamDTO,
     @Body() dto: RequestDTO.AssignRolesToUserRequestDTO,
+    @GetUser('email') userEmail: string,
   ): Promise<ResponseDTO.UserRoleAssignmentResponseDTO> {
     return await this.rolesApiService.assignRolesToUser(
       paramDTO.userId,
       dto,
-      'system',
+      userEmail,
     );
   }
 
@@ -57,11 +59,12 @@ export class UsersRolesApiController {
   async assignPermissionsToUser(
     @Param() paramDTO: RequestDTO.GetUserRoleParamDTO,
     @Body() dto: RequestDTO.AssignPermissionsToUserRequestDTO,
+    @GetUser('email') userEmail: string,
   ): Promise<ResponseDTO.UserPermissionAssignmentResponseDTO> {
     return await this.rolesApiService.assignPermissionsToUser(
       paramDTO.userId,
       dto,
-      'system',
+      userEmail,
     );
   }
 }

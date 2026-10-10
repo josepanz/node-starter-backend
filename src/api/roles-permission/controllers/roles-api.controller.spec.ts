@@ -44,12 +44,16 @@ describe('RolesApiController', () => {
 
   it('updateRole usa id del param y propaga errores', async () => {
     const dto = { name: 'n' };
-    await controller.updateRole({ id: 4 } as never, dto as never);
-    expect(service.updateRole).toHaveBeenCalledWith(4, dto, 'system');
+    await controller.updateRole(
+      { id: 4 } as never,
+      dto as never,
+      'admin@x.com',
+    );
+    expect(service.updateRole).toHaveBeenCalledWith(4, dto, 'admin@x.com');
 
     service.updateRole.mockRejectedValue(new Error('boom'));
     await expect(
-      controller.updateRole({ id: 4 } as never, dto as never),
+      controller.updateRole({ id: 4 } as never, dto as never, 'admin@x.com'),
     ).rejects.toThrow('boom');
   });
 
