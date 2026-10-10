@@ -1,107 +1,73 @@
 <!-- PROJECT: node-starter-backend v1.0 -->
 
-# node-starter-backend
+# node-starter-backend: índice de contexto
 
-## Domain
+Starter genérico de backend NestJS 11 + TypeScript + Prisma (PostgreSQL), con Sequelize opcional (DB2/AS400). Es un compendio demostrativo: cada mecanismo es funcional, genérico y degrada a un fallback (noop, consola o memoria) cuando falta su infra o proveedor.
 
-NestJS backend for merchant management, onboarding, payments, and transactions.
-Two-level architecture: `/src/api` (HTTP orchestrator, calls other services in /module which can be HttpClients to other microservices or modules that connect to the database via Prisma) → `/src/modules` (reusable logic, connection to external microservices and connection, data manipulation and business logic via Prisma to PostgreSQL)
+Puntos de entrada: [`AGENTS.md`](../AGENTS.md) (guía para asistentes), [`ARCHITECTURE.md`](../ARCHITECTURE.md), [`CONTRIBUTING.md`](../CONTRIBUTING.md), [`openspec/README.md`](../openspec/README.md).
 
-## Key Structure
+## Estructura
 
-- `api/*` — Controllers + DTOs + services that orchestrate modules
-- `api/managment` — Exclusive endpoints for managment-backend (auth: Basic Auth api-to-api)
-- `modules/auth` — Custom JWT, guards, decorators, access/refresh tokens, cookies (merchant-context)
-- `modules/payments-providers` — QR codes + Checkout 
-- `modules/acquiring` — Maybe HTTP client to acquiring-backend (no auth), merchant/branch/transaction data via Sequelize→DB2
-- `modules/report` — Dynamic generation of xlsx/csv/pdf reports based on caller parameters
-- `modules/*-db` — Prisma abstraction per domain (customers-db, merchant-db, sales-order-db, qr-payments-db)
-- `modules/storage` — S3
-- `modules/email` — email sending
-- `core/database` — PrismaService central
-- `core/config` — configuration loader, secrets/env validation
-- `common/` — decorators, filters, pipes, validators, helpers, shared utilities
+- `src/api/<feature>`: controllers, DTOs, docs Swagger y `ApiService` (orquesta módulos).
+- `src/modules/<dominio>`: lógica reutilizable; módulos `*-db` (Prisma), `auth`, `sms`, `notifications`, `email`, `storage`, `jobs`, `messaging`, `realtime`, `report`, `http-client`, etc.
+- `src/core`: config, database, filtros globales, interceptors, middlewares, observabilidad, scheduler, redis, cache, mongo, rate limit, eventos, i18n.
+- `src/common`: decorators, dtos, enums, filters, helpers, pipes, utils, validators.
+- `prisma/`: schema, migraciones, seed y verificación de triggers de auditoría.
+- `ci/k8s`: Kustomize (base + overlays develop, qa, production).
 
-## Clients that consume this backend
+## Reglas (`rules/`)
 
-| Client                    | Auth                                | Purpose                                                          |
-| ------------------------- | ----------------------------------- | ---------------------------------------------------------------- |
-|                           | Custom JWT / Basic Auth (pre-login) |               app                                                |
-|                           | Basic Auth api-to-api               | Configurations, assignments, permissions (uses Auth0 internally) |
+| Documento | Tema |
+|---|---|
+| [architecture.md](rules/architecture.md) | capas, dónde vive cada archivo, promoción a `common`, módulos opcionales |
+| [conventions.md](rules/conventions.md) | nombres, barrels, repository vs DBService, idioma, commits, principios |
+| [typescript.md](rules/typescript.md) | TS/Nest, DTOs, paginación, Prisma, JSDoc, Swagger, cierre de tarea |
+| [error-handling.md](rules/error-handling.md) | capas de defensa, `ErrorHelper`, filtros, logging |
+| [test.md](rules/test.md) | reglas de testing, mocks, qué probar por archivo |
+| [database-conventions.md](rules/database-conventions.md) | `id` + `referenceId`, auditoría, migraciones, pooler, datos sensibles |
+| [datetime.md](rules/datetime.md) | fechas y zona horaria configurable |
+| [permissions.md](rules/permissions.md) | guards, permisos `dominio:accion`, rate limit |
+| [git-workflow.md](rules/git-workflow.md) | ramas, puentes, hotfix, PR/MR, release, hooks |
+| [e2e-local-testing.md](rules/e2e-local-testing.md) | prueba E2E local con login real |
+| [infra.md](rules/infra.md) | Docker, Kubernetes, pipelines, semantic-release y patch de `git-log-parser` |
 
-# Service providers that are consumed
+## Agentes (`agents/`)
 
-| Providers           | Auth                         | Purpose                                                                                                                                                                                  |
-| ------------------- | ---------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-|            -backend | No auth                      | A service that connects to DB2 to obtain business data such as: stores, branches, transactions, MCC to list, retrieve by ID, and filter.                                                 |
-|          api        | Bearer and x-merchant header | Provider of services related to checkout and payment links for: generation, queries, cancellation, link data.                                                                            |
-|                     | Header api-key               | Transactional switch service to allow various types of payment, currently allowing us to generate QR codes for payments, check the status of the QR code and reverse/cancel the QR code. |
+- [code-reviewer](agents/code-reviewer.md): revisión por severidad (CRITICAL / WARN / STYLE).
+- [db-advisor](agents/db-advisor.md): schema, índices, queries y migraciones (PostgreSQL y DB2).
+- [testing-agent](agents/testing-agent.md): genera y revisa tests unitarios.
+- [tdd-refactor](agents/tdd-refactor.md): refactor incremental con characterization test, sin romper el contrato HTTP.
 
-## Basic Auth — public pre-login endpoints
+## Comandos (`commands/`, slash commands)
 
-Onboarding, password recovery, and pre-authentication flows use Basic Auth.
+| Comando | Archivo | Propósito |
+|---|---|---|
+| `/commit` | [commit.md](commands/commit.md) | commits convencionales agrupados por dominio, sin atribuciones |
+| `/cherry-pick` | [cherry-pick.md](commands/cherry-pick.md) | sincroniza la rama de feature con la base o trae commits puntuales |
+| `/code-review` | [code-review.md](commands/code-review.md) | ejecuta el agente `code-reviewer` sobre un archivo |
+| `/db-advisor` | [db-advisor.md](commands/db-advisor.md) | ejecuta el agente `db-advisor` sobre un archivo o schema |
+| `/testing-agent` | [testing-agent.md](commands/testing-agent.md) | ejecuta el agente `testing-agent` sobre un archivo |
+| `/tdd-refactor` | [tdd-refactor.md](commands/tdd-refactor.md) | ejecuta el agente `tdd-refactor` sobre un archivo |
+| `/feature-delivery` | [feature-delivery.md](commands/feature-delivery.md) | ciclo completo de entrega de una feature |
 
-Do not apply JWT guards to these endpoints.
+## Skills (`skills/`)
 
-## Auth
+- [feature-delivery](skills/feature-delivery/SKILL.md): SDD, TDD por slice, review, testing, E2E, docs y PR.
+- [openspec-workflow](skills/openspec-workflow/SKILL.md): explorar, proponer, implementar, actualizar, sincronizar y archivar un change.
 
-Custom JWT. Access token + refresh token + cookies (refresh + merchant-context).
-Always use guards and decorators from `modules/auth`, never implement inline authentication.
+## Documentación (`documentation/`)
 
-## Acquiring
+- [manual-tdd-sdd.md](documentation/manual-tdd-sdd.md): manual de TDD y SDD (pre y post desarrollo, mocks, E2E, CI).
+- [SDD_template.md](documentation/SDD_template.md): plantilla de diseño de producto y técnica, insumo de OpenSpec.
 
-`modules/acquiring` consumes `external-data-backend` via HTTP without authentication.
-`extarnal-data-backend` maybe uses Sequelize connected to DB2 — or Prisma to connect to PostgreSQL or MongoDB or any other database.
-Never replicate acquiring business logic here, only consume it.
+## Reglas críticas (resumen)
 
-## DB
+- DTOs explícitos en request y response; nunca tipos genéricos ni `any`.
+- Guards de autenticación en todo controller de `api/*` (salvo pre-login con Basic Auth y la salud).
+- Prisma solo desde módulos `*-db`; transacciones en escrituras multi-tabla.
+- Config validada con Joi en `core/config`; nunca `process.env` fuera de ahí.
+- `common/` es transversal: sin lógica de negocio ni conexiones a base.
+- Todo mecanismo con infra o proveedor opcional tiene fallback y no rompe el arranque.
+- Cada archivo con lógica lleva su `.spec.ts`; definición de hecho: `prisma generate`, `build`, `lint`, `test` en verde.
 
-Local PostgreSQL via Prisma. Each `-db` module encapsulates its domain.
-
-Never call PrismaService directly from `api/*` — always through the corresponding `-db` module.
-
-## Testing
-
-### Testing Rules in this Project
-
-- Every new feature MUST include unit tests in the same pull request.
-- Tests should be in `.spec.ts` files alongside the file they test.
-- Use the AAA pattern (Arrange, Act, Assert) in all tests.
-- Mock ALL external dependencies (DBs, APIs, providers).
-- Name tests in Spanish, descriptively describing the expected behavior.
-- Never hardcode real production IDs in tests.
-
-### Mock Structure
-
-Reusable mocks live in `test/mocks/`:
-
-- `test/mocks/prisma.mock.ts` → mock of PrismaService
-- `test/mocks/sequelize.mock.ts` → mock of Sequelize (acquirer-backend)
-- `test/mocks/checkout.mock.ts` → mock of the checkout provider
-- `test/mocks/http.mock.ts` → HttpService mock for inter-project calls
-
-### Commands
-
-- `pnpm run test` → run all tests
-- `pnpm run test:watch` → watch mode for development
-- `pnpm run test:cov` → generate coverage report
-- `pnpm run test:e2e` → end-to-end tests
-
-## Critical Rules
-
-- Explicit DTOs in request/response — never generic types or `any`
-- Auth module guards in all API controllers (except Basic Auth pre-login endpoints)
-- Prisma transactions for multi-table writes
-- Report module receives object + parameters — do not couple format in the caller
-- Config loader in `core/config` for all secrets — never `process.env` directly outside of core
-- `common/` is only for shared utilities — no business logic or database connections
-- @./rules/infra.md
-- @./rules/typescript.md
-- @./rules/test.md
-
-## Agents
-
-- @./agents/code-reviewer.md
-- @./agents/db-adivisor.md
-- @./agents/testing-agent.md
-- @./agents/tdd-refactor.md
+El archivo [`.mcp.json`](.mcp.json) queda vacío: se completa por proyecto con los servidores MCP que se necesiten.

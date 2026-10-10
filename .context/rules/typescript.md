@@ -1,246 +1,106 @@
-# TypeScript rules
+# Reglas de TypeScript / NestJS
 
-- Use JOI for input `config-schema.ts` on all secrets.
-- Explicit DTOs in NestJS, API tags, validations `(class-validator)` or `(ValidatorConstraint)` with validate and decorator, and transformations `(class-transformer)` if necessary (if applicable to multiple endpoints, create a validator and its specific decorator), with typed enums if applicable, Swagger documentation `(@nestjs/swagger, ApiProperty, ApiPropertyOptional)` and examples for both requests and responses, also for parameters and queries (use DTO in uppercase at the end), examples: GetUsersListQueryDTO, GetUserDetailParamDTO, CreateUserRequestDTO, CreateUserResponseDTO, UpdateUserRequestDTO, UpdateUserResponseDTO (not generic interfaces).
-- Always generate the queryDTO, requestDTO, paramDTO under the cited rules, do not create for example @Param('id', ParseIntPipe) id: number; alone, always do everything from your dto with validation, transformation and Swagger documentation mentioned.
-- Generate documentation in the docs folder to minimize content in the controller and invoke it in the controller with a decorator
-- Use Prism types directly where possible; avoid remapping
-- Always use Prisma Extended to coexist with the audit
-- Create the interfaces, enums, types, constants, helpers for each folder, whether in /api or /module, under a folder named /interfaces, /enums, /types, /constants, /helpers to expose to the services; never place these values ​​in the services themselves.
-- Do not use the repository class to call Prisma; the repository is intended solely for specific raw queries in SQL format. Integration of a `/module/*db/*.service.ts` file should call Prisma directly to execute actions on the database.
-- If it's an endpoint for listing with filter parameters and pagination, use `PrismaPaginationUtil`
-  - Example of use:
+> Dónde vive cada archivo: [`architecture.md`](architecture.md). Cómo se llama: [`conventions.md`](conventions.md). Errores y logging: [`error-handling.md`](error-handling.md). Ante un choque, mandan esas tres.
 
-  ```typescript
-    async getCustomersListByParams(
-    queryDTO: GetCustomerRequestDTO.GetCustomersListQueryDTO,
-    merchantContext: IMerchantContext,
-  ): Promise<GetCustomerResponseDTO.GetCustomersListResponseDTO> {
-    const customWhere: Prisma.CustomersWhereInput = {};
+## Lenguaje
 
-    if (queryDTO.search) {
-      customWhere.OR = [
-        { name: { contains: queryDTO.search, mode: 'insensitive' } },
-        { lastname: { contains: queryDTO.search, mode: 'insensitive' } },
-        { email: { contains: queryDTO.search, mode: 'insensitive' } },
-        { phone: { contains: queryDTO.search, mode: 'insensitive' } },
-        { documentNumber: { contains: queryDTO.search, mode: 'insensitive' } },
-      ];
-    }
+- TS en modo `strict`. Prohibido `any`: usar `unknown` + narrowing. `!` (non-null assertion) solo en propiedades de DTO (`name!: string;`) o con un comentario que justifique el invariante.
+- Imports con los alias existentes: `@core/*`, `@modules/*`, `@api/*`, `@common/*`, `@auth/*`, `@email/*`. No usar `@shared/*` ni `@helpers/*`: apuntan a carpetas que no existen.
+- Nunca pasar referencias a métodos estáticos o de instancia directo a `.map()`, `.filter()`, `.forEach()`: envolver en arrow (`items.map((item) => Helper.transform(item))`). Evita `@typescript-eslint/unbound-method`.
+- `await` siempre en promesas; ninguna promesa flotante (`no-floating-promises`).
+- Con `firstValueFrom` (rxjs), manejar errores con `.pipe(handleHttpErrors(...))` (`@common/utils/rxjs-error-handler.util`).
+- Clases DTO usan `declare` al extender (`declare data: FooResponseDTO[];`) para no pisar la propiedad base.
 
-    if (queryDTO.status !== undefined) {
-      customWhere.active = queryDTO.status;
-    }
+## Configuración
 
-    customWhere.merchantCode = merchantContext.merchantCode;
+- Toda variable de entorno nueva: `src/core/config/config-schema.ts` (Joi), `config-loader.ts` y `.env.template` con placeholder. Si tiene fallback, es opcional con default; si no, `required()`.
+- Nunca `process.env` fuera de `src/core/config/`. Se inyecta `APP_CONFIG`.
+- Restringir un enum con `Joi.valid(...)`, nunca `Joi.allow(...)` (este último solo agrega valores permitidos y no restringe nada). `required()` + `default()` en el mismo campo es contradictorio.
+- Un secreto nunca tiene default silencioso en producción; los defaults de desarrollo van marcados "solo desarrollo" en `.env.template`.
 
-    const { data: rawOrders, pagination } =
-      await PrismaPaginationUtil.paginate<CustomersWithRelations>(
-        this.prisma.extended.customers as unknown as PrismaModelDelegate,
-        queryDTO as unknown as Record<string, unknown>,
-        {
-          where: customWhere,
-          include: { salesOrders: true },
-          defaultOrderByField: 'createdAt',
-          fieldMapping: {
-            status: 'active',
-          },
-        },
-      );
+## DTOs (siempre explícitos, nunca tipos genéricos)
 
-    if (rawOrders.length === 0) {
-      throw new NotFoundException(
-        'No se encontraron órdenes de venta para los filtros aplicados.',
-      );
-    }
+- Nombre con sufijo `DTO` en mayúsculas: `GetUsersListQueryDTO`, `GetUserDetailParamDTO`, `CreateUserRequestDTO`, `CreateUserResponseDTO`, `UpdateUserRequestDTO`.
+- Validación con `class-validator` (o `ValidatorConstraint` + decorador propio en `common/validators/` si aplica a varios endpoints), transformación con `class-transformer`, enums tipados, Swagger (`ApiProperty` / `ApiPropertyOptional`) con `example` en request, response, params y queries.
+- Prohibido `@Param('id', ParseIntPipe) id: number` suelto: siempre un `ParamDTO` con validación, transformación y documentación.
+- El `ValidationPipe` global corre con `whitelist` + `forbidNonWhitelisted` + `transform`: un campo sin decorador de validación se rechaza. Los opcionales llevan `@IsOptional()`.
+- Estructura de carpetas: `dtos/request/` y `dtos/response/` con su `index.ts` (único lugar con barrels junto a `common/validators/`).
+- Todo método de controller y de `ApiService` declara el tipo de retorno explícito con su `*ResponseDTO`.
+- Fechas: un `Date` de Prisma nunca se expone crudo si el contrato define otro formato (ver [`datetime.md`](datetime.md)).
 
-    return {
-      data: rawOrders.map((order) =>
-        CustomerDBHelper.mapToCustomersResponse(order),
-      ),
-      pagination,
-    };
-  }
-  ```
+## Swagger fuera del controller
 
-- No barrel exports in large libraries (tree-shaking)
-- Use helpers to reduce code in services (api o module) for mapping, formatting, and auxiliary functions whenever possible. If local, create a folder (if it doesn't exist) and a helper file (if it doesn't exist; if it does, consider reusing and adding the methods) in the context of the service you're working on.
-- Create interceptors or middleware whenever necessary to avoid transforming the request in the controller where applicable, for example, buffered file responses for - download, cookie responses, receiving files or data from the request manipulated from Express, and where applicable, with their respective decorator.
-- Use ! in the dto definition, for example: name!: string;
-- Use `.pipe` with `handleHttpErrors` to handle `firstValueFrom` errors in `rxjs` 
-- Use _declare_, example: `declare pagination: PaginationResponseDTO;`
-- Use the _PaginatedRequest_ and _PaginatedResponse_ class as an extension in list classes that require pagination, for example: GetUsersListQueryDTO
-  - Example:
+Los decoradores de Swagger viven en `src/api/<feature>/docs/<feature>-api.docs.ts` y el controller solo invoca `@FeatureDocs('clave')`. En el controller solo se permiten `@ApiTags`, `@ApiBearerAuth` y `@ApiBasicAuth` a nivel de clase. Las respuestas de error comunes salen de `HttpResponseDOC` (`@common/docs/http-response.doc`).
 
-  ```typescript
-  export class GetBranchRequestListQueryDTO extends PaginatedRequest<GetBranchRequestListQueryDTO> {
-    @ApiPropertyOptional({
-      description: 'Código del comercio',
-      required: false,
-    })
-    @IsString({
-      message: 'El código del comercio debe ser una cadena de texto',
-    })
-    @IsNotEmpty({ message: 'El Código de comercios no puede venir vacio.' })
-    @IsOptional()
-    merchantCode?: string;
+```typescript
+const FooApiDocs = {
+  getList: applyDecorators(
+    ApiOperation({ summary: 'Lista los foo' }),
+    ApiResponse({ status: 200, type: FooListResponseDTO }),
+  ),
+};
+export const FooDocs = (key: keyof typeof FooApiDocs) => FooApiDocs[key];
+```
 
-    @ApiPropertyOptional({
-      description: 'Código de la sucursal',
-      required: false,
-    })
-    @IsString({
-      message: 'El código de la sucursal debe ser una cadena de texto',
-    })
-    @IsNotEmpty({ message: 'El Código de sucursales no puede venir vacio.' })
-    @IsOptional()
-    branchCode?: string;
+## Listados paginados
 
-    @ApiPropertyOptional({ description: 'RUC del comercio', required: false })
-    @IsString({ message: 'El RUC debe ser una cadena de texto' })
-    @IsNotEmpty({ message: 'El RUC no puede venir vacio.' })
-    @IsOptional()
-    ruc?: string;
-  }
+Todo listado con filtros devuelve `PaginatedResponse<T>` (`{ data, pagination }`) y recibe un `QueryDTO` que extiende `PaginatedRequest<T>` con `page`, `pageSize` y `orderBy` (`campo:asc|desc`). Nunca otro shape (`items`, `limit`, `offset`).
 
-  export class GetBranchListResponseDTO extends PaginatedResponse<GetBranchDetailResponseDTO> {
-    @ApiProperty({
-      description: 'Lista de comercios',
-      type: [GetBranchDetailResponseDTO],
-    })
-    declare data: GetBranchDetailResponseDTO[];
+- Implementación única: `PrismaPaginationUtil.paginate` (`@common/utils/prisma-pagination.util`): resuelve `where`/`orderBy`, búsqueda sobre `searchFields`, rango de fechas, `fieldMapping` (campo del DTO a columna) y el parseo de `orderBy`. No reimplementar `findMany` + `count` a mano; si falta algo, se agrega al util.
+- DTOs base: `@common/dtos/pagination.dto` (`PaginationQueryDTO`, `PaginationResponseDTO`), `request-with-pagination.dto`, `response-with-pagination.dto`.
+- Un listado sin resultados es `200` con `data: []`, nunca `404`.
 
-    @ApiProperty()
-    declare pagination: PaginationResponseDTO;
-  }
-  ```
+```typescript
+const { data, pagination } = await PrismaPaginationUtil.paginate<OrderWithItems>(
+  this.prisma.extended.order as unknown as PrismaModelDelegate,
+  queryDTO as unknown as Record<string, unknown>,
+  {
+    where: { tenantId },
+    include: { items: true },
+    defaultOrderByField: 'createdAt',
+    searchFields: ['reference'],
+    fieldMapping: { status: 'state' },
+  },
+);
+return { data: data.map((row) => OrderHelper.toResponse(row)), pagination };
+```
 
-  - _PaginatedRequest_ definition:
+## Prisma y acceso a datos
 
-  ```typescript
-  import { PaginationQueryDTO } from '@common/dtos/pagination.dto';
+- Solo los módulos `src/modules/*-db/` hablan con Prisma. `api/*` jamás inyecta `PrismaDatasource`.
+- Usar `this.prisma.extended` (cliente extendido con auditoría y normalización de `Decimal`); el cliente crudo solo para lo que la extensión no cubre.
+- Usar los tipos de Prisma directamente; evitar remapear modelos a mano.
+- Escritura multi-tabla: `$transaction`, siempre.
+- Transiciones de estado: `updateMany({ where: { id, status: { in: ESTADOS_VALIDOS } }, data })` y, si `count === 0`, `ConflictException`. Nunca `findUnique` + validar en código + `update` incondicional (carrera TOCTOU).
+- Unicidad con carrera posible: capturar `P2002` y traducirlo al error de negocio equivalente; no depender solo del chequeo previo.
+- Patrón repository: solo para SQL crudo (`$queryRaw`, `$executeRaw`) en `src/modules/<dominio>-db/repositories/` (o `_data/`), inyectado únicamente por el `DBService` de su propio módulo. Ver [`conventions.md`](conventions.md).
+- Los tests unitarios con mocks de Prisma nunca ejercitan el `$extends` real: si se toca la extensión, probar contra una base real.
+- Prohibido SQL crudo salvo DB2/AS400 o casos que Prisma no cubre (advisory locks, `FOR UPDATE`), siempre en repository.
 
-  export class PaginatedRequest<T> extends PaginationQueryDTO {
-    declare filters: T;
-  }
-  ```
+## Comentarios y JSDoc
 
-  - _PaginatedResponse_ definition:
+- Por defecto no se comenta: un identificador bien nombrado documenta el QUÉ. Se comenta el POR QUÉ no obvio (restricción oculta, workaround de un bug concreto).
+- Todo método público o privado de services, helpers, providers y controllers lleva JSDoc con descripción de una línea, `@param`, `@returns` y `@throws {Excepcion} condición`. Excepción: getters/setters triviales y constructores sin lógica.
+- Todo mecanismo nuevo lleva un comentario de cabecera corto con el patrón que aplica y por qué (strategy, adapter, template method, factory por config...).
+- Prohibido narrar el código, referenciar tareas/MR/sesiones y dejar `TODO` de varias líneas. Formato: `TODO(tema): qué falta y qué hacer.`
 
-  ```typescript
-  import { PaginationResponseDTO } from '@common/dtos/pagination.dto';
+## Interceptors, middlewares y decoradores
 
-  export class PaginatedResponse<T> {
-    data!: T[];
-    pagination!: PaginationResponseDTO;
-    additionalData?: {
-      [key: string]: unknown;
-    };
-  }
-  ```
+Si el controller necesita transformar la request o la respuesta (descargas de archivo, cookies, subida de archivos, streaming JSON), se resuelve con un interceptor/middleware y su decorador (`core/interceptors/`, `common/decorators/`), no con lógica en el controller. Ver `FileDownloadInterceptor`, `JsonStreamInterceptor`.
 
-  - _PaginationQueryDTO_ and _PaginationResponseDTO_ definition:
+## Versionado de API
 
-  ```typescript
-  import { IsEndDateAfterStartDate } from '@common/validators/date-range.validator';
-  import { IsOrderByFormat } from '@common/validators/is-order-by-format.validator';
-  import { ApiProperty, ApiPropertyOptional } from '@nestjs/swagger';
-  import { Transform, Type } from 'class-transformer';
-  import {
-    IsDate,
-    IsNumber,
-    IsOptional,
-    IsString,
-    Min,
-    Validate,
-  } from 'class-validator';
+`app.enableVersioning()` con versión por método (`@Version('1')`). El prefijo global es `/node-starter-backend/api`. Un endpoint de infraestructura con path fijo para sistemas externos usa `@Version(VERSION_NEUTRAL)` a nivel de método (no de clase): bajo versionado URI registra solo el path sin versión.
 
-  export class PaginationQueryDTO {
-    @ApiPropertyOptional({
-      description:
-        'Pagina para paginación de resultados (opcional, por defecto 1)',
-      example: 1,
-    })
-    @IsOptional()
-    @Type(() => Number)
-    @IsNumber()
-    @Min(1)
-    page?: number;
+## Tareas terminadas
 
-    @ApiPropertyOptional({
-      description:
-        'Pagina para paginación de resultados (opcional, por defecto 10)',
-      example: 10,
-    })
-    @IsOptional()
-    @Type(() => Number)
-    @IsNumber()
-    @Min(1)
-    pageSize?: number;
+Una tarea que tocó TypeScript no está cerrada hasta que pasan, en este orden y sin warnings nuevos:
 
-    @ApiPropertyOptional({
-      description:
-        'Campo por el cual ordenar los resultados (opcional, por defecto "fechaHora") y orden ascendente o descendente (opcional, por defecto "DESC"), separados por :',
-      example: 'tradeName:desc',
-    })
-    @IsOptional()
-    @IsString()
-    @Validate(IsOrderByFormat)
-    orderBy?: string;
+```bash
+pnpm prisma validate && pnpm prisma generate
+pnpm build
+pnpm lint
+pnpm test
+```
 
-    @ApiPropertyOptional({
-      description: 'Fecha de rango de inicio de consulta',
-    })
-    @IsOptional()
-    @IsDate()
-    @Transform(({ value }) =>
-      value ? new Date(`${value}T00:00:00`) : undefined,
-    )
-    startDate?: Date;
-
-    @ApiPropertyOptional({ description: 'Fecha de rango de fin de consulta' })
-    @IsOptional()
-    @IsDate()
-    @Transform(({ value }) =>
-      value ? new Date(`${value}T23:59:59.999`) : undefined,
-    )
-    @Validate(IsEndDateAfterStartDate)
-    endDate?: Date;
-  }
-
-  export class PaginationResponseDTO {
-    @ApiProperty({
-      description: 'Total de elementos encontrados.',
-      example: 100,
-    })
-    @Type(() => Number)
-    @IsNumber()
-    total!: number;
-
-    @ApiProperty({
-      description:
-        'Pagina para paginación de resultados (opcional, por defecto 1)',
-      example: 1,
-    })
-    @Type(() => Number)
-    @IsNumber()
-    page!: number;
-
-    @ApiProperty({
-      description:
-        'Pagina para paginación de resultados (opcional, por defecto 1).',
-      example: 2,
-    })
-    @Type(() => Number)
-    @IsNumber()
-    pageSize?: number;
-
-    @ApiProperty({
-      description: 'Total de paginas disponibles.',
-      example: 2,
-    })
-    @Type(() => Number)
-    @IsNumber()
-    totalPages!: number;
-  }
-  ```
+No se reporta "completado" con el lint en rojo ni verificando solo la intención: hay que correr el comando y leer el resultado.

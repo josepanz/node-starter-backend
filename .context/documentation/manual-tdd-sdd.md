@@ -18,8 +18,8 @@
 7. [Mocking: base de datos, proveedores y servicios externos](#7-mocking-base-de-datos-proveedores-y-servicios-externos)
 8. [Tests E2E con Supertest](#8-tests-e2e-con-supertest)
 9. [Configuración del CI/CD para testing](#9-configuración-del-cicd-para-testing)
-10. [Integración con el asistente de IA y `.agents/`](#10-integración-con-el-asistente-de-ia-y-agents)
-11. [Convenciones y estructura de archivos](#11-convenciones-y-estructura-de-archivos)
+10. [Integración con el asistente de IA y `.context/`](#10-integración-con-el-asistente-de-ia-y-agents)
+11. [Convenciones y esttaxIdtura de archivos](#11-convenciones-y-esttaxIdtura-de-archivos)
 12. [Checklist por nivel de seniority](#12-checklist-por-nivel-de-seniority)
 13. [Errores comunes y cómo evitarlos](#13-errores-comunes-y-cómo-evitarlos)
 14. [Glosario](#14-glosario)
@@ -52,7 +52,7 @@ Porque TDD no es solo para proyectos nuevos. En proyectos con código existente 
 **SDD (Specification-Driven Development)** define el contrato de un módulo o endpoint antes de construirlo: qué recibe, qué devuelve, qué errores puede lanzar. TDD convierte esas especificaciones en tests ejecutables.
 
 ```
-SDD: "El endpoint POST /comercios/create recibe un DTO válido y retorna 201 con el id del comercio creado"
+SDD: "El endpoint POST /organizaciones/create recibe un DTO válido y retorna 201 con el id del organizacion creado"
 TDD: ese contrato se escribe primero como test, luego se implementa
 ```
 
@@ -234,19 +234,19 @@ Antes de escribir un solo test, leer completamente el servicio o módulo. Identi
 
 #### Paso 2: Identificar dependencias inyectadas
 
-En NestJS las dependencias se inyectan por constructor. Esas son las que hay que mockear.
+En NestJS las dependencias se inyectan por consttaxIdtor. Esas son las que hay que mockear.
 
 ```typescript
-// Ejemplo: un servicio en modules/comercios/comercios.service.ts
+// Ejemplo: un servicio en modules/organizaciones/organizaciones.service.ts
 @Injectable()
-export class ComerciosService {
-  constructor(
+export class OrganizacionesService {
+  consttaxIdtor(
     private readonly prisma: PrismaService,       // → mock
     private readonly checkoutProvider: CheckoutProvider, // → mock
     private readonly logger: LoggerService,        // → mock o spy
   ) {}
 
-  async crearComercio(dto: CrearComercioDto) {
+  async crearOrganizacion(dto: CrearOrganizacionDto) {
     // lógica...
   }
 }
@@ -256,23 +256,23 @@ export class ComerciosService {
 
 ```
 modules/
-  comercios/
-    comercios.service.ts
-    comercios.service.spec.ts   ← acá va el test
+  organizaciones/
+    organizaciones.service.ts
+    organizaciones.service.spec.ts   ← acá va el test
 ```
 
-#### Paso 4: Estructura base de un archivo de test
+#### Paso 4: EsttaxIdtura base de un archivo de test
 
 ```typescript
-// comercios.service.spec.ts
+// organizaciones.service.spec.ts
 import { Test, TestingModule } from '@nestjs/testing';
-import { ComerciosService } from './comercios.service';
+import { OrganizacionesService } from './organizaciones.service';
 import { PrismaService } from '../prisma/prisma.service';
 import { CheckoutProvider } from '../../providers/checkout/checkout.provider';
 
 // Mock manual de dependencias
 const mockPrismaService = {
-  comercio: {
+  organizacion: {
     create: jest.fn(),
     findUnique: jest.fn(),
     findMany: jest.fn(),
@@ -282,22 +282,22 @@ const mockPrismaService = {
 };
 
 const mockCheckoutProvider = {
-  registrarComercio: jest.fn(),
+  registrarOrganizacion: jest.fn(),
 };
 
-describe('ComerciosService', () => {
-  let service: ComerciosService;
+describe('OrganizacionesService', () => {
+  let service: OrganizacionesService;
 
   beforeEach(async () => {
     const module: TestingModule = await Test.createTestingModule({
       providers: [
-        ComerciosService,
+        OrganizacionesService,
         { provide: PrismaService, useValue: mockPrismaService },
         { provide: CheckoutProvider, useValue: mockCheckoutProvider },
       ],
     }).compile();
 
-    service = module.get<ComerciosService>(ComerciosService);
+    service = module.get<OrganizacionesService>(OrganizacionesService);
   });
 
   // Limpiar mocks entre tests para evitar contaminación
@@ -305,32 +305,32 @@ describe('ComerciosService', () => {
     jest.clearAllMocks();
   });
 
-  describe('crearComercio', () => {
-    it('debe crear un comercio y retornar su id', async () => {
+  describe('crearOrganizacion', () => {
+    it('debe crear un organizacion y retornar su id', async () => {
       // Arrange
-      const dto = { nombre: 'Comercio Test', ruc: '12345678' };
-      const comercioCreado = { id: 'uuid-123', ...dto };
-      mockPrismaService.comercio.create.mockResolvedValue(comercioCreado);
+      const dto = { nombre: 'Organizacion Test', taxId: '12345678' };
+      const organizacionCreada = { id: 'uuid-123', ...dto };
+      mockPrismaService.organizacion.create.mockResolvedValue(organizacionCreada);
 
       // Act
-      const resultado = await service.crearComercio(dto);
+      const resultado = await service.crearOrganizacion(dto);
 
       // Assert
-      expect(resultado).toEqual(comercioCreado);
-      expect(mockPrismaService.comercio.create).toHaveBeenCalledWith({
+      expect(resultado).toEqual(organizacionCreada);
+      expect(mockPrismaService.organizacion.create).toHaveBeenCalledWith({
         data: dto,
       });
     });
 
-    it('debe lanzar excepción si el RUC ya existe', async () => {
+    it('debe lanzar excepción si el taxId ya existe', async () => {
       // Arrange
-      mockPrismaService.comercio.create.mockRejectedValue(
-        new Error('Unique constraint failed on the field: ruc'),
+      mockPrismaService.organizacion.create.mockRejectedValue(
+        new Error('Unique constraint failed on the field: taxId'),
       );
 
       // Act & Assert
       await expect(
-        service.crearComercio({ nombre: 'Test', ruc: '12345678' }),
+        service.crearOrganizacion({ nombre: 'Test', taxId: '12345678' }),
       ).rejects.toThrow();
     });
   });
@@ -339,7 +339,7 @@ describe('ComerciosService', () => {
 
 #### Paso 5: Patrón AAA (Arrange, Act, Assert)
 
-Siempre estructurar los tests con este patrón:
+Siempre esttaxIdturar los tests con este patrón:
 
 ```typescript
 it('descripción del comportamiento esperado', async () => {
@@ -358,12 +358,12 @@ it('descripción del comportamiento esperado', async () => {
 });
 ```
 
-### 4.3 Plan de rollout para los 3 proyectos existentes
+### 4.3 Plan de rollout para los proyectos existentes
 
 #### Semana 1-2: Setup y primeros tests
 
 ```
-[ ] Instalar dependencias de testing en los 3 proyectos
+[ ] Instalar dependencias de testing en los proyectos
 [ ] Crear jest.config.ts en cada proyecto
 [ ] Agregar scripts de test al package.json
 [ ] Escribir tests unitarios para 1 servicio crítico por proyecto
@@ -418,7 +418,7 @@ Antes de escribir código, documentar el contrato:
 ## Feature: Crear Sucursal
 
 ### Endpoint
-POST /api/v1/comercios/:comercioId/sucursales
+POST /api/v1/organizaciones/:organizacionId/sucursales
 
 ### Input (DTO)
 {
@@ -429,21 +429,21 @@ POST /api/v1/comercios/:comercioId/sucursales
 }
 
 ### Outputs
-- 201: Sucursal creada { id, nombre, direccion, telefono, activa, comercioId, creadoEn }
+- 201: Sucursal creada { id, nombre, direccion, telefono, activa, organizacionId, creadoEn }
 - 400: DTO inválido (validación fallida)
-- 404: Comercio no encontrado
-- 409: Ya existe sucursal con ese nombre en ese comercio
+- 404: Organizacion no encontrado
+- 409: Ya existe sucursal con ese nombre en ese organizacion
 
 ### Reglas de negocio
-- El comercioId debe existir en la DB
-- El nombre de la sucursal debe ser único dentro del comercio
-- Si el comercio está inactivo, no se puede crear sucursales
+- El organizacionId debe existir en la DB
+- El nombre de la sucursal debe ser único dentro del organizacion
+- Si el organizacion está inactivo, no se puede crear sucursales
 ```
 
 #### Paso 2: Crear los archivos vacíos primero
 
 ```bash
-# Crear estructura de archivos
+# Crear esttaxIdtura de archivos
 touch src/modules/sucursales/sucursales.service.ts
 touch src/modules/sucursales/sucursales.service.spec.ts
 touch src/api/sucursales/sucursales.controller.ts
@@ -460,7 +460,7 @@ import { PrismaService } from '../prisma/prisma.service';
 import { NotFoundException, ConflictException } from '@nestjs/common';
 
 const mockPrisma = {
-  comercio: { findUnique: jest.fn() },
+  organizacion: { findUnique: jest.fn() },
   sucursal: { create: jest.fn(), findFirst: jest.fn() },
 };
 
@@ -481,26 +481,26 @@ describe('SucursalesService', () => {
   afterEach(() => jest.clearAllMocks());
 
   describe('crear', () => {
-    const comercioId = 'comercio-uuid';
+    const organizacionId = 'organizacion-uuid';
     const dto = { nombre: 'Sucursal Central', direccion: 'Av. Principal 123' };
 
     it('debe crear la sucursal cuando los datos son válidos', async () => {
       // Arrange
-      mockPrisma.comercio.findUnique.mockResolvedValue({
-        id: comercioId,
+      mockPrisma.organizacion.findUnique.mockResolvedValue({
+        id: organizacionId,
         activa: true,
       });
       mockPrisma.sucursal.findFirst.mockResolvedValue(null); // no existe duplicado
       mockPrisma.sucursal.create.mockResolvedValue({
         id: 'sucursal-uuid',
-        comercioId,
+        organizacionId,
         ...dto,
         activa: true,
         creadoEn: new Date(),
       });
 
       // Act
-      const result = await service.crear(comercioId, dto);
+      const result = await service.crear(organizacionId, dto);
 
       // Assert
       expect(result.id).toBeDefined();
@@ -508,30 +508,30 @@ describe('SucursalesService', () => {
       expect(mockPrisma.sucursal.create).toHaveBeenCalledTimes(1);
     });
 
-    it('debe lanzar NotFoundException si el comercio no existe', async () => {
-      mockPrisma.comercio.findUnique.mockResolvedValue(null);
+    it('debe lanzar NotFoundException si el organizacion no existe', async () => {
+      mockPrisma.organizacion.findUnique.mockResolvedValue(null);
 
-      await expect(service.crear(comercioId, dto)).rejects.toThrow(
+      await expect(service.crear(organizacionId, dto)).rejects.toThrow(
         NotFoundException,
       );
     });
 
     it('debe lanzar ConflictException si ya existe una sucursal con ese nombre', async () => {
-      mockPrisma.comercio.findUnique.mockResolvedValue({ id: comercioId, activa: true });
+      mockPrisma.organizacion.findUnique.mockResolvedValue({ id: organizacionId, activa: true });
       mockPrisma.sucursal.findFirst.mockResolvedValue({ id: 'existente', nombre: dto.nombre });
 
-      await expect(service.crear(comercioId, dto)).rejects.toThrow(
+      await expect(service.crear(organizacionId, dto)).rejects.toThrow(
         ConflictException,
       );
     });
 
-    it('debe lanzar error si el comercio está inactivo', async () => {
-      mockPrisma.comercio.findUnique.mockResolvedValue({
-        id: comercioId,
+    it('debe lanzar error si el organizacion está inactivo', async () => {
+      mockPrisma.organizacion.findUnique.mockResolvedValue({
+        id: organizacionId,
         activa: false,
       });
 
-      await expect(service.crear(comercioId, dto)).rejects.toThrow();
+      await expect(service.crear(organizacionId, dto)).rejects.toThrow();
     });
   });
 });
@@ -554,31 +554,31 @@ import { PrismaService } from '../prisma/prisma.service';
 
 @Injectable()
 export class SucursalesService {
-  constructor(private readonly prisma: PrismaService) {}
+  consttaxIdtor(private readonly prisma: PrismaService) {}
 
-  async crear(comercioId: string, dto: { nombre: string; direccion: string; telefono?: string }) {
-    const comercio = await this.prisma.comercio.findUnique({
-      where: { id: comercioId },
+  async crear(organizacionId: string, dto: { nombre: string; direccion: string; telefono?: string }) {
+    const organizacion = await this.prisma.organizacion.findUnique({
+      where: { id: organizacionId },
     });
 
-    if (!comercio) {
-      throw new NotFoundException(`Comercio ${comercioId} no encontrado`);
+    if (!organizacion) {
+      throw new NotFoundException(`Organizacion ${organizacionId} no encontrado`);
     }
 
-    if (!comercio.activa) {
-      throw new BadRequestException('No se pueden crear sucursales en un comercio inactivo');
+    if (!organizacion.activa) {
+      throw new BadRequestException('No se pueden crear sucursales en un organizacion inactivo');
     }
 
     const duplicado = await this.prisma.sucursal.findFirst({
-      where: { comercioId, nombre: dto.nombre },
+      where: { organizacionId, nombre: dto.nombre },
     });
 
     if (duplicado) {
-      throw new ConflictException(`Ya existe una sucursal con el nombre "${dto.nombre}" en este comercio`);
+      throw new ConflictException(`Ya existe una sucursal con el nombre "${dto.nombre}" en este organizacion`);
     }
 
     return this.prisma.sucursal.create({
-      data: { ...dto, comercioId, activa: true },
+      data: { ...dto, organizacionId, activa: true },
     });
   }
 }
@@ -589,9 +589,9 @@ export class SucursalesService {
 ```bash
 npm run test -- sucursales.service.spec.ts
 # ✅ PASS: SucursalesService > crear > debe crear la sucursal cuando los datos son válidos
-# ✅ PASS: SucursalesService > crear > debe lanzar NotFoundException si el comercio no existe
+# ✅ PASS: SucursalesService > crear > debe lanzar NotFoundException si el organizacion no existe
 # ✅ PASS: SucursalesService > crear > debe lanzar ConflictException si ya existe...
-# ✅ PASS: SucursalesService > crear > debe lanzar error si el comercio está inactivo
+# ✅ PASS: SucursalesService > crear > debe lanzar error si el organizacion está inactivo
 ```
 
 #### Paso 7: Refactorizar si es necesario (REFACTOR)
@@ -713,17 +713,17 @@ function createMockExecutionContext(requestData: object) {
 
 ```typescript
 // Los utils son los más fáciles de testear: entrada → salida, sin dependencias
-describe('formatearRuc', () => {
-  it('debe formatear un RUC válido', () => {
-    expect(formatearRuc('12345678')).toBe('12.345.678');
+describe('formatearTaxId', () => {
+  it('debe formatear un taxId válido', () => {
+    expect(formatearTaxId('12345678')).toBe('12.345.678');
   });
 
-  it('debe lanzar error con RUC inválido', () => {
-    expect(() => formatearRuc('123')).toThrow('RUC inválido');
+  it('debe lanzar error con taxId inválido', () => {
+    expect(() => formatearTaxId('123')).toThrow('taxId inválido');
   });
 
-  it('debe manejar RUC con guiones', () => {
-    expect(formatearRuc('12-345-678')).toBe('12.345.678');
+  it('debe manejar taxId con guiones', () => {
+    expect(formatearTaxId('12-345-678')).toBe('12.345.678');
   });
 });
 ```
@@ -739,7 +739,7 @@ describe('formatearRuc', () => {
 // Archivo reutilizable en todos los tests que usan Prisma
 
 export const createPrismaMock = () => ({
-  comercio: {
+  organizacion: {
     create: jest.fn(),
     findUnique: jest.fn(),
     findFirst: jest.fn(),
@@ -809,7 +809,7 @@ mockPrisma.$queryRaw.mockResolvedValue([
 ```typescript
 // test/mocks/checkout.mock.ts
 export const createCheckoutProviderMock = () => ({
-  registrarComercio: jest.fn(),
+  registrarOrganizacion: jest.fn(),
   procesarPago: jest.fn(),
   anularTransaccion: jest.fn(),
   consultarEstado: jest.fn(),
@@ -843,7 +843,7 @@ const mockHttpService = {
 // En el test:
 mockHttpService.get.mockReturnValue(
   of({
-    data: { id: 'comercio-id', nombre: 'Comercio Test' },
+    data: { id: 'organizacion-id', nombre: 'Organizacion Test' },
     status: 200,
     headers: {},
     config: {},
@@ -897,16 +897,16 @@ describe('AppController (e2e)', () => {
 ### 8.2 Ejemplo de test E2E de un endpoint
 
 ```typescript
-describe('POST /api/v1/comercios', () => {
-  it('debe crear un comercio y retornar 201', async () => {
+describe('POST /api/v1/organizaciones', () => {
+  it('debe crear un organizacion y retornar 201', async () => {
     const dto = {
-      nombre: 'Comercio E2E Test',
-      ruc: '12345678',
-      email: 'test@comercio.com',
+      nombre: 'Organizacion E2E Test',
+      taxId: '12345678',
+      email: 'test@organizacion.com',
     };
 
     const response = await request(app.getHttpServer())
-      .post('/api/v1/comercios')
+      .post('/api/v1/organizaciones')
       .set('Authorization', `Bearer ${tokenValido}`)
       .send(dto)
       .expect(201);
@@ -916,10 +916,10 @@ describe('POST /api/v1/comercios', () => {
   });
 
   it('debe retornar 400 si el DTO es inválido', async () => {
-    const dtoInvalido = { nombre: 'X' }; // nombre muy corto, falta ruc
+    const dtoInvalido = { nombre: 'X' }; // nombre muy corto, falta taxId
 
     await request(app.getHttpServer())
-      .post('/api/v1/comercios')
+      .post('/api/v1/organizaciones')
       .set('Authorization', `Bearer ${tokenValido}`)
       .send(dtoInvalido)
       .expect(400);
@@ -927,8 +927,8 @@ describe('POST /api/v1/comercios', () => {
 
   it('debe retornar 401 sin token', async () => {
     await request(app.getHttpServer())
-      .post('/api/v1/comercios')
-      .send({ nombre: 'Test', ruc: '12345678' })
+      .post('/api/v1/organizaciones')
+      .send({ nombre: 'Test', taxId: '12345678' })
       .expect(401);
   });
 });
@@ -1078,7 +1078,7 @@ coverageThresholds: {
 
 ---
 
-## 10. Integración con el asistente de IA y `.agents/`
+## 10. Integración con el asistente de IA y `.context/`
 
 ### 10.1 Actualizar el `AGENTS.md` de cada proyecto
 
@@ -1096,7 +1096,7 @@ Agregar la sección de testing al `AGENTS.md` existente en cada proyecto:
 - Nombrar los tests en español, descriptivos del comportamiento esperado
 - Nunca hardcodear IDs reales de producción en los tests
 
-### Estructura de mocks
+### EsttaxIdtura de mocks
 
 Los mocks reutilizables viven en `test/mocks/`:
 - `test/mocks/prisma.mock.ts` → mock de PrismaService
@@ -1112,9 +1112,9 @@ Los mocks reutilizables viven en `test/mocks/`:
 - `npm run test:e2e` → tests end-to-end
 ```
 
-### 10.2 Crear o actualizar el agent de testing en `.agents/agents/`
+### 10.2 Crear o actualizar el agent de testing en `.context/agents/`
 
-Crear el archivo `.agents/agents/testing-agent.md`:
+Crear el archivo `.context/agents/testing-agent.md`:
 
 ```markdown
 # Agent: Testing
@@ -1161,9 +1161,9 @@ Cuando se me pide revisar tests:
 Siempre genero el archivo completo `.spec.ts`, listo para ejecutar.
 ```
 
-### 10.3 Actualizar `.agents/rules` con reglas de testing
+### 10.3 Actualizar `.context/rules/` con reglas de testing
 
-Agregar a `.agents/rules` (o al archivo de reglas existente):
+Agregar a `.context/rules/` (o al archivo de reglas existente):
 
 ```markdown
 ## Reglas de Testing
@@ -1174,22 +1174,22 @@ Agregar a `.agents/rules` (o al archivo de reglas existente):
 - SIEMPRE mockea las dependencias externas, nunca llames a servicios reales en tests unitarios
 - Los nombres de tests van en español y describen el COMPORTAMIENTO esperado, no el método
   - ❌ `it('calls prisma.create')`
-  - ✅ `it('debe retornar el comercio creado con su id generado')`
+  - ✅ `it('debe retornar el organizacion creado con su id generado')`
 ```
 
 ---
 
-## 11. Convenciones y estructura de archivos
+## 11. Convenciones y esttaxIdtura de archivos
 
 ### 11.1 Nomenclatura de archivos
 
 ```
 # Tests unitarios → junto al archivo que testean
-src/modules/comercios/comercios.service.ts
-src/modules/comercios/comercios.service.spec.ts
+src/modules/organizaciones/organizaciones.service.ts
+src/modules/organizaciones/organizaciones.service.spec.ts
 
 # Tests E2E → en carpeta separada /test
-test/comercios.e2e-spec.ts
+test/organizaciones.e2e-spec.ts
 
 # Mocks compartidos
 test/mocks/prisma.mock.ts
@@ -1202,22 +1202,22 @@ test/helpers/create-test-module.helper.ts
 
 ```typescript
 // describe → nombre de la clase o función que se testea
-describe('ComerciosService', () => {
+describe('OrganizacionesService', () => {
 
   // describe anidado → nombre del método o caso de uso
-  describe('crearComercio', () => {
+  describe('crearOrganizacion', () => {
 
     // it → descripción del comportamiento esperado en español
     // Formato: "debe [comportamiento] cuando [condición]"
-    it('debe retornar el comercio creado con su id', ...);
-    it('debe lanzar NotFoundException cuando el comercio no existe', ...);
-    it('debe lanzar ConflictException cuando el RUC ya está registrado', ...);
-    it('debe llamar al proveedor de checkout con los datos del comercio', ...);
+    it('debe retornar el organizacion creado con su id', ...);
+    it('debe lanzar NotFoundException cuando el organizacion no existe', ...);
+    it('debe lanzar ConflictException cuando el taxId ya está registrado', ...);
+    it('debe llamar al proveedor de checkout con los datos del organizacion', ...);
   });
 });
 ```
 
-### 11.3 Estructura recomendada del directorio `test/`
+### 11.3 EsttaxIdtura recomendada del directorio `test/`
 
 ```
 test/
@@ -1232,7 +1232,7 @@ test/
 │   ├── create-test-module.helper.ts
 │   ├── jwt.helper.ts           ← generar tokens de prueba
 │   └── fixtures/
-│       ├── comercio.fixture.ts ← datos de prueba reutilizables
+│       ├── organizacion.fixture.ts ← datos de prueba reutilizables
 │       └── usuario.fixture.ts
 ├── app.e2e-spec.ts
 └── jest-e2e.json
@@ -1241,20 +1241,20 @@ test/
 ### 11.4 Fixtures: datos de prueba reutilizables
 
 ```typescript
-// test/helpers/fixtures/comercio.fixture.ts
-export const comercioFixture = (overrides = {}) => ({
-  id: 'comercio-test-uuid',
-  nombre: 'Comercio de Prueba',
-  ruc: '12345678',
-  email: 'test@comercio.com',
+// test/helpers/fixtures/organizacion.fixture.ts
+export const organizacionFixture = (overrides = {}) => ({
+  id: 'organizacion-test-uuid',
+  nombre: 'Organizacion de Prueba',
+  taxId: '12345678',
+  email: 'test@organizacion.com',
   activa: true,
   creadoEn: new Date('2024-01-01'),
   ...overrides,
 });
 
 // Uso en tests:
-mockPrisma.comercio.findUnique.mockResolvedValue(
-  comercioFixture({ activa: false }),
+mockPrisma.organizacion.findUnique.mockResolvedValue(
+  organizacionFixture({ activa: false }),
 );
 ```
 
@@ -1320,16 +1320,16 @@ Todo lo anterior más:
 
 ```typescript
 // MAL: testea cómo está implementado internamente
-it('debe llamar prisma.comercio.findUnique', async () => {
+it('debe llamar prisma.organizacion.findUnique', async () => {
   await service.obtener('id');
-  expect(mockPrisma.comercio.findUnique).toHaveBeenCalled(); // ← esto es un detalle de implementación
+  expect(mockPrisma.organizacion.findUnique).toHaveBeenCalled(); // ← esto es un detalle de implementación
 });
 
 // BIEN: testea qué hace desde el punto de vista del usuario
-it('debe retornar el comercio cuando existe', async () => {
-  mockPrisma.comercio.findUnique.mockResolvedValue(comercioFixture());
+it('debe retornar el organizacion cuando existe', async () => {
+  mockPrisma.organizacion.findUnique.mockResolvedValue(organizacionFixture());
   const resultado = await service.obtener('id');
-  expect(resultado.id).toBe('comercio-test-uuid'); // ← esto es comportamiento
+  expect(resultado.id).toBe('organizacion-test-uuid'); // ← esto es comportamiento
 });
 ```
 
@@ -1351,18 +1351,18 @@ afterEach(() => {
 
 ```typescript
 // MAL: si falla el primero, no sabés si los otros fallan también
-it('debe crear comercio', async () => {
+it('debe crear organizacion', async () => {
   const resultado = await service.crear(dto);
   expect(resultado.id).toBeDefined();
   expect(resultado.nombre).toBe(dto.nombre);
-  expect(mockPrisma.comercio.create).toHaveBeenCalledTimes(1);
+  expect(mockPrisma.organizacion.create).toHaveBeenCalledTimes(1);
   expect(mockCheckout.registrar).toHaveBeenCalledWith(resultado.id);
   // ...etc
 });
 
 // BIEN: separar en tests específicos cuando tienen responsabilidades distintas
-it('debe retornar el comercio creado con id', async () => { ... });
-it('debe registrar el comercio en checkout', async () => { ... });
+it('debe retornar el organizacion creado con id', async () => { ... });
+it('debe registrar el organizacion en checkout', async () => { ... });
 ```
 
 ### ❌ Error 4: Mockear demasiado (over-mocking)
@@ -1370,14 +1370,14 @@ it('debe registrar el comercio en checkout', async () => { ... });
 ```typescript
 // MAL: mockear métodos que no usa el código bajo test
 const mockPrisma = {
-  comercio: { findUnique: jest.fn(), create: jest.fn() },
+  organizacion: { findUnique: jest.fn(), create: jest.fn() },
   sucursal: { findMany: jest.fn() }, // ← este test no usa sucursales, ¿para qué?
   usuario: { findAll: jest.fn() },   // ← tampoco
 };
 
 // BIEN: mockear solo lo que el código bajo test realmente usa
 const mockPrisma = {
-  comercio: { findUnique: jest.fn(), create: jest.fn() },
+  organizacion: { findUnique: jest.fn(), create: jest.fn() },
 };
 ```
 
@@ -1394,8 +1394,8 @@ it('debe manejar el error', async () => {
 });
 
 // BIEN: usar la sintaxis correcta de Jest para errores
-it('debe lanzar NotFoundException con comercio inexistente', async () => {
-  mockPrisma.comercio.findUnique.mockResolvedValue(null);
+it('debe lanzar NotFoundException con organizacion inexistente', async () => {
+  mockPrisma.organizacion.findUnique.mockResolvedValue(null);
   await expect(service.crear('id-inexistente', dto)).rejects.toThrow(NotFoundException);
 });
 ```
@@ -1405,13 +1405,13 @@ it('debe lanzar NotFoundException con comercio inexistente', async () => {
 ```typescript
 // MAL: conecta a la DB real → tests lentos, frágiles, no reproducibles
 providers: [
-  ComerciosService,
+  OrganizacionesService,
   PrismaService, // ← esto conecta a la DB real
 ],
 
 // BIEN: siempre mock en tests unitarios
 providers: [
-  ComerciosService,
+  OrganizacionesService,
   { provide: PrismaService, useValue: mockPrisma },
 ],
 ```
@@ -1434,7 +1434,7 @@ providers: [
 | **Coverage** | Porcentaje del código ejecutado por los tests |
 | **Happy path** | El caso de uso exitoso, cuando todo funciona bien |
 | **Red-Green-Refactor** | El ciclo base de TDD: test falla → implementar → mejorar |
-| **AAA** | Arrange-Act-Assert: el patrón de estructura de un test |
+| **AAA** | Arrange-Act-Assert: el patrón de esttaxIdtura de un test |
 | **jest.fn()** | Función mock de Jest que registra sus llamadas |
 | **mockResolvedValue** | Configura un mock async para que resuelva con un valor |
 | **mockRejectedValue** | Configura un mock async para que rechace con un error |
