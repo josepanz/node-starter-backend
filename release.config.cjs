@@ -93,9 +93,9 @@ const releaseAssets = [
 
 /** En GitLab la imagen se construye y publica aqui; en GitHub lo hace release.yml. */
 const execOptions = {
-  prepareCmd: './scripts/replace-version.sh ${nextRelease.version} ${branch.name}',
+  prepareCmd: 'bash ./scripts/replace-version.sh ${nextRelease.version} ${branch.name}',
   ...(isGitLab && {
-    publishCmd: './scripts/deploy.sh ${nextRelease.version} ${branch.name}',
+    publishCmd: 'bash ./scripts/deploy.sh ${nextRelease.version} ${branch.name}',
   }),
 };
 
