@@ -10,7 +10,7 @@ resources:
 # Reemplazar newName por el registro real del equipo.
 images:
   - name: node-starter-backend
-    newName: registry.example.com/org/node-starter-backend
+    newName: ghcr.io/josepanz/node-starter-backend
     newTag: "1.0.0"
 
 patches:
