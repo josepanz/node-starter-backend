@@ -97,9 +97,9 @@ export class UsersDBService {
     createdBy: string;
     currentAccessLevel?: AccessLevel;
     roleIds?: number[];
-    merchantCtx?: {
+    tenantCtx?: {
       ruc: string;
-      merchantCode: string;
+      tenantCode: string;
       level: AccessLevel;
       branchCodes?: string[];
       groupingIds?: number[];
@@ -177,7 +177,7 @@ export class UsersDBService {
     email?: string;
     documentNumber?: string;
     status?: UserStatus;
-    merchantCode?: string;
+    tenantCode?: string;
     currentAccessLevel?: AccessLevel;
     level?: AccessLevel;
     groupingId?: number;
@@ -261,7 +261,7 @@ export class UsersDBService {
     email?: string;
     documentNumber?: string;
     status?: UserStatus;
-    merchantCode?: string;
+    tenantCode?: string;
     currentLevel?: AccessLevel;
     level?: AccessLevel;
     groupingId?: number;

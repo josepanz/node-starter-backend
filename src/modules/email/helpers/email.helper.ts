@@ -367,7 +367,7 @@ export class EmailHelper {
    * Genera el contenido HTML para el correo de comprobante de pago.
    * @param operationNumber Número de operación
    * @param authorizationCode Código de autorización
-   * @param merchantName Nombre del comercio
+   * @param tenantName Nombre del tenant
    * @param transactionDate Fecha de la transacción
    * @param amount Monto del pago
    * @param paymentMethod Forma de pago
@@ -377,7 +377,7 @@ export class EmailHelper {
   public static createPaymentReceiptTemplate(
     operationNumber: string,
     authorizationCode: string,
-    merchantName: string,
+    tenantName: string,
     transactionDate: string,
     amount: number | string,
     paymentMethod: string,
@@ -465,8 +465,8 @@ export class EmailHelper {
                                                       <td style="border-bottom: 1px solid #EAEAEA;">${authorizationCode}</td>
                                                   </tr>
                                                   <tr bgcolor="#F9F9F9">
-                                                      <td style="font-weight: bold; border-bottom: 1px solid #EAEAEA;">Comercio:</td>
-                                                      <td style="border-bottom: 1px solid #EAEAEA;">${merchantName}</td>
+                                                      <td style="font-weight: bold; border-bottom: 1px solid #EAEAEA;">Tenant:</td>
+                                                      <td style="border-bottom: 1px solid #EAEAEA;">${tenantName}</td>
                                                   </tr>
                                                   <tr>
                                                       <td style="font-weight: bold; border-bottom: 1px solid #EAEAEA;">Fecha:</td>

@@ -1,10 +1,10 @@
 import { AccessLevel } from '@prisma/client';
 
-export interface IMerchantContext {
+export interface ITenantContext {
   level: AccessLevel;
   ruc: string;
-  merchantCode: string;
+  tenantCode: string;
   groupingId?: number;
-  merchantLegacyCode?: string;
+  tenantLegacyCode?: string;
   branchCode?: string;
 }

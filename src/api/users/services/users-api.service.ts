@@ -16,7 +16,7 @@ import {
   UpdateEditContextResponseDTO,
 } from '@api/users/dtos/response/edit-context.response.dto';
 import { UsersDBService } from '@modules/users-db/services/users-db.service';
-import { IMerchantContext } from '@common/interfaces/merchant-context.interface';
+import { ITenantContext } from '@common/interfaces/tenant-context.interface';
 import { UserRolesDBService } from '@modules/users-db/services/user-roles-db.service';
 import { UserHelper } from '../helpers/user.helper';
 import { IUserDataOnJwt } from '@modules/auth/interfaces/user-data-on-jwt.interface';
@@ -30,7 +30,7 @@ export class UsersApiService {
 
   async findAll(
     dto: ListUsersRequestDTO,
-    merchantCtx: IMerchantContext,
+    tenantCtx: ITenantContext,
     user: IUserDataOnJwt,
   ): Promise<UsersListResponseDTO> {
     const page = Number(dto.page ?? 1);
@@ -49,11 +49,11 @@ export class UsersApiService {
       email: dto.email,
       documentNumber: dto.documentNumber,
       status: dto.status,
-      merchantCode: merchantCtx.merchantCode,
-      currentLevel: merchantCtx.level,
-      level: merchantCtx.level,
-      groupingId: merchantCtx.groupingId,
-      branchCode: merchantCtx.branchCode,
+      tenantCode: tenantCtx.tenantCode,
+      currentLevel: tenantCtx.level,
+      level: tenantCtx.level,
+      groupingId: tenantCtx.groupingId,
+      branchCode: tenantCtx.branchCode,
       operatorReferenceId: user.referenceId,
     });
 

@@ -6,7 +6,7 @@ import { DocumentValidationDTO } from './dto/document-validation.dto';
 import { DocumentType } from '@prisma/client';
 import {
   ALLOWED_MIME_TYPES,
-  MERCHANT_DOC_FIELDS,
+  TENANT_DOC_FIELDS,
 } from './const/storage-api.enum';
 import { IUserDataOnJwt } from '@modules/auth/interfaces/user-data-on-jwt.interface';
 import { User } from '@common/decorators/user.decorator';
@@ -27,7 +27,7 @@ export class StorageController {
   @RateLimit('upload')
   @Version('1')
   @FileUploader({
-    fields: MERCHANT_DOC_FIELDS,
+    fields: TENANT_DOC_FIELDS,
     allowedTypes: ALLOWED_MIME_TYPES,
   })
   @ApiOperation({ summary: 'Carga archivos al storage.' })

@@ -73,7 +73,7 @@ export class StorageApiService {
       fileGroup.map((file) => ({
         id: fieldName,
         file,
-        path: `onboarding/merchants/${referenceId}/${applicationId}`,
+        path: `onboarding/tenants/${referenceId}/${applicationId}`,
       })),
     );
   }

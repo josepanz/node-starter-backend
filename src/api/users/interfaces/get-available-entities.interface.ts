@@ -1,11 +1,11 @@
 import { AccessLevel } from '@prisma/client';
 
-export interface FlatMerchantAssignment {
+export interface FlatTenantAssignment {
   id: string;
   name: string;
   ruc: string;
-  merchantCode: string;
-  merchantLegacyCode?: string;
+  tenantCode: string;
+  tenantLegacyCode?: string;
   groupingId?: number | null;
   branchCode?: string | null;
   level: AccessLevel;
@@ -13,7 +13,7 @@ export interface FlatMerchantAssignment {
 
 // 2. Define la estructura del objeto agrupado
 export interface GroupedAssignments {
-  groups: FlatMerchantAssignment[];
-  commerces: FlatMerchantAssignment[];
-  branches: FlatMerchantAssignment[];
+  groups: FlatTenantAssignment[];
+  commerces: FlatTenantAssignment[];
+  branches: FlatTenantAssignment[];
 }

@@ -401,7 +401,7 @@ describe('AuthApiService', () => {
     it('retorna el scope completo del usuario con roles y permisos', async () => {
       mockFindUserById.mockResolvedValue(mockUser);
       mockGetUserScope.mockResolvedValue({
-        roles: [{ name: 'merchant-admin', description: 'Administrador' }],
+        roles: [{ name: 'tenant-admin', description: 'Administrador' }],
         permissions: [{ name: 'dashboard:read' }],
       });
 

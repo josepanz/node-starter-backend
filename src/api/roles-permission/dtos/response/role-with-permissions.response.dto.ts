@@ -41,7 +41,7 @@ export class RoleWithPermissionsResponseDTO {
   id!: number;
 
   @ApiProperty({
-    example: 'MerchantAdmin',
+    example: 'TenantAdmin',
     description: 'Nombre del rol',
   })
   name!: string;
@@ -53,7 +53,7 @@ export class RoleWithPermissionsResponseDTO {
   displayName!: string;
 
   @ApiProperty({
-    example: 'Administrador del comercio con acceso completo',
+    example: 'Administrador del tenant con acceso completo',
     description: 'Descripción del rol',
     nullable: true,
   })

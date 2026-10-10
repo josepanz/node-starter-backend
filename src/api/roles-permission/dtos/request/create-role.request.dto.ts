@@ -3,7 +3,7 @@ import { IsString, IsOptional, MaxLength } from 'class-validator';
 
 export class CreateRoleRequestDTO {
   @ApiProperty({
-    example: 'MerchantAdmin',
+    example: 'TenantAdmin',
     description: 'Nombre único del rol (formato PascalCase)',
   })
   @IsString()
@@ -11,7 +11,7 @@ export class CreateRoleRequestDTO {
   name!: string;
 
   @ApiProperty({
-    example: 'Administrador del comercio con acceso completo',
+    example: 'Administrador del tenant con acceso completo',
     description: 'Descripción del rol',
     required: false,
   })

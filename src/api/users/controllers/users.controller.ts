@@ -21,11 +21,11 @@ import { UsersDocs } from '@api/users/docs/users-api.docs';
 
 import { PermissionsGuard } from '@modules/auth/guards/permissions.guard';
 import { JwtAuthGuard } from '@modules/auth/guards/jwt-auth.guard';
-import { MerchantContextGuard } from '@modules/auth/guards/merchant-context.guard';
+import { TenantContextGuard } from '@modules/auth/guards/tenant-context.guard';
 import { Permissions } from '@common/decorators/permissions.decorator';
 import { User } from '@common/decorators/user.decorator';
-import { MerchantContext } from '@modules/auth/decorators/get-merchant-context.decorator';
-import { IMerchantContext } from '@common/interfaces/merchant-context.interface';
+import { TenantContext } from '@modules/auth/decorators/get-tenant-context.decorator';
+import { ITenantContext } from '@common/interfaces/tenant-context.interface';
 import { PERMISSIONS } from '@common/enum/permissions.enum';
 import { UpdateEditContextRequestDTO } from '@api/users/dtos/request/edit-context.request.dto';
 import {
@@ -44,20 +44,20 @@ export class UsersController {
   @Get()
   @Version('1')
   @RateLimit('search')
-  @UseGuards(MerchantContextGuard)
+  @UseGuards(TenantContextGuard)
   @Permissions(PERMISSIONS.USER.READ)
   @UsersDocs('findAll')
   async findAll(
     @Query() query: DTO.ListUsersRequestDTO,
-    @MerchantContext() merchantCtx: IMerchantContext,
+    @TenantContext() tenantCtx: ITenantContext,
     @User() user: IUserDataOnJwt,
   ): Promise<DTO.UsersListResponseDTO> {
-    return await this.usersApiService.findAll(query, merchantCtx, user);
+    return await this.usersApiService.findAll(query, tenantCtx, user);
   }
 
   @Get('reference/:referenceId/edit-context')
   @Version('1')
-  @UseGuards(MerchantContextGuard)
+  @UseGuards(TenantContextGuard)
   @Permissions(PERMISSIONS.USER.READ)
   @UsersDocs('getEditContext')
   async getEditContext(
@@ -68,7 +68,7 @@ export class UsersController {
 
   @Put('reference/:referenceId/edit-context')
   @Version('1')
-  @UseGuards(MerchantContextGuard)
+  @UseGuards(TenantContextGuard)
   @Permissions(PERMISSIONS.USER.UPDATE)
   @UsersDocs('updateEditContext')
   async updateEditContext(
@@ -85,7 +85,7 @@ export class UsersController {
 
   @Get('reference/:referenceId')
   @Version('1')
-  @UseGuards(MerchantContextGuard)
+  @UseGuards(TenantContextGuard)
   @Permissions(PERMISSIONS.USER.READ)
   @UsersDocs('findOneByReference')
   async findOneByReference(
@@ -123,7 +123,7 @@ export class UsersController {
 
   @Get(':id')
   @Version('1')
-  @UseGuards(MerchantContextGuard)
+  @UseGuards(TenantContextGuard)
   @Permissions(PERMISSIONS.USER.READ)
   @UsersDocs('findOne')
   async findOne(

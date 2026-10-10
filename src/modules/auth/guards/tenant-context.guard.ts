@@ -1,4 +1,4 @@
-import { IMerchantContext } from '@common/interfaces/merchant-context.interface';
+import { ITenantContext } from '@common/interfaces/tenant-context.interface';
 import { PrismaDatasource } from '@core/database/services/prisma.service';
 import {
   Injectable,
@@ -9,7 +9,7 @@ import {
 } from '@nestjs/common';
 
 @Injectable()
-export class MerchantContextGuard implements CanActivate {
+export class TenantContextGuard implements CanActivate {
   constructor(private prisma: PrismaDatasource) {}
 
   async canActivate(context: ExecutionContext): Promise<boolean> {
@@ -25,25 +25,25 @@ export class MerchantContextGuard implements CanActivate {
       throw new ForbiddenException('El usuario no existe.');
     }
 
-    const cookieData = request.cookies['merchant-ctx'];
+    const cookieData = request.cookies['tenant-ctx'];
 
     if (!cookieData) {
       throw new BadRequestException(
-        'Falta la cookie merchant-ctx con el contexto de operación.',
+        'Falta la cookie tenant-ctx con el contexto de operación.',
       );
     }
 
     try {
       const decodedString = Buffer.from(cookieData, 'base64').toString('utf-8');
-      const merchantContext: IMerchantContext = JSON.parse(decodedString);
+      const tenantContext: ITenantContext = JSON.parse(decodedString);
 
-      request.merchantContext = merchantContext;
+      request.tenantContext = tenantContext;
 
       return true;
     } catch (error) {
       if (error instanceof ForbiddenException) throw error;
       throw new BadRequestException(
-        'El formato del contexto en la cookie merchant-ctx es inválido.',
+        'El formato del contexto en la cookie tenant-ctx es inválido.',
       );
     }
   }

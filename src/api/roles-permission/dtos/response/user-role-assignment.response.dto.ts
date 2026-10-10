@@ -8,7 +8,7 @@ class AssignedRoleDTO {
   id!: number;
 
   @ApiProperty({
-    example: 'MerchantAdmin',
+    example: 'TenantAdmin',
     description: 'Nombre del rol',
   })
   name!: string;
@@ -64,7 +64,7 @@ export class UserRoleAssignmentResponseDTO {
     example: [
       {
         id: 1,
-        name: 'MerchantAdmin',
+        name: 'TenantAdmin',
         assigned: true,
         message: 'Rol asignado correctamente',
       },
