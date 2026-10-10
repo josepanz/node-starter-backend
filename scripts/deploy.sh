@@ -1,66 +1,39 @@
 #!/bin/sh
+# Construye la imagen y, si hay registro y credenciales, la publica.
+# Uso: deploy.sh <version> [rama]
+#
+# Funciona sin configurar nada: los defaults salen de scripts/registry-env.sh (ghcr.io en GitHub, registro del
+# proyecto en GitLab, localhost:5000 en local). PUSH=0 fuerza solo build; PUSH=1 fuerza el push.
+# Nunca falla por falta de infraestructura: sin docker o sin credenciales, avisa y termina con exit 0.
+set -e
 
-set -e  # Detener la ejecución si algún comando falla
+VERSION=${1:-dev}
+BRANCH=${2:-local}
 
-echo "Init build node-starter-backend"
+SCRIPT_DIR=$(cd "$(dirname "$0")" && pwd)
+# shellcheck source=scripts/registry-env.sh
+. "$SCRIPT_DIR/registry-env.sh"
 
-# Set Variables
-VERSION=$1
-BRANCH=$2
-LAST_VERSION=$3
-IMAGE_NAME=${IMAGE_NAME}
-REGISTRY_DOMAIN=${REGISTRY_DOMAIN}
-REGISTRY=${REGISTRY}
-REGISTRY_USER=${REGISTRY_USER}
-REGISTRY_PASSWORD=${REGISTRY_PASSWORD}
-
-
-echo "Last Release is: $LAST_VERSION"
-echo "Building version ${VERSION} from branch ${BRANCH}"
-
-TAG=${VERSION}
-
-
-IMAGE_TAG=${REGISTRY_DOMAIN}/ruta/${IMAGE_NAME}:${TAG}
-
-echo "Start deployment of ${IMAGE_TAG}"
-
-# Login to registry
-echo "Logging in to custom registry ${REGISTRY}..."
-echo "${REGISTRY_PASSWORD}" | docker login ${REGISTRY} -u ${REGISTRY_USER} --password-stdin || { echo "Docker login failed"; exit 1; }
-
-# Build the Docker image
-echo "Building Docker image..."
-docker build -t ${IMAGE_TAG} . --platform linux/amd64 || { echo "Docker build failed"; exit 1; }
-
-# Push the Docker image to the custom registry
-echo "Pushing Docker image to ${REGISTRY}..."
-docker push ${IMAGE_TAG} || { echo "Docker push failed"; exit 1; }
-
-echo "Update argo deployment"
-
-case "$BRANCH" in
-  develop)
-    echo "Deploying to development environment"
-    # Add your argo deployment commands for the development environment here
-    ;;
-  qa)
-    echo "Deploying to QA environment"
-    # Add your argo deployment commands for the QA environment here
-    ;;
-  master)
-    echo "Deploying to production environment"
-    # Add your argo deployment commands for the production environment here
-    ;;
-  *)
-    echo "Branch does not trigger a deployment"
-    ;;
-esac
-
-
-if [ $? -ne 0 ]; then
-    echo "Deployment failed"
-    exit 1
+if ! command -v docker >/dev/null 2>&1; then
+  echo "[deploy] docker no esta disponible: se omite la construccion de la imagen."
+  exit 0
 fi
 
-echo "Deployment successful"
+IMAGE_TAG="$IMAGE_REPOSITORY:$VERSION"
+PUSH=${PUSH:-auto}
+if [ "$PUSH" = "auto" ]; then
+  if [ -n "$REGISTRY_PASSWORD" ] && [ -n "$REGISTRY_USER" ]; then PUSH=1; else PUSH=0; fi
+fi
+
+echo "[deploy] Construyendo $IMAGE_TAG (rama $BRANCH)"
+docker build -t "$IMAGE_TAG" --platform linux/amd64 "$SCRIPT_DIR/.."
+
+if [ "$PUSH" = "1" ]; then
+  if [ -n "$REGISTRY_PASSWORD" ]; then
+    echo "$REGISTRY_PASSWORD" | docker login "$REGISTRY" -u "$REGISTRY_USER" --password-stdin
+  fi
+  docker push "$IMAGE_TAG"
+  echo "[deploy] Imagen publicada: $IMAGE_TAG"
+else
+  echo "[deploy] Sin credenciales de registro: imagen construida localmente, sin push ($IMAGE_TAG)."
+fi

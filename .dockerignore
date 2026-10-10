@@ -1,4 +1,41 @@
-dist/
+# Dependencias y salida de build (se generan dentro de la imagen)
 node_modules/
+dist/
+coverage/
+
+# Entorno y secretos: nunca en la imagen
+.env
+.env.*
+!.env.template
+
+# Git, CI e infra
+.git/
+.github/
+.gitlab/
+.gitlab-ci.yml
+.husky/
+ci/
+docker-compose.yml
+Dockerfile
+.dockerignore
+
+# Contexto de asistentes, specs y documentacion
+.context/
+.agents/
+openspec/
+docs/
+*.md
+!README.md
+
+# Tests (no necesarios en la imagen)
+test/
+**/*.spec.ts
+
+# Editor, logs y temporales
 .vscode/
+.idea/
 .turbo/
+*.log
+*.bak
+*.tmp
+uploads/

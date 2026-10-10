@@ -1,9 +1,33 @@
-# Servicios de apoyo opcionales para desarrollo local (no se levantan automáticamente).
-# Redis habilita cache, rate limiting y nonces compartidos entre instancias:
-#   docker compose up -d redis   y   REDIS_URL=redis://localhost:6379/0
-# Mongo habilita el ActivityLog persistente (TTL):
-#   docker compose up -d mongo   y   MONGO_URI=mongodb://localhost:27017/starter
+# Servicios de apoyo para desarrollo local. Ninguno se levanta automaticamente: se elige por nombre.
+# Los valores estan alineados con .env.template.
+#
+#   docker compose up -d postgres            DATABASE_URL="postgresql://postgres:admin@localhost:5432/node_starter?schema=public"
+#   docker compose up -d redis               REDIS_URL=redis://localhost:6379/0  (cache, rate limit, nonces, realtime compartidos)
+#   docker compose up -d mongo               MONGO_URI=mongodb://localhost:27017/starter  (ActivityLog persistente con TTL)
+#   docker compose up -d mailpit             EMAIL_HOST=localhost EMAIL_PORT=1025  (bandeja web en http://localhost:8025)
+#   docker compose up -d seq                 SEQ_ENABLED=true SEQ_URL=http://localhost:5341  (logs en http://localhost:8081)
+#
+# Solo desarrollo: las credenciales de abajo son de ejemplo y no deben reutilizarse en otros ambientes.
+name: node-starter
+
 services:
+  postgres:
+    image: postgres:16-alpine
+    container_name: node-starter-postgres
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: admin
+      POSTGRES_DB: node_starter
+    ports:
+      - '5432:5432'
+    volumes:
+      - postgres-data:/var/lib/postgresql/data
+    healthcheck:
+      test: ['CMD-SHELL', 'pg_isready -U postgres -d node_starter']
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
   redis:
     image: redis:7.4-alpine
     container_name: node-starter-redis
@@ -31,6 +55,44 @@ services:
       timeout: 5s
       retries: 5
 
+  # SMTP de captura: recibe todo el correo saliente sin enviarlo a nadie.
+  mailpit:
+    image: axllent/mailpit:v1.20
+    container_name: node-starter-mailpit
+    environment:
+      MP_SMTP_AUTH_ACCEPT_ANY: '1'
+      MP_SMTP_AUTH_ALLOW_INSECURE: '1'
+    ports:
+      - '1025:1025'
+      - '8025:8025'
+    volumes:
+      - mailpit-data:/data
+    healthcheck:
+      test: ['CMD', '/mailpit', 'readyz']
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  # Logs estructurados (nestjs-pino con el transporte de Seq).
+  seq:
+    image: datalust/seq:2024.3
+    container_name: node-starter-seq
+    environment:
+      ACCEPT_EULA: 'Y'
+    ports:
+      - '5341:5341'
+      - '8081:80'
+    volumes:
+      - seq-data:/data
+    healthcheck:
+      test: ['CMD-SHELL', 'wget -qO- http://localhost:80/api >/dev/null || exit 1']
+      interval: 15s
+      timeout: 5s
+      retries: 5
+
 volumes:
+  postgres-data:
   redis-data:
   mongo-data:
+  mailpit-data:
+  seq-data:
