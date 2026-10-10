@@ -28,13 +28,13 @@
 <title>cluster_MessageDBModule_providers</title>
 <polygon fill="none" stroke="black" points="150,-78 150,-130 747,-130 747,-78 150,-78"/>
 </g>
-<g id="clust4" class="cluster">
-<title>cluster_MessageDBModule_exports</title>
-<polygon fill="none" stroke="black" points="259,-208 259,-260 405,-260 405,-208 259,-208"/>
-</g>
 <g id="clust3" class="cluster">
 <title>cluster_MessageDBModule_imports</title>
 <polygon fill="none" stroke="black" points="16,-78 16,-130 142,-130 142,-78 16,-78"/>
+</g>
+<g id="clust4" class="cluster">
+<title>cluster_MessageDBModule_exports</title>
+<polygon fill="none" stroke="black" points="259,-208 259,-260 405,-260 405,-208 259,-208"/>
 </g>
 <!-- DatabaseModule -->
 <g id="node1" class="node">

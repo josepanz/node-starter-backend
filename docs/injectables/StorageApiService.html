@@ -184,7 +184,7 @@
             <tbody>
                 <tr>
                     <td class="col-md-4">
-<code>constructor(storageService: <a href="../injectables/StorageService.html" target="_self">StorageService</a>, prisma: <a href="../injectables/PrismaDatasource.html" target="_self">PrismaDatasource</a>)</code>
+<code>constructor(storageService: <a href="../injectables/StorageService.html" target="_self">StorageService</a>, usersDb: <a href="../injectables/UsersDBService.html" target="_self">UsersDBService</a>)</code>
                     </td>
                 </tr>
                         <tr>
@@ -219,10 +219,10 @@
                                                     
                                                 </tr>
                                                 <tr>
-                                                        <td>prisma</td>
+                                                        <td>usersDb</td>
                                                   
                                                         <td>
-                                                                        <code><a href="../injectables/PrismaDatasource.html" target="_self" >PrismaDatasource</a></code>
+                                                                        <code><a href="../injectables/UsersDBService.html" target="_self" >UsersDBService</a></code>
                                                         </td>
                                                   
                                                     <td>
@@ -266,8 +266,8 @@
 
                     <tr>
                         <td class="col-md-4">
-                            <div class="io-line">Defined in <a href="" data-line="67"
-                                    class="link-to-prism">src/api/storage/storage-api.service.ts:67</a></div>
+                            <div class="io-line">Defined in <a href="" data-line="64"
+                                    class="link-to-prism">src/api/storage/storage-api.service.ts:64</a></div>
                         </td>
                     </tr>
 
@@ -429,8 +429,8 @@
 
                     <tr>
                         <td class="col-md-4">
-                            <div class="io-line">Defined in <a href="" data-line="34"
-                                    class="link-to-prism">src/api/storage/storage-api.service.ts:34</a></div>
+                            <div class="io-line">Defined in <a href="" data-line="31"
+                                    class="link-to-prism">src/api/storage/storage-api.service.ts:31</a></div>
                         </td>
                     </tr>
 
@@ -506,7 +506,7 @@
 
 
     <div class="tab-pane fade  tab-source-code" id="source">
-        <pre class="line-numbers compodoc-sourcecode"><code class="language-typescript">import { PrismaDatasource } from &#x27;@core/database/services/prisma.service&#x27;;
+        <pre class="line-numbers compodoc-sourcecode"><code class="language-typescript">import { UsersDBService } from &#x27;@modules/users-db/services/users-db.service&#x27;;
 import { StorageService } from &#x27;@modules/storage/services/storage.service&#x27;;
 import { StorageUploadInput } from &#x27;@modules/storage/interfaces/storage.interface&#x27;;
 import {
@@ -523,19 +523,16 @@ import {
 export class StorageApiService {
   constructor(
     private readonly storageService: StorageService,
-    private readonly prisma: PrismaDatasource,
+    private readonly usersDb: UsersDBService,
   ) {}
 
   async uploadFile(params: IUploadFileParams): Promise&lt;void&gt; {
     const { files, userId, referenceId, documentType, documentNumber } &#x3D; params;
 
     await this.uploadFilesToStorage(files, referenceId, 1);
-    await this.prisma.extended.users.update({
-      where: { id: Number(userId) },
-      data: {
-        documentNumber: documentNumber,
-        documentType: documentType,
-      },
+    await this.usersDb.updateDocument(Number(userId), {
+      documentNumber,
+      documentType,
     });
   }
 

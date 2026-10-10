@@ -28,13 +28,13 @@
 <title>cluster_NotificationsModule_providers</title>
 <polygon fill="none" stroke="black" points="296,-78 296,-130 1779,-130 1779,-78 296,-78"/>
 </g>
-<g id="clust4" class="cluster">
-<title>cluster_NotificationsModule_exports</title>
-<polygon fill="none" stroke="black" points="520,-208 520,-260 1212,-260 1212,-208 520,-208"/>
-</g>
 <g id="clust3" class="cluster">
 <title>cluster_NotificationsModule_imports</title>
 <polygon fill="none" stroke="black" points="16,-78 16,-130 288,-130 288,-78 16,-78"/>
+</g>
+<g id="clust4" class="cluster">
+<title>cluster_NotificationsModule_exports</title>
+<polygon fill="none" stroke="black" points="520,-208 520,-260 1212,-260 1212,-208 520,-208"/>
 </g>
 <!-- DatabaseModule -->
 <g id="node1" class="node">

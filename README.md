@@ -1,7 +1,7 @@
 # node-starter-backend
 
 Última actualización: <!-- AUTO:LAST_UPDATE:START -->
-10 de octubre de 2026, 14:55
+10 de octubre de 2026, 15:01
 <!-- AUTO:LAST_UPDATE:END -->
 
 ## Qué es
@@ -129,7 +129,7 @@ La lista completa de scripts está en el bloque `AUTO:SCRIPTS` más abajo. Para 
 | `ApiClientsApiModule` | `src/api/api-clients/api-clients-api.module.ts` | - | ApiClientsApiService |
 | `ApiModule` | `src/api/api.module.ts` | - | - |
 | `AuditLogsApiModule` | `src/api/audit-logs/audit-logs-api.module.ts` | - | AuditLogsApiService |
-| `AuthApiModule` | `src/api/auth/auth-api.module.ts` | - | AuthApiService, AuthCookieService, AuthMigrationService, JwtRefreshStrategy, JwtStrategy |
+| `AuthApiModule` | `src/api/auth/auth-api.module.ts` | - | AuthApiService, AuthCookieService, AuthMigrationService |
 | `CatalogOrmApiModule` | `src/api/catalog-orm/catalog-orm-api.module.ts` | - | CatalogOrmApiService |
 | `CatalogRawApiModule` | `src/api/catalog-raw/catalog-raw-api.module.ts` | - | CatalogRawApiService |
 | `EventsApiModule` | `src/api/events/events-api.module.ts` | - | NotificationRealtimeListener |
@@ -158,7 +158,7 @@ La lista completa de scripts está en el bloque `AUTO:SCRIPTS` más abajo. Para 
 | `AiDisclosureDBModule` | `src/modules/ai-disclosure-db/ai-disclosure-db.module.ts` | - | AiDisclosureDBService |
 | `ApiClientsDBModule` | `src/modules/api-clients-db/api-clients-db.module.ts` | - | ApiClientSigningSecretService, ApiClientsDBService |
 | `AuditLogDBModule` | `src/modules/audit-log-db/audit-log-db.module.ts` | - | AuditLogDBService |
-| `AuthModule` | `src/modules/auth/auth.module.ts` | - | AuthPasswordService, AuthService, AuthTokenService, CredentialsRepository |
+| `AuthModule` | `src/modules/auth/auth.module.ts` | - | AuthPasswordService, AuthService, AuthTokenService, CredentialsRepository, JwtRefreshStrategy, JwtStrategy |
 | `CatalogOrmDbModule` | `src/modules/catalog-orm/catalog-orm-db.module.ts` | - | CatalogCategoryRepository, CatalogItemRepository, CatalogItemStockRepository, CatalogOrmService |
 | `CatalogRawDbModule` | `src/modules/catalog-raw/catalog-raw-db.module.ts` | - | CatalogRawRepository, CatalogRawService |
 | `EmailModule` | `src/modules/email/email.module.ts` | - | EmailService, SmtpHealthIndicator |
@@ -273,7 +273,7 @@ La lista completa de scripts está en el bloque `AUTO:SCRIPTS` más abajo. Para 
 | SMS Infobip | `SMS_PROVIDER=infobip` + `INFOBIP_API_KEY`, `INFOBIP_BASE_URL` | Proveedor console |
 | Push FCM | `FIREBASE_PROJECT_ID`, `FIREBASE_CLIENT_EMAIL`, `FIREBASE_PRIVATE_KEY` | Proveedor Noop |
 | Push Web (VAPID) | `VAPID_PUBLIC_KEY`, `VAPID_PRIVATE_KEY` | Proveedor Noop |
-| Storage S3 | `S3_BUCKET_NAME` + credenciales `S3_*` | Storage deshabilitado |
+| Storage S3 | `S3_BUCKET_NAME`, `S3_REGION` y `S3_ACCESS_KEY_ID` / `S3_SECRET_ACCESS_KEY` | El módulo siempre se registra y el cliente S3 se crea igual (región por defecto `us-east-1`, credenciales por la cadena por defecto del SDK); la app arranca y las operaciones de storage fallan recién al usarse |
 | Sentry | `SENTRY_DSN` | No reporta |
 | Seq (logs) | `SEQ_ENABLED=true` | Solo logs por stdout |
 | Scheduler / cron jobs | `SCHEDULER_ENABLED` (cada job: `*_CRON`, `off` lo desactiva) | Sin tareas programadas |
@@ -625,7 +625,8 @@ src/
 | `start:dev` | `nest start --watch` |
 | `start:debug` | `nest start --debug --watch` |
 | `start:prod` | `node dist/main` |
-| `lint` | `eslint "{src,apps,libs,test}/**/*.ts" --quiet` |
+| `lint` | `eslint "{src,apps,libs,test}/**/*.ts" --quiet && pnpm run lint:layers` |
+| `lint:layers` | `node scripts/check-layers.js` |
 | `check:types` | `tsc --noEmit -p tsconfig.build.json` |
 | `test` | `jest` |
 | `test:watch` | `jest --watch` |

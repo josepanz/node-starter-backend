@@ -24,83 +24,83 @@
 <title>cluster_UsersApiModule</title>
 <polygon fill="none" stroke="black" stroke-dasharray="1,5" points="8,-70 8,-268 661,-268 661,-70 8,-70"/>
 </g>
-<g id="clust3" class="cluster">
-<title>cluster_UsersApiModule_imports</title>
-<polygon fill="none" stroke="black" points="398,-78 398,-130 653,-130 653,-78 398,-78"/>
+<g id="clust6" class="cluster">
+<title>cluster_UsersApiModule_providers</title>
+<polygon fill="none" stroke="black" points="279,-78 279,-130 653,-130 653,-78 279,-78"/>
 </g>
 <g id="clust4" class="cluster">
 <title>cluster_UsersApiModule_exports</title>
-<polygon fill="none" stroke="black" points="309,-208 309,-260 439,-260 439,-208 309,-208"/>
+<polygon fill="none" stroke="black" points="220,-208 220,-260 350,-260 350,-208 220,-208"/>
 </g>
-<g id="clust6" class="cluster">
-<title>cluster_UsersApiModule_providers</title>
-<polygon fill="none" stroke="black" points="16,-78 16,-130 390,-130 390,-78 16,-78"/>
+<g id="clust3" class="cluster">
+<title>cluster_UsersApiModule_imports</title>
+<polygon fill="none" stroke="black" points="16,-78 16,-130 271,-130 271,-78 16,-78"/>
 </g>
 <!-- DatabaseModule -->
 <g id="node1" class="node">
 <title>DatabaseModule</title>
-<polygon fill="#8dd3c7" stroke="black" points="645.35,-122 642.35,-126 621.35,-126 618.35,-122 534.65,-122 534.65,-86 645.35,-86 645.35,-122"/>
-<text text-anchor="middle" x="590" y="-99.8" font-family="Times,serif" font-size="14.00">DatabaseModule</text>
+<polygon fill="#8dd3c7" stroke="black" points="263.35,-122 260.35,-126 239.35,-126 236.35,-122 152.65,-122 152.65,-86 263.35,-86 263.35,-122"/>
+<text text-anchor="middle" x="208" y="-99.8" font-family="Times,serif" font-size="14.00">DatabaseModule</text>
 </g>
 <!-- UsersApiModule -->
 <g id="node3" class="node">
 <title>UsersApiModule</title>
-<polygon fill="#8dd3c7" stroke="black" points="430.42,-187 427.42,-191 406.42,-191 403.42,-187 317.58,-187 317.58,-151 430.42,-151 430.42,-187"/>
-<text text-anchor="middle" x="374" y="-164.8" font-family="Times,serif" font-size="14.00">UsersApiModule</text>
+<polygon fill="#8dd3c7" stroke="black" points="341.42,-187 338.42,-191 317.42,-191 314.42,-187 228.58,-187 228.58,-151 341.42,-151 341.42,-187"/>
+<text text-anchor="middle" x="285" y="-164.8" font-family="Times,serif" font-size="14.00">UsersApiModule</text>
 </g>
 <!-- DatabaseModule&#45;&gt;UsersApiModule -->
 <g id="edge1" class="edge">
 <title>DatabaseModule&#45;&gt;UsersApiModule</title>
-<path fill="none" stroke="black" d="M590,-122.11C590,-141.34 590,-169 590,-169 590,-169 440.47,-169 440.47,-169"/>
-<polygon fill="black" stroke="black" points="440.47,-165.5 430.47,-169 440.47,-172.5 440.47,-165.5"/>
+<path fill="none" stroke="black" d="M246.11,-122.11C246.11,-122.11 246.11,-140.99 246.11,-140.99"/>
+<polygon fill="black" stroke="black" points="242.61,-140.99 246.11,-150.99 249.61,-140.99 242.61,-140.99"/>
 </g>
 <!-- UsersDBModule -->
 <g id="node2" class="node">
 <title>UsersDBModule</title>
-<polygon fill="#8dd3c7" stroke="black" points="516.36,-122 513.36,-126 492.36,-126 489.36,-122 405.64,-122 405.64,-86 516.36,-86 516.36,-122"/>
-<text text-anchor="middle" x="461" y="-99.8" font-family="Times,serif" font-size="14.00">UsersDBModule</text>
+<polygon fill="#8dd3c7" stroke="black" points="134.36,-122 131.36,-126 110.36,-126 107.36,-122 23.64,-122 23.64,-86 134.36,-86 134.36,-122"/>
+<text text-anchor="middle" x="79" y="-99.8" font-family="Times,serif" font-size="14.00">UsersDBModule</text>
 </g>
 <!-- UsersDBModule&#45;&gt;UsersApiModule -->
 <g id="edge2" class="edge">
 <title>UsersDBModule&#45;&gt;UsersApiModule</title>
-<path fill="none" stroke="black" d="M417.89,-122.11C417.89,-122.11 417.89,-140.99 417.89,-140.99"/>
-<polygon fill="black" stroke="black" points="414.39,-140.99 417.89,-150.99 421.39,-140.99 414.39,-140.99"/>
+<path fill="none" stroke="black" d="M79,-122.11C79,-141.34 79,-169 79,-169 79,-169 218.71,-169 218.71,-169"/>
+<polygon fill="black" stroke="black" points="218.71,-172.5 228.71,-169 218.71,-165.5 218.71,-172.5"/>
 </g>
 <!-- UsersApiService  -->
 <g id="node4" class="node">
 <title>UsersApiService </title>
-<polygon fill="#fb8072" stroke="black" points="431.35,-252 316.65,-252 316.65,-216 431.35,-216 431.35,-252"/>
-<text text-anchor="middle" x="374" y="-229.8" font-family="Times,serif" font-size="14.00">UsersApiService </text>
+<polygon fill="#fb8072" stroke="black" points="342.35,-252 227.65,-252 227.65,-216 342.35,-216 342.35,-252"/>
+<text text-anchor="middle" x="285" y="-229.8" font-family="Times,serif" font-size="14.00">UsersApiService </text>
 </g>
 <!-- UsersApiModule&#45;&gt;UsersApiService  -->
 <g id="edge3" class="edge">
 <title>UsersApiModule&#45;&gt;UsersApiService </title>
-<path fill="none" stroke="black" stroke-dasharray="5,2" d="M374,-187.11C374,-187.11 374,-205.99 374,-205.99"/>
-<polygon fill="black" stroke="black" points="370.5,-205.99 374,-215.99 377.5,-205.99 370.5,-205.99"/>
+<path fill="none" stroke="black" stroke-dasharray="5,2" d="M285,-187.11C285,-187.11 285,-205.99 285,-205.99"/>
+<polygon fill="black" stroke="black" points="281.5,-205.99 285,-215.99 288.5,-205.99 281.5,-205.99"/>
 </g>
 <!-- UserRolesDBService -->
 <g id="node5" class="node">
 <title>UserRolesDBService</title>
-<ellipse fill="#fdb462" stroke="black" cx="288" cy="-104" rx="93.75" ry="18"/>
-<text text-anchor="middle" x="288" y="-99.8" font-family="Times,serif" font-size="14.00">UserRolesDBService</text>
+<ellipse fill="#fdb462" stroke="black" cx="551" cy="-104" rx="93.75" ry="18"/>
+<text text-anchor="middle" x="551" y="-99.8" font-family="Times,serif" font-size="14.00">UserRolesDBService</text>
 </g>
 <!-- UserRolesDBService&#45;&gt;UsersApiModule -->
 <g id="edge4" class="edge">
 <title>UserRolesDBService&#45;&gt;UsersApiModule</title>
-<path fill="none" stroke="black" d="M349.71,-117.78C349.71,-117.78 349.71,-140.55 349.71,-140.55"/>
-<polygon fill="black" stroke="black" points="346.21,-140.55 349.71,-150.55 353.21,-140.55 346.21,-140.55"/>
+<path fill="none" stroke="black" d="M551,-122.11C551,-141.34 551,-169 551,-169 551,-169 351.41,-169 351.41,-169"/>
+<polygon fill="black" stroke="black" points="351.41,-165.5 341.41,-169 351.41,-172.5 351.41,-165.5"/>
 </g>
 <!-- UsersApiService -->
 <g id="node6" class="node">
 <title>UsersApiService</title>
-<ellipse fill="#fdb462" stroke="black" cx="100" cy="-104" rx="76.42" ry="18"/>
-<text text-anchor="middle" x="100" y="-99.8" font-family="Times,serif" font-size="14.00">UsersApiService</text>
+<ellipse fill="#fdb462" stroke="black" cx="363" cy="-104" rx="76.42" ry="18"/>
+<text text-anchor="middle" x="363" y="-99.8" font-family="Times,serif" font-size="14.00">UsersApiService</text>
 </g>
 <!-- UsersApiService&#45;&gt;UsersApiModule -->
 <g id="edge5" class="edge">
 <title>UsersApiService&#45;&gt;UsersApiModule</title>
-<path fill="none" stroke="black" d="M100,-122.11C100,-141.34 100,-169 100,-169 100,-169 307.56,-169 307.56,-169"/>
-<polygon fill="black" stroke="black" points="307.56,-172.5 317.56,-169 307.56,-165.5 307.56,-172.5"/>
+<path fill="none" stroke="black" d="M313.87,-118.1C313.87,-118.1 313.87,-140.72 313.87,-140.72"/>
+<polygon fill="black" stroke="black" points="310.37,-140.72 313.87,-150.72 317.37,-140.72 310.37,-140.72"/>
 </g>
 </g>
 </svg>

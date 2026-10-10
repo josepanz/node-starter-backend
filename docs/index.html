@@ -98,74 +98,296 @@
 
 
 <h1>node-starter-backend</h1>
-<p>Proyecto inicial para backend con NestJS y TypeScript.</p>
 <p>Última actualización: <!-- AUTO:LAST_UPDATE:START -->
-10 de octubre de 2026, 14:46</p>
+10 de octubre de 2026, 14:55</p>
 <!-- AUTO:LAST_UPDATE:END -->
 
-<!-- MANUAL -->
-
-<h2>🗎 Documentación disponible en</h2>
-<p>El proyecto expone dos tipos principales de documentación:</p>
-<ol>
-<li><p><strong>Swagger (API):</strong> Documentación interactiva de todos los <em>endpoints</em>.</p>
+<h2>Qué es</h2>
+<p>Starter genérico de backend con NestJS 11, TypeScript, Prisma (PostgreSQL) y Sequelize opcional para DB2/IBM i. Además de la base para arrancar un proyecto, es un compendio de mecanismos reutilizables (idempotencia, permisos, auditoría, jobs, mensajería, observabilidad, entre otros). Cada mecanismo es funcional y tiene un fallback: si falta una dependencia de infraestructura o de un proveedor externo, la aplicación arranca igual con una implementación en memoria, de consola o noop.</p>
+<h2>Quickstart</h2>
+<p>Requisitos: Node 22, pnpm 10 y Docker. Tras <code>pnpm install</code>, la app levanta localmente sin editar nada:</p>
+<b>Example :</b><div><pre class="line-numbers"><code class="language-bash">docker compose up -d
+cp .env.template .env
+pnpm prisma migrate deploy &amp;&amp; pnpm prisma db seed   # 2 migraciones (init + audit_triggers); el seed es idempotente
+pnpm db:verify-audit-triggers                      # opcional: cobertura de triggers de auditoría
+pnpm start:dev                                     # o `pnpm build &amp;&amp; pnpm start:prod`</code></pre></div><p>La API queda en <code>http://localhost:3000/node-starter-backend/api</code> (Swagger en <code>/node-starter-backend/api/swagger</code>, salud en <code>/node-starter-backend/api/v1/healthcheck</code>).</p>
+<p>Solo PostgreSQL es necesario. Redis, Mongo, SMTP y Seq se activan completando su variable en <code>.env</code>; sin ellas cada módulo usa su fallback. Detalle de variables y dependencias en <a href="CONTRIBUTING.md#quickstart"><code>CONTRIBUTING.md</code></a> y en la sección Módulos opcionales más abajo.</p>
+<p><strong>Usuario demo del seed</strong> (solo desarrollo):</p>
 <ul>
-<li><strong>Ruta de acceso:</strong> <code>/node-starter-backend/api/swagger</code></li>
-<li><strong>Ejemplo Local:</strong> <code>http://localhost:3000/node-starter-backend/api/swagger</code></li>
+<li>Email: <code>demo.orders@example.com</code></li>
+<li>Contraseña: <code>DemoPass1234</code> (se guarda hasheada con bcrypt; el seed no la pisa si ya existe una credencial)</li>
+<li>Las rutas de auth exigen Basic Auth con el cliente M2M demo del seed (<code>demo-m2m-client</code>; secret de desarrollo definido en <code>prisma/seed.ts</code>).</li>
 </ul>
-</li>
-<li><p><strong>Compodoc (Código):</strong> Documentación estática de módulos, controladores, <em>providers</em>, etc.</p>
-<ul>
-<li><strong>Ruta de acceso:</strong> <code>/node-starter-backend/api/docs</code></li>
-<li><strong>Ejemplo Local:</strong> <code>http://localhost:3000/node-starter-backend/api/docs</code></li>
-</ul>
-</li>
-</ol>
-<blockquote>
-<p>Reemplaza <code>http://localhost:3000</code> con el dominio y puerto de tu entorno (DEV, QA, PROD) para acceder a la documentación remota.</p>
-</blockquote>
-<h2>🛠️ Instalación y Dependencias</h2>
-<p>Esta aplicación utiliza <strong>pnpm</strong> como gestor de paquetes para una gestión eficiente de dependencias.</p>
-<ol>
-<li><p><strong>Instalar pnpm globalmente (si aún no lo tienes):</strong></p>
-<b>Example :</b><div><pre class="line-numbers"><code class="language-bash">npm install -g pnpm</code></pre></div></li>
-<li><p><strong>Instalar todas las dependencias del proyecto:</strong></p>
-<b>Example :</b><div><pre class="line-numbers"><code class="language-bash">pnpm install</code></pre></div></li>
-<li><p><strong>Configuración del Entorno:</strong>
-Crea un archivo <code>.env</code> en la raíz del proyecto y define las variables de entorno necesarias (ej: <code>DATABASE_URL</code>, <code>JWT_SECRET</code>, etc.).</p>
-</li>
-<li><p><strong>Opcionales:</strong></p>
-<ul>
-<li>Si se quiere generar documentación de compodocs (docs/documentation.json) y actualizar archivo readme en base a este <code>pnpm docs:update-readme</code></li>
-<li>Si se quiere generar documentación de compodocs con htmls (docs/*) <code>pnpm docs:generate</code>; ambos pasos juntos: <code>pnpm docs:all</code></li>
-</ul>
-</li>
-<li><p><strong>Compilar y ejecutar:</strong></p>
-<ul>
-<li>Desarrollo (watch):</li>
-</ul>
-<b>Example :</b><div><pre class="line-numbers"><code class="language-bash">pnpm run start:dev</code></pre></div><ul>
-<li>Producción:</li>
-</ul>
-<b>Example :</b><div><pre class="line-numbers"><code class="language-bash">pnpm run build</code></pre></div><b>Example :</b><div><pre class="line-numbers"><code class="language-bash">pnpm run start:prod</code></pre></div></li>
-</ol>
-<h2>📦 Prisma</h2>
-<h3>💾 Configuración de Prisma (Base de Datos)</h3>
-<p>Para interactuar con la base de datos a través de <strong>Prisma</strong>, sigue estos pasos:</p>
-<ol>
-<li><p><strong>Instalar dependencias de desarrollo y el cliente (ya incluido en <code>pnpm install</code>, pero listado para referencia):</strong></p>
-<b>Example :</b><div><pre class="line-numbers"><code class="language-bash">pnpm install prisma &#64;prisma/client</code></pre></div></li>
-<li><p><strong>Inicializar Prisma (crea <code>prisma/schema.prisma</code> y <code>.env</code>):</strong></p>
-<b>Example :</b><div><pre class="line-numbers"><code class="language-bash">pnpm prisma init</code></pre></div></li>
-<li><p><strong>Configurar tu base de datos en <code>.env</code></strong> (con <code>DATABASE_URL</code>) <strong>y definir tus modelos en <code>prisma/schema.prisma</code></strong>.</p>
-</li>
-<li><p><strong>Generar el Cliente de Prisma:</strong>
-Siempre que modifiques el esquema, debes regenerar el cliente:</p>
-<b>Example :</b><div><pre class="line-numbers"><code class="language-bash">pnpm prisma generate</code></pre></div></li>
-<li><p><strong>Crear y Aplicar una Migración:</strong>
-Para sincronizar el esquema con la base de datos:</p>
-<b>Example :</b><div><pre class="line-numbers"><code class="language-bash">pnpm prisma migrate dev --name &lt;nombre-descriptivo-de-la-migracion&gt;</code></pre></div></li>
-</ol>
+<h2>Documentación</h2>
+<table class="table table-bordered compodoc-table">
+<thead>
+<tr>
+<th>Documento</th>
+<th>Contenido</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><a href="ARCHITECTURE.md"><code>ARCHITECTURE.md</code></a></td>
+<td>Capas, ciclo de vida de una request, módulos opcionales, componentes transversales, DB2/Sequelize y despliegue</td>
+</tr>
+<tr>
+<td><a href="CONTRIBUTING.md"><code>CONTRIBUTING.md</code></a></td>
+<td>Quickstart completo, plataformas de CI, ramas, commits, definición de hecho y recetas (módulo, proveedor, job, handler, migración)</td>
+</tr>
+<tr>
+<td><a href="AGENTS.md"><code>AGENTS.md</code></a></td>
+<td>Guía de trabajo para asistentes de IA: reglas, convenciones y comandos</td>
+</tr>
+<tr>
+<td><a href=".context/CONTEXT.md"><code>.context/CONTEXT.md</code></a></td>
+<td>Índice del contexto detallado para asistentes y desarrolladores</td>
+</tr>
+<tr>
+<td><a href=".context/rules/"><code>.context/rules/</code></a></td>
+<td>Reglas por tema (arquitectura, TypeScript, tests, errores, permisos, base de datos, DB2/Sequelize, infra, git)</td>
+</tr>
+<tr>
+<td><a href=".context/agents/"><code>.context/agents/</code></a></td>
+<td>Agentes de revisión, consulta de base de datos, testing y refactor</td>
+</tr>
+<tr>
+<td><a href=".context/commands/"><code>.context/commands/</code></a></td>
+<td>Comandos de slash del flujo de trabajo</td>
+</tr>
+<tr>
+<td><a href=".context/skills/"><code>.context/skills/</code></a></td>
+<td>Skills: entrega de features y flujo OpenSpec</td>
+</tr>
+<tr>
+<td><a href=".context/documentation/"><code>.context/documentation/</code></a></td>
+<td>Plantilla SDD y guía manual de TDD/SDD</td>
+</tr>
+<tr>
+<td><a href="openspec/README.md"><code>openspec/</code></a></td>
+<td>Especificaciones de cambios medianos o grandes (OpenSpec)</td>
+</tr>
+<tr>
+<td><a href="docs/index.html"><code>docs/</code></a></td>
+<td>Documentación de código generada con Compodoc. Se regenera con <code>pnpm docs:generate</code> y se navega con <code>pnpm docs:serve</code></td>
+</tr>
+<tr>
+<td>Swagger</td>
+<td>Documentación interactiva de los endpoints en <code>/node-starter-backend/api/swagger</code></td>
+</tr>
+<tr>
+<td>Compodoc en la API</td>
+<td>Si existe la carpeta <code>docs/</code> junto al build, se sirve en <code>/node-starter-backend/api/docs</code></td>
+</tr>
+</tbody>
+</table>
+<p>Los bloques marcados <code>AUTO</code> de este README se regeneran con <code>pnpm update:readme</code> (<code>pnpm docs:update-readme</code> regenera antes el JSON de Compodoc). El resto del contenido es manual.</p>
+<h2>Catálogo de mecanismos</h2>
+<p>Cada fila enlaza a la implementación. El patrón indica la forma de diseño usada.</p>
+<table class="table table-bordered compodoc-table">
+<thead>
+<tr>
+<th>Mecanismo</th>
+<th>Patrón</th>
+<th>Dónde</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Idempotencia de requests</td>
+<td>Interceptor + decorador de clave idempotente</td>
+<td><a href="src/modules/idempotency/interceptors/idempotency.interceptor.ts"><code>idempotency.interceptor.ts</code></a>, <a href="src/modules/idempotency/services/idempotency.service.ts"><code>idempotency.service.ts</code></a></td>
+</tr>
+<tr>
+<td>Anti-TOCTOU (transición condicional)</td>
+<td>Compare-and-set: <code>updateWhereStatus</code> / <code>updateMany</code> con condición de estado</td>
+<td><a href="src/core/database/base/prisma/prisma-base.repository.ts"><code>prisma-base.repository.ts</code></a>, <a href="src/modules/jobs-db/repositories/background-jobs.repository.ts"><code>background-jobs.repository.ts</code></a></td>
+</tr>
+<tr>
+<td>Máquina de estados de órdenes</td>
+<td>State machine (transiciones explícitas)</td>
+<td><a href="src/modules/orders-db/helpers/order-state-machine.helper.ts"><code>order-state-machine.helper.ts</code></a></td>
+</tr>
+<tr>
+<td>Ownership / IDOR</td>
+<td>Helper de pertenencia; &quot;no existe&quot; y &quot;no es tuyo&quot; responden 404</td>
+<td><a href="src/common/helpers/ownership.helper.ts"><code>ownership.helper.ts</code></a></td>
+</tr>
+<tr>
+<td>Permisos <code>dominio:accion</code></td>
+<td>Decorator + Guard (RBAC)</td>
+<td><a href="src/common/decorators/with-permissions.decorator.ts"><code>with-permissions.decorator.ts</code></a>, <a href="src/modules/auth/guards/permissions.guard.ts"><code>permissions.guard.ts</code></a>, <a href="src/common/enum/permissions.enum.ts"><code>permissions.enum.ts</code></a></td>
+</tr>
+<tr>
+<td>Lockout de login</td>
+<td>Policy object (intentos máximos y bloqueo temporal o permanente)</td>
+<td><a href="src/modules/auth/helpers/login-lockout.helper.ts"><code>login-lockout.helper.ts</code></a></td>
+</tr>
+<tr>
+<td>Política de contraseña y expiración</td>
+<td>Policy object leído desde configuración</td>
+<td><a href="src/modules/auth/helpers/password-policy.helper.ts"><code>password-policy.helper.ts</code></a>, <a href="src/modules/auth/helpers/password-expiration.helper.ts"><code>password-expiration.helper.ts</code></a></td>
+</tr>
+<tr>
+<td>Firma HMAC y cifrado AES-GCM</td>
+<td>Utilidades criptográficas; keyring con id de clave</td>
+<td><a href="src/common/helpers/crypto/hmac.helper.ts"><code>hmac.helper.ts</code></a>, <a href="src/common/helpers/crypto/aes-gcm.helper.ts"><code>aes-gcm.helper.ts</code></a></td>
+</tr>
+<tr>
+<td>Autenticación M2M y scopes</td>
+<td>Guard (Basic <code>clientId:secret</code>) + catálogo de scopes</td>
+<td><a href="src/modules/auth/guards/basic-auth.guard.ts"><code>basic-auth.guard.ts</code></a>, <a href="src/modules/api-clients-db/constants/api-client-scopes.constants.ts"><code>api-client-scopes.constants.ts</code></a></td>
+</tr>
+<tr>
+<td>Firma HMAC de requests (M2M)</td>
+<td>Guard + helper de firma con ventana de timestamp y nonce</td>
+<td><a href="src/modules/auth/guards/hmac-signature.guard.ts"><code>hmac-signature.guard.ts</code></a>, <a href="src/common/helpers/crypto/request-signature.helper.ts"><code>request-signature.helper.ts</code></a></td>
+</tr>
+<tr>
+<td>Rate limiting</td>
+<td>Guard + storage intercambiable (memoria o Redis)</td>
+<td><a href="src/core/rate-limit/app-throttler.guard.ts"><code>app-throttler.guard.ts</code></a>, <a href="src/core/rate-limit/redis-throttler.storage.ts"><code>redis-throttler.storage.ts</code></a></td>
+</tr>
+<tr>
+<td>Nonce anti-replay</td>
+<td>Service + Strategy de store (memoria o Redis)</td>
+<td><a href="src/modules/nonce/nonce.service.ts"><code>nonce.service.ts</code></a>, <a href="src/modules/nonce/stores/"><code>stores/</code></a></td>
+</tr>
+<tr>
+<td>Cache de permisos</td>
+<td>Cache con TTL configurable (0 = sin cache)</td>
+<td><a href="src/core/cache/permissions-cache.service.ts"><code>permissions-cache.service.ts</code></a></td>
+</tr>
+<tr>
+<td>Redis opcional</td>
+<td>Factory de módulo con fallback a memoria</td>
+<td><a href="src/core/redis/redis.module.ts"><code>redis.module.ts</code></a>, <a href="src/core/cache/cache.module.ts"><code>cache.module.ts</code></a></td>
+</tr>
+<tr>
+<td>Scheduler con advisory lock</td>
+<td>Template Method (<code>ScheduledJob</code>) + lock de Postgres entre réplicas</td>
+<td><a href="src/core/scheduler/scheduled-job.ts"><code>scheduled-job.ts</code></a>, <a href="src/core/scheduler/with-advisory-lock.ts"><code>with-advisory-lock.ts</code></a>, <a href="src/core/scheduler/job-scheduler.service.ts"><code>job-scheduler.service.ts</code></a></td>
+</tr>
+<tr>
+<td>Cola de trabajos (BackgroundJob)</td>
+<td>Registry + Strategy por tipo (<code>IJobHandler</code>), reintentos con backoff</td>
+<td><a href="src/modules/jobs-db/services/background-jobs-db.service.ts"><code>background-jobs-db.service.ts</code></a>, <a href="src/modules/jobs/services/job-handler.registry.ts"><code>job-handler.registry.ts</code></a>, <a href="src/modules/jobs/interfaces/job-handler.interface.ts"><code>job-handler.interface.ts</code></a></td>
+</tr>
+<tr>
+<td>Ledger de mensajes</td>
+<td>Repository + política de contenido (<code>NONE</code> / <code>AUDIT</code>)</td>
+<td><a href="src/modules/message-db/services/message-db.service.ts"><code>message-db.service.ts</code></a>, <a href="src/modules/message-db/services/message-content.service.ts"><code>message-content.service.ts</code></a></td>
+</tr>
+<tr>
+<td>Proveedor de SMS</td>
+<td>Strategy + Adapter; consola si no hay credenciales</td>
+<td><a href="src/modules/sms/interfaces/sms-sender.interface.ts"><code>sms-sender.interface.ts</code></a>, <a href="src/modules/sms/adapters/"><code>adapters/</code></a></td>
+</tr>
+<tr>
+<td>Proveedor de email</td>
+<td>Strategy + Adapter (SMTP o consola)</td>
+<td><a href="src/modules/email/interfaces/email-sender.interface.ts"><code>email-sender.interface.ts</code></a>, <a href="src/modules/email/adapters/"><code>adapters/</code></a></td>
+</tr>
+<tr>
+<td>Proveedor de push</td>
+<td>Strategy + Registry (FCM, Web Push o Noop)</td>
+<td><a href="src/modules/notifications/interfaces/push-provider.interface.ts"><code>push-provider.interface.ts</code></a>, <a href="src/modules/notifications/services/push-provider.registry.ts"><code>push-provider.registry.ts</code></a>, <a href="src/modules/notifications/providers/"><code>providers/</code></a></td>
+</tr>
+<tr>
+<td>Eventos de dominio</td>
+<td>Observer (listeners sobre eventos)</td>
+<td><a href="src/common/events/domain-events.ts"><code>domain-events.ts</code></a>, <a href="src/api/notifications/listeners/order-notifications.listener.ts"><code>order-notifications.listener.ts</code></a></td>
+</tr>
+<tr>
+<td>Realtime (websocket)</td>
+<td>Gateway + servicio con auth JWT y throttle por socket</td>
+<td><a href="src/api/events/gateway/events.gateway.ts"><code>events.gateway.ts</code></a>, <a href="src/modules/realtime/realtime.service.ts"><code>realtime.service.ts</code></a>, <a href="src/modules/realtime/ws-jwt.guard.ts"><code>ws-jwt.guard.ts</code></a></td>
+</tr>
+<tr>
+<td>i18n</td>
+<td>Catálogos por idioma (<code>en</code>, <code>es</code>) + helper</td>
+<td><a href="src/core/i18n/i18n.config.ts"><code>i18n.config.ts</code></a>, <a href="src/common/i18n/i18n.helper.ts"><code>i18n.helper.ts</code></a>, <a href="src/i18n/"><code>src/i18n/</code></a></td>
+</tr>
+<tr>
+<td>Consentimiento versionado</td>
+<td>Guard (<code>@RequiresActiveConsent</code>) + servicio de consentimientos</td>
+<td><a href="src/modules/legal-db/guards/requires-active-consent.guard.ts"><code>requires-active-consent.guard.ts</code></a>, <a href="src/modules/legal-db/services/user-consents-db.service.ts"><code>user-consents-db.service.ts</code></a></td>
+</tr>
+<tr>
+<td>Baja y anonimización de cuenta</td>
+<td>Job programado + servicio de borrado con período de gracia</td>
+<td><a href="src/modules/account-db/services/account-deletion-db.service.ts"><code>account-deletion-db.service.ts</code></a>, <a href="src/modules/account-db/jobs/account-anonymization.job.ts"><code>account-anonymization.job.ts</code></a></td>
+</tr>
+<tr>
+<td>Retención de datos</td>
+<td>Servicio ejecutor sobre políticas de retención</td>
+<td><a href="src/modules/account-db/services/data-retention-executor.service.ts"><code>data-retention-executor.service.ts</code></a>, <a href="src/modules/legal-db/services/data-retention-db.service.ts"><code>data-retention-db.service.ts</code></a></td>
+</tr>
+<tr>
+<td>Transparencia de contenido de IA</td>
+<td>Servicio de disclosure por entidad</td>
+<td><a href="src/modules/ai-disclosure-db/services/ai-disclosure-db.service.ts"><code>ai-disclosure-db.service.ts</code></a></td>
+</tr>
+<tr>
+<td>Bitácora de auditoría</td>
+<td>Interceptor (aplicación) + triggers SQL (base)</td>
+<td><a href="src/core/interceptors/audit.interceptor.ts"><code>audit.interceptor.ts</code></a>, <a href="src/modules/audit-log-db/services/audit-log-db.service.ts"><code>audit-log-db.service.ts</code></a>, <a href="prisma/migrations/20260607002428_audit_triggers/migration.sql"><code>audit_triggers/migration.sql</code></a></td>
+</tr>
+<tr>
+<td>Export en JSON streaming</td>
+<td>Interceptor + helper de streaming (cursor por lotes)</td>
+<td><a href="src/core/interceptors/json-stream.interceptor.ts"><code>json-stream.interceptor.ts</code></a>, <a href="src/common/helpers/json-stream.helper.ts"><code>json-stream.helper.ts</code></a></td>
+</tr>
+<tr>
+<td>Reporte de errores (Sentry)</td>
+<td>Adapter tras la interfaz <code>ExceptionReporter</code>; solo 5xx</td>
+<td><a href="src/core/observability/sentry-reporter.service.ts"><code>sentry-reporter.service.ts</code></a>, <a href="src/core/observability/exception-reporter.interface.ts"><code>exception-reporter.interface.ts</code></a></td>
+</tr>
+<tr>
+<td>Activity log en Mongo</td>
+<td>Strategy de store (Mongo o Noop)</td>
+<td><a href="src/modules/activity-log/stores/mongo-activity-log.store.ts"><code>mongo-activity-log.store.ts</code></a>, <a href="src/modules/activity-log/stores/noop-activity-log.store.ts"><code>noop-activity-log.store.ts</code></a></td>
+</tr>
+<tr>
+<td>Cliente HTTP saliente</td>
+<td>Template Method (<code>BaseHttpClient</code>) + Strategy de autenticación</td>
+<td><a href="src/modules/http-client/base-http.client.ts"><code>base-http.client.ts</code></a>, <a href="src/modules/http-client/auth/http-auth-strategy.ts"><code>http-auth-strategy.ts</code></a></td>
+</tr>
+<tr>
+<td>Filtros de excepción (503, Prisma, Sequelize)</td>
+<td>Exception filters globales</td>
+<td><a href="src/common/filters/transient-connection-exception.filter.ts"><code>transient-connection-exception.filter.ts</code></a>, <a href="src/common/filters/prisma-client-exception.filter.ts"><code>prisma-client-exception.filter.ts</code></a>, <a href="src/common/filters/sequelize-exception.filter.ts"><code>sequelize-exception.filter.ts</code></a>, <a href="src/core/global-filters/http-exception.filter.ts"><code>http-exception.filter.ts</code></a></td>
+</tr>
+<tr>
+<td>DB2: raw query</td>
+<td>Repository con SQL crudo sobre Sequelize</td>
+<td><a href="src/modules/catalog-raw/repositories/catalog-raw.repository.ts"><code>catalog-raw.repository.ts</code></a></td>
+</tr>
+<tr>
+<td>DB2: ORM tipado</td>
+<td>Repository sobre entities de Sequelize</td>
+<td><a href="src/modules/catalog-orm/repositories/catalog-orm.repositories.ts"><code>catalog-orm.repositories.ts</code></a></td>
+</tr>
+<tr>
+<td>trace-id y redacción de logs</td>
+<td>Middleware (asigna <code>traceId</code>) + filtro de datos sensibles</td>
+<td><a href="src/core/middlewares/trace-id.middleware.ts"><code>trace-id.middleware.ts</code></a>, <a href="src/core/observability/redaction.ts"><code>redaction.ts</code></a></td>
+</tr>
+</tbody>
+</table>
+<p>Las estrategias de DB2 se comparan en la sección DB2 / Sequelize de <a href="ARCHITECTURE.md"><code>ARCHITECTURE.md</code></a> y en <a href=".context/rules/db2-sequelize.md"><code>.context/rules/db2-sequelize.md</code></a>.</p>
+<h2>Módulos opcionales</h2>
+<p>Cada dependencia de infraestructura o proveedor se activa por variable de entorno. La tabla con la variable que la activa y el comportamiento sin ella se genera automáticamente; está en la sección <strong>Módulos opcionales</strong> más abajo (bloque <code>AUTO:OPTIONAL_MODULES</code>).</p>
+<h2>Instalación y scripts</h2>
+<p>Se usa <strong>pnpm</strong> como gestor de paquetes.</p>
+<b>Example :</b><div><pre class="line-numbers"><code class="language-bash">pnpm install          # instalar dependencias
+pnpm build            # compilar (nest build)
+pnpm start:dev        # desarrollo con watch
+pnpm start:prod       # producción (node dist/main; requiere pnpm build)
+pnpm lint             # ESLint
+pnpm check:types      # tsc sin emitir
+pnpm test             # tests unitarios
+pnpm test:e2e         # e2e con supertest</code></pre></div><p>La lista completa de scripts está en el bloque <code>AUTO:SCRIPTS</code> más abajo. Para el flujo de Prisma (validar, generar, migrar y seed) ver el Quickstart; las migraciones se crean con <code>pnpm prisma migrate dev --name &lt;nombre&gt;</code>.</p>
 <blockquote>
 <p>Las secciones siguientes se generan con <code>pnpm docs:update-readme</code>. No editar entre marcadores <code>AUTO</code>.</p>
 </blockquote>

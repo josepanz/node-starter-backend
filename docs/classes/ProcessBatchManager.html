@@ -287,7 +287,7 @@
             <tr>
                 <td class="col-md-4">
                         <span class="modifier-icon icon ion-ios-reset"></span>
-                    <code>executeWithRetry(operation: <a href="../undefineds/t.html" target="_self">function</a>, executionOptions?: <a href="../interfaces/StorageExecutionOptions.html" target="_self">StorageExecutionOptions</a>)</code>
+                    <code>executeWithRetry(operation: <a href="../undefineds/t.html" target="_self">function</a>, executionOptions?: <a href="../interfaces/ExecutionOptions.html" target="_self">ExecutionOptions</a>)</code>
                 </td>
             </tr>
 
@@ -338,7 +338,7 @@
                                         <tr>
                                                 <td>executionOptions</td>
                                             <td>
-                                                            <code><a href="../interfaces/StorageExecutionOptions.html" target="_self" >StorageExecutionOptions</a></code>
+                                                            <code><a href="../interfaces/ExecutionOptions.html" target="_self" >ExecutionOptions</a></code>
                                             </td>
 
                                             <td>
@@ -680,7 +680,7 @@
 
 
     <div class="tab-pane fade  tab-source-code" id="source">
-        <pre class="line-numbers compodoc-sourcecode"><code class="language-typescript">import { StorageExecutionOptions } from &#x27;@modules/storage/interfaces/storage.interface&#x27;;
+        <pre class="line-numbers compodoc-sourcecode"><code class="language-typescript">import { ExecutionOptions } from &#x27;@common/interfaces/execution-options.interface&#x27;;
 import {
   ServiceUnavailableException,
   BadRequestException,
@@ -689,7 +689,7 @@ import {
 export class ProcessBatchManager {
   async executeWithRetry&lt;T&gt;(
     operation: () &#x3D;&gt; Promise&lt;T&gt;,
-    executionOptions?: StorageExecutionOptions,
+    executionOptions?: ExecutionOptions,
   ): Promise&lt;T&gt; {
     const retryAttempts &#x3D; this.resolveRetryAttempts(
       executionOptions?.retryAttempts,

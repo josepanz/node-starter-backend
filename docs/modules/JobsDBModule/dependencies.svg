@@ -24,6 +24,10 @@
 <title>cluster_JobsDBModule</title>
 <polygon fill="none" stroke="black" stroke-dasharray="1,5" points="8,-70 8,-268 664,-268 664,-70 8,-70"/>
 </g>
+<g id="clust4" class="cluster">
+<title>cluster_JobsDBModule_exports</title>
+<polygon fill="none" stroke="black" points="301,-208 301,-260 491,-260 491,-208 301,-208"/>
+</g>
 <g id="clust3" class="cluster">
 <title>cluster_JobsDBModule_imports</title>
 <polygon fill="none" stroke="black" points="530,-78 530,-130 656,-130 656,-78 530,-78"/>
@@ -31,10 +35,6 @@
 <g id="clust6" class="cluster">
 <title>cluster_JobsDBModule_providers</title>
 <polygon fill="none" stroke="black" points="16,-78 16,-130 522,-130 522,-78 16,-78"/>
-</g>
-<g id="clust4" class="cluster">
-<title>cluster_JobsDBModule_exports</title>
-<polygon fill="none" stroke="black" points="301,-208 301,-260 491,-260 491,-208 301,-208"/>
 </g>
 <!-- DatabaseModule -->
 <g id="node1" class="node">

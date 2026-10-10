@@ -24,91 +24,91 @@
 <title>cluster_MessagesApiModule</title>
 <polygon fill="none" stroke="black" stroke-dasharray="1,5" points="8,-70 8,-195 964,-195 964,-70 8,-70"/>
 </g>
-<g id="clust6" class="cluster">
-<title>cluster_MessagesApiModule_providers</title>
-<polygon fill="none" stroke="black" points="558,-78 558,-130 956,-130 956,-78 558,-78"/>
-</g>
 <g id="clust3" class="cluster">
 <title>cluster_MessagesApiModule_imports</title>
-<polygon fill="none" stroke="black" points="16,-78 16,-130 550,-130 550,-78 16,-78"/>
+<polygon fill="none" stroke="black" points="422,-78 422,-130 956,-130 956,-78 422,-78"/>
+</g>
+<g id="clust6" class="cluster">
+<title>cluster_MessagesApiModule_providers</title>
+<polygon fill="none" stroke="black" points="16,-78 16,-130 414,-130 414,-78 16,-78"/>
 </g>
 <!-- IdempotencyModule -->
 <g id="node1" class="node">
 <title>IdempotencyModule</title>
-<polygon fill="#8dd3c7" stroke="black" points="542.14,-122 539.14,-126 518.14,-126 515.14,-122 409.86,-122 409.86,-86 542.14,-86 542.14,-122"/>
-<text text-anchor="middle" x="476" y="-99.8" font-family="Times,serif" font-size="14.00">IdempotencyModule</text>
+<polygon fill="#8dd3c7" stroke="black" points="948.14,-122 945.14,-126 924.14,-126 921.14,-122 815.86,-122 815.86,-86 948.14,-86 948.14,-122"/>
+<text text-anchor="middle" x="882" y="-99.8" font-family="Times,serif" font-size="14.00">IdempotencyModule</text>
 </g>
 <!-- MessagesApiModule -->
 <g id="node5" class="node">
 <title>MessagesApiModule</title>
-<polygon fill="#8dd3c7" stroke="black" points="469.47,-187 466.47,-191 445.47,-191 442.47,-187 334.53,-187 334.53,-151 469.47,-151 469.47,-187"/>
-<text text-anchor="middle" x="402" y="-164.8" font-family="Times,serif" font-size="14.00">MessagesApiModule</text>
+<polygon fill="#8dd3c7" stroke="black" points="599.47,-187 596.47,-191 575.47,-191 572.47,-187 464.53,-187 464.53,-151 599.47,-151 599.47,-187"/>
+<text text-anchor="middle" x="532" y="-164.8" font-family="Times,serif" font-size="14.00">MessagesApiModule</text>
 </g>
 <!-- IdempotencyModule&#45;&gt;MessagesApiModule -->
 <g id="edge1" class="edge">
 <title>IdempotencyModule&#45;&gt;MessagesApiModule</title>
-<path fill="none" stroke="black" d="M439.58,-122.11C439.58,-122.11 439.58,-140.99 439.58,-140.99"/>
-<polygon fill="black" stroke="black" points="436.08,-140.99 439.58,-150.99 443.08,-140.99 436.08,-140.99"/>
+<path fill="none" stroke="black" d="M882,-122.28C882,-143.32 882,-175 882,-175 882,-175 609.48,-175 609.48,-175"/>
+<polygon fill="black" stroke="black" points="609.48,-171.5 599.48,-175 609.48,-178.5 609.48,-171.5"/>
 </g>
 <!-- MessageDBModule -->
 <g id="node2" class="node">
 <title>MessageDBModule</title>
-<polygon fill="#8dd3c7" stroke="black" points="391.97,-122 388.97,-126 367.97,-126 364.97,-122 264.03,-122 264.03,-86 391.97,-86 391.97,-122"/>
-<text text-anchor="middle" x="328" y="-99.8" font-family="Times,serif" font-size="14.00">MessageDBModule</text>
+<polygon fill="#8dd3c7" stroke="black" points="797.97,-122 794.97,-126 773.97,-126 770.97,-122 670.03,-122 670.03,-86 797.97,-86 797.97,-122"/>
+<text text-anchor="middle" x="734" y="-99.8" font-family="Times,serif" font-size="14.00">MessageDBModule</text>
 </g>
 <!-- MessageDBModule&#45;&gt;MessagesApiModule -->
 <g id="edge2" class="edge">
 <title>MessageDBModule&#45;&gt;MessagesApiModule</title>
-<path fill="none" stroke="black" d="M363.25,-122.11C363.25,-122.11 363.25,-140.99 363.25,-140.99"/>
-<polygon fill="black" stroke="black" points="359.75,-140.99 363.25,-150.99 366.75,-140.99 359.75,-140.99"/>
+<path fill="none" stroke="black" d="M734,-122.02C734,-139.37 734,-163 734,-163 734,-163 609.54,-163 609.54,-163"/>
+<polygon fill="black" stroke="black" points="609.54,-159.5 599.54,-163 609.54,-166.5 609.54,-159.5"/>
 </g>
 <!-- MessagingModule -->
 <g id="node3" class="node">
 <title>MessagingModule</title>
-<polygon fill="#8dd3c7" stroke="black" points="246.2,-122 243.2,-126 222.2,-126 219.2,-122 125.8,-122 125.8,-86 246.2,-86 246.2,-122"/>
-<text text-anchor="middle" x="186" y="-99.8" font-family="Times,serif" font-size="14.00">MessagingModule</text>
+<polygon fill="#8dd3c7" stroke="black" points="652.2,-122 649.2,-126 628.2,-126 625.2,-122 531.8,-122 531.8,-86 652.2,-86 652.2,-122"/>
+<text text-anchor="middle" x="592" y="-99.8" font-family="Times,serif" font-size="14.00">MessagingModule</text>
 </g>
 <!-- MessagingModule&#45;&gt;MessagesApiModule -->
 <g id="edge3" class="edge">
 <title>MessagingModule&#45;&gt;MessagesApiModule</title>
-<path fill="none" stroke="black" d="M186,-122.02C186,-139.37 186,-163 186,-163 186,-163 324.25,-163 324.25,-163"/>
-<polygon fill="black" stroke="black" points="324.25,-166.5 334.25,-163 324.25,-159.5 324.25,-166.5"/>
+<path fill="none" stroke="black" d="M565.69,-122.11C565.69,-122.11 565.69,-140.99 565.69,-140.99"/>
+<polygon fill="black" stroke="black" points="562.19,-140.99 565.69,-150.99 569.19,-140.99 562.19,-140.99"/>
 </g>
 <!-- SmsModule -->
 <g id="node4" class="node">
 <title>SmsModule</title>
-<polygon fill="#8dd3c7" stroke="black" points="107.67,-122 104.67,-126 83.67,-126 80.67,-122 24.33,-122 24.33,-86 107.67,-86 107.67,-122"/>
-<text text-anchor="middle" x="66" y="-99.8" font-family="Times,serif" font-size="14.00">SmsModule</text>
+<polygon fill="#8dd3c7" stroke="black" points="513.67,-122 510.67,-126 489.67,-126 486.67,-122 430.33,-122 430.33,-86 513.67,-86 513.67,-122"/>
+<text text-anchor="middle" x="472" y="-99.8" font-family="Times,serif" font-size="14.00">SmsModule</text>
 </g>
 <!-- SmsModule&#45;&gt;MessagesApiModule -->
 <g id="edge4" class="edge">
 <title>SmsModule&#45;&gt;MessagesApiModule</title>
-<path fill="none" stroke="black" d="M66,-122.28C66,-143.32 66,-175 66,-175 66,-175 324.41,-175 324.41,-175"/>
-<polygon fill="black" stroke="black" points="324.41,-178.5 334.41,-175 324.41,-171.5 324.41,-178.5"/>
+<path fill="none" stroke="black" d="M489.17,-122.11C489.17,-122.11 489.17,-140.99 489.17,-140.99"/>
+<polygon fill="black" stroke="black" points="485.67,-140.99 489.17,-150.99 492.67,-140.99 485.67,-140.99"/>
 </g>
 <!-- MessagesApiService -->
 <g id="node6" class="node">
 <title>MessagesApiService</title>
-<ellipse fill="#fdb462" stroke="black" cx="856" cy="-104" rx="92.03" ry="18"/>
-<text text-anchor="middle" x="856" y="-99.8" font-family="Times,serif" font-size="14.00">MessagesApiService</text>
+<ellipse fill="#fdb462" stroke="black" cx="314" cy="-104" rx="92.03" ry="18"/>
+<text text-anchor="middle" x="314" y="-99.8" font-family="Times,serif" font-size="14.00">MessagesApiService</text>
 </g>
 <!-- MessagesApiService&#45;&gt;MessagesApiModule -->
 <g id="edge5" class="edge">
 <title>MessagesApiService&#45;&gt;MessagesApiModule</title>
-<path fill="none" stroke="black" d="M856,-122.28C856,-143.32 856,-175 856,-175 856,-175 479.48,-175 479.48,-175"/>
-<polygon fill="black" stroke="black" points="479.48,-171.5 469.48,-175 479.48,-178.5 479.48,-171.5"/>
+<path fill="none" stroke="black" d="M314,-122.02C314,-139.37 314,-163 314,-163 314,-163 454.52,-163 454.52,-163"/>
+<polygon fill="black" stroke="black" points="454.52,-166.5 464.52,-163 454.52,-159.5 454.52,-166.5"/>
 </g>
 <!-- SmsDeliveryPollJob -->
 <g id="node7" class="node">
 <title>SmsDeliveryPollJob</title>
-<ellipse fill="#fdb462" stroke="black" cx="656" cy="-104" rx="90.37" ry="18"/>
-<text text-anchor="middle" x="656" y="-99.8" font-family="Times,serif" font-size="14.00">SmsDeliveryPollJob</text>
+<ellipse fill="#fdb462" stroke="black" cx="114" cy="-104" rx="90.37" ry="18"/>
+<text text-anchor="middle" x="114" y="-99.8" font-family="Times,serif" font-size="14.00">SmsDeliveryPollJob</text>
 </g>
 <!-- SmsDeliveryPollJob&#45;&gt;MessagesApiModule -->
 <g id="edge6" class="edge">
 <title>SmsDeliveryPollJob&#45;&gt;MessagesApiModule</title>
-<path fill="none" stroke="black" d="M656,-122.02C656,-139.37 656,-163 656,-163 656,-163 479.73,-163 479.73,-163"/>
-<polygon fill="black" stroke="black" points="479.73,-159.5 469.73,-163 479.73,-166.5 479.73,-159.5"/>
+<path fill="none" stroke="black" d="M114,-122.28C114,-143.32 114,-175 114,-175 114,-175 454.38,-175 454.38,-175"/>
+<polygon fill="black" stroke="black" points="454.38,-178.5 464.38,-175 454.38,-171.5 454.38,-178.5"/>
 </g>
 </g>
 </svg>

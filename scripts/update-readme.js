@@ -36,7 +36,7 @@ const OPTIONAL_MODULES = [
   ['SMS Infobip', '`SMS_PROVIDER=infobip` + `INFOBIP_API_KEY`, `INFOBIP_BASE_URL`', 'Proveedor console'],
   ['Push FCM', '`FIREBASE_PROJECT_ID`, `FIREBASE_CLIENT_EMAIL`, `FIREBASE_PRIVATE_KEY`', 'Proveedor Noop'],
   ['Push Web (VAPID)', '`VAPID_PUBLIC_KEY`, `VAPID_PRIVATE_KEY`', 'Proveedor Noop'],
-  ['Storage S3', '`S3_BUCKET_NAME` + credenciales `S3_*`', 'Storage deshabilitado'],
+  ['Storage S3', '`S3_BUCKET_NAME`, `S3_REGION` y `S3_ACCESS_KEY_ID` / `S3_SECRET_ACCESS_KEY`', 'El módulo siempre se registra y el cliente S3 se crea igual (región por defecto `us-east-1`, credenciales por la cadena por defecto del SDK); la app arranca y las operaciones de storage fallan recién al usarse'],
   ['Sentry', '`SENTRY_DSN`', 'No reporta'],
   ['Seq (logs)', '`SEQ_ENABLED=true`', 'Solo logs por stdout'],
   ['Scheduler / cron jobs', '`SCHEDULER_ENABLED` (cada job: `*_CRON`, `off` lo desactiva)', 'Sin tareas programadas'],

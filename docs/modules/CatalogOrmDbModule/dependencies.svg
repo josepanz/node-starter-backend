@@ -24,95 +24,95 @@
 <title>cluster_CatalogOrmDbModule</title>
 <polygon fill="none" stroke="black" stroke-dasharray="1,5" points="8,-70 8,-268 1090,-268 1090,-70 8,-70"/>
 </g>
-<g id="clust3" class="cluster">
-<title>cluster_CatalogOrmDbModule_imports</title>
-<polygon fill="none" stroke="black" points="956,-78 956,-130 1082,-130 1082,-78 956,-78"/>
-</g>
 <g id="clust6" class="cluster">
 <title>cluster_CatalogOrmDbModule_providers</title>
-<polygon fill="none" stroke="black" points="16,-78 16,-130 948,-130 948,-78 16,-78"/>
+<polygon fill="none" stroke="black" points="150,-78 150,-130 1082,-130 1082,-78 150,-78"/>
 </g>
 <g id="clust4" class="cluster">
 <title>cluster_CatalogOrmDbModule_exports</title>
-<polygon fill="none" stroke="black" points="510,-208 510,-260 656,-260 656,-208 510,-208"/>
+<polygon fill="none" stroke="black" points="402,-208 402,-260 548,-260 548,-208 402,-208"/>
+</g>
+<g id="clust3" class="cluster">
+<title>cluster_CatalogOrmDbModule_imports</title>
+<polygon fill="none" stroke="black" points="16,-78 16,-130 142,-130 142,-78 16,-78"/>
 </g>
 <!-- DatabaseModule -->
 <g id="node1" class="node">
 <title>DatabaseModule</title>
-<polygon fill="#8dd3c7" stroke="black" points="1074.35,-122 1071.35,-126 1050.35,-126 1047.35,-122 963.65,-122 963.65,-86 1074.35,-86 1074.35,-122"/>
-<text text-anchor="middle" x="1019" y="-99.8" font-family="Times,serif" font-size="14.00">DatabaseModule</text>
+<polygon fill="#8dd3c7" stroke="black" points="134.35,-122 131.35,-126 110.35,-126 107.35,-122 23.65,-122 23.65,-86 134.35,-86 134.35,-122"/>
+<text text-anchor="middle" x="79" y="-99.8" font-family="Times,serif" font-size="14.00">DatabaseModule</text>
 </g>
 <!-- CatalogOrmDbModule -->
 <g id="node2" class="node">
 <title>CatalogOrmDbModule</title>
-<polygon fill="#8dd3c7" stroke="black" points="655.86,-187 652.86,-191 631.86,-191 628.86,-187 510.14,-187 510.14,-151 655.86,-151 655.86,-187"/>
-<text text-anchor="middle" x="583" y="-164.8" font-family="Times,serif" font-size="14.00">CatalogOrmDbModule</text>
+<polygon fill="#8dd3c7" stroke="black" points="547.86,-187 544.86,-191 523.86,-191 520.86,-187 402.14,-187 402.14,-151 547.86,-151 547.86,-187"/>
+<text text-anchor="middle" x="475" y="-164.8" font-family="Times,serif" font-size="14.00">CatalogOrmDbModule</text>
 </g>
 <!-- DatabaseModule&#45;&gt;CatalogOrmDbModule -->
 <g id="edge1" class="edge">
 <title>DatabaseModule&#45;&gt;CatalogOrmDbModule</title>
-<path fill="none" stroke="black" d="M1019,-122.28C1019,-143.32 1019,-175 1019,-175 1019,-175 665.98,-175 665.98,-175"/>
-<polygon fill="black" stroke="black" points="665.98,-171.5 655.98,-175 665.98,-178.5 665.98,-171.5"/>
+<path fill="none" stroke="black" d="M79,-122.28C79,-143.32 79,-175 79,-175 79,-175 391.91,-175 391.91,-175"/>
+<polygon fill="black" stroke="black" points="391.91,-178.5 401.91,-175 391.91,-171.5 391.91,-178.5"/>
 </g>
 <!-- CatalogOrmService  -->
 <g id="node3" class="node">
 <title>CatalogOrmService </title>
-<polygon fill="#fb8072" stroke="black" points="648.18,-252 517.82,-252 517.82,-216 648.18,-216 648.18,-252"/>
-<text text-anchor="middle" x="583" y="-229.8" font-family="Times,serif" font-size="14.00">CatalogOrmService </text>
+<polygon fill="#fb8072" stroke="black" points="540.18,-252 409.82,-252 409.82,-216 540.18,-216 540.18,-252"/>
+<text text-anchor="middle" x="475" y="-229.8" font-family="Times,serif" font-size="14.00">CatalogOrmService </text>
 </g>
 <!-- CatalogOrmDbModule&#45;&gt;CatalogOrmService  -->
 <g id="edge2" class="edge">
 <title>CatalogOrmDbModule&#45;&gt;CatalogOrmService </title>
-<path fill="none" stroke="black" stroke-dasharray="5,2" d="M583,-187.11C583,-187.11 583,-205.99 583,-205.99"/>
-<polygon fill="black" stroke="black" points="579.5,-205.99 583,-215.99 586.5,-205.99 579.5,-205.99"/>
+<path fill="none" stroke="black" stroke-dasharray="5,2" d="M475,-187.11C475,-187.11 475,-205.99 475,-205.99"/>
+<polygon fill="black" stroke="black" points="471.5,-205.99 475,-215.99 478.5,-205.99 471.5,-205.99"/>
 </g>
 <!-- CatalogCategoryRepository -->
 <g id="node4" class="node">
 <title>CatalogCategoryRepository</title>
-<ellipse fill="#fdb462" stroke="black" cx="821" cy="-104" rx="118.7" ry="18"/>
-<text text-anchor="middle" x="821" y="-99.8" font-family="Times,serif" font-size="14.00">CatalogCategoryRepository</text>
+<ellipse fill="#fdb462" stroke="black" cx="955" cy="-104" rx="118.7" ry="18"/>
+<text text-anchor="middle" x="955" y="-99.8" font-family="Times,serif" font-size="14.00">CatalogCategoryRepository</text>
 </g>
 <!-- CatalogCategoryRepository&#45;&gt;CatalogOrmDbModule -->
 <g id="edge3" class="edge">
 <title>CatalogCategoryRepository&#45;&gt;CatalogOrmDbModule</title>
-<path fill="none" stroke="black" d="M821,-122.02C821,-139.37 821,-163 821,-163 821,-163 666.03,-163 666.03,-163"/>
-<polygon fill="black" stroke="black" points="666.03,-159.5 656.03,-163 666.03,-166.5 666.03,-159.5"/>
+<path fill="none" stroke="black" d="M955,-122.28C955,-143.32 955,-175 955,-175 955,-175 557.9,-175 557.9,-175"/>
+<polygon fill="black" stroke="black" points="557.9,-171.5 547.9,-175 557.9,-178.5 557.9,-171.5"/>
 </g>
 <!-- CatalogItemRepository -->
 <g id="node5" class="node">
 <title>CatalogItemRepository</title>
-<ellipse fill="#fdb462" stroke="black" cx="583" cy="-104" rx="101.3" ry="18"/>
-<text text-anchor="middle" x="583" y="-99.8" font-family="Times,serif" font-size="14.00">CatalogItemRepository</text>
+<ellipse fill="#fdb462" stroke="black" cx="717" cy="-104" rx="101.3" ry="18"/>
+<text text-anchor="middle" x="717" y="-99.8" font-family="Times,serif" font-size="14.00">CatalogItemRepository</text>
 </g>
 <!-- CatalogItemRepository&#45;&gt;CatalogOrmDbModule -->
 <g id="edge4" class="edge">
 <title>CatalogItemRepository&#45;&gt;CatalogOrmDbModule</title>
-<path fill="none" stroke="black" d="M583,-122.11C583,-122.11 583,-140.99 583,-140.99"/>
-<polygon fill="black" stroke="black" points="579.5,-140.99 583,-150.99 586.5,-140.99 579.5,-140.99"/>
+<path fill="none" stroke="black" d="M717,-122.02C717,-139.37 717,-163 717,-163 717,-163 557.94,-163 557.94,-163"/>
+<polygon fill="black" stroke="black" points="557.94,-159.5 547.94,-163 557.94,-166.5 557.94,-159.5"/>
 </g>
 <!-- CatalogItemStockRepository -->
 <g id="node6" class="node">
 <title>CatalogItemStockRepository</title>
-<ellipse fill="#fdb462" stroke="black" cx="341" cy="-104" rx="123.29" ry="18"/>
-<text text-anchor="middle" x="341" y="-99.8" font-family="Times,serif" font-size="14.00">CatalogItemStockRepository</text>
+<ellipse fill="#fdb462" stroke="black" cx="475" cy="-104" rx="123.29" ry="18"/>
+<text text-anchor="middle" x="475" y="-99.8" font-family="Times,serif" font-size="14.00">CatalogItemStockRepository</text>
 </g>
 <!-- CatalogItemStockRepository&#45;&gt;CatalogOrmDbModule -->
 <g id="edge5" class="edge">
 <title>CatalogItemStockRepository&#45;&gt;CatalogOrmDbModule</title>
-<path fill="none" stroke="black" d="M341,-122.02C341,-139.37 341,-163 341,-163 341,-163 500.06,-163 500.06,-163"/>
-<polygon fill="black" stroke="black" points="500.06,-166.5 510.06,-163 500.06,-159.5 500.06,-166.5"/>
+<path fill="none" stroke="black" d="M475,-122.11C475,-122.11 475,-140.99 475,-140.99"/>
+<polygon fill="black" stroke="black" points="471.5,-140.99 475,-150.99 478.5,-140.99 471.5,-140.99"/>
 </g>
 <!-- CatalogOrmService -->
 <g id="node7" class="node">
 <title>CatalogOrmService</title>
-<ellipse fill="#fdb462" stroke="black" cx="112" cy="-104" rx="87.96" ry="18"/>
-<text text-anchor="middle" x="112" y="-99.8" font-family="Times,serif" font-size="14.00">CatalogOrmService</text>
+<ellipse fill="#fdb462" stroke="black" cx="246" cy="-104" rx="87.96" ry="18"/>
+<text text-anchor="middle" x="246" y="-99.8" font-family="Times,serif" font-size="14.00">CatalogOrmService</text>
 </g>
 <!-- CatalogOrmService&#45;&gt;CatalogOrmDbModule -->
 <g id="edge6" class="edge">
 <title>CatalogOrmService&#45;&gt;CatalogOrmDbModule</title>
-<path fill="none" stroke="black" d="M112,-122.28C112,-143.32 112,-175 112,-175 112,-175 499.92,-175 499.92,-175"/>
-<polygon fill="black" stroke="black" points="499.92,-178.5 509.92,-175 499.92,-171.5 499.92,-178.5"/>
+<path fill="none" stroke="black" d="M246,-122.02C246,-139.37 246,-163 246,-163 246,-163 391.91,-163 391.91,-163"/>
+<polygon fill="black" stroke="black" points="391.91,-166.5 401.91,-163 391.91,-159.5 391.91,-166.5"/>
 </g>
 </g>
 </svg>

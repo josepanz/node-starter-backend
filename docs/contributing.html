@@ -106,7 +106,7 @@
 cp .env.template .env
 pnpm prisma migrate deploy &amp;&amp; pnpm prisma db seed   # 2 migraciones (init + audit_triggers); el seed es idempotente
 pnpm db:verify-audit-triggers                      # opcional: cobertura de triggers de auditoría
-pnpm start:dev                                     # o `pnpm build &amp;&amp; pnpm start:prod`</code></pre></div><p>La API queda en <code>http://localhost:3000/node-starter-backend/api</code> (Swagger en <code>/swagger</code>, salud en <code>/v1/healthcheck</code>). <code>docker compose up -d</code> levanta postgres, redis, mongo, mailpit y seq; solo postgres es necesario: Redis, Mongo, SMTP y Seq se activan completando su variable en <code>.env</code> (<code>REDIS_URL</code>, <code>MONGO_URI</code>, <code>EMAIL_HOST</code>/<code>EMAIL_PORT</code>, <code>SEQ_ENABLED</code>), y sin ellas cada módulo usa su fallback. <code>DATABASE_CONNECTION_STRING</code> (DB2/Sequelize) también es opcional: vacía, ese módulo no se registra. <code>APP_TIMEZONE</code> (default UTC) fija la zona de las fechas del healthcheck. El usuario demo del seed (<code>demo.orders@example.com</code>) trae la contraseña <code>DemoPass1234</code> (solo desarrollo, se guarda hasheada con bcrypt; el seed no la pisa si ya existe una credencial) y las rutas de auth exigen Basic Auth con el cliente M2M demo del seed.</p>
+pnpm start:dev                                     # o `pnpm build &amp;&amp; pnpm start:prod`</code></pre></div><p>La API queda en <code>http://localhost:3000/node-starter-backend/api</code> (Swagger en <code>/node-starter-backend/api/swagger</code>, salud en <code>/node-starter-backend/api/v1/healthcheck</code>). <code>docker compose up -d</code> levanta postgres, redis, mongo, mailpit y seq; solo postgres es necesario: Redis, Mongo, SMTP y Seq se activan completando su variable en <code>.env</code> (<code>REDIS_URL</code>, <code>MONGO_URI</code>, <code>EMAIL_HOST</code>/<code>EMAIL_PORT</code>, <code>SEQ_ENABLED</code>), y sin ellas cada módulo usa su fallback. <code>DATABASE_CONNECTION_STRING</code> (DB2/Sequelize) también es opcional: vacía, ese módulo no se registra. <code>APP_TIMEZONE</code> fija la zona IANA de las fechas de respuesta (healthcheck, entre otras). El usuario demo del seed (<code>demo.orders@example.com</code>) trae la contraseña <code>DemoPass1234</code> (solo desarrollo, se guarda hasheada con bcrypt; el seed no la pisa si ya existe una credencial). Las rutas de auth que exigen Basic Auth (login, alta de contraseña, verificación) usan el cliente M2M demo del seed, no el usuario demo.</p>
 <h2>Plataformas de CI soportadas</h2>
 <p>El repo es agnóstico del gestor y mantiene ambas configuraciones equivalentes (lint, typecheck, test con cobertura, build, release):</p>
 <ul>
@@ -162,6 +162,11 @@ pnpm test</code></pre></div><p>Además:</p>
 <p>Para trabajo mediano o grande, acordá el alcance antes de codear con OpenSpec (<code>openspec/README.md</code> y <a href=".context/skills/openspec-workflow/SKILL.md"><code>.context/skills/openspec-workflow/SKILL.md</code></a>).</p>
 <h2>Asistentes de IA</h2>
 <p>La guía para asistentes está en <a href="AGENTS.md"><code>AGENTS.md</code></a> y el contexto detallado (reglas, agentes, comandos, skills) en <a href=".context/CONTEXT.md"><code>.context/</code></a>.</p>
+<h2>Documentos relacionados</h2>
+<ul>
+<li><a href="README.md"><code>README.md</code></a>: qué es el starter, quickstart, índice de documentación y catálogo de mecanismos.</li>
+<li><a href="ARCHITECTURE.md"><code>ARCHITECTURE.md</code></a>: capas, ciclo de vida de una request, módulos opcionales y DB2/Sequelize.</li>
+</ul>
 
 
 
