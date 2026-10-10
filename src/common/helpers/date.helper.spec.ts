@@ -32,6 +32,15 @@ describe('date.helper', () => {
     );
   });
 
+  it('toStartOfDay / toEndOfDay no mutan el input y devuelven otra instancia', () => {
+    const input = new Date('2024-03-10T15:30:00.000Z');
+    const start = toStartOfDay(input);
+    const end = toEndOfDay(input);
+    expect(input.toISOString()).toBe('2024-03-10T15:30:00.000Z');
+    expect(start).not.toBe(input);
+    expect(end).not.toBe(input);
+  });
+
   describe('toISODateOnly', () => {
     it('formatea Date y string en hora local', () => {
       expect(toISODateOnly(new Date(2024, 4, 9))).toBe('2024-05-09');

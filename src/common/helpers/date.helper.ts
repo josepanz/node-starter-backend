@@ -17,22 +17,24 @@ export function convertToISO(value: string | Date): string | null {
 
 /**
  * Sets the given date to the start of the day (UTC 00:00:00.000).
- * @param value The date value to modify.
+ * @param value The date value (not mutated).
  * @returns A new Date object at the start of the same day.
  */
 export function toStartOfDay(value: Date): Date {
-  value.setUTCHours(0, 0, 0, 0);
-  return value;
+  const result = new Date(value.getTime());
+  result.setUTCHours(0, 0, 0, 0);
+  return result;
 }
 
 /**
  * Sets the given date to the end of the day (UTC 23:59:59.999).
- * @param value The date value to modify.
+ * @param value The date value (not mutated).
  * @returns A new Date object at the end of the same day.
  */
 export function toEndOfDay(value: Date): Date {
-  value.setUTCHours(23, 59, 59, 999);
-  return value;
+  const result = new Date(value.getTime());
+  result.setUTCHours(23, 59, 59, 999);
+  return result;
 }
 
 /**
