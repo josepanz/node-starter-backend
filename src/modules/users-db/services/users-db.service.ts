@@ -22,7 +22,7 @@ import {
 } from '@modules/auth/types/user.types';
 import { EmailService } from '@modules/email/services/email.service';
 import { EmailTypeEnum } from '@modules/email/enum/email-type.enum';
-import { UpdateEditContextRequestDTO } from '@api/users/dtos';
+import { UpdateEditContextRequestDTO } from '@modules/users-db/dtos/edit-context.request.dto';
 import { UserRolesDBService } from './user-roles-db.service';
 import { RoleDTO, PermissionDTO } from '../interfaces/users-db.interface';
 import { UserWithDetail, userDetailInclude } from '../types/users-db.type';
@@ -403,6 +403,14 @@ export class UsersDBService {
     });
     await this.permissionsCache.invalidateAll();
     return updated;
+  }
+
+  /** Actualiza solo los datos del documento de identidad (no afecta roles/permisos, sin invalidar cache). */
+  async updateDocument(
+    id: number,
+    data: { documentType?: DocumentType; documentNumber?: string },
+  ): Promise<void> {
+    await this.prisma.extended.users.update({ where: { id }, data });
   }
 
   async updateUser(
