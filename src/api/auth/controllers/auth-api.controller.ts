@@ -15,7 +15,12 @@ import {
   UseGuards,
   UnauthorizedException,
 } from '@nestjs/common';
-import { ApiBasicAuth, ApiBearerAuth, ApiTags } from '@nestjs/swagger';
+import {
+  ApiBasicAuth,
+  ApiBearerAuth,
+  ApiOperation,
+  ApiTags,
+} from '@nestjs/swagger';
 
 import * as DTO from '@api/auth/dtos';
 
@@ -26,6 +31,7 @@ import { PermissionsGuard } from '@modules/auth/guards/permissions.guard';
 import { BasicAuthGuard } from '@modules/auth/guards/basic-auth.guard';
 import { UserByEmailLoaderGuard } from '@modules/auth/guards/user-by-email-loader.guard';
 
+import { RateLimit } from '@core/rate-limit/rate-limit.decorators';
 import { User } from '@common/decorators/user.decorator';
 import { Permissions } from '@common/decorators/permissions.decorator';
 import { PERMISSIONS } from '@common/enum/permissions.enum';
@@ -35,6 +41,8 @@ import { AuthCookieService } from '@api/auth/services/auth-cookie.service';
 import { AuthDocs } from '@api/auth/docs/auth-api.docs';
 import { IUserDataOnJwt } from '@modules/auth/interfaces/user-data-on-jwt.interface';
 
+// Limiter `auth` (más estricto que el default) en todo el controller de autenticación.
+@RateLimit('auth')
 @ApiTags('Auth')
 @Controller('auth')
 export class AuthApiController {
@@ -42,6 +50,17 @@ export class AuthApiController {
     private readonly authApiService: AuthApiService,
     private readonly cookieService: AuthCookieService,
   ) {}
+
+  @Get('nonce')
+  @Version('1')
+  @ApiBasicAuth()
+  @UseGuards(BasicAuthGuard)
+  @ApiOperation({
+    summary: 'Emite un nonce de un solo uso para el login (anti-replay)',
+  })
+  async nonce(): Promise<DTO.LoginNonceResponseDTO> {
+    return await this.authApiService.issueLoginNonce();
+  }
 
   @Post('login')
   @Version('1')
@@ -90,7 +109,7 @@ export class AuthApiController {
   @ApiBearerAuth()
   @Version('1')
   @UseGuards(JwtAuthGuard, PermissionsGuard)
-  @Permissions(PERMISSIONS.USER.PASSWORD.UPDATE, PERMISSIONS.ADMIN.ALL)
+  @Permissions(PERMISSIONS.USER.PASSWORD.UPDATE)
   @AuthDocs('changePassword')
   async changePassword(
     @Body() dto: DTO.UpdateUserPasswordDTO,

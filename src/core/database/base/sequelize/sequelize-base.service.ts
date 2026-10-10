@@ -58,7 +58,7 @@ export abstract class SequelizeBaseService<
     where: WhereOptions<TAttributes>,
     options: ISequelizeRepositoryOptions = {},
   ): Promise<TModel | null> {
-    this.logger.warn(
+    this.logger.debug(
       `Operation: [findOne] Buscando registro con where: ${JSON.stringify(where)}`,
     );
     return this.repository.findOne(where, options);
@@ -71,7 +71,7 @@ export abstract class SequelizeBaseService<
     where: WhereOptions<TAttributes> = {},
     opts: Parameters<TRepository['findAll']>[1] = {},
   ): Promise<{ rows: TModel[]; count: number }> {
-    this.logger.warn(
+    this.logger.debug(
       `Operation: [findAll] Buscando registros con where: ${JSON.stringify(where)}`,
     );
     return this.repository.findAll(where, opts);
@@ -84,7 +84,7 @@ export abstract class SequelizeBaseService<
     payload: TAttributes,
     options: CreateOptions = {},
   ): Promise<TModel> {
-    this.logger.warn(`Operation: [createOne] Creando nuevo registro.`);
+    this.logger.debug(`Operation: [createOne] Creando nuevo registro.`);
     return this.repository.createOne(payload, options);
   }
 
@@ -95,7 +95,7 @@ export abstract class SequelizeBaseService<
     payloads: TAttributes[],
     options: BulkCreateOptions = {},
   ): Promise<TModel[]> {
-    this.logger.warn(
+    this.logger.debug(
       `Operation: [bulkCreate] Creando ${payloads.length} registros en bulk.`,
     );
     return this.repository.bulkCreate(payloads, options);
@@ -114,7 +114,7 @@ export abstract class SequelizeBaseService<
       );
     }
 
-    this.logger.warn(
+    this.logger.debug(
       `Operation: [update] Actualizando con where: ${JSON.stringify(options.where)}`,
     );
 
@@ -131,7 +131,7 @@ export abstract class SequelizeBaseService<
     where: WhereOptions<TAttributes>,
     options: ISequelizeRepositoryOptions = {},
   ): Promise<number> {
-    this.logger.warn(
+    this.logger.debug(
       `Operation: [delete] Eliminando registros con criterios: ${JSON.stringify(where)}`,
     );
     return this.repository.delete(where, options);
@@ -142,7 +142,7 @@ export abstract class SequelizeBaseService<
    * @param id De la entidad a retornar
    * @returns Entidad
    */
-  async findByPk(id: number): Promise<TModel | null> {
+  async findByPk(id: number | string): Promise<TModel | null> {
     return await this.repository.findByPk(id);
   }
 }

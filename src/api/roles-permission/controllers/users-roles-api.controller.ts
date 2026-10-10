@@ -15,6 +15,7 @@ import * as ResponseDTO from '@api/roles-permission/dtos/response';
 import { RolesApiService } from '@api/roles-permission/services/roles-permission-api.service';
 import { UserRolesDocs } from '@api/roles-permission/docs';
 import { JwtAuthGuard } from '@modules/auth/guards';
+import { GetUser } from '@modules/auth/decorators';
 import { PERMISSIONS } from '@common/enum/permissions.enum';
 import { Permissions } from '@common/decorators/permissions.decorator';
 
@@ -28,26 +29,23 @@ export class UsersRolesApiController {
   @Post(':userId/roles')
   @Version('1')
   @UserRolesDocs('assignRolesToUser')
-  @Permissions(PERMISSIONS.ASSIGNMENT.ROLE_PERMISSION, PERMISSIONS.ADMIN.ALL)
+  @Permissions(PERMISSIONS.ASSIGNMENT.ROLE_PERMISSION)
   async assignRolesToUser(
     @Param() paramDTO: RequestDTO.GetUserRoleParamDTO,
     @Body() dto: RequestDTO.AssignRolesToUserRequestDTO,
+    @GetUser('email') userEmail: string,
   ): Promise<ResponseDTO.UserRoleAssignmentResponseDTO> {
     return await this.rolesApiService.assignRolesToUser(
       paramDTO.userId,
       dto,
-      'system',
+      userEmail,
     );
   }
 
   @Get(':userId/roles')
   @Version('1')
   @UserRolesDocs('getUserWithRoles')
-  @Permissions(
-    PERMISSIONS.USER.READ,
-    PERMISSIONS.ROLE.READ,
-    PERMISSIONS.ADMIN.ALL,
-  )
+  @Permissions(PERMISSIONS.USER.READ, PERMISSIONS.ROLE.READ)
   async getUserWithRoles(
     @Param() paramDTO: RequestDTO.GetUserRoleParamDTO,
   ): Promise<ResponseDTO.UserWithRolesResponseDTO> {
@@ -57,15 +55,16 @@ export class UsersRolesApiController {
   @Post(':userId/permissions')
   @Version('1')
   @UserRolesDocs('assignPermissionsToUser')
-  @Permissions(PERMISSIONS.ASSIGNMENT.USER_PERMISSION, PERMISSIONS.ADMIN.ALL)
+  @Permissions(PERMISSIONS.ASSIGNMENT.USER_PERMISSION)
   async assignPermissionsToUser(
     @Param() paramDTO: RequestDTO.GetUserRoleParamDTO,
     @Body() dto: RequestDTO.AssignPermissionsToUserRequestDTO,
+    @GetUser('email') userEmail: string,
   ): Promise<ResponseDTO.UserPermissionAssignmentResponseDTO> {
     return await this.rolesApiService.assignPermissionsToUser(
       paramDTO.userId,
       dto,
-      'system',
+      userEmail,
     );
   }
 }

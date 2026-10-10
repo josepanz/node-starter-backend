@@ -3,7 +3,7 @@
     <head>
         <meta charset="utf-8">
         <meta http-equiv="x-ua-compatible" content="ie=edge">
-        <title>node-started-backend documentation</title>
+        <title>node-starter-backend documentation</title>
         <meta name="description" content="">
         <meta name="viewport" content="width=device-width, initial-scale=1">
 
@@ -78,7 +78,7 @@
 
         <div class="navbar navbar-default navbar-fixed-top d-md-none p-0">
                <div class="d-flex">
-                    <a href="../" class="navbar-brand">node-started-backend documentation</a>
+                    <a href="../" class="navbar-brand">node-starter-backend documentation</a>
                     <button type="button" class="btn btn-default btn-menu ion-ios-menu" id="btn-menu"></button>
                </div>
         </div>
@@ -139,6 +139,18 @@
             </p>
 
 
+                <p class="comment">
+                <h3>Description</h3>
+                </p>
+                <p class="comment">
+                    <p>Patrón: guard de autorización declarativo (metadata + Reflector).</p>
+<ul>
+<li>Superusuario: <code>admin:all</code> pasa directo, así los controllers no repiten ese permiso.</li>
+<li>Metadata de handler y de clase (<code>getAllAndOverride</code>): el handler gana sobre la clase.</li>
+<li>403 genérico al cliente (no filtra qué permiso falta); el detalle va al log.</li>
+</ul>
+
+                </p>
 
 
 
@@ -147,6 +159,22 @@
     <h3 id="index">Index</h3>
     <table class="table table-sm table-bordered index-table">
         <tbody>
+                <tr>
+                    <td class="col-md-4">
+                        <h6><b>Properties</b></h6>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <ul class="index-list">
+                            <li>
+                                    <span class="modifier">Private</span>
+                                    <span class="modifier">Readonly</span>
+                                <a href="#logger" >logger</a>
+                            </li>
+                        </ul>
+                    </td>
+                </tr>
 
                 <tr>
                     <td class="col-md-4">
@@ -177,12 +205,12 @@
             <tbody>
                 <tr>
                     <td class="col-md-4">
-<code>constructor(reflector: Reflector)</code>
+<code>constructor(reflector: <a href="../undefineds/t.html" target="_self">Reflector</a>)</code>
                     </td>
                 </tr>
                         <tr>
                             <td class="col-md-4">
-                                <div class="io-line">Defined in <a href="" data-line="12" class="link-to-prism">src/modules/auth/guards/permissions.guard.ts:12</a></div>
+                                <div class="io-line">Defined in <a href="" data-line="32" class="link-to-prism">src/modules/auth/guards/permissions.guard.ts:32</a></div>
                             </td>
                         </tr>
 
@@ -203,7 +231,7 @@
                                                         <td>reflector</td>
                                                   
                                                         <td>
-                                                                    <code>Reflector</code>
+                                                                        <code><a href="../miscellaneous/functions.html#t" target="_self" >Reflector</a></code>
                                                         </td>
                                                   
                                                     <td>
@@ -238,15 +266,15 @@
             </tr>
             <tr>
                 <td class="col-md-4">
-<code>canActivate(context: ExecutionContext)</code>
+<code>canActivate(context: <a href="../unknowns/text.html" target="_self">ExecutionContext</a>)</code>
                 </td>
             </tr>
 
 
                     <tr>
                         <td class="col-md-4">
-                            <div class="io-line">Defined in <a href="" data-line="15"
-                                    class="link-to-prism">src/modules/auth/guards/permissions.guard.ts:15</a></div>
+                            <div class="io-line">Defined in <a href="" data-line="36"
+                                    class="link-to-prism">src/modules/auth/guards/permissions.guard.ts:36</a></div>
                         </td>
                     </tr>
 
@@ -269,7 +297,7 @@
                                         <tr>
                                                 <td>context</td>
                                             <td>
-                                                        <code>ExecutionContext</code>
+                                                            <code><a href="../miscellaneous/variables.html#text" target="_self" >ExecutionContext</a></code>
                                             </td>
 
                                             <td>
@@ -282,7 +310,7 @@
                                 </table>
                             </div>
                         <div class="io-description">
-                            <b>Returns : </b>        <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/boolean" target="_blank" >boolean</a></code>
+                            <b>Returns : </b>        <code><a href="../miscellaneous/variables.html#bool" target="_self" >boolean</a></code>
 
                         </div>
                             <div class="io-description">
@@ -302,42 +330,75 @@
   CanActivate,
   ExecutionContext,
   ForbiddenException,
+  Logger,
 } from &#x27;@nestjs/common&#x27;;
 import { Reflector } from &#x27;@nestjs/core&#x27;;
 
-const PERMISSIONS_KEY &#x3D; &#x27;permissions&#x27;;
+import {
+  PERMISSIONS_KEY,
+  PERMISSIONS_MODE_KEY,
+  PermissionsMode,
+} from &#x27;@common/decorators/permissions.decorator&#x27;;
+import { PERMISSIONS } from &#x27;@common/enum/permissions.enum&#x27;;
+import { t } from &#x27;@common/i18n/i18n.helper&#x27;;
 
+interface IRequestUser {
+  id?: string | number;
+  userId?: string | number;
+  permissions?: unknown;
+}
+
+/**
+ * Patrón: guard de autorización declarativo (metadata + Reflector).
+ * - Superusuario: &#x60;admin:all&#x60; pasa directo, así los controllers no repiten ese permiso.
+ * - Metadata de handler y de clase (&#x60;getAllAndOverride&#x60;): el handler gana sobre la clase.
+ * - 403 genérico al cliente (no filtra qué permiso falta); el detalle va al log.
+ */
 @Injectable()
 export class PermissionsGuard implements CanActivate {
-  constructor(private reflector: Reflector) {}
+  private readonly logger &#x3D; new Logger(PermissionsGuard.name);
+
+  constructor(private readonly reflector: Reflector) {}
 
   canActivate(context: ExecutionContext): boolean {
-    const requiredPermissions &#x3D; this.reflector.get&lt;string[]&gt;(
+    const targets &#x3D; [context.getHandler(), context.getClass()];
+    const required &#x3D; this.reflector.getAllAndOverride&lt;string[] | undefined&gt;(
       PERMISSIONS_KEY,
-      context.getHandler(),
+      targets,
     );
 
-    if (!requiredPermissions) {
+    if (!required || required.length &#x3D;&#x3D;&#x3D; 0) {
       return true;
     }
 
-    const { user } &#x3D; context.switchToHttp().getRequest();
+    const { user } &#x3D; context.switchToHttp().getRequest&lt;{
+      user?: IRequestUser;
+    }&gt;();
+    const granted &#x3D;
+      user &amp;&amp; Array.isArray(user.permissions)
+        ? (user.permissions as string[])
+        : [];
 
-    if (!user || !user.permissions || !Array.isArray(user.permissions)) {
-      throw new ForbiddenException(&#x60;Usuario sin permisos asignados.&#x60;);
+    if (granted.includes(PERMISSIONS.ADMIN.ALL)) {
+      return true;
     }
 
-    const hasPermission &#x3D; requiredPermissions.some((permission) &#x3D;&gt;
-      user.permissions.includes(permission),
-    );
+    const mode &#x3D;
+      this.reflector.getAllAndOverride&lt;PermissionsMode | undefined&gt;(
+        PERMISSIONS_MODE_KEY,
+        targets,
+      ) ?? &#x27;any&#x27;;
+    const has &#x3D; (permission: string) &#x3D;&gt; granted.includes(permission);
+    const allowed &#x3D; mode &#x3D;&#x3D;&#x3D; &#x27;all&#x27; ? required.every(has) : required.some(has);
 
-    if (!hasPermission) {
-      throw new ForbiddenException(
-        &#x60;Usuario no tiene los permisos necesarios: ${requiredPermissions.toString()}.&#x60;,
+    if (!allowed) {
+      this.logger.warn(
+        &#x60;Acceso denegado userId&#x3D;${user?.id ?? user?.userId ?? &#x27;anonymous&#x27;} requeridos&#x3D;[${required.join(&#x27;,&#x27;)}] modo&#x3D;${mode}&#x60;,
       );
+      throw new ForbiddenException(t(&#x27;auth.INSUFFICIENT_PERMISSIONS&#x27;));
     }
 
-    return hasPermission;
+    return true;
   }
 }
 </code></pre>

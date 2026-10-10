@@ -2,6 +2,7 @@ import { Injectable, UnauthorizedException } from '@nestjs/common';
 import { AuthGuard } from '@nestjs/passport';
 import { TokenExpiredError } from 'jsonwebtoken';
 import { UserWithSecurities } from '../types/user.types';
+import { t } from '@common/i18n/i18n.helper';
 
 @Injectable()
 export class JwtAuthGuard extends AuthGuard('jwt') {
@@ -14,7 +15,7 @@ export class JwtAuthGuard extends AuthGuard('jwt') {
     if (info instanceof TokenExpiredError) {
       throw new UnauthorizedException({
         statusCode: 401,
-        message: 'Access token expired',
+        message: t('auth.TOKEN_EXPIRED'),
         error: 'Unauthorized',
         code: 'TOKEN_EXPIRED',
       });
@@ -24,7 +25,7 @@ export class JwtAuthGuard extends AuthGuard('jwt') {
     if (err || !user) {
       throw new UnauthorizedException({
         statusCode: 401,
-        message: 'Invalid access token',
+        message: t('auth.INVALID_TOKEN'),
         error: 'Unauthorized',
         code: 'INVALID_TOKEN',
       });

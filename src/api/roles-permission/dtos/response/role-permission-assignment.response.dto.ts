@@ -47,7 +47,7 @@ export class RolePermissionAssignmentResponseDTO {
   roleId!: number;
 
   @ApiProperty({
-    example: 'MerchantAdmin',
+    example: 'TenantAdmin',
     description: 'Nombre del rol',
   })
   roleName!: string;

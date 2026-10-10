@@ -9,7 +9,6 @@ import { AuthModule } from '@modules/auth/auth.module';
 import { EmailModule } from '@modules/email/email.module';
 
 import { AuthApiController } from '@api/auth/controllers/auth-api.controller';
-import { JwtStrategy, JwtRefreshStrategy } from '@modules/auth/strategies';
 import { AuthApiService } from '@api/auth/services/auth-api.service';
 import { AuthCookieService } from '@api/auth/services/auth-cookie.service';
 import { AuthMigrationService } from '@api/auth/services/auth-migration.service';
@@ -24,13 +23,7 @@ import { AuthMigrationService } from '@api/auth/services/auth-migration.service'
     PassportModule.register({ defaultStrategy: 'jwt' }),
   ],
   controllers: [AuthApiController],
-  providers: [
-    AuthApiService,
-    AuthCookieService,
-    AuthMigrationService,
-    JwtStrategy,
-    JwtRefreshStrategy,
-  ],
+  providers: [AuthApiService, AuthCookieService, AuthMigrationService],
   exports: [AuthApiService],
 })
 export class AuthApiModule {}

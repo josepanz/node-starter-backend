@@ -1,3 +1,4 @@
+import { ExecutionOptions } from '@common/interfaces/execution-options.interface';
 import { InjectionToken } from '@nestjs/common';
 
 export const STORAGE_MODULE_OPTIONS: InjectionToken = Symbol(
@@ -36,11 +37,7 @@ export interface StorageDeleteInput {
   id?: string;
 }
 
-export interface StorageExecutionOptions {
-  maxConcurrency?: number;
-  retryAttempts?: number;
-  retryDelayMs?: number;
-}
+export type StorageExecutionOptions = ExecutionOptions;
 
 export interface StoragePresignedUrlInput {
   key: string;

@@ -14,19 +14,20 @@ import {
 } from '@nestjs/common';
 import { ApiTags, ApiBearerAuth } from '@nestjs/swagger';
 
+import { RateLimit } from '@core/rate-limit/rate-limit.decorators';
 import { UsersApiService } from '@api/users/services/users-api.service';
 import * as DTO from '@api/users/dtos';
 import { UsersDocs } from '@api/users/docs/users-api.docs';
 
 import { PermissionsGuard } from '@modules/auth/guards/permissions.guard';
 import { JwtAuthGuard } from '@modules/auth/guards/jwt-auth.guard';
-import { MerchantContextGuard } from '@modules/auth/guards/merchant-context.guard';
+import { TenantContextGuard } from '@modules/auth/guards/tenant-context.guard';
 import { Permissions } from '@common/decorators/permissions.decorator';
 import { User } from '@common/decorators/user.decorator';
-import { MerchantContext } from '@modules/auth/decorators/get-merchant-context.decorator';
-import { IMerchantContext } from '@common/interfaces/merchant-context.interface';
+import { TenantContext } from '@modules/auth/decorators/get-tenant-context.decorator';
+import { ITenantContext } from '@common/interfaces/tenant-context.interface';
 import { PERMISSIONS } from '@common/enum/permissions.enum';
-import { UpdateEditContextRequestDTO } from '@api/users/dtos/request/edit-context.request.dto';
+import { UpdateEditContextRequestDTO } from '@modules/users-db/dtos/edit-context.request.dto';
 import {
   GetEditContextResponseDTO,
   UpdateEditContextResponseDTO,
@@ -42,21 +43,22 @@ export class UsersController {
 
   @Get()
   @Version('1')
-  @UseGuards(MerchantContextGuard)
-  @Permissions(PERMISSIONS.USER.READ, PERMISSIONS.ADMIN.ALL)
+  @RateLimit('search')
+  @UseGuards(TenantContextGuard)
+  @Permissions(PERMISSIONS.USER.READ)
   @UsersDocs('findAll')
   async findAll(
     @Query() query: DTO.ListUsersRequestDTO,
-    @MerchantContext() merchantCtx: IMerchantContext,
+    @TenantContext() tenantCtx: ITenantContext,
     @User() user: IUserDataOnJwt,
   ): Promise<DTO.UsersListResponseDTO> {
-    return await this.usersApiService.findAll(query, merchantCtx, user);
+    return await this.usersApiService.findAll(query, tenantCtx, user);
   }
 
   @Get('reference/:referenceId/edit-context')
   @Version('1')
-  @UseGuards(MerchantContextGuard)
-  @Permissions(PERMISSIONS.USER.READ, PERMISSIONS.ADMIN.ALL)
+  @UseGuards(TenantContextGuard)
+  @Permissions(PERMISSIONS.USER.READ)
   @UsersDocs('getEditContext')
   async getEditContext(
     @Param('referenceId') referenceId: string,
@@ -66,8 +68,8 @@ export class UsersController {
 
   @Put('reference/:referenceId/edit-context')
   @Version('1')
-  @UseGuards(MerchantContextGuard)
-  @Permissions(PERMISSIONS.USER.UPDATE, PERMISSIONS.ADMIN.ALL)
+  @UseGuards(TenantContextGuard)
+  @Permissions(PERMISSIONS.USER.UPDATE)
   @UsersDocs('updateEditContext')
   async updateEditContext(
     @Param('referenceId') referenceId: string,
@@ -83,8 +85,8 @@ export class UsersController {
 
   @Get('reference/:referenceId')
   @Version('1')
-  @UseGuards(MerchantContextGuard)
-  @Permissions(PERMISSIONS.USER.READ, PERMISSIONS.ADMIN.ALL)
+  @UseGuards(TenantContextGuard)
+  @Permissions(PERMISSIONS.USER.READ)
   @UsersDocs('findOneByReference')
   async findOneByReference(
     @Param('referenceId') referenceId: string,
@@ -94,7 +96,7 @@ export class UsersController {
 
   @Put('reference/:referenceId')
   @Version('1')
-  @Permissions(PERMISSIONS.USER.UPDATE, PERMISSIONS.ADMIN.ALL)
+  @Permissions(PERMISSIONS.USER.UPDATE)
   @UsersDocs('updateByReference')
   async updateByReference(
     @Param('referenceId') referenceId: string,
@@ -110,7 +112,7 @@ export class UsersController {
 
   @Delete('reference/:referenceId')
   @Version('1')
-  @Permissions(PERMISSIONS.USER.DELETE, PERMISSIONS.ADMIN.ALL)
+  @Permissions(PERMISSIONS.USER.DELETE)
   @UsersDocs('deleteByReference')
   async deleteByReference(
     @Param('referenceId') referenceId: string,
@@ -121,8 +123,8 @@ export class UsersController {
 
   @Get(':id')
   @Version('1')
-  @UseGuards(MerchantContextGuard)
-  @Permissions(PERMISSIONS.USER.READ, PERMISSIONS.ADMIN.ALL)
+  @UseGuards(TenantContextGuard)
+  @Permissions(PERMISSIONS.USER.READ)
   @UsersDocs('findOne')
   async findOne(
     @Param('id', ParseIntPipe) id: number,
@@ -132,7 +134,7 @@ export class UsersController {
 
   @Put(':id')
   @Version('1')
-  @Permissions(PERMISSIONS.USER.UPDATE, PERMISSIONS.ADMIN.ALL)
+  @Permissions(PERMISSIONS.USER.UPDATE)
   @UsersDocs('update')
   async update(
     @Param('id', ParseIntPipe) id: number,
@@ -144,7 +146,7 @@ export class UsersController {
 
   @Patch(':id/block')
   @Version('1')
-  @Permissions(PERMISSIONS.USER.UPDATE, PERMISSIONS.ADMIN.ALL)
+  @Permissions(PERMISSIONS.USER.UPDATE)
   @UsersDocs('block')
   async block(
     @Param('id', ParseIntPipe) id: number,
@@ -156,7 +158,7 @@ export class UsersController {
 
   @Patch(':id/unblock')
   @Version('1')
-  @Permissions(PERMISSIONS.USER.UPDATE, PERMISSIONS.ADMIN.ALL)
+  @Permissions(PERMISSIONS.USER.UPDATE)
   @UsersDocs('unblock')
   async unblock(
     @Param('id', ParseIntPipe) id: number,

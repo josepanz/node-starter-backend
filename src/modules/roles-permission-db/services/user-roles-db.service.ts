@@ -5,6 +5,7 @@ import {
   BadRequestException,
 } from '@nestjs/common';
 import { PrismaDatasource } from '@core/database/services/prisma.service';
+import { PermissionsCacheService } from '@core/cache/permissions-cache.service';
 import { UserRoles } from '@prisma/client';
 import { UsersDBService } from '@modules/users-db/services/users-db.service';
 import { RolesDBService } from './roles-db.service';
@@ -17,6 +18,7 @@ export class UserRolesDBService {
     private readonly prisma: PrismaDatasource,
     private readonly usersDBService: UsersDBService,
     private readonly rolesDBService: RolesDBService,
+    private readonly permissionsCache: PermissionsCacheService,
   ) {}
 
   // ─── Raw DB ───────────────────────────────────────────────────────────────
@@ -26,7 +28,7 @@ export class UserRolesDBService {
     roleIds: number[];
     createdBy: string;
   }): Promise<UserRoles[]> {
-    return await this.prisma.extended.$transaction(async (tx) => {
+    const result = await this.prisma.extended.$transaction(async (tx) => {
       const oldRoles = await tx.userRoles.findMany({
         where: { userId: data.userId },
         include: { role: true },
@@ -61,6 +63,8 @@ export class UserRolesDBService {
         include: { role: true },
       });
     });
+    await this.permissionsCache.invalidateAll();
+    return result;
   }
 
   async getRolesByUserId(userId: number) {
@@ -88,6 +92,7 @@ export class UserRolesDBService {
 
       await tx.userRoles.deleteMany({ where: { userId, roleId } });
     });
+    await this.permissionsCache.invalidateAll();
   }
 
   async userHasRole(userId: number, roleId: number): Promise<boolean> {

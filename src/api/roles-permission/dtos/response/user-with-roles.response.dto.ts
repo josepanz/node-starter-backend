@@ -8,7 +8,7 @@ class RoleSummaryDTO {
   id!: number;
 
   @ApiProperty({
-    example: 'MerchantAdmin',
+    example: 'TenantAdmin',
     description: 'Nombre del rol',
   })
   name!: string;
@@ -20,7 +20,7 @@ class RoleSummaryDTO {
   displayName!: string;
 
   @ApiProperty({
-    example: 'Administrador del comercio',
+    example: 'Administrador del tenant',
     description: 'Descripción del rol',
     nullable: true,
   })
@@ -90,8 +90,8 @@ export class UserWithRolesResponseDTO {
     example: [
       {
         id: 1,
-        name: 'MerchantAdmin',
-        description: 'Administrador del comercio',
+        name: 'TenantAdmin',
+        description: 'Administrador del tenant',
         isActive: true,
       },
     ],
@@ -115,8 +115,8 @@ export class UserWithRolesResponseDTO {
     type: [PermissionSummaryDTO],
     description: 'Todos los permisos (roles + directos)',
     example: [
-      { id: 1, name: 'customers:read', source: 'MerchantAdmin' },
-      { id: 2, name: 'customers:update', source: 'MerchantAdmin' },
+      { id: 1, name: 'customers:read', source: 'TenantAdmin' },
+      { id: 2, name: 'customers:update', source: 'TenantAdmin' },
       { id: 5, name: 'reports:export', source: 'directo' },
     ],
   })

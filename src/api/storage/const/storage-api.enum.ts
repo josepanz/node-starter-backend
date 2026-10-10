@@ -1,4 +1,4 @@
-export const MERCHANT_DOC_FIELDS = [
+export const TENANT_DOC_FIELDS = [
   { name: 'documentFrontImage', maxCount: 1 },
   { name: 'documentBackImage', maxCount: 1 },
   { name: 'commercialInvoiceImage', maxCount: 1 },

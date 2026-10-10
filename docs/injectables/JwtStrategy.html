@@ -3,7 +3,7 @@
     <head>
         <meta charset="utf-8">
         <meta http-equiv="x-ua-compatible" content="ie=edge">
-        <title>node-started-backend documentation</title>
+        <title>node-starter-backend documentation</title>
         <meta name="description" content="">
         <meta name="viewport" content="width=device-width, initial-scale=1">
 
@@ -78,7 +78,7 @@
 
         <div class="navbar navbar-default navbar-fixed-top d-md-none p-0">
                <div class="d-flex">
-                    <a href="../" class="navbar-brand">node-started-backend documentation</a>
+                    <a href="../" class="navbar-brand">node-starter-backend documentation</a>
                     <button type="button" class="btn btn-default btn-menu ion-ios-menu" id="btn-menu"></button>
                </div>
         </div>
@@ -142,7 +142,7 @@
                 <h3>Extends</h3>
             </p>
             <p class="comment">
-                        <code>PassportStrategy(Strategy, &#x27;jwt&#x27;)</code>
+                            <code><a href="../miscellaneous/functions.html#t" target="_self" >PassportStrategy(Strategy, &#x27;jwt&#x27;)</a></code>
             </p>
 
 
@@ -159,6 +159,11 @@
                 <tr>
                     <td class="col-md-4">
                         <ul class="index-list">
+                            <li>
+                                    <span class="modifier">Private</span>
+                                    <span class="modifier">Async</span>
+                                <a href="#resolveUser" >resolveUser</a>
+                            </li>
                             <li>
                                     <span class="modifier">Async</span>
                                 <a href="#validate" >validate</a>
@@ -181,12 +186,12 @@
             <tbody>
                 <tr>
                     <td class="col-md-4">
-<code>constructor(usersService: <a href="../injectables/UsersDBService.html" target="_self">UsersDBService</a>, configService: <a href="../undefineds/AppConfigType.html" target="_self">ConfigType&lt;AppConfigType&gt;</a>)</code>
+<code>constructor(usersService: <a href="../injectables/UsersDBService.html" target="_self">UsersDBService</a>, permissionsCache: <a href="../injectables/PermissionsCacheService.html" target="_self">PermissionsCacheService</a>, configService: ConfigType<AppConfigType>)</code>
                     </td>
                 </tr>
                         <tr>
                             <td class="col-md-4">
-                                <div class="io-line">Defined in <a href="" data-line="12" class="link-to-prism">src/modules/auth/strategies/jwt.strategy.ts:12</a></div>
+                                <div class="io-line">Defined in <a href="" data-line="13" class="link-to-prism">src/modules/auth/strategies/jwt.strategy.ts:13</a></div>
                             </td>
                         </tr>
 
@@ -216,10 +221,22 @@
                                                     
                                                 </tr>
                                                 <tr>
+                                                        <td>permissionsCache</td>
+                                                  
+                                                        <td>
+                                                                        <code><a href="../injectables/PermissionsCacheService.html" target="_self" >PermissionsCacheService</a></code>
+                                                        </td>
+                                                  
+                                                    <td>
+                                                            No
+                                                    </td>
+                                                    
+                                                </tr>
+                                                <tr>
                                                         <td>configService</td>
                                                   
                                                         <td>
-                                                                        <code><a href="../miscellaneous/typealiases.html#AppConfigType" target="_self" >ConfigType&lt;AppConfigType&gt;</a></code>
+                                                                    <code>ConfigType&lt;AppConfigType&gt;</code>
                                                         </td>
                                                   
                                                     <td>
@@ -245,6 +262,76 @@
         <tbody>
             <tr>
                 <td class="col-md-4">
+                    <a name="resolveUser"></a>
+                    <span class="name">
+                            <span class="modifier">Private</span>
+                            <span class="modifier">Async</span>
+                        <span ><b>resolveUser</b></span>
+                        <a href="#resolveUser"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                        <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>resolveUser(payload: <a href="../interfaces/IJwtPayload.html" target="_self">IJwtPayload</a>)</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="37"
+                                    class="link-to-prism">src/modules/auth/strategies/jwt.strategy.ts:37</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                            <div class="io-description">
+                                <b>Parameters :</b>
+                                
+                                <table class="params">
+                                    <thead>
+                                        <tr>
+                                            <td>Name</td>
+                                                <td>Type</td>
+                                            <td>Optional</td>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                                <td>payload</td>
+                                            <td>
+                                                            <code><a href="../interfaces/IJwtPayload.html" target="_self" >IJwtPayload</a></code>
+                                            </td>
+
+                                            <td>
+                                                    No
+                                            </td>
+
+
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        <div class="io-description">
+                            <b>Returns : </b>        <code><a href="../interfaces/IUserDataOnJwt.html" target="_self" >Promise&lt;IUserDataOnJwt&gt;</a></code>
+
+                        </div>
+                            <div class="io-description">
+                                
+                            </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
                     <a name="validate"></a>
                     <span class="name">
                             <span class="modifier">Async</span>
@@ -263,14 +350,17 @@
 
                     <tr>
                         <td class="col-md-4">
-                            <div class="io-line">Defined in <a href="" data-line="25"
-                                    class="link-to-prism">src/modules/auth/strategies/jwt.strategy.ts:25</a></div>
+                            <div class="io-line">Defined in <a href="" data-line="31"
+                                    class="link-to-prism">src/modules/auth/strategies/jwt.strategy.ts:31</a></div>
                         </td>
                     </tr>
 
 
             <tr>
                 <td class="col-md-4">
+                        <div class="io-description"><p>Resuelve usuario + roles + permisos con cache-aside por <code>sub</code> (referenceId). Se invalida
+entero ante cambios de roles/permisos/estado (ver PermissionsCacheService).</p>
+</div>
 
                             <div class="io-description">
                                 <b>Parameters :</b>
@@ -322,14 +412,16 @@ import { ExtractJwt, Strategy } from &#x27;passport-jwt&#x27;;
 import { UsersDBService } from &#x27;@modules/users-db/services/users-db.service&#x27;;
 import { APP_CONFIG, AppConfigType } from &#x27;@core/config/config-loader&#x27;;
 import { ConfigType } from &#x27;@nestjs/config&#x27;;
-import { IJwtPayload } from &#x27;@api/auth/interfaces&#x27;;
+import { IJwtPayload } from &#x27;@common/interfaces/jwt-payload.interface&#x27;;
 import { UserWithSecuritiesExtended } from &#x27;../types/user.types&#x27;;
+import { PermissionsCacheService } from &#x27;@core/cache/permissions-cache.service&#x27;;
 import { IUserDataOnJwt } from &#x27;../interfaces/user-data-on-jwt.interface&#x27;;
 
 @Injectable()
 export class JwtStrategy extends PassportStrategy(Strategy, &#x27;jwt&#x27;) {
   constructor(
     private readonly usersService: UsersDBService,
+    private readonly permissionsCache: PermissionsCacheService,
     @Inject(APP_CONFIG.KEY)
     private readonly configService: ConfigType&lt;AppConfigType&gt;,
   ) {
@@ -340,7 +432,17 @@ export class JwtStrategy extends PassportStrategy(Strategy, &#x27;jwt&#x27;) {
     });
   }
 
+  /**
+   * Resuelve usuario + roles + permisos con cache-aside por &#x60;sub&#x60; (referenceId). Se invalida
+   * entero ante cambios de roles/permisos/estado (ver PermissionsCacheService).
+   */
   async validate(payload: IJwtPayload): Promise&lt;IUserDataOnJwt&gt; {
+    return await this.permissionsCache.getOrLoad(payload.sub, () &#x3D;&gt;
+      this.resolveUser(payload),
+    );
+  }
+
+  private async resolveUser(payload: IJwtPayload): Promise&lt;IUserDataOnJwt&gt; {
     const user: UserWithSecuritiesExtended | null &#x3D;
       await this.usersService.findActiveUserByEmailWithPermissions(
         payload.email,

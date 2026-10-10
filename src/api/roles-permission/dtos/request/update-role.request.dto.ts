@@ -3,7 +3,7 @@ import { IsString, IsOptional, MaxLength, IsBoolean } from 'class-validator';
 
 export class UpdateRoleRequestDTO {
   @ApiProperty({
-    example: 'MerchantAdmin',
+    example: 'TenantAdmin',
     description: 'Nombre del rol (formato PascalCase)',
     required: false,
   })
@@ -13,7 +13,7 @@ export class UpdateRoleRequestDTO {
   name?: string;
 
   @ApiProperty({
-    example: 'Administrador del comercio con acceso completo',
+    example: 'Administrador del tenant con acceso completo',
     description: 'Descripción del rol',
     required: false,
   })

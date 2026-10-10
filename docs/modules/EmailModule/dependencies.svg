@@ -22,45 +22,69 @@
 <text text-anchor="start" x="429.73" y="-15.4" font-family="Times-12" font-size="14.00"> &#160;Exports</text>
 <g id="clust1" class="cluster">
 <title>cluster_EmailModule</title>
-<polygon fill="none" stroke="black" stroke-dasharray="1,5" points="169,-70 169,-268 327,-268 327,-70 169,-70"/>
+<polygon fill="none" stroke="black" stroke-dasharray="1,5" points="68,-70 68,-268 428,-268 428,-70 68,-70"/>
 </g>
 <g id="clust6" class="cluster">
 <title>cluster_EmailModule_providers</title>
-<polygon fill="none" stroke="black" points="177,-78 177,-130 319,-130 319,-78 177,-78"/>
+<polygon fill="none" stroke="black" points="76,-78 76,-130 420,-130 420,-78 76,-78"/>
 </g>
 <g id="clust4" class="cluster">
 <title>cluster_EmailModule_exports</title>
-<polygon fill="none" stroke="black" points="193,-208 193,-260 303,-260 303,-208 193,-208"/>
+<polygon fill="none" stroke="black" points="102,-208 102,-260 367,-260 367,-208 102,-208"/>
 </g>
 <!-- EmailService  -->
 <g id="node1" class="node">
 <title>EmailService </title>
-<polygon fill="#fb8072" stroke="black" points="295.42,-252 200.58,-252 200.58,-216 295.42,-216 295.42,-252"/>
-<text text-anchor="middle" x="248" y="-229.8" font-family="Times,serif" font-size="14.00">EmailService </text>
+<polygon fill="#fb8072" stroke="black" points="359.42,-252 264.58,-252 264.58,-216 359.42,-216 359.42,-252"/>
+<text text-anchor="middle" x="312" y="-229.8" font-family="Times,serif" font-size="14.00">EmailService </text>
+</g>
+<!-- SmtpHealthIndicator  -->
+<g id="node2" class="node">
+<title>SmtpHealthIndicator </title>
+<polygon fill="#fb8072" stroke="black" points="246.41,-252 109.59,-252 109.59,-216 246.41,-216 246.41,-252"/>
+<text text-anchor="middle" x="178" y="-229.8" font-family="Times,serif" font-size="14.00">SmtpHealthIndicator </text>
 </g>
 <!-- EmailModule -->
-<g id="node2" class="node">
+<g id="node3" class="node">
 <title>EmailModule</title>
-<polygon fill="#8dd3c7" stroke="black" points="294.49,-187 291.49,-191 270.49,-191 267.49,-187 201.51,-187 201.51,-151 294.49,-151 294.49,-187"/>
-<text text-anchor="middle" x="248" y="-164.8" font-family="Times,serif" font-size="14.00">EmailModule</text>
+<polygon fill="#8dd3c7" stroke="black" points="249.49,-187 246.49,-191 225.49,-191 222.49,-187 156.51,-187 156.51,-151 249.49,-151 249.49,-187"/>
+<text text-anchor="middle" x="203" y="-164.8" font-family="Times,serif" font-size="14.00">EmailModule</text>
 </g>
 <!-- EmailModule&#45;&gt;EmailService  -->
 <g id="edge1" class="edge">
 <title>EmailModule&#45;&gt;EmailService </title>
-<path fill="none" stroke="black" stroke-dasharray="5,2" d="M248,-187.11C248,-187.11 248,-205.99 248,-205.99"/>
-<polygon fill="black" stroke="black" points="244.5,-205.99 248,-215.99 251.5,-205.99 244.5,-205.99"/>
+<path fill="none" stroke="black" stroke-dasharray="5,2" d="M249.86,-175C264.54,-175 276.98,-175 276.98,-175 276.98,-175 276.98,-205.98 276.98,-205.98"/>
+<polygon fill="black" stroke="black" points="273.48,-205.98 276.98,-215.98 280.48,-205.98 273.48,-205.98"/>
+</g>
+<!-- EmailModule&#45;&gt;SmtpHealthIndicator  -->
+<g id="edge2" class="edge">
+<title>EmailModule&#45;&gt;SmtpHealthIndicator </title>
+<path fill="none" stroke="black" stroke-dasharray="5,2" d="M201.48,-187.11C201.48,-187.11 201.48,-205.99 201.48,-205.99"/>
+<polygon fill="black" stroke="black" points="197.98,-205.99 201.48,-215.99 204.98,-205.99 197.98,-205.99"/>
 </g>
 <!-- EmailService -->
-<g id="node3" class="node">
+<g id="node4" class="node">
 <title>EmailService</title>
-<ellipse fill="#fdb462" stroke="black" cx="248" cy="-104" rx="63.12" ry="18"/>
-<text text-anchor="middle" x="248" y="-99.8" font-family="Times,serif" font-size="14.00">EmailService</text>
+<ellipse fill="#fdb462" stroke="black" cx="349" cy="-104" rx="63.12" ry="18"/>
+<text text-anchor="middle" x="349" y="-99.8" font-family="Times,serif" font-size="14.00">EmailService</text>
 </g>
 <!-- EmailService&#45;&gt;EmailModule -->
-<g id="edge2" class="edge">
+<g id="edge3" class="edge">
 <title>EmailService&#45;&gt;EmailModule</title>
-<path fill="none" stroke="black" d="M248,-122.11C248,-122.11 248,-140.99 248,-140.99"/>
-<polygon fill="black" stroke="black" points="244.5,-140.99 248,-150.99 251.5,-140.99 244.5,-140.99"/>
+<path fill="none" stroke="black" d="M322.7,-120.43C322.7,-137.89 322.7,-163 322.7,-163 322.7,-163 259.62,-163 259.62,-163"/>
+<polygon fill="black" stroke="black" points="259.62,-159.5 249.62,-163 259.62,-166.5 259.62,-159.5"/>
+</g>
+<!-- SmtpHealthIndicator -->
+<g id="node5" class="node">
+<title>SmtpHealthIndicator</title>
+<ellipse fill="#fdb462" stroke="black" cx="176" cy="-104" rx="92.05" ry="18"/>
+<text text-anchor="middle" x="176" y="-99.8" font-family="Times,serif" font-size="14.00">SmtpHealthIndicator</text>
+</g>
+<!-- SmtpHealthIndicator&#45;&gt;EmailModule -->
+<g id="edge4" class="edge">
+<title>SmtpHealthIndicator&#45;&gt;EmailModule</title>
+<path fill="none" stroke="black" d="M203,-121.42C203,-121.42 203,-140.62 203,-140.62"/>
+<polygon fill="black" stroke="black" points="199.5,-140.62 203,-150.62 206.5,-140.62 199.5,-140.62"/>
 </g>
 </g>
 </svg>

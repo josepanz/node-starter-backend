@@ -1,27 +1,35 @@
 #!/bin/sh
+# Actualiza imagen y tag del overlay de Kustomize que corresponde a la rama liberada.
+# Uso: replace-version.sh <version> <rama>   (develop -> develop, qa -> qa, main o master -> production)
+# La imagen sale de scripts/registry-env.sh (IMAGE_REPOSITORY sobreescribible). Sin overlay para la rama: exit 0.
+set -e
 
-set -e  # Detener la ejecución si algún comando falla
-
-echo "prepare update argo image version"
-
-# Set Variables
 VERSION=$1
 BRANCH=$2
 
-SCRIPT_DIR=$(dirname "$0")  # Directorio donde se encuentra el script
-BASE_DIR=$(realpath "$SCRIPT_DIR")  # Ruta absoluta del directorio
-FILE_PATH=$(realpath "$BASE_DIR/../ci/$BRANCH/$3") 
+case "$BRANCH" in
+  develop) OVERLAY=develop ;;
+  qa) OVERLAY=qa ;;
+  main | master) OVERLAY=production ;;
+  *)
+    echo "[replace-version] La rama '$BRANCH' no tiene overlay: nada que actualizar"
+    exit 0
+    ;;
+esac
 
-TAG=${VERSION}
+SCRIPT_DIR=$(cd "$(dirname "$0")" && pwd)
+# shellcheck source=scripts/registry-env.sh
+. "$SCRIPT_DIR/registry-env.sh"
+FILE_PATH="$SCRIPT_DIR/../ci/k8s/overlays/$OVERLAY/kustomization.yaml"
 
-echo "Updating version of node-starter-backend in $BRANCH environment path: $FILE_PATH"
-sed -i.bak -E "s|(registry-local\.dominio\.com\.py:port/ruta/node-starter-backend):[0-9]+\.[0-9]+\.[0-9]+(-[a-z0-9.]+)?|\1:$TAG|" "$FILE_PATH"
-
-
-# Confirmar el cambio
-if [ $? -eq 0 ]; then
-  echo "Image 'ruta/node-starter-backend' version updated to $TAG in $BRANCH"
-else
-  echo "Error updating image version."
-  exit 1
+if [ ! -f "$FILE_PATH" ]; then
+  echo "[replace-version] No existe $FILE_PATH: nada que actualizar"
+  exit 0
 fi
+
+echo "[replace-version] $OVERLAY: $IMAGE_REPOSITORY:$VERSION"
+sed -i.tmp -E \
+  -e "s|^([[:space:]]*newName:).*|\1 $IMAGE_REPOSITORY|" \
+  -e "s|^([[:space:]]*newTag:).*|\1 \"$VERSION\"|" \
+  "$FILE_PATH"
+rm -f "$FILE_PATH.tmp"

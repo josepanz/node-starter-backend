@@ -92,6 +92,27 @@ export class CustomHttpResponseHelper {
       throw new BadGatewayException('Servidor externo no encontrado.');
     }
 
+    if (error.code === 'ETIMEDOUT') {
+      this.logger.error('Timeout de red con el servidor externo.');
+      throw new GatewayTimeoutException(
+        'El servidor externo no respondió a tiempo.',
+      );
+    }
+
+    if (
+      error.code === 'ECONNRESET' ||
+      error.code === 'EPIPE' ||
+      error.code === 'EHOSTUNREACH' ||
+      error.code === 'ENETUNREACH'
+    ) {
+      this.logger.error(
+        `Conexión interrumpida con el servidor externo: ${error.code}`,
+      );
+      throw new ServiceUnavailableException(
+        'Conexión interrumpida con el servidor externo.',
+      );
+    }
+
     this.logger.error(`Error desconocido de Axios: ${error.message}`);
     throw new InternalServerErrorException(
       'Error desconocido al procesar la solicitud.',

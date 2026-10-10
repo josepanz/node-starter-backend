@@ -5,72 +5,52 @@ import {
   Logger,
   NotFoundException,
 } from '@nestjs/common';
-import * as nodemailer from 'nodemailer';
-import { Transporter } from 'nodemailer';
 import { EmailHelper } from '@modules/email/helpers/email.helper';
+import { RecipientHelper } from '@modules/email/helpers/recipient.helper';
 import { ISendEmailOptions } from '@modules/email/interfaces/email.interface';
 import { CryptoHelper } from '@common/helpers/crypto-helpers';
 import { APP_CONFIG, AppConfigType } from '@core/config/config-loader';
 import { ConfigType } from '@nestjs/config';
-import { UserResponseDTO } from '@api/users/dtos/response/user.response.dto';
 import { Users } from '@prisma/client';
 import { EmailTypeEnum } from '@modules/email/enum/email-type.enum';
+import {
+  EMAIL_SENDER,
+  IEmailSender,
+} from '@modules/email/interfaces/email-sender.interface';
 
 @Injectable()
 export class EmailService {
-  private transporter: Transporter;
   private readonly logger = new Logger(EmailService.name);
 
   constructor(
     @Inject(APP_CONFIG.KEY)
     private configService: ConfigType<AppConfigType>,
-  ) {
-    this.initializeTransporter();
-  }
-
-  /**
-   * Inicializa el transporter de nodemailer con la configuración del servicio de correo.
-   * @remarks
-   * Esta función configura el transporter utilizando los parámetros definidos en la configuración
-   * de la aplicación, como el host, puerto, usuario y contraseña del servidor SMTP.
-   * @returns void
-   * @throws Error si la configuración del correo es inválida.
-   */
-  private initializeTransporter() {
-    this.transporter = nodemailer.createTransport({
-      host: this.configService.email.host,
-      port: this.configService.email.port,
-      secure: false, // true for 465, false for other ports
-      auth: {
-        user: this.configService.email.user,
-        pass: this.configService.email.password,
-      },
-    });
-  }
+    @Inject(EMAIL_SENDER) private readonly sender: IEmailSender,
+  ) {}
 
   /**
    * Función que se encarga del envio de correo.
    * @param ISendEmailOptions Objeto que contiene: to (a quien), subject (asunto), content (contenido del correo).
    * @throws InternalServerErrorException si ocurre un error al enviar el correo.
    * @remarks
-   * Este método utiliza nodemailer para enviar un correo electrónico con el contenido enviado
+   * Delega el transporte en el `IEmailSender` configurado (SMTP o consola)
    * @returns void
    */
   async send({ to, subject, content }: ISendEmailOptions): Promise<void> {
     try {
-      const mailOptions = {
-        from: `Soporte <${this.configService.email.dir}>`,
-        to: to,
-        subject: subject,
+      await this.sender.send({
+        fromName: 'Soporte',
+        to: [to],
+        subject,
         html: content,
-      };
-
-      await this.transporter.sendMail(mailOptions);
-      this.logger.log(`Correo enviado a: ${to}`);
+      });
+      this.logger.log(`Correo enviado a: ${RecipientHelper.maskEmail(to)}`);
     } catch (error) {
       const errorMessage =
         error instanceof Error ? error.message : 'Error desconocido';
-      this.logger.error(`Error al enviar el correo a ${to}: ${errorMessage}`);
+      this.logger.error(
+        `Error al enviar el correo a ${RecipientHelper.maskEmail(to)}: ${errorMessage}`,
+      );
       throw new InternalServerErrorException(
         'Error al enviar el correo de creación de contraseña.',
       );
@@ -115,7 +95,7 @@ export class EmailService {
           {
             sub: String(user.id),
             email: user.email,
-            user: user as UserResponseDTO,
+            user,
           },
           'RS256',
           this.configService.authentication.tempTokenExpires,

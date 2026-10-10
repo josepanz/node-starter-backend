@@ -106,7 +106,7 @@ If no `.spec.ts` exists, create `<filename>.spec.ts` in the same folder.
 Run tests and confirm they pass against the current (unmodified) code:
 
 ```bash
-pnpm run test <path/to/file.spec.ts> --no-coverage
+pnpm test <path/to/file.spec.ts> --no-coverage --maxWorkers=2
 ```
 
 If tests fail, fix the spec — not the source. The spec must be green before any refactoring starts.
@@ -147,7 +147,7 @@ Step 3: Add VerificationStatusQueryDTO
 Execute steps one at a time. After each step:
 
 ```bash
-pnpm run test <path/to/file.spec.ts> --no-coverage
+pnpm test <path/to/file.spec.ts> --no-coverage --maxWorkers=2
 ```
 
 If tests fail after a step, revert that step's changes and diagnose before retrying. Never proceed to the next step with a red test suite.
@@ -181,7 +181,7 @@ After all refactoring steps:
 2. Verify the spec mocks match the refactored constructor (no stale mocks, no missing providers).
 3. Run the full test suite one last time:
    ```bash
-   pnpm run test <path/to/file.spec.ts> --no-coverage
+   pnpm test <path/to/file.spec.ts> --no-coverage --maxWorkers=2
    ```
 4. Output a summary:
 
@@ -218,8 +218,8 @@ Contract:        unchanged — all endpoints, versions, guards, response shapes 
 - NestJS, TypeScript strict mode, Prisma, PostgreSQL.
 - Guards live in `modules/auth/guards/` — never re-implement inline.
 - Config token: `APP_CONFIG.KEY` from `@core/config/config-loader`.
-- `parseTime(str)` from `@helpers/date.helper` — converts `'15m'`, `'7d'` to milliseconds.
-- Path aliases: `@api/*`, `@modules/*`, `@common/*`, `@core/*`, `@helpers/*`.
+- `parseTime(str)` from `@common/helpers/date.helper` — converts `'15m'`, `'7d'` to milliseconds.
+- Path aliases: `@api/*`, `@modules/*`, `@common/*`, `@core/*`, `@auth/*`, `@email/*`.
 - Test commands: `pnpm run test`, `pnpm run test:watch`, `pnpm run test:cov`.
-- Reusable mocks: `test/mocks/prisma.mock.ts`, `test/mocks/http.mock.ts`.
-- See `rules/typescript.md` for DTO conventions, `rules/test.md` for test conventions.
+- Reusable mocks live in `test/mocks/` once a mock is shared by 3+ specs; otherwise declare them in the spec.
+- See `rules/typescript.md` for DTO conventions, `rules/test.md` for test conventions, `rules/architecture.md` for layering.

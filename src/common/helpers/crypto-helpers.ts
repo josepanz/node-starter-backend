@@ -5,7 +5,7 @@ import * as crypto from 'crypto';
 import * as jwt from 'jsonwebtoken';
 import * as bcrypt from 'bcrypt';
 import { AppConfigType } from '@core/config/config-loader';
-import { IJwtPayload } from '@api/auth/interfaces/jwt-payload.interface';
+import { IJwtPayload } from '@common/interfaces/jwt-payload.interface';
 import { Algorithm } from 'jsonwebtoken';
 
 export class CryptoHelper {

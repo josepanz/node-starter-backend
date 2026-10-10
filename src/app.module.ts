@@ -3,42 +3,80 @@ import { HealthModule } from './modules/health/health.module';
 import { ConfigModule, ConfigType } from '@nestjs/config';
 import { configOptions } from '@core/config/config-options';
 import { ObservabilityModule } from '@core/observability/observability.module';
-import { DatabaseModule } from '@core/database/database.module';
+import {
+  DatabaseModule,
+  isSequelizeEnabled,
+} from '@core/database/database.module';
 import { TraceIdMiddleware } from '@core/middlewares/trace-id.middleware';
+import { HttpClientModule } from '@modules/http-client/http-client.module';
 import { ApiModule } from './api/api.module';
+import { SchedulerModule } from '@core/scheduler/scheduler.module';
 import { ObservabilityInterceptor } from '@core/observability/observability.interceptor';
 import { AppConfigType, APP_CONFIG } from '@core/config/config-loader';
 import { DatabaseHelper } from '@core/database/helpers/database.helper';
+import { RedisModule } from '@core/redis/redis.module';
+import { AppCacheModule } from '@core/cache/cache.module';
+import { RateLimitModule } from '@core/rate-limit/rate-limit.module';
+import { NonceModule } from '@modules/nonce/nonce.module';
+import { ApiClientsDBModule } from '@modules/api-clients-db/api-clients-db.module';
+import { AppEventsModule } from '@core/events/app-events.module';
+import { I18nModule } from 'nestjs-i18n';
+import { i18nOptions } from '@core/i18n/i18n.config';
+import { MongoModule } from '@core/mongo/mongo.module';
 import { registerUppercaseHooks } from '@core/database/helpers/sequelize-register-uppercase-hooks';
 
 @Module({
   imports: [
     ConfigModule.forRoot(configOptions),
+    I18nModule.forRoot(i18nOptions),
+    AppEventsModule,
+    RedisModule,
+    // Mongo opcional (solo se registra con MONGO_URI)
+    MongoModule.register(),
+    AppCacheModule,
+    RateLimitModule,
+    NonceModule,
+    ApiClientsDBModule,
     HealthModule,
     DatabaseModule,
-    DatabaseModule.forRootAsync({
-      useFactory: async (
-        configService: ConfigType<AppConfigType>,
-        databaseHelper: DatabaseHelper,
-      ) => {
-        const models = await databaseHelper.loadModels(__dirname);
-        return {
-          type: 'db2',
-          options: {
-            odbcConnectionString:
-              configService?.database?.connectionString ?? '',
-          },
-          //FIXME: Workaround temporal en database.helper.ts usando fast-glob
-          // models: await importModels(__dirname + '/**/*.entity.{ts,js}'),
-          models,
-          registerHooks(models) {
-            registerUppercaseHooks(models);
-          },
-        };
-      },
-      inject: [APP_CONFIG.KEY, DatabaseHelper],
-    }),
+    // DB2/Sequelize opcional (solo se registra con DATABASE_CONNECTION_STRING)
+    ...(isSequelizeEnabled()
+      ? [
+          DatabaseModule.forRootAsync({
+            useFactory: async (
+              configService: ConfigType<AppConfigType>,
+              databaseHelper: DatabaseHelper,
+            ) => {
+              // Descubre las `*.entity.{js,ts}` bajo src/ (o dist/); ver DatabaseHelper.
+              const models = await databaseHelper.loadModels(__dirname);
+              const { connectionString, pool, queryTimeoutSec } =
+                configService.database;
+              return {
+                type: 'db2',
+                options: {
+                  odbcConnectionString: connectionString,
+                  // QueryTimeout se agrega al connection string dentro de SequelizeService.
+                  queryTimeoutSec,
+                  pool: {
+                    max: pool.max,
+                    min: pool.min,
+                    acquire: pool.acquireMs,
+                    idle: pool.idleMs,
+                  },
+                },
+                models,
+                registerHooks(models) {
+                  registerUppercaseHooks(models);
+                },
+              };
+            },
+            inject: [APP_CONFIG.KEY, DatabaseHelper],
+          }),
+        ]
+      : []),
     ApiModule,
+    HttpClientModule,
+    SchedulerModule,
     ObservabilityModule,
   ],
   controllers: [],

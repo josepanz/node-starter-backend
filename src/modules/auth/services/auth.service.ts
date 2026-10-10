@@ -61,6 +61,9 @@ export class AuthService {
     // Validar estado
     this.validateUserStatus(userCredentials.user.status);
 
+    // Bloqueo temporal vigente: no se evalúa la contraseña
+    this.authPasswordService.assertNotLocked(userCredentials);
+
     // Validar contraseña encriptada
     const isPasswordValid = this.authPasswordService.validateEncryptedPassword(
       payload.encryptedPassword,
@@ -74,6 +77,9 @@ export class AuthService {
 
     // Resetear intentos fallidos
     await this.authPasswordService.resetFailedAttempts(userCredentials);
+
+    // Contraseña vencida (solo se revela tras validar la clave)
+    this.authPasswordService.assertPasswordNotExpired(userCredentials);
 
     // Actualizar último login
     await this.userRepository.updateLastLogin(userCredentials.userId);

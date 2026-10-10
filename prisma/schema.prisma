@@ -109,11 +109,22 @@ model Users {
   checksum        String? @map("checksum")
   changeSignature String? @map("change_signature")
 
-  roles       UserRoles[]
-  permissions UserPermissions[]
-  credentials UserCredentials[]
+  roles            UserRoles[]
+  permissions      UserPermissions[]
+  credentials      UserCredentials[]
+  orders           Order[]
+  PushSubscription PushSubscription[]
+  Notification     Notification[]
+  consents         UserConsent[]
+
+  // Derecho al olvido: baja solicitada, fecha de anonimización programada (fin del período de gracia)
+  // y momento en que se anonimizó. La fila se conserva para mantener la integridad referencial.
+  deletionRequestedAt DateTime? @map("deletion_requested_at")
+  deletionScheduledAt DateTime? @map("deletion_scheduled_at")
+  anonymizedAt        DateTime? @map("anonymized_at")
 
   @@unique([documentType, documentNumber, email], name: "UK_users_document")
+  @@index([deletionScheduledAt])
   @@map("users")
 }
 
@@ -266,6 +277,7 @@ model UserCredentials {
   createdAt    DateTime  @default(now()) @map("created_at")
   expiredAt    DateTime? @map("expired_at")
   attempts     Int       @default(0) @map("attempts")
+  lockedUntil  DateTime? @map("locked_until")
 
   user Users @relation(fields: [userId], references: [id], onDelete: Cascade)
 
@@ -273,20 +285,317 @@ model UserCredentials {
   @@map("user_credentials")
 }
 
+// Credencial M2M: el secret se guarda como hash bcrypt (se muestra una sola vez al crear/rotar).
+// `scopes` = permisos de integración (no confundir con roles/permisos de usuario).
+// `signingSecretEnc` = secreto HMAC cifrado con AES-256-GCM (solo si hmacEnabled).
+enum ApiClientStatus {
+  ACTIVE
+  INACTIVE
+}
+
 model ApiClientCredential {
-  id            Int       @id @default(autoincrement())
-  clientId      String    @unique @map("client_id")
-  clientName    String?   @map("client_name")
-  secretKey     String    @unique @map("secret_key")
-  isActive      Boolean   @default(true) @map("is_active")
-  createdAt     DateTime  @default(now()) @map("created_at")
-  lastChangedAt DateTime? @map("last_changed_at")
-  createdBy     String?   @map("created_by")
-  lastChangedBy String?   @map("last_changed_by")
-  changedReason String?   @map("changed_reason")
+  id                 Int             @id @default(autoincrement())
+  referenceId        String          @unique @default(uuid()) @map("reference_id")
+  clientId           String          @unique @map("client_id")
+  clientName         String?         @map("client_name")
+  secretHash         String          @map("secret_hash")
+  status             ApiClientStatus @default(ACTIVE)
+  scopes             String[]        @default([])
+  rateLimitPerMinute Int?            @map("rate_limit_per_minute")
+  allowedIps         String[]        @default([]) @map("allowed_ips")
+  hmacEnabled        Boolean         @default(false) @map("hmac_enabled")
+  signingSecretEnc   String?         @map("signing_secret_enc")
+  lastUsedAt         DateTime?       @map("last_used_at")
+  secretRotatedAt    DateTime?       @map("secret_rotated_at")
+  createdAt          DateTime        @default(now()) @map("created_at")
+  lastChangedAt      DateTime?       @map("last_changed_at")
+  createdBy          String?         @map("created_by")
+  lastChangedBy      String?         @map("last_changed_by")
+  changedReason      String?         @map("changed_reason")
 
   checksum        String? @map("checksum")
   changeSignature String? @map("change_signature")
 
+  @@index([status])
   @@map("api_client_credential")
+}
+
+// Idempotencia genérica: un registro por (scope, key). requestHash = HMAC del request.
+enum IdempotencyStatus {
+  IN_PROGRESS
+  COMPLETED
+}
+
+model IdempotencyRecord {
+  id           Int               @id @default(autoincrement())
+  key          String            @db.VarChar(128)
+  scope        String            @db.VarChar(255)
+  requestHash  String            @map("request_hash")
+  status       IdempotencyStatus @default(IN_PROGRESS)
+  responseCode Int?              @map("response_code")
+  responseBody Json?             @map("response_body")
+  expiresAt    DateTime          @map("expires_at")
+  createdAt    DateTime          @default(now()) @map("created_at")
+  updatedAt    DateTime          @default(now()) @updatedAt @map("updated_at")
+
+  @@unique([scope, key])
+  @@index([expiresAt])
+  @@map("idempotency_records")
+}
+
+// DEMO de dominio genérico: órdenes con máquina de estados.
+enum OrderStatus {
+  PENDING
+  CONFIRMED
+  CANCELLED
+  COMPLETED
+}
+
+model Order {
+  id          Int         @id @default(autoincrement())
+  referenceId String      @unique @default(uuid()) @map("reference_id")
+  ownerId     Int         @map("owner_id")
+  description String?     @db.VarChar(255)
+  amount      Decimal     @db.Decimal(18, 2)
+  fee         Decimal     @db.Decimal(18, 2)
+  currency    String      @default("USD") @db.VarChar(3)
+  status      OrderStatus @default(PENDING)
+  createdAt   DateTime    @default(now()) @map("created_at")
+  updatedAt   DateTime    @default(now()) @updatedAt @map("updated_at")
+
+  owner Users @relation(fields: [ownerId], references: [id], onDelete: Restrict)
+
+  @@index([ownerId, status])
+  @@map("orders")
+}
+
+// Cola de jobs genérica sobre Postgres. Los workers toman lotes con FOR UPDATE SKIP LOCKED.
+enum BackgroundJobStatus {
+  PENDING
+  RUNNING
+  COMPLETED
+  FAILED
+}
+
+model BackgroundJob {
+  id          Int                 @id @default(autoincrement())
+  referenceId String              @unique @default(uuid()) @map("reference_id")
+  type        String              @db.VarChar(100)
+  payload     Json
+  status      BackgroundJobStatus @default(PENDING)
+  attempts    Int                 @default(0)
+  maxAttempts Int                 @default(3) @map("max_attempts")
+  nextRunAt   DateTime            @default(now()) @map("next_run_at")
+  lastError   String?             @map("last_error")
+  result      Json?
+  createdBy   Int?                @map("created_by")
+  startedAt   DateTime?           @map("started_at")
+  finishedAt  DateTime?           @map("finished_at")
+  createdAt   DateTime            @default(now()) @map("created_at")
+  updatedAt   DateTime            @default(now()) @updatedAt @map("updated_at")
+
+  @@index([status, nextRunAt])
+  @@index([type])
+  @@map("background_jobs")
+}
+
+// Ledger de mensajes salientes (SMS / EMAIL / PUSH). Se escribe PENDING antes de llamar al proveedor.
+enum MessageChannel {
+  SMS
+  EMAIL
+  PUSH
+}
+
+enum MessageStatus {
+  PENDING
+  ACCEPTED
+  DELIVERED
+  UNDELIVERED
+  EXPIRED
+  REJECTED
+  UNAVAILABLE
+}
+
+enum MessageContentPolicy {
+  NONE
+  AUDIT
+}
+
+model Message {
+  id                Int                  @id @default(autoincrement())
+  referenceId       String               @unique @default(uuid()) @map("reference_id")
+  channel           MessageChannel
+  provider          String               @db.VarChar(50)
+  recipient         String               @db.VarChar(255) // siempre enmascarado
+  status            MessageStatus        @default(PENDING)
+  providerMessageId String?              @map("provider_message_id") @db.VarChar(128)
+  providerStatus    String?              @map("provider_status") @db.VarChar(64)
+  providerErrorCode String?              @map("provider_error_code") @db.VarChar(128)
+  attempts          Int                  @default(0)
+  nextAttemptAt     DateTime?            @map("next_attempt_at")
+  resentFromId      Int?                 @map("resent_from_id")
+  traceId           String?              @map("trace_id") @db.VarChar(64)
+  callerIp          String?              @map("caller_ip") @db.VarChar(64)
+  callerUserAgent   String?              @map("caller_user_agent") @db.VarChar(256)
+  sourceService     String?              @map("source_service") @db.VarChar(128)
+  createdBy         Int?                 @map("created_by")
+  contentEncrypted  String?              @map("content_encrypted")
+  contentHmac       String?              @map("content_hmac") @db.VarChar(64)
+  contentPolicy     MessageContentPolicy @default(NONE) @map("content_policy")
+  contentExpiresAt  DateTime?            @map("content_expires_at")
+  idempotencyKey    String?              @map("idempotency_key") @db.VarChar(128)
+  createdAt         DateTime             @default(now()) @map("created_at")
+  updatedAt         DateTime             @default(now()) @updatedAt @map("updated_at")
+
+  resentFrom Message?  @relation("MessageResend", fields: [resentFromId], references: [id], onDelete: SetNull)
+  resends    Message[] @relation("MessageResend")
+
+  @@index([channel, status])
+  @@index([providerMessageId])
+  @@index([contentPolicy, contentExpiresAt])
+  @@index([createdAt])
+  @@map("messages")
+}
+
+// Push: suscripciones por usuario y bandeja de notificaciones in-app.
+enum PushChannel {
+  FCM
+  WEBPUSH
+}
+
+model PushSubscription {
+  id        Int         @id @default(autoincrement())
+  userId    Int         @map("user_id")
+  channel   PushChannel
+  token     String      @db.VarChar(512) // token FCM o endpoint Web Push
+  p256dh    String?     @db.VarChar(255)
+  auth      String?     @db.VarChar(255)
+  active    Boolean     @default(true)
+  createdAt DateTime    @default(now()) @map("created_at")
+  updatedAt DateTime    @default(now()) @updatedAt @map("updated_at")
+
+  user Users @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@unique([channel, token])
+  @@index([userId, active])
+  @@map("push_subscriptions")
+}
+
+model Notification {
+  id             Int       @id @default(autoincrement())
+  referenceId    String    @unique @default(uuid()) @map("reference_id")
+  userId         Int       @map("user_id")
+  title          String    @db.VarChar(255)
+  body           String
+  data           Json?
+  requiresAction Boolean   @default(false) @map("requires_action")
+  readAt         DateTime? @map("read_at")
+  createdAt      DateTime  @default(now()) @map("created_at")
+
+  user Users @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@index([userId, readAt])
+  @@map("notifications")
+}
+
+// Cumplimiento: documentos legales versionados, consentimientos y retención de datos.
+enum LegalDocumentType {
+  TERMS
+  PRIVACY
+  COOKIES
+  MARKETING
+}
+
+enum RetentionAction {
+  ANONYMIZE
+  DELETE
+}
+
+// Una sola versión activa por tipo (garantizado por un índice único parcial en la migración).
+model LegalDocumentVersion {
+  id          Int               @id @default(autoincrement())
+  referenceId String            @unique @default(uuid()) @map("reference_id")
+  type        LegalDocumentType
+  version     String            @db.VarChar(32)
+  title       String?           @db.VarChar(255)
+  content     String?
+  contentUrl  String?           @map("content_url") @db.VarChar(1024)
+  publishedAt DateTime          @default(now()) @map("published_at")
+  isActive    Boolean           @default(false) @map("is_active")
+
+  createdAt       DateTime  @default(now()) @map("created_at")
+  createdBy       String?   @map("created_by")
+  lastChangedAt   DateTime? @default(now()) @map("last_changed_at")
+  lastChangedBy   String?   @map("last_changed_by")
+  changedReason   String?   @map("changed_reason")
+  checksum        String?   @map("checksum")
+  changeSignature String?   @map("change_signature")
+
+  consents UserConsent[]
+
+  @@unique([type, version])
+  @@index([type, isActive])
+  @@map("legal_document_versions")
+}
+
+model UserConsent {
+  id                Int       @id @default(autoincrement())
+  referenceId       String    @unique @default(uuid()) @map("reference_id")
+  userId            Int       @map("user_id")
+  documentVersionId Int       @map("document_version_id")
+  acceptedAt        DateTime  @default(now()) @map("accepted_at")
+  ipAddress         String?   @map("ip_address") @db.VarChar(64)
+  userAgent         String?   @map("user_agent") @db.VarChar(256)
+  revokedAt         DateTime? @map("revoked_at")
+
+  createdAt       DateTime  @default(now()) @map("created_at")
+  createdBy       String?   @map("created_by")
+  lastChangedAt   DateTime? @default(now()) @map("last_changed_at")
+  lastChangedBy   String?   @map("last_changed_by")
+  changedReason   String?   @map("changed_reason")
+  checksum        String?   @map("checksum")
+  changeSignature String?   @map("change_signature")
+
+  user            Users                @relation(fields: [userId], references: [id], onDelete: Cascade)
+  documentVersion LegalDocumentVersion @relation(fields: [documentVersionId], references: [id], onDelete: Restrict)
+
+  @@unique([userId, documentVersionId])
+  @@index([userId, revokedAt])
+  @@map("user_consents")
+}
+
+// Datos ligados a un usuario anonimizado se conservan `retentionDays` y luego se aplica `action`.
+model DataRetentionPolicy {
+  id            Int             @id @default(autoincrement())
+  entity        String          @unique @db.VarChar(100)
+  retentionDays Int             @map("retention_days")
+  action        RetentionAction
+  isActive      Boolean         @default(true) @map("is_active")
+
+  createdAt       DateTime  @default(now()) @map("created_at")
+  createdBy       String?   @map("created_by")
+  lastChangedAt   DateTime? @default(now()) @map("last_changed_at")
+  lastChangedBy   String?   @map("last_changed_by")
+  changedReason   String?   @map("changed_reason")
+  checksum        String?   @map("checksum")
+  changeSignature String?   @map("change_signature")
+
+  @@map("data_retention_policies")
+}
+
+// Transparencia sobre contenido generado por IA: qué entidad, con qué modelo y quién lo revisó.
+model AiContentDisclosure {
+  id          Int       @id @default(autoincrement())
+  referenceId String    @unique @default(uuid()) @map("reference_id")
+  entityType  String    @map("entity_type") @db.VarChar(100)
+  entityId    String    @map("entity_id") @db.VarChar(128)
+  model       String    @db.VarChar(100)
+  generatedAt DateTime  @default(now()) @map("generated_at")
+  reviewedBy  Int?      @map("reviewed_by") // id de usuario (sin FK: sobrevive a la anonimización)
+  reviewedAt  DateTime? @map("reviewed_at")
+  notes       String?   @db.VarChar(500)
+  createdAt   DateTime  @default(now()) @map("created_at")
+
+  @@unique([entityType, entityId])
+  @@map("ai_content_disclosures")
 }

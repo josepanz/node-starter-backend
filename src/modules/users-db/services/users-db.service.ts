@@ -13,6 +13,7 @@ import {
   UserStatus,
 } from '@prisma/client';
 import { PrismaDatasource } from '@core/database/services/prisma.service';
+import { PermissionsCacheService } from '@core/cache/permissions-cache.service';
 import { UserCredentialsWithUser } from '@modules/auth/types';
 import {
   UserWithSecurities,
@@ -21,7 +22,7 @@ import {
 } from '@modules/auth/types/user.types';
 import { EmailService } from '@modules/email/services/email.service';
 import { EmailTypeEnum } from '@modules/email/enum/email-type.enum';
-import { UpdateEditContextRequestDTO } from '@api/users/dtos';
+import { UpdateEditContextRequestDTO } from '@modules/users-db/dtos/edit-context.request.dto';
 import { UserRolesDBService } from './user-roles-db.service';
 import { RoleDTO, PermissionDTO } from '../interfaces/users-db.interface';
 import { UserWithDetail, userDetailInclude } from '../types/users-db.type';
@@ -34,6 +35,7 @@ export class UsersDBService {
     private readonly prisma: PrismaDatasource,
     private readonly emailService: EmailService,
     private readonly userRolesDBService: UserRolesDBService,
+    private readonly permissionsCache: PermissionsCacheService,
   ) {}
 
   // ─── Create ──────────────────────────────────────────────────────────────
@@ -95,9 +97,9 @@ export class UsersDBService {
     createdBy: string;
     currentAccessLevel?: AccessLevel;
     roleIds?: number[];
-    merchantCtx?: {
+    tenantCtx?: {
       ruc: string;
-      merchantCode: string;
+      tenantCode: string;
       level: AccessLevel;
       branchCodes?: string[];
       groupingIds?: number[];
@@ -175,7 +177,7 @@ export class UsersDBService {
     email?: string;
     documentNumber?: string;
     status?: UserStatus;
-    merchantCode?: string;
+    tenantCode?: string;
     currentAccessLevel?: AccessLevel;
     level?: AccessLevel;
     groupingId?: number;
@@ -259,7 +261,7 @@ export class UsersDBService {
     email?: string;
     documentNumber?: string;
     status?: UserStatus;
-    merchantCode?: string;
+    tenantCode?: string;
     currentLevel?: AccessLevel;
     level?: AccessLevel;
     groupingId?: number;
@@ -395,7 +397,20 @@ export class UsersDBService {
   // ─── Update ──────────────────────────────────────────────────────────────
 
   async update(id: number, data: Prisma.UsersUpdateInput): Promise<Users> {
-    return await this.prisma.extended.users.update({ where: { id }, data });
+    const updated = await this.prisma.extended.users.update({
+      where: { id },
+      data,
+    });
+    await this.permissionsCache.invalidateAll();
+    return updated;
+  }
+
+  /** Actualiza solo los datos del documento de identidad (no afecta roles/permisos, sin invalidar cache). */
+  async updateDocument(
+    id: number,
+    data: { documentType?: DocumentType; documentNumber?: string },
+  ): Promise<void> {
+    await this.prisma.extended.users.update({ where: { id }, data });
   }
 
   async updateUser(
@@ -439,6 +454,7 @@ export class UsersDBService {
       where: { id: userId },
       data: { status },
     });
+    await this.permissionsCache.invalidateAll();
   }
 
   async verifyUser(userId: number): Promise<void> {
@@ -457,6 +473,7 @@ export class UsersDBService {
         changedReason: reason,
       },
     });
+    await this.permissionsCache.invalidateAll();
   }
 
   async inactivate(id: number, deletedBy: string): Promise<void> {
@@ -469,6 +486,7 @@ export class UsersDBService {
         changedReason: `Eliminado por ${deletedBy}`,
       },
     });
+    await this.permissionsCache.invalidateAll();
   }
 
   async inactivateUser(id: number, deletedBy: string): Promise<void> {

@@ -3,7 +3,7 @@
     <head>
         <meta charset="utf-8">
         <meta http-equiv="x-ua-compatible" content="ie=edge">
-        <title>node-started-backend documentation</title>
+        <title>node-starter-backend documentation</title>
         <meta name="description" content="">
         <meta name="viewport" content="width=device-width, initial-scale=1">
 
@@ -78,7 +78,7 @@
 
         <div class="navbar navbar-default navbar-fixed-top d-md-none p-0">
                <div class="d-flex">
-                    <a href="../" class="navbar-brand">node-started-backend documentation</a>
+                    <a href="../" class="navbar-brand">node-starter-backend documentation</a>
                     <button type="button" class="btn btn-default btn-menu ion-ios-menu" id="btn-menu"></button>
                </div>
         </div>
@@ -133,10 +133,22 @@
                             <a href="#AccessLevel" title="src/api/users/enum/access-level.enum.ts" ><b>AccessLevel</b>&nbsp;&nbsp;&nbsp;(src/.../access-level.enum.ts)</a>
                         </li>
                         <li>
+                            <a href="#AdvisoryLockId" title="src/core/scheduler/advisory-lock-id.enum.ts" ><b>AdvisoryLockId</b>&nbsp;&nbsp;&nbsp;(src/.../advisory-lock-id.enum.ts)</a>
+                        </li>
+                        <li>
                             <a href="#AuditUserEnum" title="src/common/enum/audit-user.enum.ts" ><b>AuditUserEnum</b>&nbsp;&nbsp;&nbsp;(src/.../audit-user.enum.ts)</a>
                         </li>
                         <li>
+                            <a href="#CatalogItemStatusFilter" title="src/api/catalog-raw/dtos/request/catalog-raw.request.dto.ts" ><b>CatalogItemStatusFilter</b>&nbsp;&nbsp;&nbsp;(src/.../catalog-raw.request.dto.ts)</a>
+                        </li>
+                        <li>
+                            <a href="#CatalogOrmStatus" title="src/api/catalog-orm/dtos/request/catalog-orm.request.dto.ts" ><b>CatalogOrmStatus</b>&nbsp;&nbsp;&nbsp;(src/.../catalog-orm.request.dto.ts)</a>
+                        </li>
+                        <li>
                             <a href="#DatabaseConnections" title="src/core/database/enum/database.enum.ts" ><b>DatabaseConnections</b>&nbsp;&nbsp;&nbsp;(src/.../database.enum.ts)</a>
+                        </li>
+                        <li>
+                            <a href="#Db2SqlCode" title="src/common/enum/db2-sql-codes.enum.ts" ><b>Db2SqlCode</b>&nbsp;&nbsp;&nbsp;(src/.../db2-sql-codes.enum.ts)</a>
                         </li>
                         <li>
                             <a href="#DocumentTypeEnum" title="src/api/storage/const/storage-api.enum.ts" ><b>DocumentTypeEnum</b>&nbsp;&nbsp;&nbsp;(src/.../storage-api.enum.ts)</a>
@@ -148,7 +160,13 @@
                             <a href="#OperationType" title="src/core/middlewares/enums/operation-type.enum.ts" ><b>OperationType</b>&nbsp;&nbsp;&nbsp;(src/.../operation-type.enum.ts)</a>
                         </li>
                         <li>
+                            <a href="#PresenceStatus" title="src/api/events/dtos/presence.dto.ts" ><b>PresenceStatus</b>&nbsp;&nbsp;&nbsp;(src/.../presence.dto.ts)</a>
+                        </li>
+                        <li>
                             <a href="#PrismaErrorCodes" title="src/common/enum/prisma-error-codes.enum.ts" ><b>PrismaErrorCodes</b>&nbsp;&nbsp;&nbsp;(src/.../prisma-error-codes.enum.ts)</a>
+                        </li>
+                        <li>
+                            <a href="#PushSendOutcome" title="src/modules/notifications/interfaces/push-provider.interface.ts" ><b>PushSendOutcome</b>&nbsp;&nbsp;&nbsp;(src/.../push-provider.interface.ts)</a>
                         </li>
                     </ul>
                 </td>
@@ -200,6 +218,66 @@
             </tbody>
         </table>
 </section>
+    <h3>src/core/scheduler/advisory-lock-id.enum.ts</h3>
+    <section data-compodoc="block-enums">
+        <table class="table table-sm table-bordered">
+            <tbody>
+                <tr>
+                    <td class="col-md-4">
+                        <a name="AdvisoryLockId"></a>
+                        <span class="name "><b>AdvisoryLockId</b><a href="#AdvisoryLockId"><span class="icon ion-ios-link"></span></a></span>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-description"><p>Ids de advisory lock de Postgres, centralizados para que dos jobs nunca compartan id por
+accidente (un id repetido serializaría jobs no relacionados). Un job nuevo = una entrada nueva.</p>
+</div>
+                        </td>
+                    </tr>
+                        <tr>
+                            <td class="col-md-4">
+                                &nbsp;IdempotencyPurge
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="col-md-4">
+                                <i>Value : </i><code>910001</code>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="col-md-4">
+                                &nbsp;MessagePurge
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="col-md-4">
+                                <i>Value : </i><code>910002</code>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="col-md-4">
+                                &nbsp;SmsDeliveryPoll
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="col-md-4">
+                                <i>Value : </i><code>910003</code>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="col-md-4">
+                                &nbsp;AccountAnonymization
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="col-md-4">
+                                <i>Value : </i><code>910004</code>
+                            </td>
+                        </tr>
+            </tbody>
+        </table>
+</section>
     <h3>src/common/enum/audit-user.enum.ts</h3>
     <section data-compodoc="block-enums">
         <table class="table table-sm table-bordered">
@@ -243,6 +321,72 @@
             </tbody>
         </table>
 </section>
+    <h3>src/api/catalog-raw/dtos/request/catalog-raw.request.dto.ts</h3>
+    <section data-compodoc="block-enums">
+        <table class="table table-sm table-bordered">
+            <tbody>
+                <tr>
+                    <td class="col-md-4">
+                        <a name="CatalogItemStatusFilter"></a>
+                        <span class="name "><b>CatalogItemStatusFilter</b><a href="#CatalogItemStatusFilter"><span class="icon ion-ios-link"></span></a></span>
+                    </td>
+                </tr>
+                        <tr>
+                            <td class="col-md-4">
+                                &nbsp;ACTIVE
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="col-md-4">
+                                <i>Value : </i><code>ACTIVE</code>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="col-md-4">
+                                &nbsp;INACTIVE
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="col-md-4">
+                                <i>Value : </i><code>INACTIVE</code>
+                            </td>
+                        </tr>
+            </tbody>
+        </table>
+</section>
+    <h3>src/api/catalog-orm/dtos/request/catalog-orm.request.dto.ts</h3>
+    <section data-compodoc="block-enums">
+        <table class="table table-sm table-bordered">
+            <tbody>
+                <tr>
+                    <td class="col-md-4">
+                        <a name="CatalogOrmStatus"></a>
+                        <span class="name "><b>CatalogOrmStatus</b><a href="#CatalogOrmStatus"><span class="icon ion-ios-link"></span></a></span>
+                    </td>
+                </tr>
+                        <tr>
+                            <td class="col-md-4">
+                                &nbsp;ACTIVE
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="col-md-4">
+                                <i>Value : </i><code>ACTIVE</code>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="col-md-4">
+                                &nbsp;INACTIVE
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="col-md-4">
+                                <i>Value : </i><code>INACTIVE</code>
+                            </td>
+                        </tr>
+            </tbody>
+        </table>
+</section>
     <h3>src/core/database/enum/database.enum.ts</h3>
     <section data-compodoc="block-enums">
         <table class="table table-sm table-bordered">
@@ -261,6 +405,220 @@
                         <tr>
                             <td class="col-md-4">
                                 <i>Value : </i><code>DEFAULT_DB</code>
+                            </td>
+                        </tr>
+            </tbody>
+        </table>
+</section>
+    <h3>src/common/enum/db2-sql-codes.enum.ts</h3>
+    <section data-compodoc="block-enums">
+        <table class="table table-sm table-bordered">
+            <tbody>
+                <tr>
+                    <td class="col-md-4">
+                        <a name="Db2SqlCode"></a>
+                        <span class="name "><b>Db2SqlCode</b><a href="#Db2SqlCode"><span class="icon ion-ios-link"></span></a></span>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-description"><p>Patrón: catálogo de constantes (DRY). SQLCODEs públicos de DB2 for i en formato mensaje <code>SQLnnnn</code>
+(el driver puede entregarlos como <code>-204</code>, <code>&#39;-204&#39;</code> o <code>&#39;SQL0204&#39;</code>: normalizar con
+<code>normalizeSqlCode</code> antes de comparar). Comparar por CÓDIGO y no por SQLSTATE: el driver ODBC
+devuelve estados ODBC (p. ej. <code>42S02</code>) en vez de los nativos (<code>42704</code>).
+Las descripciones son técnicas y deben verificarse contra el archivo de mensajes del release
+(<code>DSPMSGD RANGE(SQL0204) MSGF(QSQLMSG)</code>).</p>
+</div>
+                        </td>
+                    </tr>
+                        <tr>
+                            <td class="col-md-4">
+                                &nbsp;STATEMENT_TOO_LONG
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="col-md-4">
+                                <i>Value : </i><code>SQL0101</code>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="col-md-4">
+                                &nbsp;SYNTAX_ERROR
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="col-md-4">
+                                <i>Value : </i><code>SQL0104</code>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="col-md-4">
+                                &nbsp;OBJECT_NOT_FOUND
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="col-md-4">
+                                <i>Value : </i><code>SQL0204</code>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="col-md-4">
+                                &nbsp;COLUMN_NOT_FOUND
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="col-md-4">
+                                <i>Value : </i><code>SQL0206</code>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="col-md-4">
+                                &nbsp;OPERANDS_NOT_COMPATIBLE
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="col-md-4">
+                                <i>Value : </i><code>SQL0401</code>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="col-md-4">
+                                &nbsp;NULL_NOT_ALLOWED
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="col-md-4">
+                                <i>Value : </i><code>SQL0407</code>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="col-md-4">
+                                &nbsp;NUMERIC_OVERFLOW
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="col-md-4">
+                                <i>Value : </i><code>SQL0413</code>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="col-md-4">
+                                &nbsp;APPLICATION_RAISED_ERROR
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="col-md-4">
+                                <i>Value : </i><code>SQL0438</code>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="col-md-4">
+                                &nbsp;PARAMETER_MODE_INVALID
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="col-md-4">
+                                <i>Value : </i><code>SQL0469</code>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="col-md-4">
+                                &nbsp;NOT_AUTHORIZED_LEGACY
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="col-md-4">
+                                <i>Value : </i><code>SQL0550</code>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="col-md-4">
+                                &nbsp;NOT_AUTHORIZED
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="col-md-4">
+                                <i>Value : </i><code>SQL0551</code>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="col-md-4">
+                                &nbsp;CONSTRAINT_VIOLATION
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="col-md-4">
+                                <i>Value : </i><code>SQL0530</code>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="col-md-4">
+                                &nbsp;FOREIGN_KEY_RESTRICT
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="col-md-4">
+                                <i>Value : </i><code>SQL0532</code>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="col-md-4">
+                                &nbsp;DUPLICATE_KEY
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="col-md-4">
+                                <i>Value : </i><code>SQL0803</code>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="col-md-4">
+                                &nbsp;MULTIPLE_ROWS_RETURNED
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="col-md-4">
+                                <i>Value : </i><code>SQL0811</code>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="col-md-4">
+                                &nbsp;RESOURCE_LIMIT_EXCEEDED
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="col-md-4">
+                                <i>Value : </i><code>SQL0904</code>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="col-md-4">
+                                &nbsp;DEADLOCK_OR_TIMEOUT
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="col-md-4">
+                                <i>Value : </i><code>SQL0911</code>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="col-md-4">
+                                &nbsp;ROW_LOCKED
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="col-md-4">
+                                <i>Value : </i><code>SQL0913</code>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="col-md-4">
+                                &nbsp;NOT_JOURNALED
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="col-md-4">
+                                <i>Value : </i><code>SQL7008</code>
                             </td>
                         </tr>
             </tbody>
@@ -410,6 +768,49 @@
             </tbody>
         </table>
 </section>
+    <h3>src/api/events/dtos/presence.dto.ts</h3>
+    <section data-compodoc="block-enums">
+        <table class="table table-sm table-bordered">
+            <tbody>
+                <tr>
+                    <td class="col-md-4">
+                        <a name="PresenceStatus"></a>
+                        <span class="name "><b>PresenceStatus</b><a href="#PresenceStatus"><span class="icon ion-ios-link"></span></a></span>
+                    </td>
+                </tr>
+                        <tr>
+                            <td class="col-md-4">
+                                &nbsp;ONLINE
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="col-md-4">
+                                <i>Value : </i><code>online</code>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="col-md-4">
+                                &nbsp;AWAY
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="col-md-4">
+                                <i>Value : </i><code>away</code>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="col-md-4">
+                                &nbsp;BUSY
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="col-md-4">
+                                <i>Value : </i><code>busy</code>
+                            </td>
+                        </tr>
+            </tbody>
+        </table>
+</section>
     <h3>src/common/enum/prisma-error-codes.enum.ts</h3>
     <section data-compodoc="block-enums">
         <table class="table table-sm table-bordered">
@@ -455,6 +856,49 @@ a nivel de aplicación (ej. P2002 para conflictos de unicidad).</p>
                         <tr>
                             <td class="col-md-4">
                                 <i>Value : </i><code>P2003</code>
+                            </td>
+                        </tr>
+            </tbody>
+        </table>
+</section>
+    <h3>src/modules/notifications/interfaces/push-provider.interface.ts</h3>
+    <section data-compodoc="block-enums">
+        <table class="table table-sm table-bordered">
+            <tbody>
+                <tr>
+                    <td class="col-md-4">
+                        <a name="PushSendOutcome"></a>
+                        <span class="name "><b>PushSendOutcome</b><a href="#PushSendOutcome"><span class="icon ion-ios-link"></span></a></span>
+                    </td>
+                </tr>
+                        <tr>
+                            <td class="col-md-4">
+                                &nbsp;SENT
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="col-md-4">
+                                <i>Value : </i><code>SENT</code>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="col-md-4">
+                                &nbsp;GONE
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="col-md-4">
+                                <i>Value : </i><code>GONE</code>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="col-md-4">
+                                &nbsp;FAILED
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="col-md-4">
+                                <i>Value : </i><code>FAILED</code>
                             </td>
                         </tr>
             </tbody>

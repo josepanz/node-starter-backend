@@ -3,7 +3,7 @@
     <head>
         <meta charset="utf-8">
         <meta http-equiv="x-ua-compatible" content="ie=edge">
-        <title>node-started-backend documentation</title>
+        <title>node-starter-backend documentation</title>
         <meta name="description" content="">
         <meta name="viewport" content="width=device-width, initial-scale=1">
 
@@ -78,7 +78,7 @@
 
         <div class="navbar navbar-default navbar-fixed-top d-md-none p-0">
                <div class="d-flex">
-                    <a href="../" class="navbar-brand">node-started-backend documentation</a>
+                    <a href="../" class="navbar-brand">node-starter-backend documentation</a>
                     <button type="button" class="btn btn-default btn-menu ion-ios-menu" id="btn-menu"></button>
                </div>
         </div>
@@ -139,6 +139,16 @@
             </p>
 
 
+                <p class="comment">
+                <h3>Description</h3>
+                </p>
+                <p class="comment">
+                    <p>Patrón: guard de autenticación M2M (Basic <code>clientId:secret</code>). Verifica el secret contra su hash
+bcrypt (en <code>ApiClientsDBService</code>), aplica allowlist de IPs y, si el handler declara
+<code>@ApiClientScopes(...)</code>, exige esos scopes. Publica la identidad en <code>request.apiClient</code>.
+Los endpoints que solo necesitan &quot;app cliente válida&quot; (login, onboarding) no declaran scopes.</p>
+
+                </p>
 
 
 
@@ -176,6 +186,10 @@
                                     <span class="modifier">Async</span>
                                 <a href="#canActivate" >canActivate</a>
                             </li>
+                            <li>
+                                    <span class="modifier">Private</span>
+                                <a href="#parseBasicHeader" >parseBasicHeader</a>
+                            </li>
                         </ul>
                     </td>
                 </tr>
@@ -194,12 +208,12 @@
             <tbody>
                 <tr>
                     <td class="col-md-4">
-<code>constructor(prisma: <a href="../injectables/PrismaDatasource.html" target="_self">PrismaDatasource</a>)</code>
+<code>constructor(apiClients: <a href="../injectables/ApiClientsDBService.html" target="_self">ApiClientsDBService</a>, reflector: <a href="../undefineds/t.html" target="_self">Reflector</a>)</code>
                     </td>
                 </tr>
                         <tr>
                             <td class="col-md-4">
-                                <div class="io-line">Defined in <a href="" data-line="14" class="link-to-prism">src/modules/auth/guards/basic-auth.guard.ts:14</a></div>
+                                <div class="io-line">Defined in <a href="" data-line="25" class="link-to-prism">src/modules/auth/guards/basic-auth.guard.ts:25</a></div>
                             </td>
                         </tr>
 
@@ -217,10 +231,22 @@
                                         </thead>
                                         <tbody>
                                                 <tr>
-                                                        <td>prisma</td>
+                                                        <td>apiClients</td>
                                                   
                                                         <td>
-                                                                        <code><a href="../injectables/PrismaDatasource.html" target="_self" >PrismaDatasource</a></code>
+                                                                        <code><a href="../injectables/ApiClientsDBService.html" target="_self" >ApiClientsDBService</a></code>
+                                                        </td>
+                                                  
+                                                    <td>
+                                                            No
+                                                    </td>
+                                                    
+                                                </tr>
+                                                <tr>
+                                                        <td>reflector</td>
+                                                  
+                                                        <td>
+                                                                        <code><a href="../miscellaneous/functions.html#t" target="_self" >Reflector</a></code>
                                                         </td>
                                                   
                                                     <td>
@@ -257,15 +283,15 @@
             <tr>
                 <td class="col-md-4">
                         <span class="modifier-icon icon ion-ios-reset"></span>
-                    <code>canActivate(context: ExecutionContext)</code>
+                    <code>canActivate(context: <a href="../unknowns/text.html" target="_self">ExecutionContext</a>)</code>
                 </td>
             </tr>
 
 
                     <tr>
                         <td class="col-md-4">
-                            <div class="io-line">Defined in <a href="" data-line="18"
-                                    class="link-to-prism">src/modules/auth/guards/basic-auth.guard.ts:18</a></div>
+                            <div class="io-line">Defined in <a href="" data-line="32"
+                                    class="link-to-prism">src/modules/auth/guards/basic-auth.guard.ts:32</a></div>
                         </td>
                     </tr>
 
@@ -288,7 +314,7 @@
                                         <tr>
                                                 <td>context</td>
                                             <td>
-                                                        <code>ExecutionContext</code>
+                                                            <code><a href="../miscellaneous/variables.html#text" target="_self" >ExecutionContext</a></code>
                                             </td>
 
                                             <td>
@@ -301,7 +327,76 @@
                                 </table>
                             </div>
                         <div class="io-description">
-                            <b>Returns : </b>    <code>Promise&lt;boolean&gt;</code>
+                            <b>Returns : </b>        <code><a href="../miscellaneous/variables.html#bool" target="_self" >Promise&lt;boolean&gt;</a></code>
+
+                        </div>
+                            <div class="io-description">
+                                
+                            </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="parseBasicHeader"></a>
+                    <span class="name">
+                            <span class="modifier">Private</span>
+                        <span ><b>parseBasicHeader</b></span>
+                        <a href="#parseBasicHeader"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                        <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>parseBasicHeader(header: <a href="../undefineds/t.html" target="_self">string | undefined</a>)</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="84"
+                                    class="link-to-prism">src/modules/auth/guards/basic-auth.guard.ts:84</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                            <div class="io-description">
+                                <b>Parameters :</b>
+                                
+                                <table class="params">
+                                    <thead>
+                                        <tr>
+                                            <td>Name</td>
+                                                <td>Type</td>
+                                            <td>Optional</td>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                                <td>header</td>
+                                            <td>
+                                                            <code><a href="../miscellaneous/functions.html#t" target="_self" >string | undefined</a></code>
+                                            </td>
+
+                                            <td>
+                                                    No
+                                            </td>
+
+
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        <div class="io-description">
+                            <b>Returns : </b>        <code><a href="../miscellaneous/functions.html#t" target="_self" >literal type</a></code>
 
                         </div>
                             <div class="io-description">
@@ -317,92 +412,107 @@
 
         <div class="tab-pane fade  tab-source-code" id="source">
             <pre class="line-numbers compodoc-sourcecode"><code class="language-typescript">import {
-  Injectable,
   CanActivate,
   ExecutionContext,
-  UnauthorizedException,
   ForbiddenException,
+  Injectable,
   Logger,
+  UnauthorizedException,
 } from &#x27;@nestjs/common&#x27;;
-import { PrismaDatasource } from &#x27;@core/database/services/prisma.service&#x27;;
-import { ApiClientCredential } from &#x27;@prisma/client&#x27;;
+import { Reflector } from &#x27;@nestjs/core&#x27;;
+import { ApiClientsDBService } from &#x27;@modules/api-clients-db/services/api-clients-db.service&#x27;;
+import type { ApiClientVerification } from &#x27;@modules/api-clients-db/interfaces/api-client.interface&#x27;;
+import { API_CLIENT_SCOPES } from &#x27;@modules/api-clients-db/constants/api-client-scopes.constants&#x27;;
+import { isIpAllowed } from &#x27;@common/helpers/ip.helper&#x27;;
+import { API_CLIENT_SCOPES_KEY } from &#x27;../decorators/api-client.decorators&#x27;;
+import type { ApiClientRequest } from &#x27;../interfaces/api-client-request.interface&#x27;;
 
+/**
+ * Patrón: guard de autenticación M2M (Basic &#x60;clientId:secret&#x60;). Verifica el secret contra su hash
+ * bcrypt (en &#x60;ApiClientsDBService&#x60;), aplica allowlist de IPs y, si el handler declara
+ * &#x60;@ApiClientScopes(...)&#x60;, exige esos scopes. Publica la identidad en &#x60;request.apiClient&#x60;.
+ * Los endpoints que solo necesitan &quot;app cliente válida&quot; (login, onboarding) no declaran scopes.
+ */
 @Injectable()
 export class BasicAuthGuard implements CanActivate {
   private readonly logger &#x3D; new Logger(BasicAuthGuard.name);
 
-  constructor(private readonly prisma: PrismaDatasource) {}
+  constructor(
+    private readonly apiClients: ApiClientsDBService,
+    private readonly reflector: Reflector,
+  ) {}
 
   async canActivate(context: ExecutionContext): Promise&lt;boolean&gt; {
-    const request &#x3D; context.switchToHttp().getRequest();
-    const authHeader &#x3D; request.headers[&#x27;authorization&#x27;];
+    const request &#x3D; context.switchToHttp().getRequest&lt;ApiClientRequest&gt;();
+    const { clientId, secret } &#x3D; this.parseBasicHeader(
+      request.headers.authorization,
+    );
 
-    if (!authHeader || !authHeader.startsWith(&#x27;Basic &#x27;)) {
-      throw new UnauthorizedException(&#x27;Se requiere Basic Authentication.&#x27;);
-    }
-
-    const encodedCredentials &#x3D; authHeader.substring(6);
-    let decodedString: string;
-
+    let verification: ApiClientVerification;
     try {
-      decodedString &#x3D; Buffer.from(encodedCredentials, &#x27;base64&#x27;).toString(
-        &#x27;utf8&#x27;,
-      );
+      verification &#x3D; await this.apiClients.verifyCredentials(clientId, secret);
     } catch (error) {
       this.logger.error(
-        &#x60;Error de decodificación Base64 en Basic Auth. ${error}&#x60;,
-      );
-      throw new UnauthorizedException(&#x27;Formato de credenciales inválido.&#x27;);
-    }
-
-    const credentials &#x3D; decodedString.split(&#x27;:&#x27;);
-    if (credentials.length !&#x3D;&#x3D; 2) {
-      throw new UnauthorizedException(
-        &#x27;Formato de credenciales Basic Auth incorrecto (debe ser client_id:client_secret).&#x27;,
-      );
-    }
-
-    const [clientId, clientSecret] &#x3D; credentials;
-
-    let apiClientCredential: ApiClientCredential;
-    try {
-      apiClientCredential &#x3D;
-        (await this.prisma.extended.apiClientCredential.findUnique({
-          where: { clientId: clientId },
-        })) as unknown as ApiClientCredential;
-    } catch (error) {
-      this.logger.error(
-        &#x27;Error de base de datos al buscar credenciales:&#x27;,
-        error.stack,
+        &#x27;Error al validar credenciales de API&#x27;,
+        error instanceof Error ? error.stack : String(error),
       );
       throw new ForbiddenException(
         &#x27;Error de servicio al validar credenciales.&#x27;,
       );
     }
 
-    if (!apiClientCredential) {
-      throw new UnauthorizedException(&#x27;Client ID incorrecto.&#x27;);
+    if (verification.result &#x3D;&#x3D;&#x3D; &#x27;invalid&#x27;) {
+      throw new UnauthorizedException(&#x27;Credenciales inválidas.&#x27;);
     }
-
-    if (!apiClientCredential.isActive) {
-      this.logger.warn(&#x60;Acceso denegado: Cliente ${clientId} inactivo.&#x60;);
+    if (verification.result &#x3D;&#x3D;&#x3D; &#x27;inactive&#x27;) {
+      this.logger.warn(&#x60;Acceso denegado: cliente ${clientId} inactivo.&#x60;);
       throw new ForbiddenException(
-        &#x60;El acceso para este cliente ha sido revocado.&#x60;,
+        &#x27;El acceso para este cliente ha sido revocado.&#x27;,
       );
     }
 
-    const isPasswordValid &#x3D; clientSecret &#x3D;&#x3D;&#x3D; apiClientCredential.secretKey;
-
-    if (!isPasswordValid) {
-      throw new UnauthorizedException(&#x27;Secreto incorrecto.&#x27;);
+    const { principal } &#x3D; verification;
+    if (!isIpAllowed(request.ip, principal.allowedIps)) {
+      this.logger.warn(&#x60;Acceso denegado: IP no permitida para ${clientId}.&#x60;);
+      throw new ForbiddenException(&#x27;IP no autorizada para este cliente.&#x27;);
     }
 
-    request.apiClient &#x3D; {
-      id: apiClientCredential.clientId,
-      name: apiClientCredential.clientName,
-    };
+    const required &#x3D;
+      this.reflector.getAllAndOverride&lt;string[] | undefined&gt;(
+        API_CLIENT_SCOPES_KEY,
+        [context.getHandler(), context.getClass()],
+      ) ?? [];
+    const granted &#x3D; principal.scopes;
+    const hasScopes &#x3D;
+      granted.includes(API_CLIENT_SCOPES.ALL) ||
+      required.every((scope) &#x3D;&gt; granted.includes(scope));
+    if (!hasScopes) {
+      throw new ForbiddenException(&#x27;Scope insuficiente para este recurso.&#x27;);
+    }
 
+    request.apiClient &#x3D; principal;
     return true;
+  }
+
+  private parseBasicHeader(header: string | undefined): {
+    clientId: string;
+    secret: string;
+  } {
+    if (!header?.startsWith(&#x27;Basic &#x27;)) {
+      throw new UnauthorizedException(&#x27;Se requiere Basic Authentication.&#x27;);
+    }
+    const decoded &#x3D; Buffer.from(header.slice(6), &#x27;base64&#x27;).toString(&#x27;utf8&#x27;);
+    // El secret puede contener &#x27;:&#x27;; solo el primero separa clientId de secret.
+    const separator &#x3D; decoded.indexOf(&#x27;:&#x27;);
+    if (separator &lt;&#x3D; 0 || separator &#x3D;&#x3D;&#x3D; decoded.length - 1) {
+      throw new UnauthorizedException(
+        &#x27;Formato de credenciales Basic Auth incorrecto (debe ser client_id:client_secret).&#x27;,
+      );
+    }
+    return {
+      clientId: decoded.slice(0, separator),
+      secret: decoded.slice(separator + 1),
+    };
   }
 }
 </code></pre>

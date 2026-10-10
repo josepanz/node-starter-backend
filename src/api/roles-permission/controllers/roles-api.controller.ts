@@ -32,7 +32,7 @@ export class RolesApiController {
   @Post()
   @Version('1')
   @RolesDocs('createRole')
-  @Permissions(PERMISSIONS.ROLE.CREATE, PERMISSIONS.ADMIN.ALL)
+  @Permissions(PERMISSIONS.ROLE.CREATE)
   async createRole(
     @Body() dto: RequestDTO.CreateRoleRequestDTO,
     @GetUser('email') userEmail: string,
@@ -43,7 +43,7 @@ export class RolesApiController {
   @Get()
   @Version('1')
   @RolesDocs('getAllRoles')
-  @Permissions(PERMISSIONS.ROLE.READ, PERMISSIONS.ADMIN.ALL)
+  @Permissions(PERMISSIONS.ROLE.READ)
   async getAllRoles(
     @Query() queryDTO: RequestDTO.GetRoleListQueryDTO,
   ): Promise<ResponseDTO.RoleListResponseDTO> {
@@ -53,7 +53,7 @@ export class RolesApiController {
   @Get(':id')
   @Version('1')
   @RolesDocs('getRoleById')
-  @Permissions(PERMISSIONS.ROLE.READ, PERMISSIONS.ADMIN.ALL)
+  @Permissions(PERMISSIONS.ROLE.READ)
   async getRoleById(
     @Param() paramDTO: RequestDTO.GetRoleParamDTO,
   ): Promise<ResponseDTO.RoleResponseDTO> {
@@ -63,11 +63,12 @@ export class RolesApiController {
   @Put(':id')
   @Version('1')
   @RolesDocs('updateRole')
-  @Permissions(PERMISSIONS.ROLE.UPDATE, PERMISSIONS.ADMIN.ALL)
+  @Permissions(PERMISSIONS.ROLE.UPDATE)
   async updateRole(
     @Param() paramDTO: RequestDTO.GetRoleParamDTO,
     @Body() dto: RequestDTO.UpdateRoleRequestDTO,
+    @GetUser('email') userEmail: string,
   ): Promise<ResponseDTO.RoleResponseDTO> {
-    return await this.rolesApiService.updateRole(paramDTO.id, dto, 'system');
+    return await this.rolesApiService.updateRole(paramDTO.id, dto, userEmail);
   }
 }

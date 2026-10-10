@@ -1,0 +1,8 @@
+{
+  "DELETION_ALREADY_REQUESTED": "Ya existe una solicitud de baja en curso.",
+  "DELETION_NOT_REQUESTED": "No hay una solicitud de baja para cancelar.",
+  "NOTIFICATION_REQUESTED_TITLE": "Solicitud de baja registrada",
+  "NOTIFICATION_REQUESTED_BODY": "Tu cuenta se anonimizará el {scheduledAt}. Podés cancelar la solicitud hasta esa fecha.",
+  "NOTIFICATION_CANCELLED_TITLE": "Solicitud de baja cancelada",
+  "NOTIFICATION_CANCELLED_BODY": "Tu cuenta sigue activa."
+}

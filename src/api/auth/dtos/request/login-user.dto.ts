@@ -1,4 +1,4 @@
-import { ApiProperty } from '@nestjs/swagger';
+import { ApiProperty, ApiPropertyOptional } from '@nestjs/swagger';
 import { IsBoolean, IsEmail, IsOptional, IsString } from 'class-validator';
 
 export class LoginUserDTO {
@@ -24,4 +24,13 @@ export class LoginUserDTO {
   @IsOptional()
   @IsBoolean()
   rememberMe?: boolean;
+
+  @ApiPropertyOptional({
+    example: '3f9c1d2e7a6b4c58b1e0a9d8c7f6e5d4',
+    description:
+      'Nonce de un solo uso obtenido en GET /auth/nonce. Obligatorio si LOGIN_NONCE_REQUIRED=true.',
+  })
+  @IsOptional()
+  @IsString()
+  nonce?: string;
 }

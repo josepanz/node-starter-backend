@@ -1,0 +1,21 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: node-starter-backend
+  annotations:
+    # Mayor al limite de subida de la app; el default de nginx (1m) corta las subidas antes de llegar al pod.
+    nginx.ingress.kubernetes.io/proxy-body-size: 10m
+spec:
+  ingressClassName: nginx
+  rules:
+    # El host real lo define cada overlay.
+    - host: starter.example.com
+      http:
+        paths:
+          - path: /node-starter-backend/api
+            pathType: Prefix
+            backend:
+              service:
+                name: node-starter-backend
+                port:
+                  name: http

@@ -23,6 +23,7 @@ export class CredentialsRepository {
     passwordHash: string;
     attempts?: number;
     isActive?: boolean;
+    expiredAt?: Date | null;
   }): Promise<UserCredentials> {
     return await this.prisma.extended.userCredentials.create({
       data: {
@@ -30,6 +31,7 @@ export class CredentialsRepository {
         passwordHash: data.passwordHash,
         attempts: data.attempts ?? 0,
         isActive: data.isActive ?? true,
+        expiredAt: data.expiredAt ?? null,
       },
     });
   }
@@ -43,11 +45,26 @@ export class CredentialsRepository {
       passwordHash?: string;
       attempts?: number;
       isActive?: boolean;
+      expiredAt?: Date | null;
+      lockedUntil?: Date | null;
     },
   ): Promise<UserCredentials> {
     return await this.prisma.extended.userCredentials.update({
       where: { id },
       data,
+    });
+  }
+
+  /**
+   * Actualiza intentos fallidos y bloqueo temporal en una sola escritura
+   */
+  async updateLockState(
+    id: number,
+    state: { attempts: number; lockedUntil: Date | null },
+  ): Promise<void> {
+    await this.prisma.extended.userCredentials.update({
+      where: { id },
+      data: state,
     });
   }
 

@@ -5,7 +5,7 @@
     "test",
     "dist",
     "**/*spec.ts",
-    "prisma/seed.ts",
+    "prisma",
     "docs",
     "console",
     "**/*.spec.ts",

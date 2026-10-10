@@ -15,6 +15,8 @@ import { AuthService } from '@modules/auth/services/auth.service';
 import { EmailService } from '@modules/email/services/email.service';
 import { IUserDataOnJwt } from '@modules/auth/interfaces/user-data-on-jwt.interface';
 import { EmailTypeEnum } from '@modules/email/enum/email-type.enum';
+import { NonceService } from '@modules/nonce/nonce.service';
+import { APP_CONFIG } from '@core/config/config-loader';
 import * as DTO from '@api/auth/dtos';
 
 // ─── Mock functions (module-scope standalone, evita @typescript-eslint/unbound-method) ───
@@ -37,6 +39,9 @@ const mockVerifyTempToken = jest.fn();
 const mockVerifyForgotPasswordToken = jest.fn();
 
 const mockSendEmailByType = jest.fn();
+const mockNonceIssue = jest.fn();
+const mockNonceConsume = jest.fn();
+const nonceConfig = { nonce: { loginRequired: false } };
 
 // ─── Fixtures ─────────────────────────────────────────────────────────────────
 
@@ -108,6 +113,15 @@ describe('AuthApiService', () => {
           useValue: { sendEmailByType: mockSendEmailByType },
         },
         {
+          provide: NonceService,
+          useValue: {
+            issue: mockNonceIssue,
+            consume: mockNonceConsume,
+            ttlSeconds: 120,
+          },
+        },
+        { provide: APP_CONFIG.KEY, useValue: nonceConfig },
+        {
           provide: AuthMigrationService,
           useValue: {
             migrateAndLogin: mockMigrateAndLogin,
@@ -121,7 +135,10 @@ describe('AuthApiService', () => {
     service = module.get<AuthApiService>(AuthApiService);
   });
 
-  afterEach(() => jest.clearAllMocks());
+  afterEach(() => {
+    jest.clearAllMocks();
+    nonceConfig.nonce.loginRequired = false;
+  });
 
   // ─── handleLogin ──────────────────────────────────────────────────────────
 
@@ -131,6 +148,59 @@ describe('AuthApiService', () => {
       encryptedPassword: 'encryptedPass123',
       rememberMe: false,
     };
+
+    describe('nonce opt-in', () => {
+      beforeEach(() =>
+        mockLogin.mockResolvedValue({
+          success: false,
+          requiresPasswordCreation: false,
+        }),
+      );
+
+      it('no exige nonce con la flag apagada y no consume si no se envía', async () => {
+        await service.handleLogin(loginDto);
+
+        expect(mockNonceConsume).not.toHaveBeenCalled();
+        expect(mockLogin).toHaveBeenCalled();
+      });
+
+      it('rechaza si la flag está activa y falta el nonce', async () => {
+        nonceConfig.nonce.loginRequired = true;
+        mockNonceConsume.mockResolvedValue(false);
+
+        await expect(service.handleLogin(loginDto)).rejects.toThrow(
+          UnauthorizedException,
+        );
+        expect(mockLogin).not.toHaveBeenCalled();
+      });
+
+      it('rechaza un nonce enviado inválido aun con la flag apagada', async () => {
+        mockNonceConsume.mockResolvedValue(false);
+
+        await expect(
+          service.handleLogin({ ...loginDto, nonce: 'usado-o-vencido' }),
+        ).rejects.toThrow(UnauthorizedException);
+        expect(mockLogin).not.toHaveBeenCalled();
+      });
+
+      it('continúa el login si el nonce se consume bien', async () => {
+        mockNonceConsume.mockResolvedValue(true);
+
+        await service.handleLogin({ ...loginDto, nonce: 'valido-1234' });
+
+        expect(mockNonceConsume).toHaveBeenCalledWith('valido-1234');
+        expect(mockLogin).toHaveBeenCalled();
+      });
+
+      it('issueLoginNonce devuelve el nonce y su vigencia', async () => {
+        mockNonceIssue.mockResolvedValue('abc123');
+
+        await expect(service.issueLoginNonce()).resolves.toEqual({
+          nonce: 'abc123',
+          expiresInSeconds: 120,
+        });
+      });
+    });
 
     it('retorna login exitoso con tokens cuando las credenciales son válidas', async () => {
       mockLogin.mockResolvedValue({
@@ -331,7 +401,7 @@ describe('AuthApiService', () => {
     it('retorna el scope completo del usuario con roles y permisos', async () => {
       mockFindUserById.mockResolvedValue(mockUser);
       mockGetUserScope.mockResolvedValue({
-        roles: [{ name: 'merchant-admin', description: 'Administrador' }],
+        roles: [{ name: 'tenant-admin', description: 'Administrador' }],
         permissions: [{ name: 'dashboard:read' }],
       });
 

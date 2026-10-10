@@ -3,7 +3,7 @@
     <head>
         <meta charset="utf-8">
         <meta http-equiv="x-ua-compatible" content="ie=edge">
-        <title>node-started-backend documentation</title>
+        <title>node-starter-backend documentation</title>
         <meta name="description" content="">
         <meta name="viewport" content="width=device-width, initial-scale=1">
 
@@ -78,7 +78,7 @@
 
         <div class="navbar navbar-default navbar-fixed-top d-md-none p-0">
                <div class="d-flex">
-                    <a href="./" class="navbar-brand">node-started-backend documentation</a>
+                    <a href="./" class="navbar-brand">node-starter-backend documentation</a>
                     <button type="button" class="btn btn-default btn-menu ion-ios-menu" id="btn-menu"></button>
                </div>
         </div>
@@ -97,198 +97,2602 @@
                    <div class="content-data">
 
 
-<h1>node-started-backend</h1>
-<p><a href="https://www.npmjs.com/package/node-started-backend"><img src="https://badge.fury.io/js/node-started-backend.svg" alt="npm" class="img-responsive"></a></p>
-<p>Proyecto inicial para backend con NestJS y TypeScript</p>
-<p>Última actualización: <!-- LAST_UPDATE --> 06 de junio de 2026, 11:56 p. m.</p>
-<h2>🗎 Documentación disponible en</h2>
-<!-- START:documentation -->
+<h1>node-starter-backend</h1>
+<p>Última actualización: <!-- AUTO:LAST_UPDATE:START -->
+10 de octubre de 2026, 14:55</p>
+<!-- AUTO:LAST_UPDATE:END -->
 
-<p>El proyecto expone dos tipos principales de documentación:</p>
-<ol>
-<li><p><strong>Swagger (API):</strong> Documentación interactiva de todos los <em>endpoints</em>.</p>
+<h2>Qué es</h2>
+<p>Starter genérico de backend con NestJS 11, TypeScript, Prisma (PostgreSQL) y Sequelize opcional para DB2/IBM i. Además de la base para arrancar un proyecto, es un compendio de mecanismos reutilizables (idempotencia, permisos, auditoría, jobs, mensajería, observabilidad, entre otros). Cada mecanismo es funcional y tiene un fallback: si falta una dependencia de infraestructura o de un proveedor externo, la aplicación arranca igual con una implementación en memoria, de consola o noop.</p>
+<h2>Quickstart</h2>
+<p>Requisitos: Node 22, pnpm 10 y Docker. Tras <code>pnpm install</code>, la app levanta localmente sin editar nada:</p>
+<b>Example :</b><div><pre class="line-numbers"><code class="language-bash">docker compose up -d
+cp .env.template .env
+pnpm prisma migrate deploy &amp;&amp; pnpm prisma db seed   # 2 migraciones (init + audit_triggers); el seed es idempotente
+pnpm db:verify-audit-triggers                      # opcional: cobertura de triggers de auditoría
+pnpm start:dev                                     # o `pnpm build &amp;&amp; pnpm start:prod`</code></pre></div><p>La API queda en <code>http://localhost:3000/node-starter-backend/api</code> (Swagger en <code>/node-starter-backend/api/swagger</code>, salud en <code>/node-starter-backend/api/v1/healthcheck</code>).</p>
+<p>Solo PostgreSQL es necesario. Redis, Mongo, SMTP y Seq se activan completando su variable en <code>.env</code>; sin ellas cada módulo usa su fallback. Detalle de variables y dependencias en <a href="CONTRIBUTING.md#quickstart"><code>CONTRIBUTING.md</code></a> y en la sección Módulos opcionales más abajo.</p>
+<p><strong>Usuario demo del seed</strong> (solo desarrollo):</p>
 <ul>
-<li><strong>Ruta de acceso:</strong> <code>/node-starter-backend/api/swagger</code></li>
-<li><strong>Ejemplo Local:</strong> <code>http://localhost:3000/node-starter-backend/api/swagger</code></li>
+<li>Email: <code>demo.orders@example.com</code></li>
+<li>Contraseña: <code>DemoPass1234</code> (se guarda hasheada con bcrypt; el seed no la pisa si ya existe una credencial)</li>
+<li>Las rutas de auth exigen Basic Auth con el cliente M2M demo del seed (<code>demo-m2m-client</code>; secret de desarrollo definido en <code>prisma/seed.ts</code>).</li>
 </ul>
-</li>
-<li><p><strong>Compodoc (Código):</strong> Documentación estática de módulos, controladores, <em>providers</em>, etc.</p>
-<ul>
-<li><strong>Ruta de acceso:</strong> <code>/node-starter-backend/api/docs</code></li>
-<li><strong>Ejemplo Local:</strong> <code>http://localhost:3000/node-starter-backend/api/docs</code></li>
-</ul>
-</li>
-</ol>
+<h2>Documentación</h2>
+<table class="table table-bordered compodoc-table">
+<thead>
+<tr>
+<th>Documento</th>
+<th>Contenido</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><a href="ARCHITECTURE.md"><code>ARCHITECTURE.md</code></a></td>
+<td>Capas, ciclo de vida de una request, módulos opcionales, componentes transversales, DB2/Sequelize y despliegue</td>
+</tr>
+<tr>
+<td><a href="CONTRIBUTING.md"><code>CONTRIBUTING.md</code></a></td>
+<td>Quickstart completo, plataformas de CI, ramas, commits, definición de hecho y recetas (módulo, proveedor, job, handler, migración)</td>
+</tr>
+<tr>
+<td><a href="AGENTS.md"><code>AGENTS.md</code></a></td>
+<td>Guía de trabajo para asistentes de IA: reglas, convenciones y comandos</td>
+</tr>
+<tr>
+<td><a href=".context/CONTEXT.md"><code>.context/CONTEXT.md</code></a></td>
+<td>Índice del contexto detallado para asistentes y desarrolladores</td>
+</tr>
+<tr>
+<td><a href=".context/rules/"><code>.context/rules/</code></a></td>
+<td>Reglas por tema (arquitectura, TypeScript, tests, errores, permisos, base de datos, DB2/Sequelize, infra, git)</td>
+</tr>
+<tr>
+<td><a href=".context/agents/"><code>.context/agents/</code></a></td>
+<td>Agentes de revisión, consulta de base de datos, testing y refactor</td>
+</tr>
+<tr>
+<td><a href=".context/commands/"><code>.context/commands/</code></a></td>
+<td>Comandos de slash del flujo de trabajo</td>
+</tr>
+<tr>
+<td><a href=".context/skills/"><code>.context/skills/</code></a></td>
+<td>Skills: entrega de features y flujo OpenSpec</td>
+</tr>
+<tr>
+<td><a href=".context/documentation/"><code>.context/documentation/</code></a></td>
+<td>Plantilla SDD y guía manual de TDD/SDD</td>
+</tr>
+<tr>
+<td><a href="openspec/README.md"><code>openspec/</code></a></td>
+<td>Especificaciones de cambios medianos o grandes (OpenSpec)</td>
+</tr>
+<tr>
+<td><a href="docs/index.html"><code>docs/</code></a></td>
+<td>Documentación de código generada con Compodoc. Se regenera con <code>pnpm docs:generate</code> y se navega con <code>pnpm docs:serve</code></td>
+</tr>
+<tr>
+<td>Swagger</td>
+<td>Documentación interactiva de los endpoints en <code>/node-starter-backend/api/swagger</code></td>
+</tr>
+<tr>
+<td>Compodoc en la API</td>
+<td>Si existe la carpeta <code>docs/</code> junto al build, se sirve en <code>/node-starter-backend/api/docs</code></td>
+</tr>
+</tbody>
+</table>
+<p>Los bloques marcados <code>AUTO</code> de este README se regeneran con <code>pnpm update:readme</code> (<code>pnpm docs:update-readme</code> regenera antes el JSON de Compodoc). El resto del contenido es manual.</p>
+<h2>Catálogo de mecanismos</h2>
+<p>Cada fila enlaza a la implementación. El patrón indica la forma de diseño usada.</p>
+<table class="table table-bordered compodoc-table">
+<thead>
+<tr>
+<th>Mecanismo</th>
+<th>Patrón</th>
+<th>Dónde</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Idempotencia de requests</td>
+<td>Interceptor + decorador de clave idempotente</td>
+<td><a href="src/modules/idempotency/interceptors/idempotency.interceptor.ts"><code>idempotency.interceptor.ts</code></a>, <a href="src/modules/idempotency/services/idempotency.service.ts"><code>idempotency.service.ts</code></a></td>
+</tr>
+<tr>
+<td>Anti-TOCTOU (transición condicional)</td>
+<td>Compare-and-set: <code>updateWhereStatus</code> / <code>updateMany</code> con condición de estado</td>
+<td><a href="src/core/database/base/prisma/prisma-base.repository.ts"><code>prisma-base.repository.ts</code></a>, <a href="src/modules/jobs-db/repositories/background-jobs.repository.ts"><code>background-jobs.repository.ts</code></a></td>
+</tr>
+<tr>
+<td>Máquina de estados de órdenes</td>
+<td>State machine (transiciones explícitas)</td>
+<td><a href="src/modules/orders-db/helpers/order-state-machine.helper.ts"><code>order-state-machine.helper.ts</code></a></td>
+</tr>
+<tr>
+<td>Ownership / IDOR</td>
+<td>Helper de pertenencia; &quot;no existe&quot; y &quot;no es tuyo&quot; responden 404</td>
+<td><a href="src/common/helpers/ownership.helper.ts"><code>ownership.helper.ts</code></a></td>
+</tr>
+<tr>
+<td>Permisos <code>dominio:accion</code></td>
+<td>Decorator + Guard (RBAC)</td>
+<td><a href="src/common/decorators/with-permissions.decorator.ts"><code>with-permissions.decorator.ts</code></a>, <a href="src/modules/auth/guards/permissions.guard.ts"><code>permissions.guard.ts</code></a>, <a href="src/common/enum/permissions.enum.ts"><code>permissions.enum.ts</code></a></td>
+</tr>
+<tr>
+<td>Lockout de login</td>
+<td>Policy object (intentos máximos y bloqueo temporal o permanente)</td>
+<td><a href="src/modules/auth/helpers/login-lockout.helper.ts"><code>login-lockout.helper.ts</code></a></td>
+</tr>
+<tr>
+<td>Política de contraseña y expiración</td>
+<td>Policy object leído desde configuración</td>
+<td><a href="src/modules/auth/helpers/password-policy.helper.ts"><code>password-policy.helper.ts</code></a>, <a href="src/modules/auth/helpers/password-expiration.helper.ts"><code>password-expiration.helper.ts</code></a></td>
+</tr>
+<tr>
+<td>Firma HMAC y cifrado AES-GCM</td>
+<td>Utilidades criptográficas; keyring con id de clave</td>
+<td><a href="src/common/helpers/crypto/hmac.helper.ts"><code>hmac.helper.ts</code></a>, <a href="src/common/helpers/crypto/aes-gcm.helper.ts"><code>aes-gcm.helper.ts</code></a></td>
+</tr>
+<tr>
+<td>Autenticación M2M y scopes</td>
+<td>Guard (Basic <code>clientId:secret</code>) + catálogo de scopes</td>
+<td><a href="src/modules/auth/guards/basic-auth.guard.ts"><code>basic-auth.guard.ts</code></a>, <a href="src/modules/api-clients-db/constants/api-client-scopes.constants.ts"><code>api-client-scopes.constants.ts</code></a></td>
+</tr>
+<tr>
+<td>Firma HMAC de requests (M2M)</td>
+<td>Guard + helper de firma con ventana de timestamp y nonce</td>
+<td><a href="src/modules/auth/guards/hmac-signature.guard.ts"><code>hmac-signature.guard.ts</code></a>, <a href="src/common/helpers/crypto/request-signature.helper.ts"><code>request-signature.helper.ts</code></a></td>
+</tr>
+<tr>
+<td>Rate limiting</td>
+<td>Guard + storage intercambiable (memoria o Redis)</td>
+<td><a href="src/core/rate-limit/app-throttler.guard.ts"><code>app-throttler.guard.ts</code></a>, <a href="src/core/rate-limit/redis-throttler.storage.ts"><code>redis-throttler.storage.ts</code></a></td>
+</tr>
+<tr>
+<td>Nonce anti-replay</td>
+<td>Service + Strategy de store (memoria o Redis)</td>
+<td><a href="src/modules/nonce/nonce.service.ts"><code>nonce.service.ts</code></a>, <a href="src/modules/nonce/stores/"><code>stores/</code></a></td>
+</tr>
+<tr>
+<td>Cache de permisos</td>
+<td>Cache con TTL configurable (0 = sin cache)</td>
+<td><a href="src/core/cache/permissions-cache.service.ts"><code>permissions-cache.service.ts</code></a></td>
+</tr>
+<tr>
+<td>Redis opcional</td>
+<td>Factory de módulo con fallback a memoria</td>
+<td><a href="src/core/redis/redis.module.ts"><code>redis.module.ts</code></a>, <a href="src/core/cache/cache.module.ts"><code>cache.module.ts</code></a></td>
+</tr>
+<tr>
+<td>Scheduler con advisory lock</td>
+<td>Template Method (<code>ScheduledJob</code>) + lock de Postgres entre réplicas</td>
+<td><a href="src/core/scheduler/scheduled-job.ts"><code>scheduled-job.ts</code></a>, <a href="src/core/scheduler/with-advisory-lock.ts"><code>with-advisory-lock.ts</code></a>, <a href="src/core/scheduler/job-scheduler.service.ts"><code>job-scheduler.service.ts</code></a></td>
+</tr>
+<tr>
+<td>Cola de trabajos (BackgroundJob)</td>
+<td>Registry + Strategy por tipo (<code>IJobHandler</code>), reintentos con backoff</td>
+<td><a href="src/modules/jobs-db/services/background-jobs-db.service.ts"><code>background-jobs-db.service.ts</code></a>, <a href="src/modules/jobs/services/job-handler.registry.ts"><code>job-handler.registry.ts</code></a>, <a href="src/modules/jobs/interfaces/job-handler.interface.ts"><code>job-handler.interface.ts</code></a></td>
+</tr>
+<tr>
+<td>Ledger de mensajes</td>
+<td>Repository + política de contenido (<code>NONE</code> / <code>AUDIT</code>)</td>
+<td><a href="src/modules/message-db/services/message-db.service.ts"><code>message-db.service.ts</code></a>, <a href="src/modules/message-db/services/message-content.service.ts"><code>message-content.service.ts</code></a></td>
+</tr>
+<tr>
+<td>Proveedor de SMS</td>
+<td>Strategy + Adapter; consola si no hay credenciales</td>
+<td><a href="src/modules/sms/interfaces/sms-sender.interface.ts"><code>sms-sender.interface.ts</code></a>, <a href="src/modules/sms/adapters/"><code>adapters/</code></a></td>
+</tr>
+<tr>
+<td>Proveedor de email</td>
+<td>Strategy + Adapter (SMTP o consola)</td>
+<td><a href="src/modules/email/interfaces/email-sender.interface.ts"><code>email-sender.interface.ts</code></a>, <a href="src/modules/email/adapters/"><code>adapters/</code></a></td>
+</tr>
+<tr>
+<td>Proveedor de push</td>
+<td>Strategy + Registry (FCM, Web Push o Noop)</td>
+<td><a href="src/modules/notifications/interfaces/push-provider.interface.ts"><code>push-provider.interface.ts</code></a>, <a href="src/modules/notifications/services/push-provider.registry.ts"><code>push-provider.registry.ts</code></a>, <a href="src/modules/notifications/providers/"><code>providers/</code></a></td>
+</tr>
+<tr>
+<td>Eventos de dominio</td>
+<td>Observer (listeners sobre eventos)</td>
+<td><a href="src/common/events/domain-events.ts"><code>domain-events.ts</code></a>, <a href="src/api/notifications/listeners/order-notifications.listener.ts"><code>order-notifications.listener.ts</code></a></td>
+</tr>
+<tr>
+<td>Realtime (websocket)</td>
+<td>Gateway + servicio con auth JWT y throttle por socket</td>
+<td><a href="src/api/events/gateway/events.gateway.ts"><code>events.gateway.ts</code></a>, <a href="src/modules/realtime/realtime.service.ts"><code>realtime.service.ts</code></a>, <a href="src/modules/realtime/ws-jwt.guard.ts"><code>ws-jwt.guard.ts</code></a></td>
+</tr>
+<tr>
+<td>i18n</td>
+<td>Catálogos por idioma (<code>en</code>, <code>es</code>) + helper</td>
+<td><a href="src/core/i18n/i18n.config.ts"><code>i18n.config.ts</code></a>, <a href="src/common/i18n/i18n.helper.ts"><code>i18n.helper.ts</code></a>, <a href="src/i18n/"><code>src/i18n/</code></a></td>
+</tr>
+<tr>
+<td>Consentimiento versionado</td>
+<td>Guard (<code>@RequiresActiveConsent</code>) + servicio de consentimientos</td>
+<td><a href="src/modules/legal-db/guards/requires-active-consent.guard.ts"><code>requires-active-consent.guard.ts</code></a>, <a href="src/modules/legal-db/services/user-consents-db.service.ts"><code>user-consents-db.service.ts</code></a></td>
+</tr>
+<tr>
+<td>Baja y anonimización de cuenta</td>
+<td>Job programado + servicio de borrado con período de gracia</td>
+<td><a href="src/modules/account-db/services/account-deletion-db.service.ts"><code>account-deletion-db.service.ts</code></a>, <a href="src/modules/account-db/jobs/account-anonymization.job.ts"><code>account-anonymization.job.ts</code></a></td>
+</tr>
+<tr>
+<td>Retención de datos</td>
+<td>Servicio ejecutor sobre políticas de retención</td>
+<td><a href="src/modules/account-db/services/data-retention-executor.service.ts"><code>data-retention-executor.service.ts</code></a>, <a href="src/modules/legal-db/services/data-retention-db.service.ts"><code>data-retention-db.service.ts</code></a></td>
+</tr>
+<tr>
+<td>Transparencia de contenido de IA</td>
+<td>Servicio de disclosure por entidad</td>
+<td><a href="src/modules/ai-disclosure-db/services/ai-disclosure-db.service.ts"><code>ai-disclosure-db.service.ts</code></a></td>
+</tr>
+<tr>
+<td>Bitácora de auditoría</td>
+<td>Interceptor (aplicación) + triggers SQL (base)</td>
+<td><a href="src/core/interceptors/audit.interceptor.ts"><code>audit.interceptor.ts</code></a>, <a href="src/modules/audit-log-db/services/audit-log-db.service.ts"><code>audit-log-db.service.ts</code></a>, <a href="prisma/migrations/20260607002428_audit_triggers/migration.sql"><code>audit_triggers/migration.sql</code></a></td>
+</tr>
+<tr>
+<td>Export en JSON streaming</td>
+<td>Interceptor + helper de streaming (cursor por lotes)</td>
+<td><a href="src/core/interceptors/json-stream.interceptor.ts"><code>json-stream.interceptor.ts</code></a>, <a href="src/common/helpers/json-stream.helper.ts"><code>json-stream.helper.ts</code></a></td>
+</tr>
+<tr>
+<td>Reporte de errores (Sentry)</td>
+<td>Adapter tras la interfaz <code>ExceptionReporter</code>; solo 5xx</td>
+<td><a href="src/core/observability/sentry-reporter.service.ts"><code>sentry-reporter.service.ts</code></a>, <a href="src/core/observability/exception-reporter.interface.ts"><code>exception-reporter.interface.ts</code></a></td>
+</tr>
+<tr>
+<td>Activity log en Mongo</td>
+<td>Strategy de store (Mongo o Noop)</td>
+<td><a href="src/modules/activity-log/stores/mongo-activity-log.store.ts"><code>mongo-activity-log.store.ts</code></a>, <a href="src/modules/activity-log/stores/noop-activity-log.store.ts"><code>noop-activity-log.store.ts</code></a></td>
+</tr>
+<tr>
+<td>Cliente HTTP saliente</td>
+<td>Template Method (<code>BaseHttpClient</code>) + Strategy de autenticación</td>
+<td><a href="src/modules/http-client/base-http.client.ts"><code>base-http.client.ts</code></a>, <a href="src/modules/http-client/auth/http-auth-strategy.ts"><code>http-auth-strategy.ts</code></a></td>
+</tr>
+<tr>
+<td>Filtros de excepción (503, Prisma, Sequelize)</td>
+<td>Exception filters globales</td>
+<td><a href="src/common/filters/transient-connection-exception.filter.ts"><code>transient-connection-exception.filter.ts</code></a>, <a href="src/common/filters/prisma-client-exception.filter.ts"><code>prisma-client-exception.filter.ts</code></a>, <a href="src/common/filters/sequelize-exception.filter.ts"><code>sequelize-exception.filter.ts</code></a>, <a href="src/core/global-filters/http-exception.filter.ts"><code>http-exception.filter.ts</code></a></td>
+</tr>
+<tr>
+<td>DB2: raw query</td>
+<td>Repository con SQL crudo sobre Sequelize</td>
+<td><a href="src/modules/catalog-raw/repositories/catalog-raw.repository.ts"><code>catalog-raw.repository.ts</code></a></td>
+</tr>
+<tr>
+<td>DB2: ORM tipado</td>
+<td>Repository sobre entities de Sequelize</td>
+<td><a href="src/modules/catalog-orm/repositories/catalog-orm.repositories.ts"><code>catalog-orm.repositories.ts</code></a></td>
+</tr>
+<tr>
+<td>trace-id y redacción de logs</td>
+<td>Middleware (asigna <code>traceId</code>) + filtro de datos sensibles</td>
+<td><a href="src/core/middlewares/trace-id.middleware.ts"><code>trace-id.middleware.ts</code></a>, <a href="src/core/observability/redaction.ts"><code>redaction.ts</code></a></td>
+</tr>
+</tbody>
+</table>
+<p>Las estrategias de DB2 se comparan en la sección DB2 / Sequelize de <a href="ARCHITECTURE.md"><code>ARCHITECTURE.md</code></a> y en <a href=".context/rules/db2-sequelize.md"><code>.context/rules/db2-sequelize.md</code></a>.</p>
+<h2>Módulos opcionales</h2>
+<p>Cada dependencia de infraestructura o proveedor se activa por variable de entorno. La tabla con la variable que la activa y el comportamiento sin ella se genera automáticamente; está en la sección <strong>Módulos opcionales</strong> más abajo (bloque <code>AUTO:OPTIONAL_MODULES</code>).</p>
+<h2>Instalación y scripts</h2>
+<p>Se usa <strong>pnpm</strong> como gestor de paquetes.</p>
+<b>Example :</b><div><pre class="line-numbers"><code class="language-bash">pnpm install          # instalar dependencias
+pnpm build            # compilar (nest build)
+pnpm start:dev        # desarrollo con watch
+pnpm start:prod       # producción (node dist/main; requiere pnpm build)
+pnpm lint             # ESLint
+pnpm check:types      # tsc sin emitir
+pnpm test             # tests unitarios
+pnpm test:e2e         # e2e con supertest</code></pre></div><p>La lista completa de scripts está en el bloque <code>AUTO:SCRIPTS</code> más abajo. Para el flujo de Prisma (validar, generar, migrar y seed) ver el Quickstart; las migraciones se crean con <code>pnpm prisma migrate dev --name &lt;nombre&gt;</code>.</p>
 <blockquote>
-<p>Reemplaza <code>http://localhost:3000</code> con el dominio y puerto de tu entorno (DEV, QA, PROD) para acceder a la documentación remota.</p>
+<p>Las secciones siguientes se generan con <code>pnpm docs:update-readme</code>. No editar entre marcadores <code>AUTO</code>.</p>
 </blockquote>
-<!-- END:documentation -->
+<h2>🧩 Módulos</h2>
+<!-- AUTO:MODULES:START -->
+<table class="table table-bordered compodoc-table">
+<thead>
+<tr>
+<th>Módulo</th>
+<th>Archivo</th>
+<th>Controllers</th>
+<th>Providers</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>AccountApiModule</code></td>
+<td><code>src/api/account/account-api.module.ts</code></td>
+<td>-</td>
+<td>AccountApiService</td>
+</tr>
+<tr>
+<td><code>ActivityLogsApiModule</code></td>
+<td><code>src/api/activity-logs/activity-logs-api.module.ts</code></td>
+<td>-</td>
+<td>-</td>
+</tr>
+<tr>
+<td><code>AiDisclosureApiModule</code></td>
+<td><code>src/api/ai-disclosure/ai-disclosure-api.module.ts</code></td>
+<td>-</td>
+<td>-</td>
+</tr>
+<tr>
+<td><code>ApiClientsApiModule</code></td>
+<td><code>src/api/api-clients/api-clients-api.module.ts</code></td>
+<td>-</td>
+<td>ApiClientsApiService</td>
+</tr>
+<tr>
+<td><code>ApiModule</code></td>
+<td><code>src/api/api.module.ts</code></td>
+<td>-</td>
+<td>-</td>
+</tr>
+<tr>
+<td><code>AuditLogsApiModule</code></td>
+<td><code>src/api/audit-logs/audit-logs-api.module.ts</code></td>
+<td>-</td>
+<td>AuditLogsApiService</td>
+</tr>
+<tr>
+<td><code>AuthApiModule</code></td>
+<td><code>src/api/auth/auth-api.module.ts</code></td>
+<td>-</td>
+<td>AuthApiService, AuthCookieService, AuthMigrationService, JwtRefreshStrategy, JwtStrategy</td>
+</tr>
+<tr>
+<td><code>CatalogOrmApiModule</code></td>
+<td><code>src/api/catalog-orm/catalog-orm-api.module.ts</code></td>
+<td>-</td>
+<td>CatalogOrmApiService</td>
+</tr>
+<tr>
+<td><code>CatalogRawApiModule</code></td>
+<td><code>src/api/catalog-raw/catalog-raw-api.module.ts</code></td>
+<td>-</td>
+<td>CatalogRawApiService</td>
+</tr>
+<tr>
+<td><code>EventsApiModule</code></td>
+<td><code>src/api/events/events-api.module.ts</code></td>
+<td>-</td>
+<td>NotificationRealtimeListener</td>
+</tr>
+<tr>
+<td><code>ExampleApiModule</code></td>
+<td><code>src/api/example/example-api.module.ts</code></td>
+<td>-</td>
+<td>ExampleApiService</td>
+</tr>
+<tr>
+<td><code>JobsApiModule</code></td>
+<td><code>src/api/jobs/jobs-api.module.ts</code></td>
+<td>-</td>
+<td>JobsApiService</td>
+</tr>
+<tr>
+<td><code>LegalApiModule</code></td>
+<td><code>src/api/legal/legal-api.module.ts</code></td>
+<td>-</td>
+<td>LegalApiService</td>
+</tr>
+<tr>
+<td><code>M2mApiModule</code></td>
+<td><code>src/api/m2m/m2m-api.module.ts</code></td>
+<td>-</td>
+<td>-</td>
+</tr>
+<tr>
+<td><code>MessagesApiModule</code></td>
+<td><code>src/api/messages/messages-api.module.ts</code></td>
+<td>-</td>
+<td>MessagesApiService, SmsDeliveryPollJob</td>
+</tr>
+<tr>
+<td><code>NotificationsApiModule</code></td>
+<td><code>src/api/notifications/notifications-api.module.ts</code></td>
+<td>-</td>
+<td>NotificationsApiService, OrderNotificationsListener</td>
+</tr>
+<tr>
+<td><code>OnboardingApiModule</code></td>
+<td><code>src/api/onboarding/onboarding-api.module.ts</code></td>
+<td>-</td>
+<td>OnboardingApiService</td>
+</tr>
+<tr>
+<td><code>OrdersApiModule</code></td>
+<td><code>src/api/orders/orders-api.module.ts</code></td>
+<td>-</td>
+<td>OrdersApiService</td>
+</tr>
+<tr>
+<td><code>RolesApiModule</code></td>
+<td><code>src/api/roles-permission/roles-permission.module.ts</code></td>
+<td>-</td>
+<td>RolesApiService, RolesPermissionsMapper</td>
+</tr>
+<tr>
+<td><code>StorageApiModule</code></td>
+<td><code>src/api/storage/storage-api.module.ts</code></td>
+<td>-</td>
+<td>StorageApiService</td>
+</tr>
+<tr>
+<td><code>UsersApiModule</code></td>
+<td><code>src/api/users/users-api.module.ts</code></td>
+<td>-</td>
+<td>UserRolesDBService, UsersApiService</td>
+</tr>
+<tr>
+<td><code>AppModule</code></td>
+<td><code>src/app.module.ts</code></td>
+<td>-</td>
+<td>ObservabilityInterceptor</td>
+</tr>
+<tr>
+<td><code>AppCacheModule</code></td>
+<td><code>src/core/cache/cache.module.ts</code></td>
+<td>-</td>
+<td>CacheShutdown, PermissionsCacheService</td>
+</tr>
+<tr>
+<td><code>DatabaseModule</code></td>
+<td><code>src/core/database/database.module.ts</code></td>
+<td>-</td>
+<td>DatabaseHelper, PrismaDatasource</td>
+</tr>
+<tr>
+<td><code>AppEventsModule</code></td>
+<td><code>src/core/events/app-events.module.ts</code></td>
+<td>-</td>
+<td>-</td>
+</tr>
+<tr>
+<td><code>MongoModule</code></td>
+<td><code>src/core/mongo/mongo.module.ts</code></td>
+<td>-</td>
+<td>-</td>
+</tr>
+<tr>
+<td><code>ObservabilityModule</code></td>
+<td><code>src/core/observability/observability.module.ts</code></td>
+<td>-</td>
+<td>SentryReporterService</td>
+</tr>
+<tr>
+<td><code>RateLimitModule</code></td>
+<td><code>src/core/rate-limit/rate-limit.module.ts</code></td>
+<td>-</td>
+<td>AppThrottlerGuard</td>
+</tr>
+<tr>
+<td><code>RedisModule</code></td>
+<td><code>src/core/redis/redis.module.ts</code></td>
+<td>-</td>
+<td>RedisHealthIndicator, RedisService</td>
+</tr>
+<tr>
+<td><code>SchedulerModule</code></td>
+<td><code>src/core/scheduler/scheduler.module.ts</code></td>
+<td>-</td>
+<td>JobSchedulerService</td>
+</tr>
+<tr>
+<td><code>AccountDBModule</code></td>
+<td><code>src/modules/account-db/account-db.module.ts</code></td>
+<td>-</td>
+<td>AccountAnonymizationJob, AccountDeletionDBService, DataRetentionExecutorService</td>
+</tr>
+<tr>
+<td><code>ActivityLogModule</code></td>
+<td><code>src/modules/activity-log/activity-log.module.ts</code></td>
+<td>-</td>
+<td>-</td>
+</tr>
+<tr>
+<td><code>AiDisclosureDBModule</code></td>
+<td><code>src/modules/ai-disclosure-db/ai-disclosure-db.module.ts</code></td>
+<td>-</td>
+<td>AiDisclosureDBService</td>
+</tr>
+<tr>
+<td><code>ApiClientsDBModule</code></td>
+<td><code>src/modules/api-clients-db/api-clients-db.module.ts</code></td>
+<td>-</td>
+<td>ApiClientSigningSecretService, ApiClientsDBService</td>
+</tr>
+<tr>
+<td><code>AuditLogDBModule</code></td>
+<td><code>src/modules/audit-log-db/audit-log-db.module.ts</code></td>
+<td>-</td>
+<td>AuditLogDBService</td>
+</tr>
+<tr>
+<td><code>AuthModule</code></td>
+<td><code>src/modules/auth/auth.module.ts</code></td>
+<td>-</td>
+<td>AuthPasswordService, AuthService, AuthTokenService, CredentialsRepository</td>
+</tr>
+<tr>
+<td><code>CatalogOrmDbModule</code></td>
+<td><code>src/modules/catalog-orm/catalog-orm-db.module.ts</code></td>
+<td>-</td>
+<td>CatalogCategoryRepository, CatalogItemRepository, CatalogItemStockRepository, CatalogOrmService</td>
+</tr>
+<tr>
+<td><code>CatalogRawDbModule</code></td>
+<td><code>src/modules/catalog-raw/catalog-raw-db.module.ts</code></td>
+<td>-</td>
+<td>CatalogRawRepository, CatalogRawService</td>
+</tr>
+<tr>
+<td><code>EmailModule</code></td>
+<td><code>src/modules/email/email.module.ts</code></td>
+<td>-</td>
+<td>EmailService, SmtpHealthIndicator</td>
+</tr>
+<tr>
+<td><code>ExampleModule</code></td>
+<td><code>src/modules/example/example.module.ts</code></td>
+<td>-</td>
+<td>ExampleRepository, ExampleService</td>
+</tr>
+<tr>
+<td><code>HealthModule</code></td>
+<td><code>src/modules/health/health.module.ts</code></td>
+<td>-</td>
+<td>-</td>
+</tr>
+<tr>
+<td><code>HttpClientModule</code></td>
+<td><code>src/modules/http-client/http-client.module.ts</code></td>
+<td>-</td>
+<td>ExampleUpstreamClient</td>
+</tr>
+<tr>
+<td><code>IdempotencyModule</code></td>
+<td><code>src/modules/idempotency/idempotency.module.ts</code></td>
+<td>-</td>
+<td>IdempotencyInterceptor, IdempotencyPurgeJob, IdempotencyService</td>
+</tr>
+<tr>
+<td><code>JobsDBModule</code></td>
+<td><code>src/modules/jobs-db/jobs-db.module.ts</code></td>
+<td>-</td>
+<td>BackgroundJobsDBService, BackgroundJobsRepository</td>
+</tr>
+<tr>
+<td><code>JobsModule</code></td>
+<td><code>src/modules/jobs/jobs.module.ts</code></td>
+<td>-</td>
+<td>BackgroundJobWorkerJob, JobHandlerRegistry, ReportExportHandler</td>
+</tr>
+<tr>
+<td><code>LegalDBModule</code></td>
+<td><code>src/modules/legal-db/legal-db.module.ts</code></td>
+<td>-</td>
+<td>DataRetentionDBService, LegalDocumentsDBService, UserConsentsDBService</td>
+</tr>
+<tr>
+<td><code>MessageDBModule</code></td>
+<td><code>src/modules/message-db/message-db.module.ts</code></td>
+<td>-</td>
+<td>MessageContentService, MessageDBService, MessagePurgeJob</td>
+</tr>
+<tr>
+<td><code>MessagingModule</code></td>
+<td><code>src/modules/messaging/messaging.module.ts</code></td>
+<td>-</td>
+<td>MessageDispatcherService</td>
+</tr>
+<tr>
+<td><code>NonceModule</code></td>
+<td><code>src/modules/nonce/nonce.module.ts</code></td>
+<td>-</td>
+<td>NonceService</td>
+</tr>
+<tr>
+<td><code>NotificationsModule</code></td>
+<td><code>src/modules/notifications/notifications.module.ts</code></td>
+<td>-</td>
+<td>FcmPushProvider, NoopPushProvider, NotificationInboxDBService, NotificationsService, PushProviderRegistry, PushSubscriptionsDBService, WebPushProvider</td>
+</tr>
+<tr>
+<td><code>OnboardingModule</code></td>
+<td><code>src/modules/onboarding/onboarding.module.ts</code></td>
+<td>-</td>
+<td>OnboardingService</td>
+</tr>
+<tr>
+<td><code>OrdersDBModule</code></td>
+<td><code>src/modules/orders-db/orders-db.module.ts</code></td>
+<td>-</td>
+<td>FeeCalculator, OrdersDBService, OrdersRepository</td>
+</tr>
+<tr>
+<td><code>RealtimeModule</code></td>
+<td><code>src/modules/realtime/realtime.module.ts</code></td>
+<td>-</td>
+<td>RealtimeService, WsAuthService</td>
+</tr>
+<tr>
+<td><code>ReportModule</code></td>
+<td><code>src/modules/report/report.module.ts</code></td>
+<td>-</td>
+<td>ReportService</td>
+</tr>
+<tr>
+<td><code>RolesPermissionDBModule</code></td>
+<td><code>src/modules/roles-permission-db/roles-permission-db.module.ts</code></td>
+<td>-</td>
+<td>PermissionsDBService, RolePermissionsDBService, RolesDBService, UserPermissionsDBService, UserRolesDBService</td>
+</tr>
+<tr>
+<td><code>SmsModule</code></td>
+<td><code>src/modules/sms/sms.module.ts</code></td>
+<td>-</td>
+<td>-</td>
+</tr>
+<tr>
+<td><code>StorageModule</code></td>
+<td><code>src/modules/storage/storage.module.ts</code></td>
+<td>-</td>
+<td>StorageService</td>
+</tr>
+<tr>
+<td><code>UsersDBModule</code></td>
+<td><code>src/modules/users-db/users-db.module.ts</code></td>
+<td>-</td>
+<td>UserRolesDBService, UsersDBService</td>
+</tr>
+</tbody>
+</table>
+<!-- AUTO:MODULES:END -->
 
-<!-- anything below this line will be safe from template removal -->
+<h2>🌐 Endpoints</h2>
+<!-- AUTO:ENDPOINTS:START -->
+<table class="table table-bordered compodoc-table">
+<thead>
+<tr>
+<th>Método</th>
+<th>Ruta</th>
+<th>Controller</th>
+<th>Permisos / Guards</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>DELETE</td>
+<td><code>/v1/account/deletion</code></td>
+<td>AccountApiController</td>
+<td>guards(JwtAuthGuard)</td>
+</tr>
+<tr>
+<td>GET</td>
+<td><code>/v1/account/deletion</code></td>
+<td>AccountApiController</td>
+<td>guards(JwtAuthGuard)</td>
+</tr>
+<tr>
+<td>POST</td>
+<td><code>/v1/ai-disclosures/:entityType/:entityId/review</code></td>
+<td>AiDisclosureApiController</td>
+<td>AI_DISCLOSURE.UPDATE</td>
+</tr>
+<tr>
+<td>GET</td>
+<td><code>/v1/ai-disclosures/:entityType/:entityId</code></td>
+<td>AiDisclosureApiController</td>
+<td>AI_DISCLOSURE.READ</td>
+</tr>
+<tr>
+<td>PATCH</td>
+<td><code>/v1/api-clients/:referenceId/status</code></td>
+<td>ApiClientsApiController</td>
+<td>API_CLIENT.UPDATE</td>
+</tr>
+<tr>
+<td>GET</td>
+<td><code>/v1/api-clients/:referenceId</code></td>
+<td>ApiClientsApiController</td>
+<td>API_CLIENT.READ</td>
+</tr>
+<tr>
+<td>GET</td>
+<td><code>/v1/api-clients</code></td>
+<td>ApiClientsApiController</td>
+<td>API_CLIENT.READ</td>
+</tr>
+<tr>
+<td>GET</td>
+<td><code>/v1/audit-logs/:id</code></td>
+<td>AuditLogsApiController</td>
+<td>AUDIT_LOG.READ</td>
+</tr>
+<tr>
+<td>PUT</td>
+<td><code>/v1/auth/change-password</code></td>
+<td>AuthApiController</td>
+<td>USER.PASSWORD.UPDATE, guards(JwtAuthGuard, PermissionsGuard)</td>
+</tr>
+<tr>
+<td>POST</td>
+<td><code>/v1/auth/create-password</code></td>
+<td>AuthApiController</td>
+<td>guards(BasicAuthGuard)</td>
+</tr>
+<tr>
+<td>POST</td>
+<td><code>/v1/auth/email/send-create-password</code></td>
+<td>AuthApiController</td>
+<td>guards(BasicAuthGuard, UserByEmailLoaderGuard)</td>
+</tr>
+<tr>
+<td>POST</td>
+<td><code>/v1/auth/email/send-password-reset</code></td>
+<td>AuthApiController</td>
+<td>guards(BasicAuthGuard, UserByEmailLoaderGuard)</td>
+</tr>
+<tr>
+<td>POST</td>
+<td><code>/v1/auth/email/send-verification</code></td>
+<td>AuthApiController</td>
+<td>guards(BasicAuthGuard, UserByEmailLoaderGuard)</td>
+</tr>
+<tr>
+<td>PUT</td>
+<td><code>/v1/auth/forgot-password</code></td>
+<td>AuthApiController</td>
+<td>guards(BasicAuthGuard)</td>
+</tr>
+<tr>
+<td>POST</td>
+<td><code>/v1/auth/login</code></td>
+<td>AuthApiController</td>
+<td>guards(BasicAuthGuard)</td>
+</tr>
+<tr>
+<td>POST</td>
+<td><code>/v1/auth/refresh-token</code></td>
+<td>AuthApiController</td>
+<td>guards(AuthGuard(&#39;jwt-refresh&#39;)</td>
+</tr>
+<tr>
+<td>GET</td>
+<td><code>/v1/auth/scope</code></td>
+<td>AuthApiController</td>
+<td>guards(JwtAuthGuard)</td>
+</tr>
+<tr>
+<td>GET</td>
+<td><code>/v1/auth/user-verify</code></td>
+<td>AuthApiController</td>
+<td>guards(JwtAuthGuard)</td>
+</tr>
+<tr>
+<td>GET</td>
+<td><code>/v1/auth/verification-status</code></td>
+<td>AuthApiController</td>
+<td>guards(BasicAuthGuard, UserByEmailLoaderGuard)</td>
+</tr>
+<tr>
+<td>GET</td>
+<td><code>/v1/catalog-orm/categories</code></td>
+<td>CatalogOrmApiController</td>
+<td>CATALOG.READ</td>
+</tr>
+<tr>
+<td>GET</td>
+<td><code>/v1/catalog-orm/items/:code/stocks</code></td>
+<td>CatalogOrmApiController</td>
+<td>CATALOG.READ</td>
+</tr>
+<tr>
+<td>DELETE</td>
+<td><code>/v1/catalog-orm/items/:code</code></td>
+<td>CatalogOrmApiController</td>
+<td>CATALOG.DELETE</td>
+</tr>
+<tr>
+<td>GET</td>
+<td><code>/v1/catalog-orm/items/:code</code></td>
+<td>CatalogOrmApiController</td>
+<td>CATALOG.READ</td>
+</tr>
+<tr>
+<td>PATCH</td>
+<td><code>/v1/catalog-orm/items/:code</code></td>
+<td>CatalogOrmApiController</td>
+<td>CATALOG.UPDATE</td>
+</tr>
+<tr>
+<td>GET</td>
+<td><code>/v1/catalog-orm/items</code></td>
+<td>CatalogOrmApiController</td>
+<td>CATALOG.READ</td>
+</tr>
+<tr>
+<td>POST</td>
+<td><code>/v1/catalog-orm/items</code></td>
+<td>CatalogOrmApiController</td>
+<td>CATALOG.CREATE</td>
+</tr>
+<tr>
+<td>GET</td>
+<td><code>/v1/catalog-raw/categories/:categoryCode/items</code></td>
+<td>CatalogRawApiController</td>
+<td>CATALOG.READ</td>
+</tr>
+<tr>
+<td>POST</td>
+<td><code>/v1/catalog-raw/categories/:categoryCode/recalculate</code></td>
+<td>CatalogRawApiController</td>
+<td>CATALOG.UPDATE</td>
+</tr>
+<tr>
+<td>GET</td>
+<td><code>/v1/catalog-raw/items/:code</code></td>
+<td>CatalogRawApiController</td>
+<td>CATALOG.READ</td>
+</tr>
+<tr>
+<td>PUT</td>
+<td><code>/v1/catalog-raw/items/prices</code></td>
+<td>CatalogRawApiController</td>
+<td>CATALOG.UPDATE</td>
+</tr>
+<tr>
+<td>PATCH</td>
+<td><code>/v1/catalog-raw/items/status</code></td>
+<td>CatalogRawApiController</td>
+<td>CATALOG.UPDATE</td>
+</tr>
+<tr>
+<td>GET</td>
+<td><code>/v1/catalog-raw/items</code></td>
+<td>CatalogRawApiController</td>
+<td>CATALOG.READ</td>
+</tr>
+<tr>
+<td>POST</td>
+<td><code>/v1/catalog-raw/items</code></td>
+<td>CatalogRawApiController</td>
+<td>CATALOG.CREATE</td>
+</tr>
+<tr>
+<td>POST</td>
+<td><code>/v1/jobs/:referenceId/requeue</code></td>
+<td>JobsApiController</td>
+<td>JOB.REQUEUE</td>
+</tr>
+<tr>
+<td>GET</td>
+<td><code>/v1/jobs/:referenceId</code></td>
+<td>JobsApiController</td>
+<td>JOB.READ</td>
+</tr>
+<tr>
+<td>GET</td>
+<td><code>/v1/jobs/types</code></td>
+<td>JobsApiController</td>
+<td>JOB.READ</td>
+</tr>
+<tr>
+<td>GET</td>
+<td><code>/v1/legal/consents/me</code></td>
+<td>LegalApiController</td>
+<td>guards(JwtAuthGuard)</td>
+</tr>
+<tr>
+<td>POST</td>
+<td><code>/v1/legal/consents</code></td>
+<td>LegalApiController</td>
+<td>guards(JwtAuthGuard)</td>
+</tr>
+<tr>
+<td>GET</td>
+<td><code>/v1/legal/documents/versions</code></td>
+<td>LegalApiController</td>
+<td>LEGAL.READ</td>
+</tr>
+<tr>
+<td>GET</td>
+<td><code>/v1/legal/retention-policies</code></td>
+<td>LegalApiController</td>
+<td>LEGAL.READ</td>
+</tr>
+<tr>
+<td>GET</td>
+<td><code>/v1/m2m/ping</code></td>
+<td>M2mDemoController</td>
+<td>guards(BasicAuthGuard, HmacSignatureGuard, ApiClientThrottlerGuard)</td>
+</tr>
+<tr>
+<td>GET</td>
+<td><code>/v1/messages/:referenceId</code></td>
+<td>MessagesApiController</td>
+<td>MESSAGE.READ</td>
+</tr>
+<tr>
+<td>POST</td>
+<td><code>/v1/messages/email</code></td>
+<td>MessagesApiController</td>
+<td>MESSAGE.SEND</td>
+</tr>
+<tr>
+<td>PATCH</td>
+<td><code>/v1/notifications/:referenceId/read</code></td>
+<td>NotificationsApiController</td>
+<td>NOTIFICATION.UPDATE</td>
+</tr>
+<tr>
+<td>DELETE</td>
+<td><code>/v1/notifications/subscriptions/:id</code></td>
+<td>NotificationsApiController</td>
+<td>NOTIFICATION.UPDATE</td>
+</tr>
+<tr>
+<td>POST</td>
+<td><code>/v1/notifications/subscriptions</code></td>
+<td>NotificationsApiController</td>
+<td>NOTIFICATION.UPDATE</td>
+</tr>
+<tr>
+<td>GET</td>
+<td><code>/v1/notifications/unread-count</code></td>
+<td>NotificationsApiController</td>
+<td>NOTIFICATION.READ</td>
+</tr>
+<tr>
+<td>GET</td>
+<td><code>/v1/notifications</code></td>
+<td>NotificationsApiController</td>
+<td>NOTIFICATION.READ</td>
+</tr>
+<tr>
+<td>POST</td>
+<td><code>/v1/onboarding</code></td>
+<td>OnboardingController</td>
+<td>guards(BasicAuthGuard)</td>
+</tr>
+<tr>
+<td>PATCH</td>
+<td><code>/v1/orders/:referenceId/status</code></td>
+<td>OrdersApiController</td>
+<td>ORDER.UPDATE</td>
+</tr>
+<tr>
+<td>GET</td>
+<td><code>/v1/orders/:referenceId</code></td>
+<td>OrdersApiController</td>
+<td>ORDER.READ</td>
+</tr>
+<tr>
+<td>GET</td>
+<td><code>/v1/orders</code></td>
+<td>OrdersApiController</td>
+<td>ORDER.READ</td>
+</tr>
+<tr>
+<td>POST</td>
+<td><code>/v1/orders</code></td>
+<td>OrdersApiController</td>
+<td>ORDER.CREATE</td>
+</tr>
+<tr>
+<td>GET</td>
+<td><code>/v1/roles/:id</code></td>
+<td>RolesApiController</td>
+<td>guards(JwtAuthGuard), ROLE.READ</td>
+</tr>
+<tr>
+<td>PUT</td>
+<td><code>/v1/roles/:id</code></td>
+<td>RolesApiController</td>
+<td>guards(JwtAuthGuard), ROLE.UPDATE</td>
+</tr>
+<tr>
+<td>GET</td>
+<td><code>/v1/roles</code></td>
+<td>RolesApiController</td>
+<td>guards(JwtAuthGuard), ROLE.READ</td>
+</tr>
+<tr>
+<td>POST</td>
+<td><code>/v1/roles</code></td>
+<td>RolesApiController</td>
+<td>guards(JwtAuthGuard), ROLE.CREATE</td>
+</tr>
+<tr>
+<td>PATCH</td>
+<td><code>/v1/users/:id/block</code></td>
+<td>UsersController</td>
+<td>guards(JwtAuthGuard, PermissionsGuard), USER.UPDATE</td>
+</tr>
+<tr>
+<td>PATCH</td>
+<td><code>/v1/users/:id/unblock</code></td>
+<td>UsersController</td>
+<td>guards(JwtAuthGuard, PermissionsGuard), USER.UPDATE</td>
+</tr>
+<tr>
+<td>GET</td>
+<td><code>/v1/users/:id</code></td>
+<td>UsersController</td>
+<td>guards(JwtAuthGuard, PermissionsGuard), USER.READ, guards(TenantContextGuard)</td>
+</tr>
+<tr>
+<td>PUT</td>
+<td><code>/v1/users/:id</code></td>
+<td>UsersController</td>
+<td>guards(JwtAuthGuard, PermissionsGuard), USER.UPDATE</td>
+</tr>
+<tr>
+<td>POST</td>
+<td><code>/v1/users/:userId/permissions</code></td>
+<td>UsersRolesApiController</td>
+<td>guards(JwtAuthGuard), ASSIGNMENT.USER_PERMISSION</td>
+</tr>
+<tr>
+<td>GET</td>
+<td><code>/v1/users/:userId/roles</code></td>
+<td>UsersRolesApiController</td>
+<td>guards(JwtAuthGuard), USER.READ, ROLE.READ</td>
+</tr>
+<tr>
+<td>POST</td>
+<td><code>/v1/users/:userId/roles</code></td>
+<td>UsersRolesApiController</td>
+<td>guards(JwtAuthGuard), ASSIGNMENT.ROLE_PERMISSION</td>
+</tr>
+<tr>
+<td>GET</td>
+<td><code>/v1/users/reference/:referenceId/edit-context</code></td>
+<td>UsersController</td>
+<td>guards(JwtAuthGuard, PermissionsGuard), USER.READ, guards(TenantContextGuard)</td>
+</tr>
+<tr>
+<td>PUT</td>
+<td><code>/v1/users/reference/:referenceId/edit-context</code></td>
+<td>UsersController</td>
+<td>guards(JwtAuthGuard, PermissionsGuard), USER.UPDATE, guards(TenantContextGuard)</td>
+</tr>
+<tr>
+<td>DELETE</td>
+<td><code>/v1/users/reference/:referenceId</code></td>
+<td>UsersController</td>
+<td>guards(JwtAuthGuard, PermissionsGuard), USER.DELETE</td>
+</tr>
+<tr>
+<td>GET</td>
+<td><code>/v1/users/reference/:referenceId</code></td>
+<td>UsersController</td>
+<td>guards(JwtAuthGuard, PermissionsGuard), USER.READ, guards(TenantContextGuard)</td>
+</tr>
+<tr>
+<td>PUT</td>
+<td><code>/v1/users/reference/:referenceId</code></td>
+<td>UsersController</td>
+<td>guards(JwtAuthGuard, PermissionsGuard), USER.UPDATE</td>
+</tr>
+<tr>
+<td>GET</td>
+<td><code>/v1/users</code></td>
+<td>UsersController</td>
+<td>guards(JwtAuthGuard, PermissionsGuard), USER.READ, guards(TenantContextGuard)</td>
+</tr>
+</tbody>
+</table>
+<!-- AUTO:ENDPOINTS:END -->
 
-<!-- START:initial-setup -->
+<h2>🔌 Módulos opcionales</h2>
+<!-- AUTO:OPTIONAL_MODULES:START -->
+<table class="table table-bordered compodoc-table">
+<thead>
+<tr>
+<th>Módulo</th>
+<th>Se activa con</th>
+<th>Sin configurar</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>PostgreSQL / Prisma</td>
+<td><code>DATABASE_URL</code></td>
+<td>Base principal; requerida</td>
+</tr>
+<tr>
+<td>DB2 / Sequelize</td>
+<td><code>DATABASE_CONNECTION_STRING</code></td>
+<td>No se registra el módulo Sequelize</td>
+</tr>
+<tr>
+<td>Redis (cache, rate limit, nonces, realtime)</td>
+<td><code>REDIS_URL</code></td>
+<td>Memoria del proceso</td>
+</tr>
+<tr>
+<td>MongoDB (activity log)</td>
+<td><code>MONGO_URI</code></td>
+<td>Store noop (no persiste)</td>
+</tr>
+<tr>
+<td>Email SMTP</td>
+<td><code>EMAIL_HOST</code></td>
+<td>ConsoleEmailSender (solo loguea)</td>
+</tr>
+<tr>
+<td>SMS Infobip</td>
+<td><code>SMS_PROVIDER=infobip</code> + <code>INFOBIP_API_KEY</code>, <code>INFOBIP_BASE_URL</code></td>
+<td>Proveedor console</td>
+</tr>
+<tr>
+<td>Push FCM</td>
+<td><code>FIREBASE_PROJECT_ID</code>, <code>FIREBASE_CLIENT_EMAIL</code>, <code>FIREBASE_PRIVATE_KEY</code></td>
+<td>Proveedor Noop</td>
+</tr>
+<tr>
+<td>Push Web (VAPID)</td>
+<td><code>VAPID_PUBLIC_KEY</code>, <code>VAPID_PRIVATE_KEY</code></td>
+<td>Proveedor Noop</td>
+</tr>
+<tr>
+<td>Storage S3</td>
+<td><code>S3_BUCKET_NAME</code> + credenciales <code>S3_*</code></td>
+<td>Storage deshabilitado</td>
+</tr>
+<tr>
+<td>Sentry</td>
+<td><code>SENTRY_DSN</code></td>
+<td>No reporta</td>
+</tr>
+<tr>
+<td>Seq (logs)</td>
+<td><code>SEQ_ENABLED=true</code></td>
+<td>Solo logs por stdout</td>
+</tr>
+<tr>
+<td>Scheduler / cron jobs</td>
+<td><code>SCHEDULER_ENABLED</code> (cada job: <code>*_CRON</code>, <code>off</code> lo desactiva)</td>
+<td>Sin tareas programadas</td>
+</tr>
+<tr>
+<td>Rate limiting</td>
+<td><code>RATE_LIMIT_ENABLED</code></td>
+<td>Sin límites</td>
+</tr>
+<tr>
+<td>Ledger de mensajes con contenido</td>
+<td><code>MESSAGE_CONTENT_POLICY=AUDIT</code> (+ <code>ENCRYPTION_KEYS</code>)</td>
+<td>Política NONE (sin contenido)</td>
+</tr>
+</tbody>
+</table>
+<!-- AUTO:OPTIONAL_MODULES:END -->
 
-<h2>🛠️ Instalación y Dependencias</h2>
-<p>Esta aplicación utiliza <strong>pnpm</strong> como gestor de paquetes para una gestión eficiente de dependencias.</p>
-<ol>
-<li><p><strong>Instalar pnpm globalmente (si aún no lo tienes):</strong></p>
-<b>Example :</b><div><pre class="line-numbers"><code class="language-bash">npm install -g pnpm</code></pre></div></li>
-<li><p><strong>Instalar todas las dependencias del proyecto:</strong></p>
-<b>Example :</b><div><pre class="line-numbers"><code class="language-bash">pnpm install</code></pre></div></li>
-<li><p><strong>Configuración del Entorno:</strong>
-Crea un archivo <code>.env</code> en la raíz del proyecto y define las variables de entorno necesarias (ej: <code>DATABASE_URL</code>, <code>JWT_SECRET</code>, etc.).</p>
-</li>
-<li><p><strong>Opcionales:</strong></p>
-<ul>
-<li>Si se quiere generar documentación de compodocs (docs/documentation.json) y actualizar archivo readme en base a este <code>pnpm docs:update-readme</code></li>
-<li>Si se quiere generar documentación de compodocs con htmls (docs/*) <code>pnpm docs:generate</code></li>
-</ul>
-</li>
-<li><p><strong>Compilar y ejecutar:</strong></p>
-<ul>
-<li>Desarrollo (watch):</li>
-</ul>
-<b>Example :</b><div><pre class="line-numbers"><code class="language-bash">pnpm run start:dev</code></pre></div><ul>
-<li>Producción:</li>
-</ul>
-<b>Example :</b><div><pre class="line-numbers"><code class="language-bash">pnpm run build</code></pre></div><b>Example :</b><div><pre class="line-numbers"><code class="language-bash">pnpm run start:prod</code></pre></div></li>
-</ol>
-<!-- END:initial-setup -->
-<h2>📦 Prisma</h2>
-<!-- START:prisma-setup -->
+<h2>🔧 Variables de entorno</h2>
+<!-- AUTO:ENV:START -->
+<p><strong>APP / SERVIDOR</strong></p>
+<table class="table table-bordered compodoc-table">
+<thead>
+<tr>
+<th>Variable</th>
+<th>Descripción</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>BASE_URL</code></td>
+<td></td>
+</tr>
+<tr>
+<td><code>NODE_ENV</code></td>
+<td>local | development | qa | production</td>
+</tr>
+<tr>
+<td><code>PORT</code></td>
+<td></td>
+</tr>
+<tr>
+<td><code>APP_TIMEZONE</code></td>
+<td>Zona horaria IANA para fechas de respuesta (health, etc.)</td>
+</tr>
+<tr>
+<td><code>PROJECT_DESCRIPTION</code></td>
+<td></td>
+</tr>
+<tr>
+<td><code>PROJECT_NAME</code></td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<p><strong>BASE DE DATOS</strong></p>
+<table class="table table-bordered compodoc-table">
+<thead>
+<tr>
+<th>Variable</th>
+<th>Descripción</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>DATABASE_URL</code></td>
+<td>Postgres / Prisma</td>
+</tr>
+<tr>
+<td><code>DATABASE_CONNECTION_STRING</code></td>
+<td>DB2 / Sequelize (opcional). Vacio = el modulo Sequelize no se registra y la app arranca solo con Postgres. Ejemplo IBM i Access ODBC Driver: DRIVER={IBM i Access ODBC Driver};UID=USER;PWD=PASSWORD;SYSTEM=host;CCSID=1208;TRIMCHAR=1;</td>
+</tr>
+<tr>
+<td><code>DB2_POOL_MAX</code></td>
+<td>Pool DB2 (cada conexion es un job en el servidor IBM i: coordinar con sysadmin antes de subir DB2_POOL_MAX)</td>
+</tr>
+<tr>
+<td><code>DB2_POOL_MIN</code></td>
+<td></td>
+</tr>
+<tr>
+<td><code>DB2_POOL_ACQUIRE_MS</code></td>
+<td></td>
+</tr>
+<tr>
+<td><code>DB2_POOL_IDLE_MS</code></td>
+<td></td>
+</tr>
+<tr>
+<td><code>DB2_QUERY_TIMEOUT_SECONDS</code></td>
+<td>Segundos de QueryTimeout que se agregan al connection string si no lo trae (0 = sin tope)</td>
+</tr>
+<tr>
+<td><code>AUDIT_SIGNATURE_PEPPER</code></td>
+<td>Pepper de la firma de auditoria (change_signature); lo setea PrismaDatasource como GUC app.audit_pepper. Vacio = firma sin pepper</td>
+</tr>
+</tbody>
+</table>
+<p><strong>AUTH / JWT</strong> - Solo desarrollo - regenerar en produccion (PEM; los saltos de linea como \n)</p>
+<table class="table table-bordered compodoc-table">
+<thead>
+<tr>
+<th>Variable</th>
+<th>Descripción</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>JWT_PRIVATE_KEY</code></td>
+<td>Par RSA SOLO DESARROLLO (PEM multilínea entre comillas; también acepta una línea con \n) — regenerar en producción</td>
+</tr>
+<tr>
+<td><code>JWT_PUBLIC_KEY</code></td>
+<td></td>
+</tr>
+<tr>
+<td><code>ACCESS_TOKEN_EXPIRES</code></td>
+<td>Duraciones en formato ms/jsonwebtoken (15m, 1h, 7d)</td>
+</tr>
+<tr>
+<td><code>REFRESH_TOKEN_EXPIRES</code></td>
+<td></td>
+</tr>
+<tr>
+<td><code>REFRESH_TOKEN_SHORT_EXPIRES</code></td>
+<td>Refresh token de sesion corta (sin &quot;recordarme&quot;)</td>
+</tr>
+<tr>
+<td><code>TEMP_TOKEN_EXPIRES</code></td>
+<td></td>
+</tr>
+<tr>
+<td><code>LOGIN_NONCE_REQUIRED</code></td>
+<td>true exige <code>nonce</code> (GET /auth/nonce) en el login</td>
+</tr>
+</tbody>
+</table>
+<p><strong>CREDENCIALES: POLITICA DE CONTRASENA Y LOCKOUT</strong></p>
+<table class="table table-bordered compodoc-table">
+<thead>
+<tr>
+<th>Variable</th>
+<th>Descripción</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>LOCKOUT_MINUTES</code></td>
+<td>0 = bloqueo permanente (estado BLOCKED)</td>
+</tr>
+<tr>
+<td><code>MAX_LOGIN_ATTEMPTS</code></td>
+<td></td>
+</tr>
+<tr>
+<td><code>PASSWORD_EXPIRATION_DAYS</code></td>
+<td>0 = las contrasenas no expiran</td>
+</tr>
+<tr>
+<td><code>PASSWORD_MAX_LENGTH</code></td>
+<td>bcrypt trunca a 72 bytes</td>
+</tr>
+<tr>
+<td><code>PASSWORD_MIN_LENGTH</code></td>
+<td></td>
+</tr>
+<tr>
+<td><code>PASSWORD_REQUIRE_DIGIT</code></td>
+<td></td>
+</tr>
+<tr>
+<td><code>PASSWORD_REQUIRE_LOWERCASE</code></td>
+<td></td>
+</tr>
+<tr>
+<td><code>PASSWORD_REQUIRE_SYMBOL</code></td>
+<td></td>
+</tr>
+<tr>
+<td><code>PASSWORD_REQUIRE_UPPERCASE</code></td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<p><strong>CRYPTO</strong> - Solo desarrollo - regenerar en produccion Keyring AES-256-GCM: &quot;id:base64(32 bytes)&quot; separado por comas. Generar: node -e &quot;console.log(require(&#39;crypto&#39;).randomBytes(32).toString(&#39;base64&#39;))&quot;</p>
+<table class="table table-bordered compodoc-table">
+<thead>
+<tr>
+<th>Variable</th>
+<th>Descripción</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>ENCRYPTION_ACTIVE_KEY_ID</code></td>
+<td></td>
+</tr>
+<tr>
+<td><code>ENCRYPTION_KEYS</code></td>
+<td></td>
+</tr>
+<tr>
+<td><code>HMAC_SECRET</code></td>
+<td>Habilita /verify-content en el ledger de mensajes</td>
+</tr>
+</tbody>
+</table>
+<p><strong>IDEMPOTENCIA</strong></p>
+<table class="table table-bordered compodoc-table">
+<thead>
+<tr>
+<th>Variable</th>
+<th>Descripción</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>IDEMPOTENCY_TTL_HOURS</code></td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<p><strong>RATE LIMITING (TTL en segundos)</strong></p>
+<table class="table table-bordered compodoc-table">
+<thead>
+<tr>
+<th>Variable</th>
+<th>Descripción</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>RATE_LIMIT_AUTH_LIMIT</code></td>
+<td></td>
+</tr>
+<tr>
+<td><code>RATE_LIMIT_AUTH_TTL_SECONDS</code></td>
+<td></td>
+</tr>
+<tr>
+<td><code>RATE_LIMIT_CLIENT_DEFAULT_PER_MINUTE</code></td>
+<td>Credenciales M2M sin rateLimitPerMinute propio</td>
+</tr>
+<tr>
+<td><code>RATE_LIMIT_DEFAULT_LIMIT</code></td>
+<td></td>
+</tr>
+<tr>
+<td><code>RATE_LIMIT_DEFAULT_TTL_SECONDS</code></td>
+<td></td>
+</tr>
+<tr>
+<td><code>RATE_LIMIT_ENABLED</code></td>
+<td></td>
+</tr>
+<tr>
+<td><code>RATE_LIMIT_SEARCH_LIMIT</code></td>
+<td></td>
+</tr>
+<tr>
+<td><code>RATE_LIMIT_SEARCH_TTL_SECONDS</code></td>
+<td></td>
+</tr>
+<tr>
+<td><code>RATE_LIMIT_UPLOAD_LIMIT</code></td>
+<td></td>
+</tr>
+<tr>
+<td><code>RATE_LIMIT_UPLOAD_TTL_SECONDS</code></td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<p><strong>REDIS / CACHE / NONCE</strong> - Sin REDIS_URL, cache / rate limit / nonces / realtime usan memoria del proceso. Local: redis://localhost:6379/0</p>
+<table class="table table-bordered compodoc-table">
+<thead>
+<tr>
+<th>Variable</th>
+<th>Descripción</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>REDIS_URL</code></td>
+<td></td>
+</tr>
+<tr>
+<td><code>REDIS_CONNECT_TIMEOUT_MS</code></td>
+<td></td>
+</tr>
+<tr>
+<td><code>REDIS_KEY_PREFIX</code></td>
+<td></td>
+</tr>
+<tr>
+<td><code>CACHE_DEFAULT_TTL_SECONDS</code></td>
+<td></td>
+</tr>
+<tr>
+<td><code>CACHE_MAX_ITEMS</code></td>
+<td></td>
+</tr>
+<tr>
+<td><code>PERMISSIONS_CACHE_TTL_SECONDS</code></td>
+<td>0 = no cachear la resolucion de permisos del usuario</td>
+</tr>
+<tr>
+<td><code>NONCE_TTL_SECONDS</code></td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<p><strong>M2M / HMAC DE REQUESTS (API clients)</strong></p>
+<table class="table table-bordered compodoc-table">
+<thead>
+<tr>
+<th>Variable</th>
+<th>Descripción</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>API_CLIENT_BCRYPT_ROUNDS</code></td>
+<td></td>
+</tr>
+<tr>
+<td><code>HMAC_TIMESTAMP_WINDOW_SECONDS</code></td>
+<td></td>
+</tr>
+<tr>
+<td><code>HMAC_NONCE_REQUIRED</code></td>
+<td>true exige X-Nonce en requests firmados</td>
+</tr>
+</tbody>
+</table>
+<p><strong>HTTP CLIENTS UPSTREAM (demo ExampleUpstreamClient)</strong> - AUTH_TYPE: none | basic | api-key | bearer | hmac</p>
+<table class="table table-bordered compodoc-table">
+<thead>
+<tr>
+<th>Variable</th>
+<th>Descripción</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>UPSTREAM_EXAMPLE_AUTH_HEADER</code></td>
+<td></td>
+</tr>
+<tr>
+<td><code>UPSTREAM_EXAMPLE_AUTH_SECRET</code></td>
+<td></td>
+</tr>
+<tr>
+<td><code>UPSTREAM_EXAMPLE_AUTH_TYPE</code></td>
+<td></td>
+</tr>
+<tr>
+<td><code>UPSTREAM_EXAMPLE_AUTH_USER</code></td>
+<td></td>
+</tr>
+<tr>
+<td><code>UPSTREAM_EXAMPLE_BASE_URL</code></td>
+<td></td>
+</tr>
+<tr>
+<td><code>UPSTREAM_EXAMPLE_RETRY_ATTEMPTS</code></td>
+<td></td>
+</tr>
+<tr>
+<td><code>UPSTREAM_EXAMPLE_RETRY_DELAY_MS</code></td>
+<td></td>
+</tr>
+<tr>
+<td><code>UPSTREAM_EXAMPLE_SIGNING_SECRET</code></td>
+<td>Solo desarrollo - usado solo con AUTH_TYPE=hmac; regenerar en produccion</td>
+</tr>
+<tr>
+<td><code>UPSTREAM_EXAMPLE_TIMEOUT_MS</code></td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<p><strong>SCHEDULER / JOBS</strong> - Cron de 6 campos (con segundos); el valor <code>off</code> deshabilita ese job</p>
+<table class="table table-bordered compodoc-table">
+<thead>
+<tr>
+<th>Variable</th>
+<th>Descripción</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>SCHEDULER_ENABLED</code></td>
+<td></td>
+</tr>
+<tr>
+<td><code>SCHEDULER_TIMEZONE</code></td>
+<td></td>
+</tr>
+<tr>
+<td><code>ACCOUNT_ANONYMIZATION_CRON</code></td>
+<td></td>
+</tr>
+<tr>
+<td><code>IDEMPOTENCY_PURGE_CRON</code></td>
+<td></td>
+</tr>
+<tr>
+<td><code>JOBS_WORKER_CRON</code></td>
+<td></td>
+</tr>
+<tr>
+<td><code>MESSAGE_PURGE_CRON</code></td>
+<td></td>
+</tr>
+<tr>
+<td><code>SMS_DELIVERY_POLL_CRON</code></td>
+<td></td>
+</tr>
+<tr>
+<td><code>JOBS_BACKOFF_BASE_SECONDS</code></td>
+<td>Cola de jobs (Postgres)</td>
+</tr>
+<tr>
+<td><code>JOBS_BACKOFF_MAX_SECONDS</code></td>
+<td></td>
+</tr>
+<tr>
+<td><code>JOBS_BATCH_SIZE</code></td>
+<td></td>
+</tr>
+<tr>
+<td><code>JOBS_MAX_ATTEMPTS</code></td>
+<td></td>
+</tr>
+<tr>
+<td><code>JOBS_VISIBILITY_TIMEOUT_MINUTES</code></td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<p><strong>MENSAJERIA: LEDGER</strong></p>
+<table class="table table-bordered compodoc-table">
+<thead>
+<tr>
+<th>Variable</th>
+<th>Descripción</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>MESSAGE_CONTENT_POLICY</code></td>
+<td>NONE | AUDIT (AUDIT requiere ENCRYPTION_KEYS)</td>
+</tr>
+<tr>
+<td><code>MESSAGE_CONTENT_RETENTION_DAYS</code></td>
+<td></td>
+</tr>
+<tr>
+<td><code>MESSAGE_PURGE_BATCH_SIZE</code></td>
+<td></td>
+</tr>
+<tr>
+<td><code>MESSAGE_RETENTION_DAYS</code></td>
+<td>0 = no se borran filas del ledger</td>
+</tr>
+</tbody>
+</table>
+<p><strong>MENSAJERIA: SMS</strong> - infobip | console. Sin credenciales se usa console aunque SMS_PROVIDER=infobip</p>
+<table class="table table-bordered compodoc-table">
+<thead>
+<tr>
+<th>Variable</th>
+<th>Descripción</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>SMS_PROVIDER</code></td>
+<td></td>
+</tr>
+<tr>
+<td><code>INFOBIP_API_KEY</code></td>
+<td></td>
+</tr>
+<tr>
+<td><code>INFOBIP_BASE_URL</code></td>
+<td></td>
+</tr>
+<tr>
+<td><code>PHONE_DEFAULT_COUNTRY_CODE</code></td>
+<td>Solo digitos (ej. 1). Vacio = se exige formato internacional (+...)</td>
+</tr>
+<tr>
+<td><code>SMS_DELIVERY_SOURCE</code></td>
+<td>reports | logs | off</td>
+</tr>
+<tr>
+<td><code>SMS_DELIVERY_POLL_LIMIT</code></td>
+<td></td>
+</tr>
+<tr>
+<td><code>SMS_FROM</code></td>
+<td></td>
+</tr>
+<tr>
+<td><code>SMS_TIMEOUT_MS</code></td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<p><strong>MENSAJERIA: EMAIL / SMTP</strong> - Sin EMAIL_HOST se usa ConsoleEmailSender (solo loguea, no envia)</p>
+<table class="table table-bordered compodoc-table">
+<thead>
+<tr>
+<th>Variable</th>
+<th>Descripción</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>EMAIL_HOST</code></td>
+<td></td>
+</tr>
+<tr>
+<td><code>EMAIL_PORT</code></td>
+<td></td>
+</tr>
+<tr>
+<td><code>EMAIL_USER</code></td>
+<td></td>
+</tr>
+<tr>
+<td><code>EMAIL_PASSWORD</code></td>
+<td></td>
+</tr>
+<tr>
+<td><code>EMAIL_DIR</code></td>
+<td>Remitente (debe ser un email valido)</td>
+</tr>
+<tr>
+<td><code>EMAIL_SECURE</code></td>
+<td>true para TLS implicito (ej. puerto 465/443); vacio = automatico segun el puerto</td>
+</tr>
+<tr>
+<td><code>EMAIL_TIMEOUT_MS</code></td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<p><strong>MENSAJERIA: PUSH (FCM / Web Push)</strong> - Sin credenciales el canal usa el proveedor Noop</p>
+<table class="table table-bordered compodoc-table">
+<thead>
+<tr>
+<th>Variable</th>
+<th>Descripción</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>FIREBASE_CLIENT_EMAIL</code></td>
+<td></td>
+</tr>
+<tr>
+<td><code>FIREBASE_PRIVATE_KEY</code></td>
+<td>Saltos de linea como \n</td>
+</tr>
+<tr>
+<td><code>FIREBASE_PROJECT_ID</code></td>
+<td></td>
+</tr>
+<tr>
+<td><code>VAPID_PRIVATE_KEY</code></td>
+<td></td>
+</tr>
+<tr>
+<td><code>VAPID_PUBLIC_KEY</code></td>
+<td></td>
+</tr>
+<tr>
+<td><code>VAPID_SUBJECT</code></td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<p><strong>STORAGE S3</strong> - Sin credenciales/bucket el storage no se habilita</p>
+<table class="table table-bordered compodoc-table">
+<thead>
+<tr>
+<th>Variable</th>
+<th>Descripción</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>S3_ACCESS_KEY_ID</code></td>
+<td></td>
+</tr>
+<tr>
+<td><code>S3_BUCKET_NAME</code></td>
+<td></td>
+</tr>
+<tr>
+<td><code>S3_MAX_CONCURRENCY</code></td>
+<td></td>
+</tr>
+<tr>
+<td><code>S3_PRESIGNED_URL_EXPIRES_IN</code></td>
+<td>Segundos</td>
+</tr>
+<tr>
+<td><code>S3_REGION</code></td>
+<td></td>
+</tr>
+<tr>
+<td><code>S3_RETRY_ATTEMPTS</code></td>
+<td></td>
+</tr>
+<tr>
+<td><code>S3_RETRY_DELAY_MS</code></td>
+<td></td>
+</tr>
+<tr>
+<td><code>S3_SECRET_ACCESS_KEY</code></td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<p><strong>COMPLIANCE: baja de cuenta y consentimiento versionado</strong></p>
+<table class="table table-bordered compodoc-table">
+<thead>
+<tr>
+<th>Variable</th>
+<th>Descripción</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>ACCOUNT_ANONYMIZATION_BATCH_SIZE</code></td>
+<td></td>
+</tr>
+<tr>
+<td><code>ACCOUNT_DELETION_GRACE_DAYS</code></td>
+<td>Dias de gracia antes de anonimizar (0 = en el proximo barrido)</td>
+</tr>
+<tr>
+<td><code>CONSENT_REQUIRED_STATUS</code></td>
+<td>403 | 451 al faltar el consentimiento vigente</td>
+</tr>
+</tbody>
+</table>
+<p><strong>AUDITORIA</strong></p>
+<table class="table table-bordered compodoc-table">
+<thead>
+<tr>
+<th>Variable</th>
+<th>Descripción</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>AUDIT_EXPORT_BATCH_SIZE</code></td>
+<td>Lote del cursor en GET /audit-logs/export (JSON streaming, 1-5000)</td>
+</tr>
+</tbody>
+</table>
+<p><strong>OBSERVABILIDAD: Seq, Sentry</strong></p>
+<table class="table table-bordered compodoc-table">
+<thead>
+<tr>
+<th>Variable</th>
+<th>Descripción</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>SEQ_ENABLED</code></td>
+<td></td>
+</tr>
+<tr>
+<td><code>SEQ_URL</code></td>
+<td>Requerido por el schema aunque SEQ_ENABLED=false (puerto por defecto de Seq)</td>
+</tr>
+<tr>
+<td><code>SENTRY_DSN</code></td>
+<td>Sin DSN no se reporta nada. Reporta solo 5xx, con traceId como tag. Ej: https://<key>@<host>/<project></td>
+</tr>
+<tr>
+<td><code>SENTRY_DEDUPE_WINDOW_SECONDS</code></td>
+<td>Ventana de dedupe del mismo error (0 = sin dedupe)</td>
+</tr>
+</tbody>
+</table>
+<p><strong>MONGO</strong> - Sin MONGO_URI el ActivityLog usa un store noop (no se persiste nada). Local: mongodb://localhost:27017/starter (docker compose up -d mongo)</p>
+<table class="table table-bordered compodoc-table">
+<thead>
+<tr>
+<th>Variable</th>
+<th>Descripción</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>MONGO_URI</code></td>
+<td></td>
+</tr>
+<tr>
+<td><code>MONGO_MAX_POOL_SIZE</code></td>
+<td></td>
+</tr>
+<tr>
+<td><code>ACTIVITY_LOG_TTL_DAYS</code></td>
+<td>Expiracion automatica (indice TTL) de las entradas; 0 = nunca</td>
+</tr>
+</tbody>
+</table>
+<p><strong>ORDERS (demo): fee = max(monto * % / 100, minimo)</strong></p>
+<table class="table table-bordered compodoc-table">
+<thead>
+<tr>
+<th>Variable</th>
+<th>Descripción</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>ORDER_FEE_MINIMUM</code></td>
+<td></td>
+</tr>
+<tr>
+<td><code>ORDER_FEE_PERCENTAGE</code></td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<p><strong>OTROS: REALTIME (socket.io)</strong> - Con REDIS_URL se usa el adapter Redis; sin el, in-memory</p>
+<table class="table table-bordered compodoc-table">
+<thead>
+<tr>
+<th>Variable</th>
+<th>Descripción</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>WS_THROTTLE_LIMIT</code></td>
+<td>Mensajes por socket dentro de la ventana</td>
+</tr>
+<tr>
+<td><code>WS_THROTTLE_WINDOW_SECONDS</code></td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<p><em>Los valores por defecto y placeholders están en <code>.env.template</code>; no se listan aquí.</em></p>
+<!-- AUTO:ENV:END -->
 
-<h3>💾 Configuración de Prisma (Base de Datos)</h3>
-<p>Para interactuar con la base de datos a través de <strong>Prisma</strong>, sigue estos pasos:</p>
-<ol>
-<li><p><strong>Instalar dependencias de desarrollo y el cliente (ya incluido en <code>pnpm install</code>, pero listado para referencia):</strong></p>
-<b>Example :</b><div><pre class="line-numbers"><code class="language-bash">pnpm install prisma &#64;prisma/client</code></pre></div></li>
-<li><p><strong>Inicializar Prisma (crea <code>prisma/schema.prisma</code> y <code>.env</code>):</strong></p>
-<b>Example :</b><div><pre class="line-numbers"><code class="language-bash">pnpm prisma init</code></pre></div></li>
-<li><p><strong>Configurar tu base de datos en <code>.env</code></strong> (con <code>DATABASE_URL</code>) <strong>y definir tus modelos en <code>prisma/schema.prisma</code></strong>.</p>
-</li>
-<li><p><strong>Generar el Cliente de Prisma:</strong>
-Siempre que modifiques el esquema, debes regenerar el cliente:</p>
-<b>Example :</b><div><pre class="line-numbers"><code class="language-bash">pnpm prisma generate</code></pre></div></li>
-<li><p><strong>Crear y Aplicar una Migración:</strong>
-Para sincronizar el esquema con la base de datos:</p>
-<b>Example :</b><div><pre class="line-numbers"><code class="language-bash">pnpm prisma migrate dev --name &lt;nombre-descriptivo-de-la-migracion&gt;</code></pre></div></li>
-</ol>
-<!-- END:prisma-setup -->
+<h2>🏗️ Estructura</h2>
+<!-- AUTO:STRUCTURE:START -->
+<b>Example :</b><div><pre class="line-numbers"><code class="language-plaintext">src/
+├── api/  # Entrada HTTP: controllers, DTOs, docs, ApiService
+│   ├── account/
+│   ├── activity-logs/
+│   ├── ai-disclosure/
+│   ├── api-clients/
+│   ├── audit-logs/
+│   ├── auth/
+│   ├── catalog-orm/
+│   ├── catalog-raw/
+│   ├── events/
+│   ├── example/
+│   ├── jobs/
+│   ├── legal/
+│   ├── m2m/
+│   ├── messages/
+│   ├── notifications/
+│   ├── onboarding/
+│   ├── orders/
+│   ├── roles-permission/
+│   ├── storage/
+│   └── users/
+├── common/  # Transversal: decoradores, helpers, enums, interfaces
+│   ├── context/
+│   ├── decorators/
+│   ├── docs/
+│   ├── dtos/
+│   ├── enum/
+│   ├── errors/
+│   ├── events/
+│   ├── examples/
+│   ├── filters/
+│   ├── helpers/
+│   ├── i18n/
+│   ├── interfaces/
+│   ├── pipes/
+│   ├── utils/
+│   └── validators/
+├── core/  # Config, base de datos, filtros, interceptors, observabilidad
+│   ├── cache/
+│   ├── config/
+│   ├── database/
+│   ├── events/
+│   ├── global-filters/
+│   ├── i18n/
+│   ├── interceptors/
+│   ├── middlewares/
+│   ├── mongo/
+│   ├── observability/
+│   ├── rate-limit/
+│   ├── redis/
+│   └── scheduler/
+├── i18n/  # Traducciones
+│   ├── en/
+│   └── es/
+├── modules/  # Servicios, repositorios y acceso a datos por dominio
+│   ├── account-db/
+│   ├── activity-log/
+│   ├── ai-disclosure-db/
+│   ├── api-clients-db/
+│   ├── audit-log-db/
+│   ├── auth/
+│   ├── catalog-orm/
+│   ├── catalog-raw/
+│   ├── email/
+│   ├── example/
+│   ├── health/
+│   ├── http-client/
+│   ├── idempotency/
+│   ├── jobs/
+│   ├── jobs-db/
+│   ├── legal-db/
+│   ├── message-db/
+│   ├── messaging/
+│   ├── nonce/
+│   ├── notifications/
+│   ├── onboarding/
+│   ├── orders-db/
+│   ├── realtime/
+│   ├── report/
+│   ├── roles-permission-db/
+│   ├── sms/
+│   ├── storage/
+│   └── users-db/
+├── types/  # Tipos globales
+├── app.module.ts
+└── main.ts</code></pre></div><!-- AUTO:STRUCTURE:END -->
+
+<h2>⚙️ Scripts disponibles</h2>
+<!-- AUTO:SCRIPTS:START -->
+<table class="table table-bordered compodoc-table">
+<thead>
+<tr>
+<th>Script</th>
+<th>Comando</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>build</code></td>
+<td><code>nest build</code></td>
+</tr>
+<tr>
+<td><code>format</code></td>
+<td><code>prettier --write &quot;src/**/*.ts&quot; &quot;test/**/*.ts&quot;</code></td>
+</tr>
+<tr>
+<td><code>start</code></td>
+<td><code>nest start</code></td>
+</tr>
+<tr>
+<td><code>start:dev</code></td>
+<td><code>nest start --watch</code></td>
+</tr>
+<tr>
+<td><code>start:debug</code></td>
+<td><code>nest start --debug --watch</code></td>
+</tr>
+<tr>
+<td><code>start:prod</code></td>
+<td><code>node dist/main</code></td>
+</tr>
+<tr>
+<td><code>lint</code></td>
+<td><code>eslint &quot;{src,apps,libs,test}/**/*.ts&quot; --quiet</code></td>
+</tr>
+<tr>
+<td><code>check:types</code></td>
+<td><code>tsc --noEmit -p tsconfig.build.json</code></td>
+</tr>
+<tr>
+<td><code>test</code></td>
+<td><code>jest</code></td>
+</tr>
+<tr>
+<td><code>test:watch</code></td>
+<td><code>jest --watch</code></td>
+</tr>
+<tr>
+<td><code>test:cov</code></td>
+<td><code>jest --coverage</code></td>
+</tr>
+<tr>
+<td><code>test:debug</code></td>
+<td><code>node --inspect-brk -r tsconfig-paths/register -r ts-node/register node_modules/.bin/jest --runInBand</code></td>
+</tr>
+<tr>
+<td><code>test:e2e</code></td>
+<td><code>jest --config ./test/jest-e2e.json</code></td>
+</tr>
+<tr>
+<td><code>prepare</code></td>
+<td><code>husky || true</code></td>
+</tr>
+<tr>
+<td><code>seed</code></td>
+<td><code>ts-node prisma/seed.ts</code></td>
+</tr>
+<tr>
+<td><code>db:verify-audit-triggers</code></td>
+<td><code>ts-node prisma/verify-audit-triggers.ts</code></td>
+</tr>
+<tr>
+<td><code>docs:generate</code></td>
+<td><code>npx compodoc -p tsconfig.build.json -d docs</code></td>
+</tr>
+<tr>
+<td><code>docs:json</code></td>
+<td><code>npx compodoc -p tsconfig.build.json -d docs -e json</code></td>
+</tr>
+<tr>
+<td><code>update:readme</code></td>
+<td><code>node scripts/update-readme.js</code></td>
+</tr>
+<tr>
+<td><code>docs:serve</code></td>
+<td><code>npx compodoc -p tsconfig.build.json -s -d docs</code></td>
+</tr>
+<tr>
+<td><code>docs:rebuild</code></td>
+<td><code>pnpm run docs:generate &amp;&amp; pnpm run docs:serve</code></td>
+</tr>
+<tr>
+<td><code>docs:update-readme</code></td>
+<td><code>pnpm run docs:json &amp;&amp; pnpm run update:readme</code></td>
+</tr>
+<tr>
+<td><code>docs:all</code></td>
+<td><code>pnpm run docs:generate &amp;&amp; pnpm run docs:json &amp;&amp; pnpm run update:readme</code></td>
+</tr>
+<tr>
+<td><code>test:ci</code></td>
+<td><code>jest --coverage --ci --maxWorkers=2</code></td>
+</tr>
+<tr>
+<td><code>release:dry</code></td>
+<td><code>semantic-release --dry-run --no-ci</code></td>
+</tr>
+</tbody>
+</table>
+<!-- AUTO:SCRIPTS:END -->
 
 <h2>📦 Dependencias</h2>
-<!-- START:dependencies -->
-<ul>
-<li><strong>@autotelic/pino-seq-transport</strong> <code>^0.1.0</code></li>
-<li><strong>@aws-sdk/client-s3</strong> <code>^3.1012.0</code></li>
-<li><strong>@aws-sdk/s3-request-presigner</strong> <code>^3.1012.0</code></li>
-<li><strong>@nestjs/axios</strong> <code>^4.0.0</code></li>
-<li><strong>@nestjs/common</strong> <code>^11.0.1</code></li>
-<li><strong>@nestjs/config</strong> <code>^4.0.1</code></li>
-<li><strong>@nestjs/core</strong> <code>^11.0.1</code></li>
-<li><strong>@nestjs/jwt</strong> <code>^11.0.0</code></li>
-<li><strong>@nestjs/mapped-types</strong> <code>^2.1.0</code></li>
-<li><strong>@nestjs/passport</strong> <code>^11.0.5</code></li>
-<li><strong>@nestjs/platform-express</strong> <code>^11.0.1</code></li>
-<li><strong>@nestjs/sequelize</strong> <code>^11.0.0</code></li>
-<li><strong>@nestjs/swagger</strong> <code>^11.0.7</code></li>
-<li><strong>@nestjs/terminus</strong> <code>^11.0.0</code></li>
-<li><strong>@prisma/client</strong> <code>6.18.0</code></li>
-<li><strong>@sequelize/core</strong> <code>7.0.0-alpha.43</code></li>
-<li><strong>@sequelize/db2-ibmi</strong> <code>7.0.0-alpha.43</code></li>
-<li><strong>@sequelize/postgres</strong> <code>7.0.0-alpha.43</code></li>
-<li><strong>axios</strong> <code>^1.9.0</code></li>
-<li><strong>bcrypt</strong> <code>^6.0.0</code></li>
-<li><strong>class-transformer</strong> <code>^0.5.1</code></li>
-<li><strong>class-validator</strong> <code>^0.14.1</code></li>
-<li><strong>cookie-parser</strong> <code>^1.4.7</code></li>
-<li><strong>date-fns</strong> <code>^4.1.0</code></li>
-<li><strong>date-fns-tz</strong> <code>^3.2.0</code></li>
-<li><strong>exceljs</strong> <code>^4.4.0</code></li>
-<li><strong>express</strong> <code>^5.1.0</code></li>
-<li><strong>fast-glob</strong> <code>^3.3.3</code></li>
-<li><strong>handlebars</strong> <code>^4.7.9</code></li>
-<li><strong>html-pdf-node</strong> <code>^1.0.8</code></li>
-<li><strong>joi</strong> <code>^17.13.3</code></li>
-<li><strong>jsonwebtoken</strong> <code>^9.0.2</code></li>
-<li><strong>jwks-rsa</strong> <code>^3.2.0</code></li>
-<li><strong>multer</strong> <code>^2.0.0</code></li>
-<li><strong>nanoid</strong> <code>^5.1.5</code></li>
-<li><strong>nestjs-pino</strong> <code>^4.4.0</code></li>
-<li><strong>nodemailer</strong> <code>^7.0.6</code></li>
-<li><strong>passport</strong> <code>^0.7.0</code></li>
-<li><strong>passport-jwt</strong> <code>^4.0.1</code></li>
-<li><strong>pdfmake</strong> <code>^0.3.9</code></li>
-<li><strong>pino-pretty</strong> <code>^13.0.0</code></li>
-<li><strong>read-pkg-up</strong> <code>^11.0.0</code></li>
-<li><strong>reflect-metadata</strong> <code>^0.2.2</code></li>
-<li><strong>rxjs</strong> <code>^7.8.1</code></li>
-<li><strong>uuid</strong> <code>^11.1.0</code></li>
-<li><strong>write-file-atomic</strong> <code>^7.0.0</code><!-- END:dependencies --></li>
-</ul>
-<h2>⚙️ Scripts disponibles</h2>
-<!-- START:scripts -->
-<ul>
-<li><strong>build</strong> → <code>nest build</code></li>
-<li><strong>format</strong> → <code>prettier --write &quot;src/**/*.ts&quot; &quot;test/**/*.ts&quot;</code></li>
-<li><strong>start</strong> → <code>nest start</code></li>
-<li><strong>start:dev</strong> → <code>nest start --watch</code></li>
-<li><strong>start:debug</strong> → <code>nest start --debug --watch</code></li>
-<li><strong>start:prod</strong> → <code>node dist/main</code></li>
-<li><strong>lint</strong> → <code>eslint &quot;{src,apps,libs,test}/**/*.ts&quot; --quiet</code></li>
-<li><strong>check:types</strong> → <code>tsc --noEmit -p tsconfig.build.json</code></li>
-<li><strong>test</strong> → <code>jest</code></li>
-<li><strong>test:watch</strong> → <code>jest --watch</code></li>
-<li><strong>test:cov</strong> → <code>jest --coverage</code></li>
-<li><strong>test:debug</strong> → <code>node --inspect-brk -r tsconfig-paths/register -r ts-node/register node_modules/.bin/jest --runInBand</code></li>
-<li><strong>test:e2e</strong> → <code>jest --config ./test/jest-e2e.json</code></li>
-<li><strong>prepare</strong> → <code>husky || true</code></li>
-<li><strong>seed</strong> → <code>ts-node prisma/seed.ts</code></li>
-<li><strong>docs:generate</strong> → <code>npx compodoc -p tsconfig.json -d docs</code></li>
-<li><strong>docs:json</strong> → <code>npx compodoc -p tsconfig.json -d docs -e json</code></li>
-<li><strong>update:readme</strong> → <code>node scripts/update-readme.js</code></li>
-<li><strong>docs:serve</strong> → <code>npx compodoc -s -d docs</code></li>
-<li><strong>docs:rebuild</strong> → <code>pnpm run docs:generate &amp;&amp; pnpm run docs:serve</code></li>
-<li><strong>docs:update-readme</strong> → <code>pnpm run docs:json &amp;&amp; pnpm run update:readme</code></li>
-<li><strong>bm</strong> → <code>ts-node -r tsconfig-paths/register console/bm/index.ts</code><!-- END:scripts --></li>
-</ul>
-<h2>🏗️ Arquitectura</h2>
-<!-- START:architecture -->
+<!-- AUTO:DEPENDENCIES:START -->
+<p><strong>Dependencies</strong> (66)</p>
+<table class="table table-bordered compodoc-table">
+<thead>
+<tr>
+<th>Paquete</th>
+<th>Versión</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>@autotelic/pino-seq-transport</code></td>
+<td><code>^0.1.0</code></td>
+</tr>
+<tr>
+<td><code>@aws-sdk/client-s3</code></td>
+<td><code>^3.1012.0</code></td>
+</tr>
+<tr>
+<td><code>@aws-sdk/s3-request-presigner</code></td>
+<td><code>^3.1012.0</code></td>
+</tr>
+<tr>
+<td><code>@infobip-api/sdk</code></td>
+<td><code>^0.3.2</code></td>
+</tr>
+<tr>
+<td><code>@keyv/redis</code></td>
+<td><code>^5.1.6</code></td>
+</tr>
+<tr>
+<td><code>@nestjs/axios</code></td>
+<td><code>^4.0.0</code></td>
+</tr>
+<tr>
+<td><code>@nestjs/cache-manager</code></td>
+<td><code>^3.1.3</code></td>
+</tr>
+<tr>
+<td><code>@nestjs/common</code></td>
+<td><code>^11.0.1</code></td>
+</tr>
+<tr>
+<td><code>@nestjs/config</code></td>
+<td><code>^4.0.1</code></td>
+</tr>
+<tr>
+<td><code>@nestjs/core</code></td>
+<td><code>^11.0.1</code></td>
+</tr>
+<tr>
+<td><code>@nestjs/event-emitter</code></td>
+<td><code>^3.1.0</code></td>
+</tr>
+<tr>
+<td><code>@nestjs/jwt</code></td>
+<td><code>^11.0.0</code></td>
+</tr>
+<tr>
+<td><code>@nestjs/mapped-types</code></td>
+<td><code>^2.1.0</code></td>
+</tr>
+<tr>
+<td><code>@nestjs/mongoose</code></td>
+<td><code>^11.0.4</code></td>
+</tr>
+<tr>
+<td><code>@nestjs/passport</code></td>
+<td><code>^11.0.5</code></td>
+</tr>
+<tr>
+<td><code>@nestjs/platform-express</code></td>
+<td><code>^11.0.1</code></td>
+</tr>
+<tr>
+<td><code>@nestjs/platform-socket.io</code></td>
+<td><code>^11.2.7</code></td>
+</tr>
+<tr>
+<td><code>@nestjs/schedule</code></td>
+<td><code>^6.1.3</code></td>
+</tr>
+<tr>
+<td><code>@nestjs/sequelize</code></td>
+<td><code>^11.0.0</code></td>
+</tr>
+<tr>
+<td><code>@nestjs/swagger</code></td>
+<td><code>^11.0.7</code></td>
+</tr>
+<tr>
+<td><code>@nestjs/terminus</code></td>
+<td><code>^11.0.0</code></td>
+</tr>
+<tr>
+<td><code>@nestjs/throttler</code></td>
+<td><code>^6.7.1</code></td>
+</tr>
+<tr>
+<td><code>@nestjs/websockets</code></td>
+<td><code>^11.2.7</code></td>
+</tr>
+<tr>
+<td><code>@prisma/client</code></td>
+<td><code>6.18.0</code></td>
+</tr>
+<tr>
+<td><code>@sentry/nestjs</code></td>
+<td><code>^11.4.0</code></td>
+</tr>
+<tr>
+<td><code>@sequelize/core</code></td>
+<td><code>7.0.0-alpha.43</code></td>
+</tr>
+<tr>
+<td><code>@sequelize/db2-ibmi</code></td>
+<td><code>7.0.0-alpha.43</code></td>
+</tr>
+<tr>
+<td><code>@sequelize/postgres</code></td>
+<td><code>7.0.0-alpha.43</code></td>
+</tr>
+<tr>
+<td><code>@socket.io/redis-adapter</code></td>
+<td><code>^8.3.0</code></td>
+</tr>
+<tr>
+<td><code>axios</code></td>
+<td><code>^1.9.0</code></td>
+</tr>
+<tr>
+<td><code>bcrypt</code></td>
+<td><code>^6.0.0</code></td>
+</tr>
+<tr>
+<td><code>cache-manager</code></td>
+<td><code>^7.2.9</code></td>
+</tr>
+<tr>
+<td><code>cacheable</code></td>
+<td><code>^2.5.0</code></td>
+</tr>
+<tr>
+<td><code>class-transformer</code></td>
+<td><code>^0.5.1</code></td>
+</tr>
+<tr>
+<td><code>class-validator</code></td>
+<td><code>^0.14.1</code></td>
+</tr>
+<tr>
+<td><code>cookie-parser</code></td>
+<td><code>^1.4.7</code></td>
+</tr>
+<tr>
+<td><code>cron</code></td>
+<td><code>^4.4.0</code></td>
+</tr>
+<tr>
+<td><code>date-fns</code></td>
+<td><code>^4.1.0</code></td>
+</tr>
+<tr>
+<td><code>date-fns-tz</code></td>
+<td><code>^3.2.0</code></td>
+</tr>
+<tr>
+<td><code>exceljs</code></td>
+<td><code>^4.4.0</code></td>
+</tr>
+<tr>
+<td><code>express</code></td>
+<td><code>^5.1.0</code></td>
+</tr>
+<tr>
+<td><code>fast-glob</code></td>
+<td><code>^3.3.3</code></td>
+</tr>
+<tr>
+<td><code>firebase-admin</code></td>
+<td><code>^14.5.0</code></td>
+</tr>
+<tr>
+<td><code>handlebars</code></td>
+<td><code>^4.7.9</code></td>
+</tr>
+<tr>
+<td><code>html-pdf-node</code></td>
+<td><code>^1.0.8</code></td>
+</tr>
+<tr>
+<td><code>ioredis</code></td>
+<td><code>^5.11.1</code></td>
+</tr>
+<tr>
+<td><code>joi</code></td>
+<td><code>^17.13.3</code></td>
+</tr>
+<tr>
+<td><code>jsonwebtoken</code></td>
+<td><code>^9.0.2</code></td>
+</tr>
+<tr>
+<td><code>jwks-rsa</code></td>
+<td><code>^3.2.0</code></td>
+</tr>
+<tr>
+<td><code>keyv</code></td>
+<td><code>^5.6.0</code></td>
+</tr>
+<tr>
+<td><code>mongoose</code></td>
+<td><code>^9.10.4</code></td>
+</tr>
+<tr>
+<td><code>multer</code></td>
+<td><code>^2.0.0</code></td>
+</tr>
+<tr>
+<td><code>nanoid</code></td>
+<td><code>^5.1.5</code></td>
+</tr>
+<tr>
+<td><code>nestjs-i18n</code></td>
+<td><code>^10.8.5</code></td>
+</tr>
+<tr>
+<td><code>nestjs-pino</code></td>
+<td><code>^4.4.0</code></td>
+</tr>
+<tr>
+<td><code>nodemailer</code></td>
+<td><code>^7.0.6</code></td>
+</tr>
+<tr>
+<td><code>passport</code></td>
+<td><code>^0.7.0</code></td>
+</tr>
+<tr>
+<td><code>passport-jwt</code></td>
+<td><code>^4.0.1</code></td>
+</tr>
+<tr>
+<td><code>pdfmake</code></td>
+<td><code>^0.3.9</code></td>
+</tr>
+<tr>
+<td><code>pino-pretty</code></td>
+<td><code>^13.0.0</code></td>
+</tr>
+<tr>
+<td><code>reflect-metadata</code></td>
+<td><code>^0.2.2</code></td>
+</tr>
+<tr>
+<td><code>rxjs</code></td>
+<td><code>^7.8.1</code></td>
+</tr>
+<tr>
+<td><code>socket.io</code></td>
+<td><code>^4.8.4</code></td>
+</tr>
+<tr>
+<td><code>uuid</code></td>
+<td><code>^11.1.0</code></td>
+</tr>
+<tr>
+<td><code>web-push</code></td>
+<td><code>^3.6.7</code></td>
+</tr>
+<tr>
+<td><code>write-file-atomic</code></td>
+<td><code>^7.0.0</code></td>
+</tr>
+</tbody>
+</table>
+<p><strong>DevDependencies</strong> (46)</p>
+<table class="table table-bordered compodoc-table">
+<thead>
+<tr>
+<th>Paquete</th>
+<th>Versión</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>@commitlint/cli</code></td>
+<td><code>^19.8.0</code></td>
+</tr>
+<tr>
+<td><code>@commitlint/config-conventional</code></td>
+<td><code>^19.8.0</code></td>
+</tr>
+<tr>
+<td><code>@compodoc/compodoc</code></td>
+<td><code>^1.1.32</code></td>
+</tr>
+<tr>
+<td><code>@eslint/eslintrc</code></td>
+<td><code>^3.2.0</code></td>
+</tr>
+<tr>
+<td><code>@eslint/js</code></td>
+<td><code>^9.18.0</code></td>
+</tr>
+<tr>
+<td><code>@jest/globals</code></td>
+<td><code>^30.4.1</code></td>
+</tr>
+<tr>
+<td><code>@nestjs/cli</code></td>
+<td><code>^11.0.0</code></td>
+</tr>
+<tr>
+<td><code>@nestjs/schematics</code></td>
+<td><code>^11.0.0</code></td>
+</tr>
+<tr>
+<td><code>@nestjs/testing</code></td>
+<td><code>^11.0.1</code></td>
+</tr>
+<tr>
+<td><code>@semantic-release/changelog</code></td>
+<td><code>^6.0.3</code></td>
+</tr>
+<tr>
+<td><code>@semantic-release/exec</code></td>
+<td><code>^7.0.3</code></td>
+</tr>
+<tr>
+<td><code>@semantic-release/git</code></td>
+<td><code>^10.0.1</code></td>
+</tr>
+<tr>
+<td><code>@semantic-release/github</code></td>
+<td><code>^11.0.0</code></td>
+</tr>
+<tr>
+<td><code>@semantic-release/gitlab</code></td>
+<td><code>^13.2.4</code></td>
+</tr>
+<tr>
+<td><code>@semantic-release/npm</code></td>
+<td><code>^12.0.1</code></td>
+</tr>
+<tr>
+<td><code>@swc/cli</code></td>
+<td><code>^0.6.0</code></td>
+</tr>
+<tr>
+<td><code>@swc/core</code></td>
+<td><code>^1.10.7</code></td>
+</tr>
+<tr>
+<td><code>@types/bcrypt</code></td>
+<td><code>^6.0.0</code></td>
+</tr>
+<tr>
+<td><code>@types/express</code></td>
+<td><code>^5.0.0</code></td>
+</tr>
+<tr>
+<td><code>@types/inquirer</code></td>
+<td><code>^9.0.9</code></td>
+</tr>
+<tr>
+<td><code>@types/jest</code></td>
+<td><code>^29.5.14</code></td>
+</tr>
+<tr>
+<td><code>@types/multer</code></td>
+<td><code>^1.4.12</code></td>
+</tr>
+<tr>
+<td><code>@types/node</code></td>
+<td><code>^22.10.7</code></td>
+</tr>
+<tr>
+<td><code>@types/pdfmake</code></td>
+<td><code>^0.3.3</code></td>
+</tr>
+<tr>
+<td><code>@types/supertest</code></td>
+<td><code>^6.0.2</code></td>
+</tr>
+<tr>
+<td><code>@types/web-push</code></td>
+<td><code>^3.6.4</code></td>
+</tr>
+<tr>
+<td><code>eslint</code></td>
+<td><code>^9.18.0</code></td>
+</tr>
+<tr>
+<td><code>eslint-config-prettier</code></td>
+<td><code>^10.0.1</code></td>
+</tr>
+<tr>
+<td><code>eslint-plugin-prettier</code></td>
+<td><code>^5.2.2</code></td>
+</tr>
+<tr>
+<td><code>globals</code></td>
+<td><code>^16.0.0</code></td>
+</tr>
+<tr>
+<td><code>husky</code></td>
+<td><code>^9.1.7</code></td>
+</tr>
+<tr>
+<td><code>inquirer</code></td>
+<td><code>^12.10.0</code></td>
+</tr>
+<tr>
+<td><code>jest</code></td>
+<td><code>^29.7.0</code></td>
+</tr>
+<tr>
+<td><code>jest-mock-extended</code></td>
+<td><code>^4.0.1</code></td>
+</tr>
+<tr>
+<td><code>lint-staged</code></td>
+<td><code>^15.5.0</code></td>
+</tr>
+<tr>
+<td><code>prettier</code></td>
+<td><code>^3.4.2</code></td>
+</tr>
+<tr>
+<td><code>prisma</code></td>
+<td><code>^6.18.0</code></td>
+</tr>
+<tr>
+<td><code>semantic-release</code></td>
+<td><code>^24.2.3</code></td>
+</tr>
+<tr>
+<td><code>source-map-support</code></td>
+<td><code>^0.5.21</code></td>
+</tr>
+<tr>
+<td><code>supertest</code></td>
+<td><code>^7.0.0</code></td>
+</tr>
+<tr>
+<td><code>ts-jest</code></td>
+<td><code>^29.2.5</code></td>
+</tr>
+<tr>
+<td><code>ts-loader</code></td>
+<td><code>^9.5.2</code></td>
+</tr>
+<tr>
+<td><code>ts-node</code></td>
+<td><code>^10.9.2</code></td>
+</tr>
+<tr>
+<td><code>tsconfig-paths</code></td>
+<td><code>^4.2.0</code></td>
+</tr>
+<tr>
+<td><code>typescript</code></td>
+<td><code>^5.7.3</code></td>
+</tr>
+<tr>
+<td><code>typescript-eslint</code></td>
+<td><code>^8.20.0</code></td>
+</tr>
+</tbody>
+</table>
+<!-- AUTO:DEPENDENCIES:END -->
 
-<b>Example :</b><div><pre class="line-numbers"><code class="language-plaintext">src/
-├── api/                # Puntos de entrada (rutas, controladores, dtos, validaciones)
-│   ├── auth/           # Autenticación, login, refresh, guards, etc.
-│   ├── users/          # Gestión de usuarios
-│   ├── onboarding/     # Registro o flujo de alta
-│   └── permissions/    # Roles y permisos del sistema
-│   └── ...             # Otras funcionalidades
-│
-├── modules/            # Casos de uso genéricos y reutilizables
-│   ├── email/          # Envío de correos (mailer)
-│   ├── auth/           # Módulo de autenticación compartido
-│   ├── db/             # Conexiones o repositorios a base de datos
-│   └── ...             # Otros módulos reutilizables
-│
-├── common/             # Decoradores, pipes, filtros, interceptores, utilidades
-├── core/               # Configuración principal, constantes globales
-├── prisma/             # Client de base de datos, migraciones
-└── main.ts             # Archivo main que define setup global del proyecto
-└── ...                 # Otros archivos de configuracion de typescript, nest, git, docker, etc</code></pre></div><p><strong>Arquitectura general</strong></p>
-<ul>
-<li>@api: expone las rutas y orquesta los módulos.</li>
-<li>@modules: contiene la lógica de negocio y recursos compartidos.</li>
-<li>@common: utilidades, validadores y middlewares genéricos.</li>
-<li>@core: punto central de configuración e inicialización.</li>
-<li>Enfoque <strong>Clean Architecture</strong>: separación clara entre capas, alta cohesión, bajo acoplamiento, facilidad de testing y escalabilidad.</li>
-</ul>
-<!-- END:architecture -->
-
-<!-- START:functionalities -->
-
-<!-- END:functionalities -->
-
-<!-- START:api-controllers -->
-
-<!-- END:api-controllers -->
 
 
 

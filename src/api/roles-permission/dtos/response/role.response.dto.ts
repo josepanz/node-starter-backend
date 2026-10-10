@@ -8,19 +8,19 @@ export class RoleResponseDTO {
   id!: number;
 
   @ApiProperty({
-    example: 'MerchantAdmin',
+    example: 'TenantAdmin',
     description: 'Nombre del rol',
   })
   name!: string;
 
   @ApiProperty({
-    example: 'Administrador de comercio',
+    example: 'Administrador de tenant',
     description: 'Nombre en pantalla del rol',
   })
   displayName?: string | null;
 
   @ApiProperty({
-    example: 'Administrador del comercio con acceso completo',
+    example: 'Administrador del tenant con acceso completo',
     description: 'Descripción del rol',
     nullable: true,
   })

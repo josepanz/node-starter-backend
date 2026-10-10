@@ -1,0 +1,19 @@
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+
+# Manifiestos comunes. Los overlays fijan namespace, imagen, replicas, recursos y dominio.
+# El Secret real NO vive aqui: ver ../secret.example.yaml.
+resources:
+  - serviceaccount.yaml
+  - configmap.yaml
+  - deployment.yaml
+  - service.yaml
+  - ingress.yaml
+  - hpa.yaml
+  - pdb.yaml
+
+labels:
+  - pairs:
+      app.kubernetes.io/name: node-starter-backend
+      app.kubernetes.io/part-of: node-starter
+    includeSelectors: false

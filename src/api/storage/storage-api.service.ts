@@ -1,4 +1,4 @@
-import { PrismaDatasource } from '@core/database/services/prisma.service';
+import { UsersDBService } from '@modules/users-db/services/users-db.service';
 import { StorageService } from '@modules/storage/services/storage.service';
 import { StorageUploadInput } from '@modules/storage/interfaces/storage.interface';
 import {
@@ -15,19 +15,16 @@ import {
 export class StorageApiService {
   constructor(
     private readonly storageService: StorageService,
-    private readonly prisma: PrismaDatasource,
+    private readonly usersDb: UsersDBService,
   ) {}
 
   async uploadFile(params: IUploadFileParams): Promise<void> {
     const { files, userId, referenceId, documentType, documentNumber } = params;
 
     await this.uploadFilesToStorage(files, referenceId, 1);
-    await this.prisma.extended.users.update({
-      where: { id: Number(userId) },
-      data: {
-        documentNumber: documentNumber,
-        documentType: documentType,
-      },
+    await this.usersDb.updateDocument(Number(userId), {
+      documentNumber,
+      documentType,
     });
   }
 
@@ -73,7 +70,7 @@ export class StorageApiService {
       fileGroup.map((file) => ({
         id: fieldName,
         file,
-        path: `onboarding/merchants/${referenceId}/${applicationId}`,
+        path: `onboarding/tenants/${referenceId}/${applicationId}`,
       })),
     );
   }

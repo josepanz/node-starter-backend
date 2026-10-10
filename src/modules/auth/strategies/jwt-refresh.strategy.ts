@@ -5,7 +5,7 @@ import { Request } from 'express';
 import { ConfigType } from '@nestjs/config';
 
 import { UsersDBService } from '@modules/users-db/services/users-db.service';
-import { IJwtPayload } from '@api/auth/interfaces';
+import { IJwtPayload } from '@common/interfaces/jwt-payload.interface';
 import { APP_CONFIG, AppConfigType } from '@core/config/config-loader';
 import { UserWithSecurities } from '@modules/auth/types/user.types';
 

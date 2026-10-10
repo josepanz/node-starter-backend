@@ -1,0 +1,7 @@
+{
+  "UNAUTHORIZED": "Not authenticated.",
+  "TOO_MANY_REQUESTS": "Too many requests, please try again later.",
+  "IDEMPOTENCY_KEY_REQUIRED": "The Idempotency-Key header is required.",
+  "IDEMPOTENCY_KEY_REUSED": "The Idempotency-Key was already used with different content.",
+  "IDEMPOTENCY_IN_PROGRESS": "A request with this Idempotency-Key is already in progress."
+}

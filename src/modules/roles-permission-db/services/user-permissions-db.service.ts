@@ -5,6 +5,7 @@ import {
   BadRequestException,
 } from '@nestjs/common';
 import { PrismaDatasource } from '@core/database/services/prisma.service';
+import { PermissionsCacheService } from '@core/cache/permissions-cache.service';
 import { UserPermissions } from '@prisma/client';
 import { UsersDBService } from '@modules/users-db/services/users-db.service';
 import { PermissionsDBService } from './permissions-db.service';
@@ -17,6 +18,7 @@ export class UserPermissionsDBService {
     private readonly prisma: PrismaDatasource,
     private readonly usersDBService: UsersDBService,
     private readonly permissionsDBService: PermissionsDBService,
+    private readonly permissionsCache: PermissionsCacheService,
   ) {}
 
   // ─── Raw DB ───────────────────────────────────────────────────────────────
@@ -26,7 +28,7 @@ export class UserPermissionsDBService {
     permissionIds: number[];
     createdBy: string;
   }): Promise<UserPermissions[]> {
-    return await this.prisma.extended.$transaction(async (tx) => {
+    const result = await this.prisma.extended.$transaction(async (tx) => {
       const oldPermissions = await tx.userPermissions.findMany({
         where: { userId: data.userId },
         include: { permission: true },
@@ -61,6 +63,8 @@ export class UserPermissionsDBService {
         include: { permission: true },
       });
     });
+    await this.permissionsCache.invalidateAll();
+    return result;
   }
 
   async getPermissionsByUserId(userId: number) {
@@ -88,6 +92,7 @@ export class UserPermissionsDBService {
 
       await tx.userPermissions.deleteMany({ where: { userId, permissionId } });
     });
+    await this.permissionsCache.invalidateAll();
   }
 
   async userHasPermission(

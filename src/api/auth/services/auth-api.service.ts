@@ -1,7 +1,10 @@
-import { Injectable } from '@nestjs/common';
+import { Inject, Injectable, UnauthorizedException } from '@nestjs/common';
+import { ConfigType } from '@nestjs/config';
 import { Users } from '@prisma/client';
 
 import * as DTO from '@api/auth/dtos';
+import { APP_CONFIG, AppConfigType } from '@core/config/config-loader';
+import { NonceService } from '@modules/nonce/nonce.service';
 import { UsersDBService } from '@modules/users-db/services/users-db.service';
 import { AuthService } from '@modules/auth/services/auth.service';
 import { EmailService } from '@modules/email/services/email.service';
@@ -16,12 +19,36 @@ export class AuthApiService {
     private readonly authService: AuthService,
     private readonly emailService: EmailService,
     private readonly authMigrationService: AuthMigrationService,
+    private readonly nonceService: NonceService,
+    @Inject(APP_CONFIG.KEY) private readonly config: ConfigType<AppConfigType>,
   ) {}
+
+  /** Emite un nonce de un solo uso para el próximo login (anti-replay). */
+  async issueLoginNonce(): Promise<DTO.LoginNonceResponseDTO> {
+    return {
+      nonce: await this.nonceService.issue(),
+      expiresInSeconds: this.nonceService.ttlSeconds,
+    };
+  }
+
+  /**
+   * Opt-in (LOGIN_NONCE_REQUIRED): con la flag activa el nonce es obligatorio; con la flag
+   * apagada (default, no rompe clientes existentes) solo se valida si el cliente lo envía.
+   */
+  private async assertLoginNonce(nonce: string | undefined): Promise<void> {
+    if (nonce === undefined && !this.config.nonce.loginRequired) return;
+    if (!(await this.nonceService.consume(nonce))) {
+      throw new UnauthorizedException(
+        'Nonce inválido, expirado o ya utilizado.',
+      );
+    }
+  }
 
   async handleLogin(
     dto: DTO.LoginUserDTO,
     userAgent?: string,
   ): Promise<DTO.LoginUserResponseDTO> {
+    await this.assertLoginNonce(dto.nonce);
     const loginResult = await this.authService.login({
       email: dto.email,
       encryptedPassword: dto.encryptedPassword,

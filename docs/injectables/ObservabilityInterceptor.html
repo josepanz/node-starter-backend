@@ -3,7 +3,7 @@
     <head>
         <meta charset="utf-8">
         <meta http-equiv="x-ua-compatible" content="ie=edge">
-        <title>node-started-backend documentation</title>
+        <title>node-starter-backend documentation</title>
         <meta name="description" content="">
         <meta name="viewport" content="width=device-width, initial-scale=1">
 
@@ -78,7 +78,7 @@
 
         <div class="navbar navbar-default navbar-fixed-top d-md-none p-0">
                <div class="d-flex">
-                    <a href="../" class="navbar-brand">node-started-backend documentation</a>
+                    <a href="../" class="navbar-brand">node-starter-backend documentation</a>
                     <button type="button" class="btn btn-default btn-menu ion-ios-menu" id="btn-menu"></button>
                </div>
         </div>
@@ -137,6 +137,14 @@
         </p>
 
 
+            <p class="comment">
+                <h3>Description</h3>
+            </p>
+            <p class="comment">
+                <p>Patrón: interceptor de observabilidad (AOP). Mide latencia y loguea entrada/salida/error
+con traceId; los payloads pasan por <code>formatPayload</code> (redacción + truncado).</p>
+
+            </p>
 
 
 
@@ -179,7 +187,7 @@
                 </tr>
                         <tr>
                             <td class="col-md-4">
-                                <div class="io-line">Defined in <a href="" data-line="18" class="link-to-prism">src/core/observability/observability.interceptor.ts:18</a></div>
+                                <div class="io-line">Defined in <a href="" data-line="21" class="link-to-prism">src/core/observability/observability.interceptor.ts:21</a></div>
                             </td>
                         </tr>
 
@@ -235,15 +243,15 @@
             </tr>
             <tr>
                 <td class="col-md-4">
-<code>intercept(context: ExecutionContext, next: CallHandler)</code>
+<code>intercept(context: <a href="../unknowns/text.html" target="_self">ExecutionContext</a>, next: CallHandler)</code>
                 </td>
             </tr>
 
 
                     <tr>
                         <td class="col-md-4">
-                            <div class="io-line">Defined in <a href="" data-line="21"
-                                    class="link-to-prism">src/core/observability/observability.interceptor.ts:21</a></div>
+                            <div class="io-line">Defined in <a href="" data-line="24"
+                                    class="link-to-prism">src/core/observability/observability.interceptor.ts:24</a></div>
                         </td>
                     </tr>
 
@@ -266,7 +274,7 @@
                                         <tr>
                                                 <td>context</td>
                                             <td>
-                                                        <code>ExecutionContext</code>
+                                                            <code><a href="../miscellaneous/variables.html#text" target="_self" >ExecutionContext</a></code>
                                             </td>
 
                                             <td>
@@ -291,7 +299,7 @@
                                 </table>
                             </div>
                         <div class="io-description">
-                            <b>Returns : </b>    <code>Observable&lt;any&gt;</code>
+                            <b>Returns : </b>    <code>Observable&lt;unknown&gt;</code>
 
                         </div>
                             <div class="io-description">
@@ -308,86 +316,83 @@
 
     <div class="tab-pane fade  tab-source-code" id="source">
         <pre class="line-numbers compodoc-sourcecode"><code class="language-typescript">import {
+  CallHandler,
+  ExecutionContext,
+  HttpException,
+  HttpStatus,
   Injectable,
   NestInterceptor,
-  ExecutionContext,
-  CallHandler,
-  HttpStatus,
 } from &#x27;@nestjs/common&#x27;;
-import { Observable, tap, catchError, throwError } from &#x27;rxjs&#x27;;
+import { Observable, catchError, tap, throwError } from &#x27;rxjs&#x27;;
 import { PinoLogger } from &#x27;nestjs-pino&#x27;;
-import { Request } from &#x27;express&#x27;;
+import { Request, Response } from &#x27;express&#x27;;
 import { TRACE_ID_HEADER } from &#x27;@core/middlewares/trace-id.middleware&#x27;;
-import { formatPayload } from &#x27;@core/observability/observability.module&#x27;;
+import { RequestContext } from &#x27;@common/context/request-context&#x27;;
+import { formatPayload } from &#x27;./payload-formatter&#x27;;
 
+/**
+ * Patrón: interceptor de observabilidad (AOP). Mide latencia y loguea entrada/salida/error
+ * con traceId; los payloads pasan por &#x60;formatPayload&#x60; (redacción + truncado).
+ */
 @Injectable()
 export class ObservabilityInterceptor implements NestInterceptor {
   constructor(private readonly logger: PinoLogger) {}
 
-  intercept(context: ExecutionContext, next: CallHandler): Observable&lt;any&gt; {
-    const now &#x3D; Date.now();
-    const ctx &#x3D; context.switchToHttp();
-    const req &#x3D; ctx.getRequest&lt;Request&gt;();
+  intercept(context: ExecutionContext, next: CallHandler): Observable&lt;unknown&gt; {
+    const startedAt &#x3D; Date.now();
+    const http &#x3D; context.switchToHttp();
+    const req &#x3D; http.getRequest&lt;Request&gt;();
+    const res &#x3D; http.getResponse&lt;Response&gt;();
+    const traceId &#x3D;
+      (req[TRACE_ID_HEADER] as string | undefined) ??
+      RequestContext.getTraceId();
+    const label &#x3D; &#x60;${req.method} ${req.url}&#x60;;
+
     this.logger.info(
-      {
-        request: req?.body ? formatPayload(req?.body) : undefined,
-      },
-      &#x60;Incoming | ${req.method} ${req.url} | Trace ID: ${req[TRACE_ID_HEADER]}&#x60;,
+      { request: req.body ? formatPayload(req.body) : undefined },
+      &#x60;Incoming | ${label} | Trace ID: ${traceId}&#x60;,
     );
 
     return next.handle().pipe(
-      tap((responseBody) &#x3D;&gt; {
-        const latency &#x3D; Date.now() - now;
-        const context &#x3D; ctx.getResponse();
-        const statusCode &#x3D; context.statusCode;
-        const statusName &#x3D;
-          Object.entries(HttpStatus).find(
-            ([key, value]) &#x3D;&gt; value &#x3D;&#x3D;&#x3D; statusCode,
-          )?.[0] ?? &#x27;UNKNOWN&#x27;;
-        if (statusCode &gt;&#x3D; HttpStatus.OK &amp;&amp; statusCode &lt; HttpStatus.AMBIGUOUS) {
-          this.logger.info(
-            {
-              response:
-                responseBody !&#x3D; undefined
-                  ? formatPayload(responseBody)
-                  : undefined,
-              latencyMs: latency,
-            },
-            &#x60;Success | ${req.method} ${req.url} - (${statusCode} - ${statusName}) | Trace ID: ${req[TRACE_ID_HEADER]}&#x60;,
-          );
-        } else {
-          this.logger.error(
-            {
-              response:
-                responseBody !&#x3D; undefined
-                  ? formatPayload(responseBody)
-                  : undefined,
-              latencyMs: latency,
-            },
-            &#x60;Not OK | ${req.method} ${req.url} - (${statusCode} - ${statusName}) | Trace ID: ${req[TRACE_ID_HEADER]}&#x60;,
-          );
-        }
+      tap((responseBody: unknown) &#x3D;&gt; {
+        const statusCode &#x3D; res.statusCode;
+        const ok &#x3D; statusCode &lt; 300;
+        const payload &#x3D; {
+          response:
+            responseBody !&#x3D;&#x3D; undefined
+              ? formatPayload(responseBody)
+              : undefined,
+          latencyMs: Date.now() - startedAt,
+        };
+        const message &#x3D; &#x60;${ok ? &#x27;Success&#x27; : &#x27;Not OK&#x27;} | ${label} - (${statusCode} - ${statusName(statusCode)}) | Trace ID: ${traceId}&#x60;;
+        if (ok) this.logger.info(payload, message);
+        else this.logger.error(payload, message);
       }),
-      catchError((error) &#x3D;&gt; {
-        const latency &#x3D; Date.now() - now;
-        const context &#x3D; ctx.getResponse();
-        const statusCode &#x3D; context.statusCode;
-        const statusName &#x3D;
-          Object.entries(HttpStatus).find(
-            ([key, value]) &#x3D;&gt; value &#x3D;&#x3D;&#x3D; statusCode,
-          )?.[0] ?? &#x27;UNKNOWN&#x27;;
+      catchError((error: unknown) &#x3D;&gt; {
+        const statusCode &#x3D;
+          error instanceof HttpException
+            ? error.getStatus()
+            : HttpStatus.INTERNAL_SERVER_ERROR;
         this.logger.error(
           {
-            error: error.message,
-            stack: error.stack,
-            latencyMs: latency,
+            error: error instanceof Error ? error.message : String(error),
+            stack: error instanceof Error ? error.stack : undefined,
+            latencyMs: Date.now() - startedAt,
           },
-          &#x60;Error | ${req.method} ${req.url} - (${statusCode} - ${statusName}) | Trace ID: ${req[TRACE_ID_HEADER]}&#x60;,
+          &#x60;Error | ${label} - (${statusCode} - ${statusName(statusCode)}) | Trace ID: ${traceId}&#x60;,
         );
         return throwError(() &#x3D;&gt; error);
       }),
     );
   }
+}
+
+function statusName(statusCode: number): string {
+  return (
+    Object.entries(HttpStatus).find(
+      ([, value]) &#x3D;&gt; Number(value) &#x3D;&#x3D;&#x3D; statusCode,
+    )?.[0] ?? &#x27;UNKNOWN&#x27;
+  );
 }
 </code></pre>
     </div>

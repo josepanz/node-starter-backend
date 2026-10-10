@@ -1,0 +1,1548 @@
+<!doctype html>
+<html class="no-js" lang="">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="x-ua-compatible" content="ie=edge">
+        <title>node-starter-backend documentation</title>
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+
+        <link rel="icon" type="image/x-icon" href="../images/favicon.ico">
+	   <link rel="stylesheet" href="../styles/style.css">
+        <link rel="stylesheet" href="../styles/dark.css">
+    </head>
+    <body>
+          <script>
+               // Blocking script to avoid flickering dark mode
+               // Dark mode toggle button
+               var useDark = window.matchMedia('(prefers-color-scheme: dark)');
+               var darkModeState = useDark.matches;
+               var $darkModeToggleSwitchers = document.querySelectorAll('.dark-mode-switch input');
+               var $darkModeToggles = document.querySelectorAll('.dark-mode-switch');
+               var darkModeStateLocal = localStorage.getItem('compodoc_darkmode-state');
+
+               function checkToggle(check) {
+                    for (var i = 0; i < $darkModeToggleSwitchers.length; i++) {
+                         $darkModeToggleSwitchers[i].checked = check;
+                    }
+               }
+
+               function toggleDarkMode(state) {
+                    if (window.localStorage) {
+                         localStorage.setItem('compodoc_darkmode-state', state);
+                    }
+
+                    checkToggle(state);
+
+                    const hasClass = document.body.classList.contains('dark');
+
+                    if (state) {
+                         for (var i = 0; i < $darkModeToggles.length; i++) {
+                              $darkModeToggles[i].classList.add('dark');
+                         }
+                         if (!hasClass) {
+                              document.body.classList.add('dark');
+                         }
+                    } else {
+                         for (var i = 0; i < $darkModeToggles.length; i++) {
+                              $darkModeToggles[i].classList.remove('dark');
+                         }
+                         if (hasClass) {
+                              document.body.classList.remove('dark');
+                         }
+                    }
+               }
+
+               useDark.addEventListener('change', function (evt) {
+                    toggleDarkMode(evt.matches);
+               });
+               if (darkModeStateLocal) {
+                    darkModeState = darkModeStateLocal === 'true';
+               }
+               toggleDarkMode(darkModeState);
+          </script>
+          <script>
+              // --- Iframe navigation tracking for Template Playground ---
+              function sendCurrentUrlToParent() {
+                  if (window.parent && window.parent !== window) {
+                      window.parent.postMessage({
+                          type: 'compodoc-iframe-navigate',
+                          url: window.location.pathname + window.location.hash
+                      }, '*');
+                  }
+              }
+              window.addEventListener('hashchange', sendCurrentUrlToParent, false);
+              window.addEventListener('popstate', sendCurrentUrlToParent, false);
+              window.addEventListener('DOMContentLoaded', sendCurrentUrlToParent, false);
+          </script>
+
+        <div class="navbar navbar-default navbar-fixed-top d-md-none p-0">
+               <div class="d-flex">
+                    <a href="../" class="navbar-brand">node-starter-backend documentation</a>
+                    <button type="button" class="btn btn-default btn-menu ion-ios-menu" id="btn-menu"></button>
+               </div>
+        </div>
+
+        <div class="xs-menu menu" id="mobile-menu">
+                <div id="book-search-input" role="search"><input type="text" placeholder="Type to search"></div>            <compodoc-menu></compodoc-menu>
+        </div>
+
+        <div class="container-fluid main">
+           <div class="row main">
+               <div class="d-none d-md-block menu">
+                   <compodoc-menu mode="normal"></compodoc-menu>
+               </div>
+               <!-- START CONTENT -->
+               <div class="content injectable">
+                   <div class="content-data">
+
+
+
+
+
+
+
+
+
+
+
+
+<ol class="breadcrumb">
+  <li class="breadcrumb-item">Injectables</li>
+  <li class="breadcrumb-item" >MessageDBService</li>
+</ol>
+
+<ul class="nav nav-tabs" role="tablist">
+        <li class="nav-item">
+            <a href="#info" 
+                class="nav-link"
+                class="nav-link active"
+                role="tab" id="info-tab" data-bs-toggle="tab" data-link="info">Info</a>
+        </li>
+        <li class="nav-item">
+            <a href="#source" 
+                class="nav-link"
+                
+                role="tab" id="source-tab" data-bs-toggle="tab" data-link="source">Source</a>
+        </li>
+</ul>
+
+<div class="tab-content">
+    <div class="tab-pane fade active in" id="info">
+        <p class="comment">
+            <h3>File</h3>
+        </p>
+        <p class="comment">
+            <code>src/modules/message-db/services/message-db.service.ts</code>
+        </p>
+
+
+            <p class="comment">
+                <h3>Description</h3>
+            </p>
+            <p class="comment">
+                <p>Ledger de mensajes. Regla clave: se inserta PENDING ANTES de llamar al proveedor, así un crash
+entre ambos pasos deja evidencia del intento en vez de un envío sin rastro.
+Estados: PENDING -&gt; ACCEPTED -&gt; DELIVERED | UNDELIVERED | EXPIRED, o PENDING -&gt; REJECTED |
+UNAVAILABLE. Los estados de entrega solo se aplican sobre ACCEPTED (nunca pisan uno final).</p>
+
+            </p>
+
+
+
+            <section data-compodoc="block-index">
+    <h3 id="index">Index</h3>
+    <table class="table table-sm table-bordered index-table">
+        <tbody>
+
+                <tr>
+                    <td class="col-md-4">
+                        <h6><b>Methods</b></h6>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <ul class="index-list">
+                            <li>
+                                    <span class="modifier">Async</span>
+                                <a href="#applyDeliveryStatus" >applyDeliveryStatus</a>
+                            </li>
+                            <li>
+                                <a href="#createPending" >createPending</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Async</span>
+                                <a href="#deleteOlderThan" >deleteOlderThan</a>
+                            </li>
+                            <li>
+                                <a href="#findByReference" >findByReference</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Async</span>
+                                <a href="#findByReferenceOrFail" >findByReferenceOrFail</a>
+                            </li>
+                            <li>
+                                <a href="#findSmsAwaitingDelivery" >findSmsAwaitingDelivery</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Async</span>
+                                <a href="#list" >list</a>
+                            </li>
+                            <li>
+                                <a href="#markAccepted" >markAccepted</a>
+                            </li>
+                            <li>
+                                <a href="#markFailed" >markFailed</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Async</span>
+                                <a href="#purgeExpiredContent" >purgeExpiredContent</a>
+                            </li>
+                            <li>
+                                <a href="#revealContent" >revealContent</a>
+                            </li>
+                            <li>
+                                <a href="#verifyContent" >verifyContent</a>
+                            </li>
+                        </ul>
+                    </td>
+                </tr>
+
+
+
+
+
+        </tbody>
+    </table>
+</section>
+
+            <section data-compodoc="block-constructor">
+    <h3 id="constructor">Constructor</h3>
+        <table class="table table-sm table-bordered">
+            <tbody>
+                <tr>
+                    <td class="col-md-4">
+<code>constructor(prisma: <a href="../injectables/PrismaDatasource.html" target="_self">PrismaDatasource</a>, content: <a href="../injectables/MessageContentService.html" target="_self">MessageContentService</a>)</code>
+                    </td>
+                </tr>
+                        <tr>
+                            <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="20" class="link-to-prism">src/modules/message-db/services/message-db.service.ts:20</a></div>
+                            </td>
+                        </tr>
+
+                <tr>
+                    <td class="col-md-4">
+                            <div>
+                                    <b>Parameters :</b>
+                                    <table class="params">
+                                        <thead>
+                                            <tr>
+                                                <td>Name</td>
+                                                    <td>Type</td>
+                                                <td>Optional</td>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                                <tr>
+                                                        <td>prisma</td>
+                                                  
+                                                        <td>
+                                                                        <code><a href="../injectables/PrismaDatasource.html" target="_self" >PrismaDatasource</a></code>
+                                                        </td>
+                                                  
+                                                    <td>
+                                                            No
+                                                    </td>
+                                                    
+                                                </tr>
+                                                <tr>
+                                                        <td>content</td>
+                                                  
+                                                        <td>
+                                                                        <code><a href="../injectables/MessageContentService.html" target="_self" >MessageContentService</a></code>
+                                                        </td>
+                                                  
+                                                    <td>
+                                                            No
+                                                    </td>
+                                                    
+                                                </tr>
+                                        </tbody>
+                                    </table>
+                            </div>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+</section>
+
+            <section data-compodoc="block-methods">
+    
+    <h3 id="methods">
+        Methods
+    </h3>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="applyDeliveryStatus"></a>
+                    <span class="name">
+                            <span class="modifier">Async</span>
+                        <span ><b>applyDeliveryStatus</b></span>
+                        <a href="#applyDeliveryStatus"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                        <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>applyDeliveryStatus(providerMessageId: <a href="../undefineds/t.html" target="_self">string</a>, status: <a href="../undefineds/t.html" target="_self">MessageStatus</a>, providerStatus: <a href="../undefineds/t.html" target="_self">string</a>, errorCode?: <a href="../undefineds/t.html" target="_self">string</a>)</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="86"
+                                    class="link-to-prism">src/modules/message-db/services/message-db.service.ts:86</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                        <div class="io-description"><p>Aplica un estado de entrega por <code>providerMessageId</code>. Update condicional: solo si el mensaje
+sigue ACCEPTED, así un reporte tardío o repetido no pisa un estado final.</p>
+</div>
+
+                            <div class="io-description">
+                                <b>Parameters :</b>
+                                
+                                <table class="params">
+                                    <thead>
+                                        <tr>
+                                            <td>Name</td>
+                                                <td>Type</td>
+                                            <td>Optional</td>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                                <td>providerMessageId</td>
+                                            <td>
+                                                            <code><a href="../miscellaneous/functions.html#t" target="_self" >string</a></code>
+                                            </td>
+
+                                            <td>
+                                                    No
+                                            </td>
+
+
+                                        </tr>
+                                        <tr>
+                                                <td>status</td>
+                                            <td>
+                                                            <code><a href="../miscellaneous/functions.html#t" target="_self" >MessageStatus</a></code>
+                                            </td>
+
+                                            <td>
+                                                    No
+                                            </td>
+
+
+                                        </tr>
+                                        <tr>
+                                                <td>providerStatus</td>
+                                            <td>
+                                                            <code><a href="../miscellaneous/functions.html#t" target="_self" >string</a></code>
+                                            </td>
+
+                                            <td>
+                                                    No
+                                            </td>
+
+
+                                        </tr>
+                                        <tr>
+                                                <td>errorCode</td>
+                                            <td>
+                                                            <code><a href="../miscellaneous/functions.html#t" target="_self" >string</a></code>
+                                            </td>
+
+                                            <td>
+                                                    Yes
+                                            </td>
+
+
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        <div class="io-description">
+                            <b>Returns : </b>        <code><a href="../miscellaneous/variables.html#num" target="_self" >Promise&lt;number&gt;</a></code>
+
+                        </div>
+                            <div class="io-description">
+                                <p>cantidad de filas actualizadas (0 = sin fila o ya final)</p>
+
+                            </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="createPending"></a>
+                    <span class="name">
+                        <span ><b>createPending</b></span>
+                        <a href="#createPending"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>createPending(input: <a href="../interfaces/ICreatePendingMessage.html" target="_self">ICreatePendingMessage</a>)</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="26"
+                                    class="link-to-prism">src/modules/message-db/services/message-db.service.ts:26</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                            <div class="io-description">
+                                <b>Parameters :</b>
+                                
+                                <table class="params">
+                                    <thead>
+                                        <tr>
+                                            <td>Name</td>
+                                                <td>Type</td>
+                                            <td>Optional</td>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                                <td>input</td>
+                                            <td>
+                                                            <code><a href="../interfaces/ICreatePendingMessage.html" target="_self" >ICreatePendingMessage</a></code>
+                                            </td>
+
+                                            <td>
+                                                    No
+                                            </td>
+
+
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        <div class="io-description">
+                            <b>Returns : </b>    <code>Promise&lt;Message&gt;</code>
+
+                        </div>
+                            <div class="io-description">
+                                
+                            </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="deleteOlderThan"></a>
+                    <span class="name">
+                            <span class="modifier">Async</span>
+                        <span ><b>deleteOlderThan</b></span>
+                        <a href="#deleteOlderThan"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                        <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>deleteOlderThan(olderThan: <a href="../undefineds/t.html" target="_self">Date</a>, batchSize: <a href="../unknowns/num.html" target="_self">number</a>)</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="191"
+                                    class="link-to-prism">src/modules/message-db/services/message-db.service.ts:191</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                        <div class="io-description"><p>Borra filas más viejas que <code>olderThan</code> (un lote). <code>resentFromId</code> queda en NULL por la FK.</p>
+</div>
+
+                            <div class="io-description">
+                                <b>Parameters :</b>
+                                
+                                <table class="params">
+                                    <thead>
+                                        <tr>
+                                            <td>Name</td>
+                                                <td>Type</td>
+                                            <td>Optional</td>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                                <td>olderThan</td>
+                                            <td>
+                                                            <code><a href="../miscellaneous/functions.html#t" target="_self" >Date</a></code>
+                                            </td>
+
+                                            <td>
+                                                    No
+                                            </td>
+
+
+                                        </tr>
+                                        <tr>
+                                                <td>batchSize</td>
+                                            <td>
+                                                            <code><a href="../miscellaneous/variables.html#num" target="_self" >number</a></code>
+                                            </td>
+
+                                            <td>
+                                                    No
+                                            </td>
+
+
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        <div class="io-description">
+                            <b>Returns : </b>        <code><a href="../miscellaneous/variables.html#num" target="_self" >Promise&lt;number&gt;</a></code>
+
+                        </div>
+                            <div class="io-description">
+                                
+                            </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="findByReference"></a>
+                    <span class="name">
+                        <span ><b>findByReference</b></span>
+                        <a href="#findByReference"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>findByReference(referenceId: <a href="../undefineds/t.html" target="_self">string</a>)</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="116"
+                                    class="link-to-prism">src/modules/message-db/services/message-db.service.ts:116</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                            <div class="io-description">
+                                <b>Parameters :</b>
+                                
+                                <table class="params">
+                                    <thead>
+                                        <tr>
+                                            <td>Name</td>
+                                                <td>Type</td>
+                                            <td>Optional</td>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                                <td>referenceId</td>
+                                            <td>
+                                                            <code><a href="../miscellaneous/functions.html#t" target="_self" >string</a></code>
+                                            </td>
+
+                                            <td>
+                                                    No
+                                            </td>
+
+
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        <div class="io-description">
+                            <b>Returns : </b>    <code>Promise&lt;Message | null&gt;</code>
+
+                        </div>
+                            <div class="io-description">
+                                
+                            </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="findByReferenceOrFail"></a>
+                    <span class="name">
+                            <span class="modifier">Async</span>
+                        <span ><b>findByReferenceOrFail</b></span>
+                        <a href="#findByReferenceOrFail"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                        <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>findByReferenceOrFail(referenceId: <a href="../undefineds/t.html" target="_self">string</a>)</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="120"
+                                    class="link-to-prism">src/modules/message-db/services/message-db.service.ts:120</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                            <div class="io-description">
+                                <b>Parameters :</b>
+                                
+                                <table class="params">
+                                    <thead>
+                                        <tr>
+                                            <td>Name</td>
+                                                <td>Type</td>
+                                            <td>Optional</td>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                                <td>referenceId</td>
+                                            <td>
+                                                            <code><a href="../miscellaneous/functions.html#t" target="_self" >string</a></code>
+                                            </td>
+
+                                            <td>
+                                                    No
+                                            </td>
+
+
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        <div class="io-description">
+                            <b>Returns : </b>    <code>Promise&lt;Message&gt;</code>
+
+                        </div>
+                            <div class="io-description">
+                                
+                            </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="findSmsAwaitingDelivery"></a>
+                    <span class="name">
+                        <span ><b>findSmsAwaitingDelivery</b></span>
+                        <a href="#findSmsAwaitingDelivery"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>findSmsAwaitingDelivery(limit: <a href="../unknowns/num.html" target="_self">number</a>, now: unknown)</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="103"
+                                    class="link-to-prism">src/modules/message-db/services/message-db.service.ts:103</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                            <div class="io-description">
+                                <b>Parameters :</b>
+                                
+                                <table class="params">
+                                    <thead>
+                                        <tr>
+                                            <td>Name</td>
+                                                <td>Type</td>
+                                            <td>Optional</td>
+                                                <td>Default value</td>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                                <td>limit</td>
+                                            <td>
+                                                            <code><a href="../miscellaneous/variables.html#num" target="_self" >number</a></code>
+                                            </td>
+
+                                            <td>
+                                                    No
+                                            </td>
+
+                                            <td>
+                                            </td>
+
+                                        </tr>
+                                        <tr>
+                                                <td>now</td>
+                                            <td>
+                                                        <code>unknown</code>
+                                            </td>
+
+                                            <td>
+                                                    No
+                                            </td>
+
+                                            <td>
+                                                    <code>new Date()</code>
+                                            </td>
+
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        <div class="io-description">
+                            <b>Returns : </b>    <code>Promise&lt;Message[]&gt;</code>
+
+                        </div>
+                            <div class="io-description">
+                                
+                            </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="list"></a>
+                    <span class="name">
+                            <span class="modifier">Async</span>
+                        <span ><b>list</b></span>
+                        <a href="#list"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                        <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>list(filters: <a href="../interfaces/IMessageListFilters.html" target="_self">IMessageListFilters</a>)</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="126"
+                                    class="link-to-prism">src/modules/message-db/services/message-db.service.ts:126</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                            <div class="io-description">
+                                <b>Parameters :</b>
+                                
+                                <table class="params">
+                                    <thead>
+                                        <tr>
+                                            <td>Name</td>
+                                                <td>Type</td>
+                                            <td>Optional</td>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                                <td>filters</td>
+                                            <td>
+                                                            <code><a href="../interfaces/IMessageListFilters.html" target="_self" >IMessageListFilters</a></code>
+                                            </td>
+
+                                            <td>
+                                                    No
+                                            </td>
+
+
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        <div class="io-description">
+                            <b>Returns : </b>        <code><a href="../miscellaneous/functions.html#t" target="_self" >Promise&lt;literal type&gt;</a></code>
+
+                        </div>
+                            <div class="io-description">
+                                
+                            </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="markAccepted"></a>
+                    <span class="name">
+                        <span ><b>markAccepted</b></span>
+                        <a href="#markAccepted"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>markAccepted(id: <a href="../unknowns/num.html" target="_self">number</a>, result: <a href="../undefineds/t.html" target="_self">literal type</a>)</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="49"
+                                    class="link-to-prism">src/modules/message-db/services/message-db.service.ts:49</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                            <div class="io-description">
+                                <b>Parameters :</b>
+                                
+                                <table class="params">
+                                    <thead>
+                                        <tr>
+                                            <td>Name</td>
+                                                <td>Type</td>
+                                            <td>Optional</td>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                                <td>id</td>
+                                            <td>
+                                                            <code><a href="../miscellaneous/variables.html#num" target="_self" >number</a></code>
+                                            </td>
+
+                                            <td>
+                                                    No
+                                            </td>
+
+
+                                        </tr>
+                                        <tr>
+                                                <td>result</td>
+                                            <td>
+                                                            <code><a href="../miscellaneous/functions.html#t" target="_self" >literal type</a></code>
+                                            </td>
+
+                                            <td>
+                                                    No
+                                            </td>
+
+
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        <div class="io-description">
+                            <b>Returns : </b>    <code>Promise&lt;Message&gt;</code>
+
+                        </div>
+                            <div class="io-description">
+                                
+                            </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="markFailed"></a>
+                    <span class="name">
+                        <span ><b>markFailed</b></span>
+                        <a href="#markFailed"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>markFailed(id: <a href="../unknowns/num.html" target="_self">number</a>, status: "REJECTED" | "UNAVAILABLE", detail: <a href="../undefineds/t.html" target="_self">literal type</a>)</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="65"
+                                    class="link-to-prism">src/modules/message-db/services/message-db.service.ts:65</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                            <div class="io-description">
+                                <b>Parameters :</b>
+                                
+                                <table class="params">
+                                    <thead>
+                                        <tr>
+                                            <td>Name</td>
+                                                <td>Type</td>
+                                            <td>Optional</td>
+                                                <td>Default value</td>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                                <td>id</td>
+                                            <td>
+                                                            <code><a href="../miscellaneous/variables.html#num" target="_self" >number</a></code>
+                                            </td>
+
+                                            <td>
+                                                    No
+                                            </td>
+
+                                            <td>
+                                            </td>
+
+                                        </tr>
+                                        <tr>
+                                                <td>status</td>
+                                            <td>
+                                                        <code>&quot;REJECTED&quot; | &quot;UNAVAILABLE&quot;</code>
+                                            </td>
+
+                                            <td>
+                                                    No
+                                            </td>
+
+                                            <td>
+                                            </td>
+
+                                        </tr>
+                                        <tr>
+                                                <td>detail</td>
+                                            <td>
+                                                            <code><a href="../miscellaneous/functions.html#t" target="_self" >literal type</a></code>
+                                            </td>
+
+                                            <td>
+                                                    No
+                                            </td>
+
+                                            <td>
+                                                    <code>{}</code>
+                                            </td>
+
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        <div class="io-description">
+                            <b>Returns : </b>    <code>Promise&lt;Message&gt;</code>
+
+                        </div>
+                            <div class="io-description">
+                                
+                            </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="purgeExpiredContent"></a>
+                    <span class="name">
+                            <span class="modifier">Async</span>
+                        <span ><b>purgeExpiredContent</b></span>
+                        <a href="#purgeExpiredContent"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                        <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>purgeExpiredContent(batchSize: <a href="../unknowns/num.html" target="_self">number</a>, now: unknown)</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="169"
+                                    class="link-to-prism">src/modules/message-db/services/message-db.service.ts:169</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                        <div class="io-description"><p>Anula el contenido cifrado AUDIT vencido (un lote). La fila y su huella HMAC se conservan.</p>
+</div>
+
+                            <div class="io-description">
+                                <b>Parameters :</b>
+                                
+                                <table class="params">
+                                    <thead>
+                                        <tr>
+                                            <td>Name</td>
+                                                <td>Type</td>
+                                            <td>Optional</td>
+                                                <td>Default value</td>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                                <td>batchSize</td>
+                                            <td>
+                                                            <code><a href="../miscellaneous/variables.html#num" target="_self" >number</a></code>
+                                            </td>
+
+                                            <td>
+                                                    No
+                                            </td>
+
+                                            <td>
+                                            </td>
+
+                                        </tr>
+                                        <tr>
+                                                <td>now</td>
+                                            <td>
+                                                        <code>unknown</code>
+                                            </td>
+
+                                            <td>
+                                                    No
+                                            </td>
+
+                                            <td>
+                                                    <code>new Date()</code>
+                                            </td>
+
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        <div class="io-description">
+                            <b>Returns : </b>        <code><a href="../miscellaneous/variables.html#num" target="_self" >Promise&lt;number&gt;</a></code>
+
+                        </div>
+                            <div class="io-description">
+                                
+                            </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="revealContent"></a>
+                    <span class="name">
+                        <span ><b>revealContent</b></span>
+                        <a href="#revealContent"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>revealContent(message: Message)</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="151"
+                                    class="link-to-prism">src/modules/message-db/services/message-db.service.ts:151</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                        <div class="io-description"><p>Descifra el contenido AUDIT. 404 si no hay contenido (política NONE o ya purgado).</p>
+</div>
+
+                            <div class="io-description">
+                                <b>Parameters :</b>
+                                
+                                <table class="params">
+                                    <thead>
+                                        <tr>
+                                            <td>Name</td>
+                                                <td>Type</td>
+                                            <td>Optional</td>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                                <td>message</td>
+                                            <td>
+                                                        <code>Message</code>
+                                            </td>
+
+                                            <td>
+                                                    No
+                                            </td>
+
+
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        <div class="io-description">
+                            <b>Returns : </b>        <code><a href="../miscellaneous/functions.html#t" target="_self" >string</a></code>
+
+                        </div>
+                            <div class="io-description">
+                                
+                            </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="verifyContent"></a>
+                    <span class="name">
+                        <span ><b>verifyContent</b></span>
+                        <a href="#verifyContent"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>verifyContent(message: Message, content: <a href="../undefineds/t.html" target="_self">string</a>)</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="161"
+                                    class="link-to-prism">src/modules/message-db/services/message-db.service.ts:161</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                        <div class="io-description"><p>Verifica <code>content</code> contra la huella guardada sin revelar el original.</p>
+</div>
+
+                            <div class="io-description">
+                                <b>Parameters :</b>
+                                
+                                <table class="params">
+                                    <thead>
+                                        <tr>
+                                            <td>Name</td>
+                                                <td>Type</td>
+                                            <td>Optional</td>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                                <td>message</td>
+                                            <td>
+                                                        <code>Message</code>
+                                            </td>
+
+                                            <td>
+                                                    No
+                                            </td>
+
+
+                                        </tr>
+                                        <tr>
+                                                <td>content</td>
+                                            <td>
+                                                            <code><a href="../miscellaneous/functions.html#t" target="_self" >string</a></code>
+                                            </td>
+
+                                            <td>
+                                                    No
+                                            </td>
+
+
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        <div class="io-description">
+                            <b>Returns : </b>        <code><a href="../miscellaneous/variables.html#bool" target="_self" >boolean</a></code>
+
+                        </div>
+                            <div class="io-description">
+                                
+                            </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</section>
+
+    </div>
+
+
+    <div class="tab-pane fade  tab-source-code" id="source">
+        <pre class="line-numbers compodoc-sourcecode"><code class="language-typescript">import { Injectable, NotFoundException } from &#x27;@nestjs/common&#x27;;
+import { Message, MessageStatus, Prisma } from &#x27;@prisma/client&#x27;;
+import { PrismaDatasource } from &#x27;@core/database/services/prisma.service&#x27;;
+import { MessageContentService } from &#x27;./message-content.service&#x27;;
+import type {
+  ICreatePendingMessage,
+  IMessageListFilters,
+} from &#x27;../interfaces/message.interface&#x27;;
+
+/** Los SMS aceptados se siguen consultando hasta esta antigüedad; después se consideran perdidos. */
+const DELIVERY_WINDOW_MS &#x3D; 72 * 3_600_000;
+
+/**
+ * Ledger de mensajes. Regla clave: se inserta PENDING ANTES de llamar al proveedor, así un crash
+ * entre ambos pasos deja evidencia del intento en vez de un envío sin rastro.
+ * Estados: PENDING -&gt; ACCEPTED -&gt; DELIVERED | UNDELIVERED | EXPIRED, o PENDING -&gt; REJECTED |
+ * UNAVAILABLE. Los estados de entrega solo se aplican sobre ACCEPTED (nunca pisan uno final).
+ */
+@Injectable()
+export class MessageDBService {
+  constructor(
+    private readonly prisma: PrismaDatasource,
+    private readonly content: MessageContentService,
+  ) {}
+
+  createPending(input: ICreatePendingMessage): Promise&lt;Message&gt; {
+    const protectedContent &#x3D; this.content.protect(
+      input.content,
+      input.contentPolicy,
+    );
+    return this.prisma.message.create({
+      data: {
+        channel: input.channel,
+        provider: input.provider,
+        recipient: input.recipient,
+        status: MessageStatus.PENDING,
+        traceId: input.caller?.traceId,
+        callerIp: input.caller?.ip,
+        callerUserAgent: input.caller?.userAgent,
+        sourceService: input.caller?.sourceService,
+        createdBy: input.createdBy,
+        idempotencyKey: input.idempotencyKey,
+        resentFromId: input.resentFromId,
+        ...protectedContent,
+      },
+    });
+  }
+
+  markAccepted(
+    id: number,
+    result: { providerMessageId?: string; providerStatus?: string },
+  ): Promise&lt;Message&gt; {
+    return this.prisma.message.update({
+      where: { id },
+      data: {
+        status: MessageStatus.ACCEPTED,
+        providerMessageId: result.providerMessageId,
+        providerStatus: result.providerStatus,
+        attempts: { increment: 1 },
+        nextAttemptAt: null,
+      },
+    });
+  }
+
+  markFailed(
+    id: number,
+    status: &#x27;REJECTED&#x27; | &#x27;UNAVAILABLE&#x27;,
+    detail: { errorCode?: string; nextAttemptAt?: Date } &#x3D; {},
+  ): Promise&lt;Message&gt; {
+    return this.prisma.message.update({
+      where: { id },
+      data: {
+        status,
+        providerErrorCode: detail.errorCode?.slice(0, 128),
+        attempts: { increment: 1 },
+        nextAttemptAt: detail.nextAttemptAt ?? null,
+      },
+    });
+  }
+
+  /**
+   * Aplica un estado de entrega por &#x60;providerMessageId&#x60;. Update condicional: solo si el mensaje
+   * sigue ACCEPTED, así un reporte tardío o repetido no pisa un estado final.
+   * @returns cantidad de filas actualizadas (0 &#x3D; sin fila o ya final)
+   */
+  async applyDeliveryStatus(
+    providerMessageId: string,
+    status: MessageStatus,
+    providerStatus: string,
+    errorCode?: string,
+  ): Promise&lt;number&gt; {
+    const { count } &#x3D; await this.prisma.message.updateMany({
+      where: { providerMessageId, status: MessageStatus.ACCEPTED },
+      data: {
+        status,
+        providerStatus: providerStatus.slice(0, 64),
+        providerErrorCode: errorCode?.slice(0, 128),
+      },
+    });
+    return count;
+  }
+
+  findSmsAwaitingDelivery(limit: number, now &#x3D; new Date()): Promise&lt;Message[]&gt; {
+    return this.prisma.message.findMany({
+      where: {
+        channel: &#x27;SMS&#x27;,
+        status: MessageStatus.ACCEPTED,
+        providerMessageId: { not: null },
+        createdAt: { gte: new Date(now.getTime() - DELIVERY_WINDOW_MS) },
+      },
+      orderBy: { createdAt: &#x27;asc&#x27; },
+      take: limit,
+    });
+  }
+
+  findByReference(referenceId: string): Promise&lt;Message | null&gt; {
+    return this.prisma.message.findUnique({ where: { referenceId } });
+  }
+
+  async findByReferenceOrFail(referenceId: string): Promise&lt;Message&gt; {
+    const message &#x3D; await this.findByReference(referenceId);
+    if (!message) throw new NotFoundException(&#x27;Mensaje no encontrado.&#x27;);
+    return message;
+  }
+
+  async list(
+    filters: IMessageListFilters,
+  ): Promise&lt;{ items: Message[]; total: number }&gt; {
+    const where: Prisma.MessageWhereInput &#x3D; {
+      channel: filters.channel,
+      status: filters.status,
+      provider: filters.provider,
+      createdAt:
+        filters.from || filters.to
+          ? { gte: filters.from, lte: filters.to }
+          : undefined,
+    };
+    const [items, total] &#x3D; await this.prisma.$transaction([
+      this.prisma.message.findMany({
+        where,
+        orderBy: { createdAt: &#x27;desc&#x27; },
+        skip: (filters.page - 1) * filters.pageSize,
+        take: filters.pageSize,
+      }),
+      this.prisma.message.count({ where }),
+    ]);
+    return { items, total };
+  }
+
+  /** Descifra el contenido AUDIT. 404 si no hay contenido (política NONE o ya purgado). */
+  revealContent(message: Message): string {
+    if (!message.contentEncrypted) {
+      throw new NotFoundException(
+        &#x27;El contenido no está disponible (política NONE o vencido).&#x27;,
+      );
+    }
+    return this.content.reveal(message.contentEncrypted);
+  }
+
+  /** Verifica &#x60;content&#x60; contra la huella guardada sin revelar el original. */
+  verifyContent(message: Message, content: string): boolean {
+    if (!message.contentHmac) {
+      throw new NotFoundException(&#x27;El mensaje no tiene huella de contenido.&#x27;);
+    }
+    return this.content.verify(content, message.contentHmac);
+  }
+
+  /** Anula el contenido cifrado AUDIT vencido (un lote). La fila y su huella HMAC se conservan. */
+  async purgeExpiredContent(
+    batchSize: number,
+    now &#x3D; new Date(),
+  ): Promise&lt;number&gt; {
+    const rows &#x3D; await this.prisma.message.findMany({
+      where: {
+        contentEncrypted: { not: null },
+        contentExpiresAt: { lt: now },
+      },
+      select: { id: true },
+      take: batchSize,
+    });
+    if (rows.length &#x3D;&#x3D;&#x3D; 0) return 0;
+
+    const { count } &#x3D; await this.prisma.message.updateMany({
+      where: { id: { in: rows.map((row) &#x3D;&gt; row.id) } },
+      data: { contentEncrypted: null },
+    });
+    return count;
+  }
+
+  /** Borra filas más viejas que &#x60;olderThan&#x60; (un lote). &#x60;resentFromId&#x60; queda en NULL por la FK. */
+  async deleteOlderThan(olderThan: Date, batchSize: number): Promise&lt;number&gt; {
+    const rows &#x3D; await this.prisma.message.findMany({
+      where: { createdAt: { lt: olderThan } },
+      select: { id: true },
+      take: batchSize,
+    });
+    if (rows.length &#x3D;&#x3D;&#x3D; 0) return 0;
+
+    const { count } &#x3D; await this.prisma.message.deleteMany({
+      where: { id: { in: rows.map((row) &#x3D;&gt; row.id) } },
+    });
+    return count;
+  }
+}
+</code></pre>
+    </div>
+
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+                   </div><div class="search-results">
+    <div class="has-results">
+        <h1 class="search-results-title"><span class='search-results-count'></span> results matching "<span class='search-query'></span>"</h1>
+        <ul class="search-results-list"></ul>
+    </div>
+    <div class="no-results">
+        <h1 class="search-results-title">No results matching "<span class='search-query'></span>"</h1>
+    </div>
+</div>
+</div>
+               <!-- END CONTENT -->
+           </div>
+       </div>
+
+          <label class="dark-mode-switch">
+               <input type="checkbox">
+               <span class="slider">
+                    <svg class="slider-icon" viewBox="0 0 24 24" fill="none" height="20" stroke="#000" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" width="20" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M21 12.79A9 9 0 1111.21 3 7 7 0 0021 12.79z"></path>
+                    </svg>
+               </span>
+          </label>
+
+       <script>
+            var COMPODOC_CURRENT_PAGE_DEPTH = 1;
+            var COMPODOC_CURRENT_PAGE_CONTEXT = 'injectable';
+            var COMPODOC_CURRENT_PAGE_URL = 'MessageDBService.html';
+            var MAX_SEARCH_RESULTS = 15;
+       </script>
+
+       <script>
+               $darkModeToggleSwitchers = document.querySelectorAll('.dark-mode-switch input');
+               checkToggle(darkModeState);
+               if ($darkModeToggleSwitchers.length > 0) {
+                    for (var i = 0; i < $darkModeToggleSwitchers.length; i++) {
+                         $darkModeToggleSwitchers[i].addEventListener('change', function (event) {
+                              darkModeState = !darkModeState;
+                              toggleDarkMode(darkModeState);
+                         });
+                    }
+               }
+          </script>
+
+       <script src="../js/libs/custom-elements.min.js"></script>
+       <script src="../js/libs/lit-html.js"></script>
+
+       <script src="../js/menu-wc.js" defer></script>
+       <script nomodule src="../js/menu-wc_es5.js" defer></script>
+
+       <script src="../js/libs/bootstrap-native.js"></script>
+
+       <script src="../js/libs/es6-shim.min.js"></script>
+       <script src="../js/libs/EventDispatcher.js"></script>
+       <script src="../js/libs/promise.min.js"></script>
+
+       <script src="../js/compodoc.js"></script>
+
+       <script src="../js/tabs.js"></script>
+       <script src="../js/menu.js"></script>
+       <script src="../js/libs/clipboard.min.js"></script>
+       <script src="../js/libs/prism.js"></script>
+       <script src="../js/sourceCode.js"></script>
+          <script src="../js/search/search.js"></script>
+          <script src="../js/search/lunr.min.js"></script>
+          <script src="../js/search/search-lunr.js"></script>
+          <script src="../js/search/search_index.js"></script>
+       <script src="../js/lazy-load-graphs.js"></script>
+
+
+    </body>
+</html>

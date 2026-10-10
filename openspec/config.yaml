@@ -1,0 +1,74 @@
+schema: spec-driven
+
+context: |
+  Tech stack: NestJS 11 + TypeScript 5.7 (CommonJS, ES2023, decorators), pnpm 10 / Node 22, Prisma 6 (PostgreSQL), Sequelize (DB2/AS400, opcional), Jest.
+  Arquitectura: capas api -> modules -> core/common. `src/api/<feature>/` (controllers, dtos/{request,response}, docs Swagger, ApiService) y `src/modules/<dominio>/` (servicios, modulos -db con Prisma, adaptadores de proveedores). `core/` es infraestructura del proceso; `common/` es transversal.
+  Auth: JwtAuthGuard + PermissionsGuard compuestos en `@WithPermissions([...])`; Basic Auth en endpoints pre-login; credenciales M2M con firma HMAC. Permisos `dominio:accion` en `src/common/enum/permissions.enum.ts`.
+  Validacion: ValidationPipe global con whitelist y forbidNonWhitelisted; DTOs con class-validator, class-transformer y Swagger.
+  Config: `@nestjs/config` con loader en `src/core/config/config-loader.ts` y schema Joi en `config-schema.ts`; toda variable nueva tambien en `.env.template`. Nunca `process.env` fuera de `core/config`.
+  Modulos opcionales: cada dependencia de infra o proveedor tiene fallback (noop, console o memoria) cuando falta su variable.
+  Logging: nestjs-pino con Seq opcional; Sentry opcional (solo 5xx). No loguear PII ni secretos.
+  Versionado: `@Version('1')` por metodo; prefijo global `/node-starter-backend/api`.
+  Estilo: ESLint 9 + typescript-eslint + Prettier; husky + lint-staged + commitlint (conventional commits); semantic-release con prerelease en develop y qa.
+  Mensajes y documentacion en espanol; identificadores en ingles. CI en GitHub Actions o GitLab CI (lint, typecheck, test, build, release).
+
+strict_tdd: true
+
+testing:
+  strict_tdd: true
+  runner:
+    framework: jest
+    command: "pnpm test"
+    config_root: "src/"
+    test_regex: ".*\\.spec\\.ts$"
+  layers:
+    unit:
+      available: true
+      tool: "jest + ts-jest"
+    e2e:
+      available: true
+      tool: "supertest + @nestjs/testing"
+      command: "pnpm test:e2e"
+  coverage:
+    available: true
+    command: "pnpm test:cov"
+    output_dir: "coverage/"
+  quality:
+    linter:
+      available: true
+      command: "pnpm lint"
+    type_checker:
+      available: true
+      command: "pnpm check:types"
+    formatter:
+      available: true
+      command: "pnpm format"
+
+# El schema spec-driven solo acepta rules para los artifact IDs proposal | specs | design | tasks.
+# Las convenciones de apply/verify viven en .context/rules/typescript.md y test.md; el checklist de
+# archivado, en openspec/README.md.
+#
+# YAML: si un bullet contiene "Texto: mas texto" (dos puntos seguidos de espacio) se interpreta como un
+# mapa y el CLI descarta TODA la regla del artefacto. Envolver esos bullets entre comillas.
+rules:
+  proposal:
+    - Identificar modulos afectados (api/* y modules/*)
+    - Listar variables de entorno nuevas con su valor por defecto y el fallback si faltan
+    - Definir los permisos nuevos antes de tocar guards o controllers
+    - Plan de rollback explicito si el cambio agrega variables requeridas en Joi o migraciones
+  specs:
+    - Usar Given/When/Then en escenarios
+    - Usar RFC 2119 (MUST/SHALL/SHOULD/MAY)
+    - "Cada endpoint nuevo: contrato de request, response y codigos de error"
+    - Comportamiento de auth y permisos explicito por endpoint
+  design:
+    - Diagrama de secuencia para flujos con varias capas (controller, ApiService, DBService, proveedor)
+    - Decisiones arquitectonicas con su fundamento
+    - "Mapeo de capas: archivos en `src/api/<feature>/` y `src/modules/<dominio>/`"
+    - Lista explicita de guards y permisos por endpoint
+    - Reusar el patron vigente (strategy, factory por config, template method) salvo justificacion explicita
+  tasks:
+    - "Agrupar por fase: config, modulo de dominio, modulo api, registro en api.module.ts, permisos, docs Swagger, tests"
+    - Numeracion jerarquica (1.1, 1.2)
+    - Cada tarea pequena (un archivo o un cambio cohesivo)
+    - Incluir tareas de tests TDD-first

@@ -1,0 +1,4 @@
+{
+  "ORDER_STATUS_TITLE": "Tu orden cambió de estado",
+  "ORDER_STATUS_BODY": "La orden {reference} pasó de {from} a {to}."
+}

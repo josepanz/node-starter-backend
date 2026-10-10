@@ -3,11 +3,11 @@ import { AccessLevel } from '@prisma/client';
 import { IsArray, IsObject, IsOptional, IsString } from 'class-validator';
 
 export class RoleScopeDTO {
-  @ApiProperty({ example: 'merchant-admin' })
+  @ApiProperty({ example: 'tenant-admin' })
   @IsString()
   name: string;
 
-  @ApiProperty({ example: 'Administrador del comercio', nullable: true })
+  @ApiProperty({ example: 'Administrador del tenant', nullable: true })
   @IsString()
   @IsOptional()
   description?: string | null;

@@ -8,14 +8,17 @@ import { STORAGE_MODULE_OPTIONS } from './interfaces/storage.interface';
   providers: [
     {
       provide: S3Client,
-      useFactory: () =>
-        new S3Client({
-          region: APP_CONFIG().s3.region!,
-          credentials: {
-            accessKeyId: APP_CONFIG().s3.accessKeyId!,
-            secretAccessKey: APP_CONFIG().s3.secretAccessKey!,
-          },
-        }),
+      // Sin S3 configurado el cliente se construye igual (no abre conexión): la app arranca y las
+      // operaciones de storage fallan recién al usarse. Región por defecto solo para poder instanciar.
+      useFactory: () => {
+        const { region, accessKeyId, secretAccessKey } = APP_CONFIG().s3;
+        return new S3Client({
+          region: region || 'us-east-1',
+          ...(accessKeyId && secretAccessKey
+            ? { credentials: { accessKeyId, secretAccessKey } }
+            : {}),
+        });
+      },
     },
     {
       provide: STORAGE_MODULE_OPTIONS,

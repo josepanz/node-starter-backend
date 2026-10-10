@@ -1,9 +1,13 @@
 import { BadRequestException, Injectable } from '@nestjs/common';
 import { PrismaDatasource } from '@core/database/services/prisma.service';
+import { PermissionsCacheService } from '@core/cache/permissions-cache.service';
 
 @Injectable()
 export class UserRolesDBService {
-  constructor(private readonly prisma: PrismaDatasource) {}
+  constructor(
+    private readonly prisma: PrismaDatasource,
+    private readonly permissionsCache: PermissionsCacheService,
+  ) {}
 
   async getUserRoleIds(userId: number): Promise<number[]> {
     const userRoles = await this.prisma.extended.userRoles.findMany({
@@ -60,6 +64,8 @@ export class UserRolesDBService {
         isActive: true,
       },
     });
+    // Si el caller usa una tx, la ventana hasta el commit queda acotada por el TTL del cache.
+    await this.permissionsCache.invalidateAll();
   }
 
   async getAllAvailableRoles(): Promise<

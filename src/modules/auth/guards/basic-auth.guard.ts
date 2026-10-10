@@ -1,89 +1,104 @@
 import {
-  Injectable,
   CanActivate,
   ExecutionContext,
-  UnauthorizedException,
   ForbiddenException,
+  Injectable,
   Logger,
+  UnauthorizedException,
 } from '@nestjs/common';
-import { PrismaDatasource } from '@core/database/services/prisma.service';
-import { ApiClientCredential } from '@prisma/client';
+import { Reflector } from '@nestjs/core';
+import { ApiClientsDBService } from '@modules/api-clients-db/services/api-clients-db.service';
+import type { ApiClientVerification } from '@modules/api-clients-db/interfaces/api-client.interface';
+import { API_CLIENT_SCOPES } from '@modules/api-clients-db/constants/api-client-scopes.constants';
+import { isIpAllowed } from '@common/helpers/ip.helper';
+import { API_CLIENT_SCOPES_KEY } from '../decorators/api-client.decorators';
+import type { ApiClientRequest } from '../interfaces/api-client-request.interface';
 
+/**
+ * Patrón: guard de autenticación M2M (Basic `clientId:secret`). Verifica el secret contra su hash
+ * bcrypt (en `ApiClientsDBService`), aplica allowlist de IPs y, si el handler declara
+ * `@ApiClientScopes(...)`, exige esos scopes. Publica la identidad en `request.apiClient`.
+ * Los endpoints que solo necesitan "app cliente válida" (login, onboarding) no declaran scopes.
+ */
 @Injectable()
 export class BasicAuthGuard implements CanActivate {
   private readonly logger = new Logger(BasicAuthGuard.name);
 
-  constructor(private readonly prisma: PrismaDatasource) {}
+  constructor(
+    private readonly apiClients: ApiClientsDBService,
+    private readonly reflector: Reflector,
+  ) {}
 
   async canActivate(context: ExecutionContext): Promise<boolean> {
-    const request = context.switchToHttp().getRequest();
-    const authHeader = request.headers['authorization'];
+    const request = context.switchToHttp().getRequest<ApiClientRequest>();
+    const { clientId, secret } = this.parseBasicHeader(
+      request.headers.authorization,
+    );
 
-    if (!authHeader || !authHeader.startsWith('Basic ')) {
-      throw new UnauthorizedException('Se requiere Basic Authentication.');
-    }
-
-    const encodedCredentials = authHeader.substring(6);
-    let decodedString: string;
-
+    let verification: ApiClientVerification;
     try {
-      decodedString = Buffer.from(encodedCredentials, 'base64').toString(
-        'utf8',
-      );
+      verification = await this.apiClients.verifyCredentials(clientId, secret);
     } catch (error) {
       this.logger.error(
-        `Error de decodificación Base64 en Basic Auth. ${error}`,
-      );
-      throw new UnauthorizedException('Formato de credenciales inválido.');
-    }
-
-    const credentials = decodedString.split(':');
-    if (credentials.length !== 2) {
-      throw new UnauthorizedException(
-        'Formato de credenciales Basic Auth incorrecto (debe ser client_id:client_secret).',
-      );
-    }
-
-    const [clientId, clientSecret] = credentials;
-
-    let apiClientCredential: ApiClientCredential;
-    try {
-      apiClientCredential =
-        (await this.prisma.extended.apiClientCredential.findUnique({
-          where: { clientId: clientId },
-        })) as unknown as ApiClientCredential;
-    } catch (error) {
-      this.logger.error(
-        'Error de base de datos al buscar credenciales:',
-        error.stack,
+        'Error al validar credenciales de API',
+        error instanceof Error ? error.stack : String(error),
       );
       throw new ForbiddenException(
         'Error de servicio al validar credenciales.',
       );
     }
 
-    if (!apiClientCredential) {
-      throw new UnauthorizedException('Client ID incorrecto.');
+    if (verification.result === 'invalid') {
+      throw new UnauthorizedException('Credenciales inválidas.');
     }
-
-    if (!apiClientCredential.isActive) {
-      this.logger.warn(`Acceso denegado: Cliente ${clientId} inactivo.`);
+    if (verification.result === 'inactive') {
+      this.logger.warn(`Acceso denegado: cliente ${clientId} inactivo.`);
       throw new ForbiddenException(
-        `El acceso para este cliente ha sido revocado.`,
+        'El acceso para este cliente ha sido revocado.',
       );
     }
 
-    const isPasswordValid = clientSecret === apiClientCredential.secretKey;
-
-    if (!isPasswordValid) {
-      throw new UnauthorizedException('Secreto incorrecto.');
+    const { principal } = verification;
+    if (!isIpAllowed(request.ip, principal.allowedIps)) {
+      this.logger.warn(`Acceso denegado: IP no permitida para ${clientId}.`);
+      throw new ForbiddenException('IP no autorizada para este cliente.');
     }
 
-    request.apiClient = {
-      id: apiClientCredential.clientId,
-      name: apiClientCredential.clientName,
-    };
+    const required =
+      this.reflector.getAllAndOverride<string[] | undefined>(
+        API_CLIENT_SCOPES_KEY,
+        [context.getHandler(), context.getClass()],
+      ) ?? [];
+    const granted = principal.scopes;
+    const hasScopes =
+      granted.includes(API_CLIENT_SCOPES.ALL) ||
+      required.every((scope) => granted.includes(scope));
+    if (!hasScopes) {
+      throw new ForbiddenException('Scope insuficiente para este recurso.');
+    }
 
+    request.apiClient = principal;
     return true;
+  }
+
+  private parseBasicHeader(header: string | undefined): {
+    clientId: string;
+    secret: string;
+  } {
+    if (!header?.startsWith('Basic ')) {
+      throw new UnauthorizedException('Se requiere Basic Authentication.');
+    }
+    const decoded = Buffer.from(header.slice(6), 'base64').toString('utf8');
+    // El secret puede contener ':'; solo el primero separa clientId de secret.
+    const separator = decoded.indexOf(':');
+    if (separator <= 0 || separator === decoded.length - 1) {
+      throw new UnauthorizedException(
+        'Formato de credenciales Basic Auth incorrecto (debe ser client_id:client_secret).',
+      );
+    }
+    return {
+      clientId: decoded.slice(0, separator),
+      secret: decoded.slice(separator + 1),
+    };
   }
 }

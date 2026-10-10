@@ -5,5 +5,5 @@ export * from './update-permission.request.dto';
 export * from './assign-permissions-to-role.request.dto';
 export * from './assign-roles-to-user.request.dto';
 export * from './assign-permissions-to-user.request.dto';
-export * from './get-role.request';
-export * from './get-permission.request';
+export * from '@modules/roles-permission-db/dtos/get-role.request';
+export * from '@modules/roles-permission-db/dtos/get-permission.request';

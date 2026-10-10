@@ -1,287 +1,308 @@
 #!/usr/bin/env node
 /**
- * Actualiza automáticamente el README.md
- * - Inserta dependencias, scripts y funcionalidades documentadas por Compodoc
- * - Inserta estructura de carpetas y arquitectura
- * - Actualiza la fecha de última modificación
- * - Muestra controllers y endpoints en tabla Markdown
- * - Muestra módulos, providers, imports y exports
- * - Lista controllers dentro de @api
- * - Añade sección miscellaneous
+ * Regenera los bloques automáticos del README.md.
+ *
+ * Patrón: template con marcadores explícitos (`<!-- AUTO:<NOMBRE>:START -->` ...
+ * `<!-- AUTO:<NOMBRE>:END -->`). Solo se reescribe lo que está entre marcadores; si un
+ * marcador falta se avisa por consola y no se toca nada. Todo lo demás es contenido manual.
+ *
+ * Fuentes: package.json, docs/documentation.json (compodoc, opcional), .env.template,
+ * escaneo de src/api/**\/*.controller.ts y árbol de src/.
+ *
+ * Uso: node scripts/update-readme.js   (env README_LOCALE, default "es")
  */
-
 const fs = require('fs');
 const path = require('path');
-const { readPackageUpSync } = require('read-pkg-up');
 
 const rootDir = process.cwd();
-const readmePath = path.resolve(rootDir, 'README.md');
-const compodocJson = path.resolve(rootDir, 'docs', 'documentation.json');
-const apiDir = path.resolve(rootDir, 'src', 'api');
+const readmePath = path.join(rootDir, 'README.md');
+const pkgPath = path.join(rootDir, 'package.json');
+const compodocPath = path.join(rootDir, 'docs', 'documentation.json');
+const envTemplatePath = path.join(rootDir, '.env.template');
+const srcDir = path.join(rootDir, 'src');
+const apiDir = path.join(srcDir, 'api');
+const locale = process.env.README_LOCALE || 'es';
 
-// --- Leemos package.json ---
-const pkg = readPackageUpSync({ cwd: rootDir })?.packageJson;
-if (!pkg) throw new Error('❌ No se encontró package.json');
+const NO_COMPODOC =
+  '> _Sin datos de Compodoc: ejecutar `pnpm docs:json` (o `pnpm docs:update-readme`) y volver a correr el script._';
 
-// --- Leemos README.md ---
-if (!fs.existsSync(readmePath)) throw new Error('❌ No se encontró README.md');
-let readme = fs.readFileSync(readmePath, 'utf8');
+/** Módulos opcionales: tabla declarativa (nombre, env que lo activa, comportamiento sin ella). */
+const OPTIONAL_MODULES = [
+  ['PostgreSQL / Prisma', '`DATABASE_URL`', 'Base principal; requerida'],
+  ['DB2 / Sequelize', '`DATABASE_CONNECTION_STRING`', 'No se registra el módulo Sequelize'],
+  ['Redis (cache, rate limit, nonces, realtime)', '`REDIS_URL`', 'Memoria del proceso'],
+  ['MongoDB (activity log)', '`MONGO_URI`', 'Store noop (no persiste)'],
+  ['Email SMTP', '`EMAIL_HOST`', 'ConsoleEmailSender (solo loguea)'],
+  ['SMS Infobip', '`SMS_PROVIDER=infobip` + `INFOBIP_API_KEY`, `INFOBIP_BASE_URL`', 'Proveedor console'],
+  ['Push FCM', '`FIREBASE_PROJECT_ID`, `FIREBASE_CLIENT_EMAIL`, `FIREBASE_PRIVATE_KEY`', 'Proveedor Noop'],
+  ['Push Web (VAPID)', '`VAPID_PUBLIC_KEY`, `VAPID_PRIVATE_KEY`', 'Proveedor Noop'],
+  ['Storage S3', '`S3_BUCKET_NAME`, `S3_REGION` y `S3_ACCESS_KEY_ID` / `S3_SECRET_ACCESS_KEY`', 'El módulo siempre se registra y el cliente S3 se crea igual (región por defecto `us-east-1`, credenciales por la cadena por defecto del SDK); la app arranca y las operaciones de storage fallan recién al usarse'],
+  ['Sentry', '`SENTRY_DSN`', 'No reporta'],
+  ['Seq (logs)', '`SEQ_ENABLED=true`', 'Solo logs por stdout'],
+  ['Scheduler / cron jobs', '`SCHEDULER_ENABLED` (cada job: `*_CRON`, `off` lo desactiva)', 'Sin tareas programadas'],
+  ['Rate limiting', '`RATE_LIMIT_ENABLED`', 'Sin límites'],
+  ['Ledger de mensajes con contenido', '`MESSAGE_CONTENT_POLICY=AUDIT` (+ `ENCRYPTION_KEYS`)', 'Política NONE (sin contenido)'],
+];
 
-// --- Fecha ---
-const formattedDate = new Date().toLocaleString('es-PY', {
-  day: '2-digit',
-  month: 'long',
-  year: 'numeric',
-  hour: '2-digit',
-  minute: '2-digit',
-});
+const LAYER_NOTES = {
+  api: 'Entrada HTTP: controllers, DTOs, docs, ApiService',
+  modules: 'Servicios, repositorios y acceso a datos por dominio',
+  common: 'Transversal: decoradores, helpers, enums, interfaces',
+  core: 'Config, base de datos, filtros, interceptors, observabilidad',
+  i18n: 'Traducciones',
+  types: 'Tipos globales',
+};
 
-// --- Dependencias ---
-const deps =
-  Object.entries(pkg.dependencies || {})
-    .map(([name, version]) => `- **${name}** \`${version}\``)
-    .join('\n') || '_Sin dependencias._';
+const warn = (msg) => console.warn(`[update-readme] ${msg}`);
+const cell = (v) => String(v ?? '').replace(/\|/g, '\\|').replace(/\r?\n/g, ' ');
+const table = (headers, rows) =>
+  [
+    `| ${headers.join(' | ')} |`,
+    `| ${headers.map(() => '---').join(' | ')} |`,
+    ...rows.map((r) => `| ${r.map(cell).join(' | ')} |`),
+  ].join('\n');
+const readJson = (file) => JSON.parse(fs.readFileSync(file, 'utf8'));
+const rel = (p) => p.split(path.sep).join('/');
 
-// --- Scripts ---
-const scripts =
-  Object.entries(pkg.scripts || {})
-    .map(([name, cmd]) => `- **${name}** → \`${cmd}\``)
-    .join('\n') || '_Sin scripts definidos._';
+// ---------- Bloques ----------
 
-// --- Funcionalidades documentadas por Compodoc ---
-let functionalities = '_Sin funcionalidades documentadas._';
-if (fs.existsSync(compodocJson)) {
+function lastUpdate() {
+  return new Date().toLocaleString(locale, {
+    day: '2-digit',
+    month: 'long',
+    year: 'numeric',
+    hour: '2-digit',
+    minute: '2-digit',
+  });
+}
+
+function dependencies(pkg) {
+  const list = (obj) =>
+    Object.entries(obj || {}).map(([n, v]) => [`\`${n}\``, `\`${v}\``]);
+  const prod = list(pkg.dependencies);
+  const dev = list(pkg.devDependencies);
+  const out = [];
+  out.push(`**Dependencies** (${prod.length})\n`);
+  out.push(prod.length ? table(['Paquete', 'Versión'], prod) : '_Sin dependencias._');
+  out.push(`\n**DevDependencies** (${dev.length})\n`);
+  out.push(dev.length ? table(['Paquete', 'Versión'], dev) : '_Sin devDependencies._');
+  return out.join('\n');
+}
+
+function scripts(pkg) {
+  const rows = Object.entries(pkg.scripts || {}).map(([n, c]) => [`\`${n}\``, `\`${c}\``]);
+  return rows.length ? table(['Script', 'Comando'], rows) : '_Sin scripts definidos._';
+}
+
+function modules() {
+  if (!fs.existsSync(compodocPath)) return NO_COMPODOC;
+  let data;
   try {
-    const data = JSON.parse(fs.readFileSync(compodocJson, 'utf8'));
-    const modules = data.modules || [];
-    const coverage = data.coverage || [];
-    const lines = [];
+    data = readJson(compodocPath);
+  } catch (err) {
+    return `> _No se pudo leer docs/documentation.json: ${err.message}_`;
+  }
+  const of = (m, type) => {
+    const c = (m.children || []).find((x) => x.type === type);
+    return (c ? c.elements : m[type] || []).map((x) => x.name).join(', ') || '-';
+  };
+  const rows = (data.modules || [])
+    .filter((m) => m.file && m.file.startsWith('src/'))
+    .sort((a, b) => a.file.localeCompare(b.file))
+    .map((m) => [`\`${m.name}\``, `\`${rel(m.file)}\``, of(m, 'controllers'), of(m, 'providers')]);
+  return rows.length
+    ? table(['Módulo', 'Archivo', 'Controllers', 'Providers'], rows)
+    : '_Compodoc no reportó módulos._';
+}
 
-    const renderControllerTable = (ctrlCov) => {
-      lines.push(`#### - Controller: **${ctrlCov.name}**`);
-      lines.push('');
-    };
+function walk(dir, filter, acc = []) {
+  if (!fs.existsSync(dir)) return acc;
+  for (const e of fs.readdirSync(dir, { withFileTypes: true })) {
+    const full = path.join(dir, e.name);
+    if (e.isDirectory()) walk(full, filter, acc);
+    else if (filter(e.name)) acc.push(full);
+  }
+  return acc.sort();
+}
 
-    const renderModuleDetails = (mod, moduleCov) => {
-      lines.push(`### 🧩 Módulo **${mod.name}**\n`);
+const joinRoute = (...parts) =>
+  '/' + parts.map((p) => String(p || '').replace(/^\/+|\/+$/g, '')).filter(Boolean).join('/');
 
-      if (mod.imports && mod.imports.length > 0) {
-        lines.push(`**Imports:** ${mod.imports.map((i) => i.name).join(', ')}`);
+/** Escaneo simple por decoradores: @Controller + @Get/@Post/... + @Version + permisos/guards. */
+function endpoints() {
+  const files = walk(apiDir, (n) => n.endsWith('.controller.ts'));
+  if (!files.length) return '_Sin controllers detectados en `src/api`._';
+  const rows = [];
+  const verbRe = /@(Get|Post|Put|Patch|Delete)\(\s*(?:['"`]([^'"`]*)['"`])?\s*\)/;
+  for (const file of files) {
+    const lines = fs.readFileSync(file, 'utf8').split(/\r?\n/);
+    const src = lines.join('\n');
+    const ctrlMatch =
+      src.match(/@Controller\(\s*['"`]([^'"`]*)['"`]\s*\)/) ||
+      src.match(/@Controller\(\s*\{[^}]*path:\s*['"`]([^'"`]*)['"`]/);
+    const prefix = ctrlMatch ? ctrlMatch[1] : '';
+    const ctrlVer = (src.match(/@Controller\(\s*\{[^}]*version:\s*['"`](\d+)['"`]/) || [])[1];
+    const className = (src.match(/export class (\w+)/) || [])[1] || path.basename(file);
+    const classIdx = lines.findIndex((l) => /export class /.test(l));
+    const classDecos = lines.slice(0, Math.max(classIdx, 0)).join('\n');
+    const classPerms = permsOf(classDecos);
+
+    let block = [];
+    for (let i = Math.max(classIdx, 0) + 1; i < lines.length; i++) {
+      const line = lines[i];
+      if (/^\s{2}@/.test(line) || (block.length && /^\s{4,}\S/.test(line) && !/^\s{2}\S/.test(line))) {
+        block.push(line);
+        continue;
       }
-      if (mod.exports && mod.exports.length > 0) {
-        lines.push(`**Exports:** ${mod.exports.map((e) => e.name).join(', ')}`);
-      }
-      if (mod.providers && mod.providers.length > 0) {
-        lines.push(
-          `**Providers:** ${mod.providers.map((p) => p.name).join(', ')}`,
-        );
-      }
-
-      // --- Controllers desde coverage.files ---
-      if (moduleCov && moduleCov.length > 0) {
-        moduleCov.forEach(renderControllerTable);
-      } else {
-        lines.push('_Sin controllers documentados para este módulo._\n');
-      }
-
-      lines.push('');
-    };
-
-    if (modules.length) {
-      modules.forEach((mod) => {
-        // carpeta base del módulo
-        const moduleDir = path.dirname(mod.file); // ejemplo: 'src/api/auth'
-        // filtrar coverage para este módulo
-        let moduleCov = [];
-        if (coverage) {
-          const ff = coverage.files.filter(
-            (f) => f.type === 'controller' && f.filePath.startsWith(moduleDir),
-          );
-          moduleCov.push(...ff);
+      if (block.length && /^\s{2}(?:async\s+)?\w+\s*\(/.test(line)) {
+        const text = block.join('\n');
+        const v = text.match(verbRe);
+        if (v) {
+          const ver = (text.match(/@Version\(\s*['"`](\d+)['"`]/) || [])[1] || ctrlVer;
+          const p = joinRoute(ver ? `v${ver}` : '', prefix, v[2] || '');
+          const perms = [...new Set([...classPerms, ...permsOf(text)])];
+          rows.push([v[1].toUpperCase(), `\`${p}\``, className, perms.join(', ') || '-']);
         }
+      }
+      block = [];
+    }
+  }
+  rows.sort((a, b) => a[1].localeCompare(b[1]) || a[0].localeCompare(b[0]));
+  return table(['Método', 'Ruta', 'Controller', 'Permisos / Guards'], rows);
+}
 
-        const moduleMarkdown = renderModuleDetails(mod, moduleCov);
-        functionalities += '\n' + moduleMarkdown;
+function permsOf(text) {
+  const out = [];
+  for (const m of text.matchAll(/@(?:WithPermissions|Permissions)\(\s*\[?([^)\]]*)\]?\s*\)/g)) {
+    m[1].split(',').map((s) => s.trim().replace(/^PERMISSIONS\./, '')).filter(Boolean).forEach((s) => out.push(s));
+  }
+  for (const m of text.matchAll(/@(?:Public|Roles|UseGuards)\(([^)]*(?:\([^)]*\))?[^)]*)\)/g)) {
+    const name = m[0].startsWith('@UseGuards') ? `guards(${m[1].trim()})` : m[0];
+    out.push(name);
+  }
+  if (/@Public\b/.test(text) && !out.some((o) => o.startsWith('@Public'))) out.push('@Public');
+  return out;
+}
+
+function optionalModules() {
+  return table(
+    ['Módulo', 'Se activa con', 'Sin configurar'],
+    OPTIONAL_MODULES,
+  );
+}
+
+/** Variables por sección, leídas de los encabezados `# ---- / # NOMBRE / # ----` de .env.template. */
+function env() {
+  if (!fs.existsSync(envTemplatePath)) return '> _No se encontró `.env.template`._';
+  const lines = fs.readFileSync(envTemplatePath, 'utf8').split(/\r?\n/);
+  const isRule = (l) => /^#\s*[-=]{5,}\s*$/.test(l);
+  const sections = [];
+  let current = null;
+  let comments = [];
+  let inPem = false;
+  for (let i = 0; i < lines.length; i++) {
+    const l = lines[i];
+    if (inPem) {
+      if (/-----END /.test(l)) inPem = false;
+      continue;
+    }
+    if (isRule(l) && lines[i + 1] && /^#/.test(lines[i + 1]) && !isRule(lines[i + 1])) {
+      // encabezado: título + notas hasta la siguiente regla
+      let j = i + 1;
+      const head = [];
+      while (j < lines.length && !isRule(lines[j])) head.push(lines[j++].replace(/^#\s?/, '').trim());
+      current = { title: head[0], note: head.slice(1).join(' '), vars: [] };
+      sections.push(current);
+      comments = [];
+      i = j;
+      continue;
+    }
+    if (/^#/.test(l)) {
+      comments.push(l.replace(/^#\s?/, '').trim());
+      continue;
+    }
+    const m = l.match(/^([A-Z][A-Z0-9_]*)=(.*)$/);
+    if (m && current) {
+      if (/^"-----BEGIN /.test(m[2]) && !/-----END /.test(m[2])) inPem = true;
+      current.vars.push([`\`${m[1]}\``, comments.join(' ')]);
+    }
+    if (m || l.trim() === '') comments = [];
+  }
+  const out = [];
+  for (const s of sections) {
+    if (!s.vars.length) continue;
+    out.push(`**${s.title}**${s.note ? ` - ${s.note}` : ''}\n`);
+    out.push(table(['Variable', 'Descripción'], s.vars));
+    out.push('');
+  }
+  out.push('_Los valores por defecto y placeholders están en `.env.template`; no se listan aquí._');
+  return out.join('\n');
+}
+
+function structure() {
+  const lines = ['```plaintext', 'src/'];
+  const entries = (dir) =>
+    fs.readdirSync(dir, { withFileTypes: true }).sort((a, b) => Number(b.isDirectory()) - Number(a.isDirectory()) || a.name.localeCompare(b.name));
+  const top = entries(srcDir);
+  top.forEach((e, i) => {
+    const last = i === top.length - 1;
+    const note = e.isDirectory() && LAYER_NOTES[e.name] ? `  # ${LAYER_NOTES[e.name]}` : '';
+    lines.push(`${last ? '└── ' : '├── '}${e.name}${e.isDirectory() ? '/' : ''}${note}`);
+    if (e.isDirectory()) {
+      const subs = entries(path.join(srcDir, e.name)).filter((s) => s.isDirectory());
+      subs.forEach((s, k) => {
+        lines.push(`${last ? '    ' : '│   '}${k === subs.length - 1 ? '└── ' : '├── '}${s.name}/`);
       });
     }
-
-    if (lines.length > 0) {
-      functionalities = "## 🧩 **Funcionalidades** documentadas\n\n"
-      functionalities += lines.join('\n');
-    } 
-  } catch (err) {
-    console.error('⚠️ No se pudo leer documentation.json:', err.message);
-  }
+  });
+  lines.push('```');
+  return lines.join('\n');
 }
 
-// --- Documentación de API controllers en src/api ---
-let apiControllersSection = '_Sin controllers en @api detectados._';
-if (fs.existsSync(apiDir)) {
-  const walkControllers = (dir) => {
-    let entries = [];
-    fs.readdirSync(dir, { withFileTypes: true }).forEach((entry) => {
-      const fullPath = path.join(dir, entry.name);
-      if (entry.isDirectory()) {
-        entries = entries.concat(walkControllers(fullPath));
-      } else if (entry.isFile() && entry.name.endsWith('.controller.ts')) {
-        const controllerName = path.basename(entry.name, '.ts');
-        entries.push(controllerName);
-      }
-    });
-    return entries;
+// ---------- Reemplazo seguro entre marcadores ----------
+
+function replaceBlock(text, name, content) {
+  const start = `<!-- AUTO:${name}:START -->`;
+  const end = `<!-- AUTO:${name}:END -->`;
+  const s = text.indexOf(start);
+  const e = s === -1 ? -1 : text.indexOf(end, s + start.length);
+  if (s === -1 || e === -1) {
+    warn(`marcador AUTO:${name} no encontrado en README.md; se omite.`);
+    return text;
+  }
+  return `${text.slice(0, s + start.length)}\n${content}\n${text.slice(e)}`;
+}
+
+function main() {
+  if (!fs.existsSync(readmePath)) {
+    warn('no se encontró README.md');
+    process.exitCode = 1;
+    return;
+  }
+  const pkg = readJson(pkgPath);
+  const blocks = {
+    LAST_UPDATE: lastUpdate,
+    DEPENDENCIES: () => dependencies(pkg),
+    SCRIPTS: () => scripts(pkg),
+    MODULES: modules,
+    ENDPOINTS: endpoints,
+    OPTIONAL_MODULES: optionalModules,
+    ENV: env,
+    STRUCTURE: structure,
   };
-
-  const controllers = walkControllers(apiDir);
-  if (controllers.length > 0) {
-    apiControllersSection = '## 📦 **Controllers** en @api\n\n';
-    apiControllersSection += controllers.map((c) => `- **${c}**`).join('\n');
+  let readme = fs.readFileSync(readmePath, 'utf8');
+  for (const [name, build] of Object.entries(blocks)) {
+    let content;
+    try {
+      content = build();
+    } catch (err) {
+      warn(`fallo generando ${name}: ${err.message}; se omite.`);
+      continue;
+    }
+    readme = replaceBlock(readme, name, content);
   }
+  fs.writeFileSync(readmePath, readme);
+  console.log(`README actualizado (${lastUpdate()})`);
 }
 
-// --- Estructura y arquitectura ---
-const architecture = `
-\`\`\`plaintext
-src/
-├── api/                # Puntos de entrada (rutas, controladores, dtos, validaciones)
-│   ├── auth/           # Autenticación, login, refresh, guards, etc.
-│   ├── users/          # Gestión de usuarios
-│   ├── onboarding/     # Registro o flujo de alta
-│   └── permissions/    # Roles y permisos del sistema
-│   └── ...             # Otras funcionalidades
-│
-├── modules/            # Casos de uso genéricos y reutilizables
-│   ├── email/          # Envío de correos (mailer)
-│   ├── auth/           # Módulo de autenticación compartido
-│   ├── db/             # Conexiones o repositorios a base de datos
-│   └── ...             # Otros módulos reutilizables
-│
-├── common/             # Decoradores, pipes, filtros, interceptores, utilidades
-├── core/               # Configuración principal, constantes globales
-├── prisma/             # Client de base de datos, migraciones
-└── main.ts             # Archivo main que define setup global del proyecto
-└── ...                 # Otros archivos de configuracion de typescript, nest, git, docker, etc
-\`\`\`
-
-**Arquitectura general**
-- @api: expone las rutas y orquesta los módulos.
-- @modules: contiene la lógica de negocio y recursos compartidos.
-- @common: utilidades, validadores y middlewares genéricos.
-- @core: punto central de configuración e inicialización.
-- Enfoque **Clean Architecture**: separación clara entre capas, alta cohesión, bajo acoplamiento, facilidad de testing y escalabilidad.
-`;
-
-// --- [NUEVO] Instalación Inicial (pnpm) ---
-const initialSetup = `
-## 🛠️ Instalación y Dependencias
-
-Esta aplicación utiliza **pnpm** como gestor de paquetes para una gestión eficiente de dependencias.
-
-1.  **Instalar pnpm globalmente (si aún no lo tienes):**
-
-    \`\`\`bash
-    npm install -g pnpm
-    \`\`\`
-
-2.  **Instalar todas las dependencias del proyecto:**
-
-    \`\`\`bash
-    pnpm install
-    \`\`\`
-
-3.  **Configuración del Entorno:**
-    Crea un archivo \`.env\` en la raíz del proyecto y define las variables de entorno necesarias (ej: \`DATABASE_URL\`, \`JWT_SECRET\`, etc.).
-
-4. **Opcionales:**
-    - Si se quiere generar documentación de compodocs (docs/documentation.json) y actualizar archivo readme en base a este \`pnpm docs:update-readme\`
-    - Si se quiere generar documentación de compodocs con htmls (docs/*) \`pnpm docs:generate\`
-
-5. **Compilar y ejecutar:**
-    - Desarrollo (watch):
-
-    \`\`\`bash
-    pnpm run start:dev
-    \`\`\`
-
-    - Producción:
-
-    \`\`\`bash
-    pnpm run build
-    \`\`\`
-
-    \`\`\`bash
-    pnpm run start:prod
-    \`\`\`
-`;
-
-// --- Configuración e Instalación de Prisma (usando pnpm) ---
-const prismaSetup = `
-### 💾 Configuración de Prisma (Base de Datos)
-
-Para interactuar con la base de datos a través de **Prisma**, sigue estos pasos:
-
-1.  **Instalar dependencias de desarrollo y el cliente (ya incluido en \`pnpm install\`, pero listado para referencia):**
-
-    \`\`\`bash
-    pnpm install prisma @prisma/client
-    \`\`\`
-
-2.  **Inicializar Prisma (crea \`prisma/schema.prisma\` y \`.env\`):**
-
-    \`\`\`bash
-    pnpm prisma init
-    \`\`\`
-
-3.  **Configurar tu base de datos en \`.env\`** (con \`DATABASE_URL\`) **y definir tus modelos en \`prisma/schema.prisma\`**.
-
-4.  **Generar el Cliente de Prisma:**
-    Siempre que modifiques el esquema, debes regenerar el cliente:
-
-    \`\`\`bash
-    pnpm prisma generate
-    \`\`\`
-
-5.  **Crear y Aplicar una Migración:**
-    Para sincronizar el esquema con la base de datos:
-
-    \`\`\`bash
-    pnpm prisma migrate dev --name <nombre-descriptivo-de-la-migracion>
-    \`\`\`
-`;
-
-const documentationSection = `
-El proyecto expone dos tipos principales de documentación:
-
-1.  **Swagger (API):** Documentación interactiva de todos los *endpoints*.
-    * **Ruta de acceso:** \`/node-starter-backend/api/swagger\`
-    * **Ejemplo Local:** \`http://localhost:3000/node-starter-backend/api/swagger\`
-
-2.  **Compodoc (Código):** Documentación estática de módulos, controladores, *providers*, etc.
-    * **Ruta de acceso:** \`/node-starter-backend/api/docs\`
-    * **Ejemplo Local:** \`http://localhost:3000/node-starter-backend/api/docs\`
-
-> Reemplaza \`http://localhost:3000\` con el dominio y puerto de tu entorno (DEV, QA, PROD) para acceder a la documentación remota.
-`;
-
-// --- Reemplazo de secciones ---
-const replaceSection = (text, tag, content) =>
-  text.replace(
-    new RegExp(`(<!-- START:${tag} -->)[\\s\\S]*(<!-- END:${tag} -->)`),
-    `$1\n${content}\n$2`,
-  );
-
-// --- Actualización del README ---
-readme = readme
-  .replace(/<!-- LAST_UPDATE -->.*/g, `<!-- LAST_UPDATE --> ${formattedDate}`)
-  .replace(/<!-- LAST_UPDATE -->$/, `<!-- LAST_UPDATE --> ${formattedDate}`);
-
-readme = replaceSection(readme, 'documentation', documentationSection);
-readme = replaceSection(readme, 'initial-setup', initialSetup);
-readme = replaceSection(readme, 'dependencies', deps);
-readme = replaceSection(readme, 'scripts', scripts);
-readme = replaceSection(readme, 'architecture', architecture);
-readme = replaceSection(readme, 'prisma-setup', prismaSetup);
-readme = replaceSection(readme, 'functionalities', ''); // functionalities); // se comenta funcionalidades por ahora, demasiado texto
-readme = replaceSection(readme, 'api-controllers', ''); // apiControllersSection); // se comenta api-controllers por ahora, demasiado texto
-
-fs.writeFileSync(readmePath, readme);
-console.log(`✅ README actualizado (${formattedDate})`);
+main();

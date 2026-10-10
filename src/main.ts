@@ -1,5 +1,7 @@
 import { NestFactory } from '@nestjs/core';
-import { ValidationPipe } from '@nestjs/common';
+import { NestExpressApplication } from '@nestjs/platform-express';
+import { IoAdapter } from '@nestjs/platform-socket.io';
+import { Logger as NestLogger, ValidationPipe } from '@nestjs/common';
 import { ConfigType } from '@nestjs/config';
 import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
 import { Logger } from 'nestjs-pino';
@@ -10,7 +12,12 @@ import { APP_CONFIG, AppConfigType } from '@core/config/config-loader';
 import { AppModule } from './app.module';
 import { ObservabilityInterceptor } from '@core/observability/observability.interceptor';
 import { AllExceptionsFilter } from '@core/global-filters/http-exception.filter';
+import { SentryReporterService } from '@core/observability/sentry-reporter.service';
+import { TransientConnectionExceptionFilter } from '@common/filters/transient-connection-exception.filter';
+import { PrismaClientExceptionFilter } from '@common/filters/prisma-client-exception.filter';
+import { SequelizeExceptionFilter } from '@common/filters/sequelize-exception.filter';
 import * as express from 'express';
+import { RedisIoAdapter } from '@modules/realtime/redis-io.adapter';
 import { join } from 'path';
 
 interface PackageJson {
@@ -23,12 +30,28 @@ const packageJson = JSON.parse(
 ) as PackageJson;
 
 async function bootstrap() {
-  const app = await NestFactory.create(AppModule);
+  const logger = new NestLogger('Bootstrap');
+  const app = await NestFactory.create<NestExpressApplication>(AppModule, {
+    // rawBody: bytes originales del request, necesarios para validar firmas HMAC.
+    rawBody: true,
+  });
+  // Express 5 usa 'simple' por defecto; 'extended' (qs) soporta arrays y objetos anidados en query.
+  app.set('query parser', 'extended');
   app.use(cookieParser());
   app.useLogger(app.get(Logger));
 
   app.useGlobalInterceptors(app.get(ObservabilityInterceptor));
-  app.useGlobalFilters(new AllExceptionsFilter());
+  app.useGlobalFilters(
+    // Orden de la cadena: transient (503 + Retry-After) -> prisma (P2xxx -> HTTP)
+    // -> sequelize (409/503/500 sin detalle DB2) -> all (fallback)
+    new TransientConnectionExceptionFilter(
+      new PrismaClientExceptionFilter(
+        new SequelizeExceptionFilter(
+          new AllExceptionsFilter(app.get(SentryReporterService)),
+        ),
+      ),
+    ),
+  );
 
   app.useGlobalPipes(
     new ValidationPipe({
@@ -39,6 +62,16 @@ async function bootstrap() {
     }),
   );
   app.enableCors({ origin: true, credentials: true });
+
+  // Realtime: adapter Redis solo si REDIS_URL (varias instancias); si no, in-memory.
+  const wsAdapter = new RedisIoAdapter(app);
+  const redisUrl = app.get<ConfigType<AppConfigType>>(APP_CONFIG.KEY).redis.url;
+  if (redisUrl && (await wsAdapter.connect(redisUrl))) {
+    app.useWebSocketAdapter(wsAdapter);
+    logger.log('Socket.io usa el adapter Redis');
+  } else {
+    app.useWebSocketAdapter(new IoAdapter(app));
+  }
 
   app.enableVersioning();
   app.setGlobalPrefix('/node-starter-backend/api');
@@ -68,13 +101,13 @@ async function bootstrap() {
   if (fs.existsSync(docsPath)) {
     // Si existe, configuramos el middleware para servirla
     app.use('/node-starter-backend/api/docs', express.static(docsPath));
-    console.log(
-      `✅ Documentación de Compodoc servida en /node-starter-backend/api/docs`,
+    logger.log(
+      'Documentación de Compodoc servida en /node-starter-backend/api/docs',
     );
   } else {
     // Si no existe, solo mostramos un aviso y continuamos
-    console.warn(
-      `⚠️ Directorio de docs no encontrado en ${docsPath}. La documentación de Compodoc no se servirá.`,
+    logger.warn(
+      `Directorio de docs no encontrado en ${docsPath}. La documentación de Compodoc no se servirá.`,
     );
   }
 

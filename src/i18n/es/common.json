@@ -1,0 +1,8 @@
+{
+  "INTERNAL_SERVER_ERROR": "Error interno del servidor.",
+  "SERVICE_UNAVAILABLE": "Servicio temporalmente no disponible, reintente en unos segundos.",
+  "NOT_FOUND": "Recurso no encontrado.",
+  "VALIDATION_FAILED": "Los datos enviados no son válidos.",
+  "DUPLICATE_RECORD": "Ya existe un registro con esos datos.",
+  "DATABASE_NOT_CONFIGURED": "La base de datos requerida no está configurada."
+}

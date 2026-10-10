@@ -1,1 +1,12 @@
-* @jpanza
+# Responsables de revision por ruta (GitLab). Reemplazar por el grupo o usuarios reales.
+
+# Por defecto, todo el repositorio
+# * @your-group/maintainers
+
+# Infraestructura y CI
+# /.gitlab-ci.yml   @your-group/platform
+# /ci/              @your-group/platform
+# /Dockerfile       @your-group/platform
+
+# Esquema de base de datos
+# /prisma/          @your-group/data

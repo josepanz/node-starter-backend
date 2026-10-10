@@ -110,6 +110,8 @@ export abstract class SequelizeBaseRepository<
       offset?: number;
       order?: FindOptions['order'];
       attributes?: ISequelizeRepositoryOptions['attributes'];
+      /** Relaciones a cargar (p. ej. un BelongsTo; un HasMany inflaría el count y exigiría `distinct`). */
+      include?: FindOptions['include'];
       transaction?: Transaction;
       logging?: boolean;
     } = {},
@@ -120,6 +122,7 @@ export abstract class SequelizeBaseRepository<
       offset: opts.offset,
       order: opts.order,
       attributes: opts.attributes,
+      include: opts.include,
       transaction: opts.transaction,
       logging: false,
     };

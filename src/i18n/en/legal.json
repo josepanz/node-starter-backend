@@ -1,0 +1,9 @@
+{
+  "CONSENT_REQUIRED": "You must accept the current version of the legal document to continue.",
+  "VERSION_NOT_FOUND": "Legal document version not found.",
+  "VERSION_NOT_ACTIVE": "Only the active version of the document can be accepted.",
+  "ALREADY_ACCEPTED": "This version was already accepted.",
+  "CONSENT_NOT_FOUND": "There is no active consent to revoke.",
+  "VERSION_DUPLICATED": "That version already exists for the document type.",
+  "CONTENT_REQUIRED": "The document requires content or contentUrl."
+}

@@ -1,0 +1,992 @@
+<!doctype html>
+<html class="no-js" lang="">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="x-ua-compatible" content="ie=edge">
+        <title>node-starter-backend documentation</title>
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+
+        <link rel="icon" type="image/x-icon" href="../images/favicon.ico">
+	   <link rel="stylesheet" href="../styles/style.css">
+        <link rel="stylesheet" href="../styles/dark.css">
+    </head>
+    <body>
+          <script>
+               // Blocking script to avoid flickering dark mode
+               // Dark mode toggle button
+               var useDark = window.matchMedia('(prefers-color-scheme: dark)');
+               var darkModeState = useDark.matches;
+               var $darkModeToggleSwitchers = document.querySelectorAll('.dark-mode-switch input');
+               var $darkModeToggles = document.querySelectorAll('.dark-mode-switch');
+               var darkModeStateLocal = localStorage.getItem('compodoc_darkmode-state');
+
+               function checkToggle(check) {
+                    for (var i = 0; i < $darkModeToggleSwitchers.length; i++) {
+                         $darkModeToggleSwitchers[i].checked = check;
+                    }
+               }
+
+               function toggleDarkMode(state) {
+                    if (window.localStorage) {
+                         localStorage.setItem('compodoc_darkmode-state', state);
+                    }
+
+                    checkToggle(state);
+
+                    const hasClass = document.body.classList.contains('dark');
+
+                    if (state) {
+                         for (var i = 0; i < $darkModeToggles.length; i++) {
+                              $darkModeToggles[i].classList.add('dark');
+                         }
+                         if (!hasClass) {
+                              document.body.classList.add('dark');
+                         }
+                    } else {
+                         for (var i = 0; i < $darkModeToggles.length; i++) {
+                              $darkModeToggles[i].classList.remove('dark');
+                         }
+                         if (hasClass) {
+                              document.body.classList.remove('dark');
+                         }
+                    }
+               }
+
+               useDark.addEventListener('change', function (evt) {
+                    toggleDarkMode(evt.matches);
+               });
+               if (darkModeStateLocal) {
+                    darkModeState = darkModeStateLocal === 'true';
+               }
+               toggleDarkMode(darkModeState);
+          </script>
+          <script>
+              // --- Iframe navigation tracking for Template Playground ---
+              function sendCurrentUrlToParent() {
+                  if (window.parent && window.parent !== window) {
+                      window.parent.postMessage({
+                          type: 'compodoc-iframe-navigate',
+                          url: window.location.pathname + window.location.hash
+                      }, '*');
+                  }
+              }
+              window.addEventListener('hashchange', sendCurrentUrlToParent, false);
+              window.addEventListener('popstate', sendCurrentUrlToParent, false);
+              window.addEventListener('DOMContentLoaded', sendCurrentUrlToParent, false);
+          </script>
+
+        <div class="navbar navbar-default navbar-fixed-top d-md-none p-0">
+               <div class="d-flex">
+                    <a href="../" class="navbar-brand">node-starter-backend documentation</a>
+                    <button type="button" class="btn btn-default btn-menu ion-ios-menu" id="btn-menu"></button>
+               </div>
+        </div>
+
+        <div class="xs-menu menu" id="mobile-menu">
+                <div id="book-search-input" role="search"><input type="text" placeholder="Type to search"></div>            <compodoc-menu></compodoc-menu>
+        </div>
+
+        <div class="container-fluid main">
+           <div class="row main">
+               <div class="d-none d-md-block menu">
+                   <compodoc-menu mode="normal"></compodoc-menu>
+               </div>
+               <!-- START CONTENT -->
+               <div class="content class">
+                   <div class="content-data">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<ol class="breadcrumb">
+  <li class="breadcrumb-item">Classes</li>
+  <li class="breadcrumb-item" >SqlQueryHelper</li>
+</ol>
+
+<ul class="nav nav-tabs" role="tablist">
+        <li class="nav-item">
+            <a href="#info" 
+                class="nav-link"
+                class="nav-link active"
+                role="tab" id="info-tab" data-bs-toggle="tab" data-link="info">Info</a>
+        </li>
+        <li class="nav-item">
+            <a href="#source" 
+                class="nav-link"
+                
+                role="tab" id="source-tab" data-bs-toggle="tab" data-link="source">Source</a>
+        </li>
+</ul>
+
+<div class="tab-content">
+    <div class="tab-pane fade active in" id="info">
+        <p class="comment">
+            <h3>File</h3>
+        </p>
+        <p class="comment">
+            <code>src/common/helpers/sql-query.helper.ts</code>
+        </p>
+
+
+            <p class="comment">
+                <h3>Description</h3>
+            </p>
+            <p class="comment">
+                <p>Patrón: builder estático puro (SRP/DRY) para SQL crudo parametrizado. Nunca concatena VALORES en
+el SQL: todo valor sale como <code>:placeholder</code> + <code>replacements</code>. Lo que sí se interpola (columnas,
+operadores, ORDER BY) pasa por whitelist. Sirve para cualquier dialecto con <code>:named</code> replacements.</p>
+
+            </p>
+
+
+
+
+            <section data-compodoc="block-index">
+    <h3 id="index">Index</h3>
+    <table class="table table-sm table-bordered index-table">
+        <tbody>
+
+                <tr>
+                    <td class="col-md-4">
+                        <h6><b>Methods</b></h6>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <ul class="index-list">
+                            <li>
+                                    <span class="modifier">Static</span>
+                                <a href="#buildInPlaceholders" >buildInPlaceholders</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Static</span>
+                                <a href="#buildOrderBy" >buildOrderBy</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Static</span>
+                                <a href="#buildPagination" >buildPagination</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Static</span>
+                                <a href="#buildWhereClause" >buildWhereClause</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Private</span>
+                                    <span class="modifier">Static</span>
+                                <a href="#isEmpty" >isEmpty</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Static</span>
+                                <a href="#likeWrap" >likeWrap</a>
+                            </li>
+                        </ul>
+                    </td>
+                </tr>
+
+
+
+
+
+        </tbody>
+    </table>
+</section>
+
+
+
+            <section data-compodoc="block-methods">
+    
+    <h3 id="methods">
+        Methods
+    </h3>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="buildInPlaceholders"></a>
+                    <span class="name">
+                            <span class="modifier">Static</span>
+                        <span ><b>buildInPlaceholders</b></span>
+                        <a href="#buildInPlaceholders"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                        <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>buildInPlaceholders(key: <a href="../undefineds/t.html" target="_self">string</a>, values: unknown)</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="85"
+                                    class="link-to-prism">src/common/helpers/sql-query.helper.ts:85</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                        <div class="io-description"><p><code>:key_0, :key_1, ...</code> y sus replacements (para <code>IN (...)</code> y <code>UPDATE ... WHERE ... IN (...)</code>).</p>
+</div>
+
+                            <div class="io-description">
+                                <b>Parameters :</b>
+                                
+                                <table class="params">
+                                    <thead>
+                                        <tr>
+                                            <td>Name</td>
+                                                <td>Type</td>
+                                            <td>Optional</td>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                                <td>key</td>
+                                            <td>
+                                                            <code><a href="../miscellaneous/functions.html#t" target="_self" >string</a></code>
+                                            </td>
+
+                                            <td>
+                                                    No
+                                            </td>
+
+
+                                        </tr>
+                                        <tr>
+                                                <td>values</td>
+                                            <td>
+                                                        <code>unknown</code>
+                                            </td>
+
+                                            <td>
+                                                    No
+                                            </td>
+
+
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        <div class="io-description">
+                            <b>Returns : </b>        <code><a href="../miscellaneous/functions.html#t" target="_self" >literal type</a></code>
+
+                        </div>
+                            <div class="io-description">
+                                
+                            </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="buildOrderBy"></a>
+                    <span class="name">
+                            <span class="modifier">Static</span>
+                        <span ><b>buildOrderBy</b></span>
+                        <a href="#buildOrderBy"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                        <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>buildOrderBy(orderBy: <a href="../undefineds/t.html" target="_self">string | undefined</a>, columns: <a href="../undefineds/t.html" target="_self">Readonly&lt;Record&lt;string, string&gt;&gt;</a>, defaults: <a href="../undefineds/t.html" target="_self">literal type</a>, tieBreaker?: <a href="../undefineds/t.html" target="_self">string</a>)</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="109"
+                                    class="link-to-prism">src/common/helpers/sql-query.helper.ts:109</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                        <div class="io-description"><p><code>ORDER BY</code> seguro: la columna sale de una whitelist (<code>columns</code>), nunca del input. Formato de
+entrada <code>campo:asc|desc</code>. Un campo desconocido cae al default.</p>
+</div>
+
+                            <div class="io-description">
+                                <b>Parameters :</b>
+                                
+                                <table class="params">
+                                    <thead>
+                                        <tr>
+                                            <td>Name</td>
+                                                <td>Type</td>
+                                            <td>Optional</td>
+                                                <td>Description</td>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                                <td>orderBy</td>
+                                            <td>
+                                                            <code><a href="../miscellaneous/functions.html#t" target="_self" >string | undefined</a></code>
+                                            </td>
+
+                                            <td>
+                                                    No
+                                            </td>
+
+
+                                            <td>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                                <td>columns</td>
+                                            <td>
+                                                            <code><a href="../miscellaneous/functions.html#t" target="_self" >Readonly&lt;Record&lt;string, string&gt;&gt;</a></code>
+                                            </td>
+
+                                            <td>
+                                                    No
+                                            </td>
+
+
+                                            <td>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                                <td>defaults</td>
+                                            <td>
+                                                            <code><a href="../miscellaneous/functions.html#t" target="_self" >literal type</a></code>
+                                            </td>
+
+                                            <td>
+                                                    No
+                                            </td>
+
+
+                                            <td>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                                <td>tieBreaker</td>
+                                            <td>
+                                                            <code><a href="../miscellaneous/functions.html#t" target="_self" >string</a></code>
+                                            </td>
+
+                                            <td>
+                                                    Yes
+                                            </td>
+
+
+                                            <td>
+                                                    <p>Columna final para orden determinístico (obligatorio con paginación).</p>
+
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        <div class="io-description">
+                            <b>Returns : </b>        <code><a href="../miscellaneous/functions.html#t" target="_self" >string</a></code>
+
+                        </div>
+                            <div class="io-description">
+                                
+                            </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="buildPagination"></a>
+                    <span class="name">
+                            <span class="modifier">Static</span>
+                        <span ><b>buildPagination</b></span>
+                        <a href="#buildPagination"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                        <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>buildPagination(orderByClause: <a href="../undefineds/t.html" target="_self">string</a>, page: <a href="../unknowns/num.html" target="_self">number</a>, pageSize: <a href="../unknowns/num.html" target="_self">number</a>)</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="132"
+                                    class="link-to-prism">src/common/helpers/sql-query.helper.ts:132</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                        <div class="io-description"><p>Paginación DB2: <code>OFFSET :offset ROWS FETCH NEXT :pageSize ROWS ONLY</code>. Exige un <code>ORDER BY</code> previo
+(sin él las páginas no son determinísticas). Los números se fuerzan a <code>Number</code>.</p>
+</div>
+
+                            <div class="io-description">
+                                <b>Parameters :</b>
+                                
+                                <table class="params">
+                                    <thead>
+                                        <tr>
+                                            <td>Name</td>
+                                                <td>Type</td>
+                                            <td>Optional</td>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                                <td>orderByClause</td>
+                                            <td>
+                                                            <code><a href="../miscellaneous/functions.html#t" target="_self" >string</a></code>
+                                            </td>
+
+                                            <td>
+                                                    No
+                                            </td>
+
+
+                                        </tr>
+                                        <tr>
+                                                <td>page</td>
+                                            <td>
+                                                            <code><a href="../miscellaneous/variables.html#num" target="_self" >number</a></code>
+                                            </td>
+
+                                            <td>
+                                                    No
+                                            </td>
+
+
+                                        </tr>
+                                        <tr>
+                                                <td>pageSize</td>
+                                            <td>
+                                                            <code><a href="../miscellaneous/variables.html#num" target="_self" >number</a></code>
+                                            </td>
+
+                                            <td>
+                                                    No
+                                            </td>
+
+
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        <div class="io-description">
+                            <b>Returns : </b>        <code><a href="../miscellaneous/functions.html#t" target="_self" >literal type</a></code>
+
+                        </div>
+                            <div class="io-description">
+                                
+                            </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="buildWhereClause"></a>
+                    <span class="name">
+                            <span class="modifier">Static</span>
+                        <span ><b>buildWhereClause</b></span>
+                        <a href="#buildWhereClause"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                        <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>buildWhereClause(filters: <a href="../interfaces/IWhereClause.html" target="_self">Record&lt;string | IWhereClause&gt;</a>, options?: <a href="../interfaces/IWhereOptions.html" target="_self">IWhereOptions</a>)</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="36"
+                                    class="link-to-prism">src/common/helpers/sql-query.helper.ts:36</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                        <div class="io-description"><p>Arma el <code>WHERE</code> dinámico a partir de un mapa de filtros.</p>
+<ul>
+<li><code>=</code>/<code>LIKE</code>/...: <code>col OP :key</code></li>
+<li><code>IN</code> con array: <code>col IN (:key_0, :key_1)</code>. El dialecto IBM i NO expande arrays en <code>IN (:param)</code>,
+hay que generar un placeholder por valor (por eso este helper).</li>
+<li><code>rawCondition</code>: condición libre, solo si el filtro trae valor.</li>
+<li>Valores vacíos (<code>undefined</code>, <code>null</code>, <code>&#39;&#39;</code>, <code>[]</code>) omiten el filtro: se pueden pasar todos los
+filtros posibles y el helper descarta los no enviados.</li>
+</ul>
+</div>
+
+                            <div class="io-description">
+                                <b>Parameters :</b>
+                                
+                                <table class="params">
+                                    <thead>
+                                        <tr>
+                                            <td>Name</td>
+                                                <td>Type</td>
+                                            <td>Optional</td>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                                <td>filters</td>
+                                            <td>
+                                                            <code><a href="../interfaces/IWhereClause.html" target="_self" >Record&lt;string | IWhereClause&gt;</a></code>
+                                            </td>
+
+                                            <td>
+                                                    No
+                                            </td>
+
+
+                                        </tr>
+                                        <tr>
+                                                <td>options</td>
+                                            <td>
+                                                            <code><a href="../interfaces/IWhereOptions.html" target="_self" >IWhereOptions</a></code>
+                                            </td>
+
+                                            <td>
+                                                    Yes
+                                            </td>
+
+
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        <div class="io-description">
+                            <b>Returns : </b>        <code><a href="../interfaces/IBuiltWhere.html" target="_self" >IBuiltWhere</a></code>
+
+                        </div>
+                            <div class="io-description">
+                                
+                            </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="isEmpty"></a>
+                    <span class="name">
+                            <span class="modifier">Private</span>
+                            <span class="modifier">Static</span>
+                        <span ><b>isEmpty</b></span>
+                        <a href="#isEmpty"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                        <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>isEmpty(value: unknown)</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="148"
+                                    class="link-to-prism">src/common/helpers/sql-query.helper.ts:148</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                            <div class="io-description">
+                                <b>Parameters :</b>
+                                
+                                <table class="params">
+                                    <thead>
+                                        <tr>
+                                            <td>Name</td>
+                                                <td>Type</td>
+                                            <td>Optional</td>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                                <td>value</td>
+                                            <td>
+                                                        <code>unknown</code>
+                                            </td>
+
+                                            <td>
+                                                    No
+                                            </td>
+
+
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        <div class="io-description">
+                            <b>Returns : </b>        <code><a href="../miscellaneous/variables.html#bool" target="_self" >boolean</a></code>
+
+                        </div>
+                            <div class="io-description">
+                                
+                            </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="likeWrap"></a>
+                    <span class="name">
+                            <span class="modifier">Static</span>
+                        <span ><b>likeWrap</b></span>
+                        <a href="#likeWrap"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                        <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>likeWrap(value: <a href="../undefineds/t.html" target="_self">string</a>)</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="100"
+                                    class="link-to-prism">src/common/helpers/sql-query.helper.ts:100</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                        <div class="io-description"><p><code>%VALUE%</code> en mayúsculas y sin espacios laterales, para <code>LIKE</code> sobre columnas normalizadas con UPPER(TRIM()).</p>
+</div>
+
+                            <div class="io-description">
+                                <b>Parameters :</b>
+                                
+                                <table class="params">
+                                    <thead>
+                                        <tr>
+                                            <td>Name</td>
+                                                <td>Type</td>
+                                            <td>Optional</td>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                                <td>value</td>
+                                            <td>
+                                                            <code><a href="../miscellaneous/functions.html#t" target="_self" >string</a></code>
+                                            </td>
+
+                                            <td>
+                                                    No
+                                            </td>
+
+
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        <div class="io-description">
+                            <b>Returns : </b>        <code><a href="../miscellaneous/functions.html#t" target="_self" >string</a></code>
+
+                        </div>
+                            <div class="io-description">
+                                
+                            </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</section>
+
+
+
+
+
+    </div>
+
+
+    <div class="tab-pane fade  tab-source-code" id="source">
+        <pre class="line-numbers compodoc-sourcecode"><code class="language-typescript">import {
+  IBuiltWhere,
+  IWhereClause,
+  IWhereOptions,
+} from &#x27;@common/interfaces/build-where.interface&#x27;;
+
+const ALLOWED_OPERATORS: ReadonlySet&lt;string&gt; &#x3D; new Set([
+  &#x27;&#x3D;&#x27;,
+  &#x27;&lt;&gt;&#x27;,
+  &#x27;&gt;&#x27;,
+  &#x27;&gt;&#x3D;&#x27;,
+  &#x27;&lt;&#x27;,
+  &#x27;&lt;&#x3D;&#x27;,
+  &#x27;LIKE&#x27;,
+  &#x27;NOT LIKE&#x27;,
+  &#x27;IN&#x27;,
+  &#x27;NOT IN&#x27;,
+]);
+const IDENTIFIER &#x3D; /^[A-Za-z_][A-Za-z0-9_]*$/;
+
+/**
+ * Patrón: builder estático puro (SRP/DRY) para SQL crudo parametrizado. Nunca concatena VALORES en
+ * el SQL: todo valor sale como &#x60;:placeholder&#x60; + &#x60;replacements&#x60;. Lo que sí se interpola (columnas,
+ * operadores, ORDER BY) pasa por whitelist. Sirve para cualquier dialecto con &#x60;:named&#x60; replacements.
+ */
+export class SqlQueryHelper {
+  /**
+   * Arma el &#x60;WHERE&#x60; dinámico a partir de un mapa de filtros.
+   * - &#x60;&#x3D;&#x60;/&#x60;LIKE&#x60;/...: &#x60;col OP :key&#x60;
+   * - &#x60;IN&#x60; con array: &#x60;col IN (:key_0, :key_1)&#x60;. El dialecto IBM i NO expande arrays en &#x60;IN (:param)&#x60;,
+   *   hay que generar un placeholder por valor (por eso este helper).
+   * - &#x60;rawCondition&#x60;: condición libre, solo si el filtro trae valor.
+   * - Valores vacíos (&#x60;undefined&#x60;, &#x60;null&#x60;, &#x60;&#x27;&#x27;&#x60;, &#x60;[]&#x60;) omiten el filtro: se pueden pasar todos los
+   *   filtros posibles y el helper descarta los no enviados.
+   */
+  static buildWhereClause(
+    filters: Record&lt;string, IWhereClause&gt;,
+    options?: IWhereOptions,
+  ): IBuiltWhere {
+    const conditions: string[] &#x3D; [];
+    const replacements: Record&lt;string, unknown&gt; &#x3D; {};
+
+    for (const [key, filter] of Object.entries(filters)) {
+      if (!IDENTIFIER.test(key)) {
+        throw new Error(&#x60;Nombre de filtro inválido: ${key}&#x60;);
+      }
+      if (this.isEmpty(filter.value)) continue;
+
+      if (filter.rawCondition) {
+        conditions.push(filter.rawCondition);
+        if (new RegExp(&#x60;:${key}(?![A-Za-z0-9_])&#x60;).test(filter.rawCondition)) {
+          replacements[key] &#x3D; filter.value;
+        }
+        continue;
+      }
+
+      const operator &#x3D; (filter.operator ?? &#x27;&#x3D;&#x27;).toUpperCase();
+      if (!filter.column || !ALLOWED_OPERATORS.has(operator)) {
+        throw new Error(&#x60;Filtro ${key}: columna u operador inválido&#x60;);
+      }
+      const column &#x3D; filter.transform
+        ? filter.transform(filter.column)
+        : filter.column;
+
+      if (Array.isArray(filter.value)) {
+        const { placeholders, replacements: inReplacements } &#x3D;
+          this.buildInPlaceholders(key, filter.value);
+        conditions.push(&#x60;${column} ${operator} (${placeholders})&#x60;);
+        Object.assign(replacements, inReplacements);
+      } else {
+        conditions.push(&#x60;${column} ${operator} :${key}&#x60;);
+        replacements[key] &#x3D; filter.value;
+      }
+    }
+
+    const prefix &#x3D; options?.hasExistingWhere ? &#x27; AND &#x27; : &#x27; WHERE &#x27;;
+    return {
+      whereClause:
+        conditions.length &gt; 0 ? &#x60;${prefix}${conditions.join(&#x27; AND &#x27;)}&#x60; : &#x27;&#x27;,
+      replacements,
+    };
+  }
+
+  /** &#x60;:key_0, :key_1, ...&#x60; y sus replacements (para &#x60;IN (...)&#x60; y &#x60;UPDATE ... WHERE ... IN (...)&#x60;). */
+  static buildInPlaceholders(
+    key: string,
+    values: readonly unknown[],
+  ): { placeholders: string; replacements: Record&lt;string, unknown&gt; } {
+    const replacements: Record&lt;string, unknown&gt; &#x3D; {};
+    const placeholders &#x3D; values
+      .map((value, index) &#x3D;&gt; {
+        replacements[&#x60;${key}_${index}&#x60;] &#x3D; value;
+        return &#x60;:${key}_${index}&#x60;;
+      })
+      .join(&#x27;, &#x27;);
+    return { placeholders, replacements };
+  }
+
+  /** &#x60;%VALUE%&#x60; en mayúsculas y sin espacios laterales, para &#x60;LIKE&#x60; sobre columnas normalizadas con UPPER(TRIM()). */
+  static likeWrap(value: string): string {
+    return &#x60;%${String(value).toUpperCase().trim()}%&#x60;;
+  }
+
+  /**
+   * &#x60;ORDER BY&#x60; seguro: la columna sale de una whitelist (&#x60;columns&#x60;), nunca del input. Formato de
+   * entrada &#x60;campo:asc|desc&#x60;. Un campo desconocido cae al default.
+   * @param tieBreaker Columna final para orden determinístico (obligatorio con paginación).
+   */
+  static buildOrderBy(
+    orderBy: string | undefined,
+    columns: Readonly&lt;Record&lt;string, string&gt;&gt;,
+    defaults: { field: string; direction?: &#x27;ASC&#x27; | &#x27;DESC&#x27; },
+    tieBreaker?: string,
+  ): string {
+    const [rawField, rawDirection] &#x3D; (orderBy ?? &#x27;&#x27;).split(&#x27;:&#x27;);
+    const known &#x3D; Boolean(rawField) &amp;&amp; Object.hasOwn(columns, rawField);
+    const field &#x3D; known ? rawField : defaults.field;
+    const direction &#x3D; known
+      ? rawDirection?.toLowerCase() &#x3D;&#x3D;&#x3D; &#x27;desc&#x27;
+        ? &#x27;DESC&#x27;
+        : &#x27;ASC&#x27;
+      : (defaults.direction ?? &#x27;ASC&#x27;);
+    const parts &#x3D; [&#x60;${columns[field]} ${direction}&#x60;];
+    if (tieBreaker &amp;&amp; tieBreaker !&#x3D;&#x3D; columns[field]) parts.push(tieBreaker);
+    return &#x60; ORDER BY ${parts.join(&#x27;, &#x27;)}&#x60;;
+  }
+
+  /**
+   * Paginación DB2: &#x60;OFFSET :offset ROWS FETCH NEXT :pageSize ROWS ONLY&#x60;. Exige un &#x60;ORDER BY&#x60; previo
+   * (sin él las páginas no son determinísticas). Los números se fuerzan a &#x60;Number&#x60;.
+   */
+  static buildPagination(
+    orderByClause: string,
+    page: number,
+    pageSize: number,
+  ): { clause: string; replacements: { offset: number; pageSize: number } } {
+    if (!/\bORDER BY\b/i.test(orderByClause)) {
+      throw new Error(&#x27;La paginación OFFSET/FETCH requiere ORDER BY&#x27;);
+    }
+    const size &#x3D; Math.max(1, Number(pageSize) || 10);
+    const current &#x3D; Math.max(1, Number(page) || 1);
+    return {
+      clause: &#x60;${orderByClause} OFFSET :offset ROWS FETCH NEXT :pageSize ROWS ONLY&#x60;,
+      replacements: { offset: (current - 1) * size, pageSize: size },
+    };
+  }
+
+  private static isEmpty(value: unknown): boolean {
+    return (
+      value &#x3D;&#x3D;&#x3D; undefined ||
+      value &#x3D;&#x3D;&#x3D; null ||
+      value &#x3D;&#x3D;&#x3D; &#x27;&#x27; ||
+      (Array.isArray(value) &amp;&amp; value.length &#x3D;&#x3D;&#x3D; 0)
+    );
+  }
+}
+</code></pre>
+    </div>
+</div>
+
+
+
+
+
+
+
+
+
+                   </div><div class="search-results">
+    <div class="has-results">
+        <h1 class="search-results-title"><span class='search-results-count'></span> results matching "<span class='search-query'></span>"</h1>
+        <ul class="search-results-list"></ul>
+    </div>
+    <div class="no-results">
+        <h1 class="search-results-title">No results matching "<span class='search-query'></span>"</h1>
+    </div>
+</div>
+</div>
+               <!-- END CONTENT -->
+           </div>
+       </div>
+
+          <label class="dark-mode-switch">
+               <input type="checkbox">
+               <span class="slider">
+                    <svg class="slider-icon" viewBox="0 0 24 24" fill="none" height="20" stroke="#000" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" width="20" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M21 12.79A9 9 0 1111.21 3 7 7 0 0021 12.79z"></path>
+                    </svg>
+               </span>
+          </label>
+
+       <script>
+            var COMPODOC_CURRENT_PAGE_DEPTH = 1;
+            var COMPODOC_CURRENT_PAGE_CONTEXT = 'class';
+            var COMPODOC_CURRENT_PAGE_URL = 'SqlQueryHelper.html';
+            var MAX_SEARCH_RESULTS = 15;
+       </script>
+
+       <script>
+               $darkModeToggleSwitchers = document.querySelectorAll('.dark-mode-switch input');
+               checkToggle(darkModeState);
+               if ($darkModeToggleSwitchers.length > 0) {
+                    for (var i = 0; i < $darkModeToggleSwitchers.length; i++) {
+                         $darkModeToggleSwitchers[i].addEventListener('change', function (event) {
+                              darkModeState = !darkModeState;
+                              toggleDarkMode(darkModeState);
+                         });
+                    }
+               }
+          </script>
+
+       <script src="../js/libs/custom-elements.min.js"></script>
+       <script src="../js/libs/lit-html.js"></script>
+
+       <script src="../js/menu-wc.js" defer></script>
+       <script nomodule src="../js/menu-wc_es5.js" defer></script>
+
+       <script src="../js/libs/bootstrap-native.js"></script>
+
+       <script src="../js/libs/es6-shim.min.js"></script>
+       <script src="../js/libs/EventDispatcher.js"></script>
+       <script src="../js/libs/promise.min.js"></script>
+
+       <script src="../js/compodoc.js"></script>
+
+       <script src="../js/tabs.js"></script>
+       <script src="../js/menu.js"></script>
+       <script src="../js/libs/clipboard.min.js"></script>
+       <script src="../js/libs/prism.js"></script>
+       <script src="../js/sourceCode.js"></script>
+          <script src="../js/search/search.js"></script>
+          <script src="../js/search/lunr.min.js"></script>
+          <script src="../js/search/search-lunr.js"></script>
+          <script src="../js/search/search_index.js"></script>
+       <script src="../js/lazy-load-graphs.js"></script>
+
+
+    </body>
+</html>

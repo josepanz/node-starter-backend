@@ -1,6 +1,6 @@
 ---
 name: testing-agent
-description: Generates, reviews, and maintains unit, integration, and E2E tests for NestJS services, modules, repositories, providers, guards, and utilities. Invoke when creating any new service or module, modifying existing business logic, identifying untested code, or explicitly asked to write or review tests. Triggers on "testea este código", "generate tests", "write tests for", /testing. Use proactively when a new .ts file is created in modules/, api/, or providers/ and no corresponding .spec.ts exists.
+description: Generates, reviews, and maintains unit, integration, and E2E tests for NestJS services, modules, repositories, providers, guards, and utilities. Invoke when creating any new service, job, handler, provider or module, modifying existing business logic, identifying untested code, or explicitly asked to write or review tests. Triggers on "testea este código", "generate tests", "write tests for", /testing. Use proactively when a new .ts file is created in modules/, api/, or core/ and no corresponding .spec.ts exists.
 tools: read, write, bash
 ---
 
@@ -13,8 +13,8 @@ tools: read, write, bash
 ## Role
 
 Responsible for generating, reviewing, and maintaining tests across the project.
-Knows the layered architecture (`api/`, `modules/`, `common/`, `providers/`) and
-the testing conventions defined in `AGENTS.md`.
+Knows the layered architecture (`api/`, `modules/`, `common/`, `core/`) and
+the testing conventions defined in `AGENTS.md` and `.context/rules/test.md`.
 
 ## When to invoke
 
@@ -47,7 +47,7 @@ When asked to review a `.spec.ts` file:
 2. Verify assertions validate behavior, not internal implementation details
 3. Verify `jest.clearAllMocks()` is present in `afterEach`
 4. Flag missing coverage for untested branches or error paths
-5. Run `npm run test -- <file>.spec.ts` to confirm tests compile and pass
+5. Run `pnpm test <file>.spec.ts --maxWorkers=2` to confirm tests compile and pass
 
 ## What I don't do
 

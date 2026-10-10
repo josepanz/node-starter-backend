@@ -3,6 +3,7 @@ import {
   ValidatorConstraintInterface,
   ValidationArguments,
 } from 'class-validator';
+import { t } from '@common/i18n/i18n.helper';
 
 export interface DateRangeDTO {
   startDate?: Date;
@@ -15,12 +16,12 @@ export class IsEndDateAfterStartDate implements ValidatorConstraintInterface {
   validate(endDate: unknown, args: ValidationArguments) {
     const obj = args.object as DateRangeDTO;
     if (!obj.startDate) {
-      this.message = 'startDate es requerido';
+      this.message = t('validation.START_DATE_REQUIRED');
       return false;
     }
 
     if (new Date(endDate as Date) < new Date(obj.startDate)) {
-      this.message = 'endDate debe ser posterior a startDate';
+      this.message = t('validation.END_DATE_AFTER_START');
       return false;
     }
 
@@ -28,7 +29,7 @@ export class IsEndDateAfterStartDate implements ValidatorConstraintInterface {
   }
 
   defaultMessage(): string {
-    return this.message || 'endDate inválida';
+    return this.message || t('validation.END_DATE_INVALID');
   }
 }
 
@@ -48,6 +49,6 @@ export class IsDateRangeWithinSixMonths
   }
 
   defaultMessage(): string {
-    return 'El rango de fechas no puede superar los 6 meses.';
+    return t('validation.DATE_RANGE_MAX_SIX_MONTHS');
   }
 }

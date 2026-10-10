@@ -1,0 +1,12 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: node-starter-backend
+spec:
+  type: ClusterIP
+  selector:
+    app: node-starter-backend
+  ports:
+    - name: http
+      port: 80
+      targetPort: http

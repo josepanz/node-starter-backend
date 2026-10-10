@@ -1,0 +1,4 @@
+{
+  "ORDER_STATUS_TITLE": "Your order status changed",
+  "ORDER_STATUS_BODY": "Order {reference} moved from {from} to {to}."
+}

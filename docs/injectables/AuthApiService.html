@@ -3,7 +3,7 @@
     <head>
         <meta charset="utf-8">
         <meta http-equiv="x-ua-compatible" content="ie=edge">
-        <title>node-started-backend documentation</title>
+        <title>node-starter-backend documentation</title>
         <meta name="description" content="">
         <meta name="viewport" content="width=device-width, initial-scale=1">
 
@@ -78,7 +78,7 @@
 
         <div class="navbar navbar-default navbar-fixed-top d-md-none p-0">
                <div class="d-flex">
-                    <a href="../" class="navbar-brand">node-started-backend documentation</a>
+                    <a href="../" class="navbar-brand">node-starter-backend documentation</a>
                     <button type="button" class="btn btn-default btn-menu ion-ios-menu" id="btn-menu"></button>
                </div>
         </div>
@@ -154,6 +154,11 @@
                     <td class="col-md-4">
                         <ul class="index-list">
                             <li>
+                                    <span class="modifier">Private</span>
+                                    <span class="modifier">Async</span>
+                                <a href="#assertLoginNonce" >assertLoginNonce</a>
+                            </li>
+                            <li>
                                     <span class="modifier">Async</span>
                                 <a href="#createPasswordWithToken" >createPasswordWithToken</a>
                             </li>
@@ -164,6 +169,10 @@
                             <li>
                                     <span class="modifier">Async</span>
                                 <a href="#handleLogin" >handleLogin</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Async</span>
+                                <a href="#issueLoginNonce" >issueLoginNonce</a>
                             </li>
                             <li>
                                     <span class="modifier">Async</span>
@@ -215,12 +224,12 @@
             <tbody>
                 <tr>
                     <td class="col-md-4">
-<code>constructor(userService: <a href="../injectables/UsersDBService.html" target="_self">UsersDBService</a>, authService: <a href="../injectables/AuthService.html" target="_self">AuthService</a>, emailService: <a href="../injectables/EmailService.html" target="_self">EmailService</a>, authMigrationService: <a href="../injectables/AuthMigrationService.html" target="_self">AuthMigrationService</a>)</code>
+<code>constructor(userService: <a href="../injectables/UsersDBService.html" target="_self">UsersDBService</a>, authService: <a href="../injectables/AuthService.html" target="_self">AuthService</a>, emailService: <a href="../injectables/EmailService.html" target="_self">EmailService</a>, authMigrationService: <a href="../injectables/AuthMigrationService.html" target="_self">AuthMigrationService</a>, nonceService: <a href="../injectables/NonceService.html" target="_self">NonceService</a>, config: ConfigType<AppConfigType>)</code>
                     </td>
                 </tr>
                         <tr>
                             <td class="col-md-4">
-                                <div class="io-line">Defined in <a href="" data-line="13" class="link-to-prism">src/api/auth/services/auth-api.service.ts:13</a></div>
+                                <div class="io-line">Defined in <a href="" data-line="16" class="link-to-prism">src/api/auth/services/auth-api.service.ts:16</a></div>
                             </td>
                         </tr>
 
@@ -285,6 +294,30 @@
                                                     </td>
                                                     
                                                 </tr>
+                                                <tr>
+                                                        <td>nonceService</td>
+                                                  
+                                                        <td>
+                                                                        <code><a href="../injectables/NonceService.html" target="_self" >NonceService</a></code>
+                                                        </td>
+                                                  
+                                                    <td>
+                                                            No
+                                                    </td>
+                                                    
+                                                </tr>
+                                                <tr>
+                                                        <td>config</td>
+                                                  
+                                                        <td>
+                                                                    <code>ConfigType&lt;AppConfigType&gt;</code>
+                                                        </td>
+                                                  
+                                                    <td>
+                                                            No
+                                                    </td>
+                                                    
+                                                </tr>
                                         </tbody>
                                     </table>
                             </div>
@@ -299,6 +332,79 @@
     <h3 id="methods">
         Methods
     </h3>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="assertLoginNonce"></a>
+                    <span class="name">
+                            <span class="modifier">Private</span>
+                            <span class="modifier">Async</span>
+                        <span ><b>assertLoginNonce</b></span>
+                        <a href="#assertLoginNonce"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                        <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>assertLoginNonce(nonce: <a href="../undefineds/t.html" target="_self">string | undefined</a>)</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="38"
+                                    class="link-to-prism">src/api/auth/services/auth-api.service.ts:38</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                        <div class="io-description"><p>Opt-in (LOGIN_NONCE_REQUIRED): con la flag activa el nonce es obligatorio; con la flag
+apagada (default, no rompe clientes existentes) solo se valida si el cliente lo envía.</p>
+</div>
+
+                            <div class="io-description">
+                                <b>Parameters :</b>
+                                
+                                <table class="params">
+                                    <thead>
+                                        <tr>
+                                            <td>Name</td>
+                                                <td>Type</td>
+                                            <td>Optional</td>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                                <td>nonce</td>
+                                            <td>
+                                                            <code><a href="../miscellaneous/functions.html#t" target="_self" >string | undefined</a></code>
+                                            </td>
+
+                                            <td>
+                                                    No
+                                            </td>
+
+
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        <div class="io-description">
+                            <b>Returns : </b>    <code>Promise&lt;void&gt;</code>
+
+                        </div>
+                            <div class="io-description">
+                                
+                            </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
     <table class="table table-sm table-bordered">
         <tbody>
             <tr>
@@ -321,8 +427,8 @@
 
                     <tr>
                         <td class="col-md-4">
-                            <div class="io-line">Defined in <a href="" data-line="48"
-                                    class="link-to-prism">src/api/auth/services/auth-api.service.ts:48</a></div>
+                            <div class="io-line">Defined in <a href="" data-line="75"
+                                    class="link-to-prism">src/api/auth/services/auth-api.service.ts:75</a></div>
                         </td>
                     </tr>
 
@@ -358,7 +464,7 @@
                                 </table>
                             </div>
                         <div class="io-description">
-                            <b>Returns : </b>    <code>Promise&lt;literal type&gt;</code>
+                            <b>Returns : </b>        <code><a href="../miscellaneous/functions.html#t" target="_self" >Promise&lt;literal type&gt;</a></code>
 
                         </div>
                             <div class="io-description">
@@ -390,8 +496,8 @@
 
                     <tr>
                         <td class="col-md-4">
-                            <div class="io-line">Defined in <a href="" data-line="65"
-                                    class="link-to-prism">src/api/auth/services/auth-api.service.ts:65</a></div>
+                            <div class="io-line">Defined in <a href="" data-line="92"
+                                    class="link-to-prism">src/api/auth/services/auth-api.service.ts:92</a></div>
                         </td>
                     </tr>
 
@@ -427,7 +533,7 @@
                                 </table>
                             </div>
                         <div class="io-description">
-                            <b>Returns : </b>    <code>Promise&lt;literal type&gt;</code>
+                            <b>Returns : </b>        <code><a href="../miscellaneous/functions.html#t" target="_self" >Promise&lt;literal type&gt;</a></code>
 
                         </div>
                             <div class="io-description">
@@ -452,15 +558,15 @@
             <tr>
                 <td class="col-md-4">
                         <span class="modifier-icon icon ion-ios-reset"></span>
-                    <code>handleLogin(dto: <a href="../classes/LoginUserDTO.html" target="_self">DTO.LoginUserDTO</a>, userAgent?: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank">string</a>)</code>
+                    <code>handleLogin(dto: <a href="../classes/LoginUserDTO.html" target="_self">DTO.LoginUserDTO</a>, userAgent?: <a href="../undefineds/t.html" target="_self">string</a>)</code>
                 </td>
             </tr>
 
 
                     <tr>
                         <td class="col-md-4">
-                            <div class="io-line">Defined in <a href="" data-line="21"
-                                    class="link-to-prism">src/api/auth/services/auth-api.service.ts:21</a></div>
+                            <div class="io-line">Defined in <a href="" data-line="47"
+                                    class="link-to-prism">src/api/auth/services/auth-api.service.ts:47</a></div>
                         </td>
                     </tr>
 
@@ -495,7 +601,7 @@
                                         <tr>
                                                 <td>userAgent</td>
                                             <td>
-                                                            <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
+                                                            <code><a href="../miscellaneous/functions.html#t" target="_self" >string</a></code>
                                             </td>
 
                                             <td>
@@ -522,6 +628,47 @@
         <tbody>
             <tr>
                 <td class="col-md-4">
+                    <a name="issueLoginNonce"></a>
+                    <span class="name">
+                            <span class="modifier">Async</span>
+                        <span ><b>issueLoginNonce</b></span>
+                        <a href="#issueLoginNonce"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                        <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>issueLoginNonce()</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="27"
+                                    class="link-to-prism">src/api/auth/services/auth-api.service.ts:27</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                        <div class="io-description"><p>Emite un nonce de un solo uso para el próximo login (anti-replay).</p>
+</div>
+
+                        <div class="io-description">
+                            <b>Returns : </b>        <code><a href="../classes/LoginNonceResponseDTO.html" target="_self" >Promise&lt;DTO.LoginNonceResponseDTO&gt;</a></code>
+
+                        </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
                     <a name="refreshAccessToken"></a>
                     <span class="name">
                             <span class="modifier">Async</span>
@@ -533,15 +680,15 @@
             <tr>
                 <td class="col-md-4">
                         <span class="modifier-icon icon ion-ios-reset"></span>
-                    <code>refreshAccessToken(refreshToken: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank">string</a>)</code>
+                    <code>refreshAccessToken(refreshToken: <a href="../undefineds/t.html" target="_self">string</a>)</code>
                 </td>
             </tr>
 
 
                     <tr>
                         <td class="col-md-4">
-                            <div class="io-line">Defined in <a href="" data-line="78"
-                                    class="link-to-prism">src/api/auth/services/auth-api.service.ts:78</a></div>
+                            <div class="io-line">Defined in <a href="" data-line="105"
+                                    class="link-to-prism">src/api/auth/services/auth-api.service.ts:105</a></div>
                         </td>
                     </tr>
 
@@ -564,7 +711,7 @@
                                         <tr>
                                                 <td>refreshToken</td>
                                             <td>
-                                                            <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
+                                                            <code><a href="../miscellaneous/functions.html#t" target="_self" >string</a></code>
                                             </td>
 
                                             <td>
@@ -577,7 +724,7 @@
                                 </table>
                             </div>
                         <div class="io-description">
-                            <b>Returns : </b>    <code>Promise&lt;literal type&gt;</code>
+                            <b>Returns : </b>        <code><a href="../miscellaneous/functions.html#t" target="_self" >Promise&lt;literal type&gt;</a></code>
 
                         </div>
                             <div class="io-description">
@@ -609,8 +756,8 @@
 
                     <tr>
                         <td class="col-md-4">
-                            <div class="io-line">Defined in <a href="" data-line="84"
-                                    class="link-to-prism">src/api/auth/services/auth-api.service.ts:84</a></div>
+                            <div class="io-line">Defined in <a href="" data-line="111"
+                                    class="link-to-prism">src/api/auth/services/auth-api.service.ts:111</a></div>
                         </td>
                     </tr>
 
@@ -671,15 +818,15 @@
             <tr>
                 <td class="col-md-4">
                         <span class="modifier-icon icon ion-ios-reset"></span>
-                    <code>sendPasswordCreationEmail(to: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank">string</a>, user: <a href="../unknowns/User.html" target="_self">Users</a>)</code>
+                    <code>sendPasswordCreationEmail(to: <a href="../undefineds/t.html" target="_self">string</a>, user: <a href="../unknowns/User.html" target="_self">Users</a>)</code>
                 </td>
             </tr>
 
 
                     <tr>
                         <td class="col-md-4">
-                            <div class="io-line">Defined in <a href="" data-line="134"
-                                    class="link-to-prism">src/api/auth/services/auth-api.service.ts:134</a></div>
+                            <div class="io-line">Defined in <a href="" data-line="161"
+                                    class="link-to-prism">src/api/auth/services/auth-api.service.ts:161</a></div>
                         </td>
                     </tr>
 
@@ -702,7 +849,7 @@
                                         <tr>
                                                 <td>to</td>
                                             <td>
-                                                            <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
+                                                            <code><a href="../miscellaneous/functions.html#t" target="_self" >string</a></code>
                                             </td>
 
                                             <td>
@@ -752,15 +899,15 @@
             <tr>
                 <td class="col-md-4">
                         <span class="modifier-icon icon ion-ios-reset"></span>
-                    <code>sendPasswordResetEmail(to: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank">string</a>, user: <a href="../unknowns/User.html" target="_self">Users</a>)</code>
+                    <code>sendPasswordResetEmail(to: <a href="../undefineds/t.html" target="_self">string</a>, user: <a href="../unknowns/User.html" target="_self">Users</a>)</code>
                 </td>
             </tr>
 
 
                     <tr>
                         <td class="col-md-4">
-                            <div class="io-line">Defined in <a href="" data-line="125"
-                                    class="link-to-prism">src/api/auth/services/auth-api.service.ts:125</a></div>
+                            <div class="io-line">Defined in <a href="" data-line="152"
+                                    class="link-to-prism">src/api/auth/services/auth-api.service.ts:152</a></div>
                         </td>
                     </tr>
 
@@ -783,7 +930,7 @@
                                         <tr>
                                                 <td>to</td>
                                             <td>
-                                                            <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
+                                                            <code><a href="../miscellaneous/functions.html#t" target="_self" >string</a></code>
                                             </td>
 
                                             <td>
@@ -833,15 +980,15 @@
             <tr>
                 <td class="col-md-4">
                         <span class="modifier-icon icon ion-ios-reset"></span>
-                    <code>sendVerificationEmail(to: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank">string</a>, user: <a href="../unknowns/User.html" target="_self">Users</a>)</code>
+                    <code>sendVerificationEmail(to: <a href="../undefineds/t.html" target="_self">string</a>, user: <a href="../unknowns/User.html" target="_self">Users</a>)</code>
                 </td>
             </tr>
 
 
                     <tr>
                         <td class="col-md-4">
-                            <div class="io-line">Defined in <a href="" data-line="117"
-                                    class="link-to-prism">src/api/auth/services/auth-api.service.ts:117</a></div>
+                            <div class="io-line">Defined in <a href="" data-line="144"
+                                    class="link-to-prism">src/api/auth/services/auth-api.service.ts:144</a></div>
                         </td>
                     </tr>
 
@@ -864,7 +1011,7 @@
                                         <tr>
                                                 <td>to</td>
                                             <td>
-                                                            <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
+                                                            <code><a href="../miscellaneous/functions.html#t" target="_self" >string</a></code>
                                             </td>
 
                                             <td>
@@ -921,8 +1068,8 @@
 
                     <tr>
                         <td class="col-md-4">
-                            <div class="io-line">Defined in <a href="" data-line="59"
-                                    class="link-to-prism">src/api/auth/services/auth-api.service.ts:59</a></div>
+                            <div class="io-line">Defined in <a href="" data-line="86"
+                                    class="link-to-prism">src/api/auth/services/auth-api.service.ts:86</a></div>
                         </td>
                     </tr>
 
@@ -958,7 +1105,7 @@
                                 </table>
                             </div>
                         <div class="io-description">
-                            <b>Returns : </b>    <code>Promise&lt;literal type&gt;</code>
+                            <b>Returns : </b>        <code><a href="../miscellaneous/functions.html#t" target="_self" >Promise&lt;literal type&gt;</a></code>
 
                         </div>
                             <div class="io-description">
@@ -990,8 +1137,8 @@
 
                     <tr>
                         <td class="col-md-4">
-                            <div class="io-line">Defined in <a href="" data-line="111"
-                                    class="link-to-prism">src/api/auth/services/auth-api.service.ts:111</a></div>
+                            <div class="io-line">Defined in <a href="" data-line="138"
+                                    class="link-to-prism">src/api/auth/services/auth-api.service.ts:138</a></div>
                         </td>
                     </tr>
 
@@ -1027,7 +1174,7 @@
                                 </table>
                             </div>
                         <div class="io-description">
-                            <b>Returns : </b>    <code>Promise&lt;literal type&gt;</code>
+                            <b>Returns : </b>        <code><a href="../miscellaneous/functions.html#t" target="_self" >Promise&lt;literal type&gt;</a></code>
 
                         </div>
                             <div class="io-description">
@@ -1059,8 +1206,8 @@
 
                     <tr>
                         <td class="col-md-4">
-                            <div class="io-line">Defined in <a href="" data-line="107"
-                                    class="link-to-prism">src/api/auth/services/auth-api.service.ts:107</a></div>
+                            <div class="io-line">Defined in <a href="" data-line="134"
+                                    class="link-to-prism">src/api/auth/services/auth-api.service.ts:134</a></div>
                         </td>
                     </tr>
 
@@ -1112,10 +1259,13 @@
 
 
     <div class="tab-pane fade  tab-source-code" id="source">
-        <pre class="line-numbers compodoc-sourcecode"><code class="language-typescript">import { Injectable } from &#x27;@nestjs/common&#x27;;
+        <pre class="line-numbers compodoc-sourcecode"><code class="language-typescript">import { Inject, Injectable, UnauthorizedException } from &#x27;@nestjs/common&#x27;;
+import { ConfigType } from &#x27;@nestjs/config&#x27;;
 import { Users } from &#x27;@prisma/client&#x27;;
 
 import * as DTO from &#x27;@api/auth/dtos&#x27;;
+import { APP_CONFIG, AppConfigType } from &#x27;@core/config/config-loader&#x27;;
+import { NonceService } from &#x27;@modules/nonce/nonce.service&#x27;;
 import { UsersDBService } from &#x27;@modules/users-db/services/users-db.service&#x27;;
 import { AuthService } from &#x27;@modules/auth/services/auth.service&#x27;;
 import { EmailService } from &#x27;@modules/email/services/email.service&#x27;;
@@ -1130,12 +1280,36 @@ export class AuthApiService {
     private readonly authService: AuthService,
     private readonly emailService: EmailService,
     private readonly authMigrationService: AuthMigrationService,
+    private readonly nonceService: NonceService,
+    @Inject(APP_CONFIG.KEY) private readonly config: ConfigType&lt;AppConfigType&gt;,
   ) {}
+
+  /** Emite un nonce de un solo uso para el próximo login (anti-replay). */
+  async issueLoginNonce(): Promise&lt;DTO.LoginNonceResponseDTO&gt; {
+    return {
+      nonce: await this.nonceService.issue(),
+      expiresInSeconds: this.nonceService.ttlSeconds,
+    };
+  }
+
+  /**
+   * Opt-in (LOGIN_NONCE_REQUIRED): con la flag activa el nonce es obligatorio; con la flag
+   * apagada (default, no rompe clientes existentes) solo se valida si el cliente lo envía.
+   */
+  private async assertLoginNonce(nonce: string | undefined): Promise&lt;void&gt; {
+    if (nonce &#x3D;&#x3D;&#x3D; undefined &amp;&amp; !this.config.nonce.loginRequired) return;
+    if (!(await this.nonceService.consume(nonce))) {
+      throw new UnauthorizedException(
+        &#x27;Nonce inválido, expirado o ya utilizado.&#x27;,
+      );
+    }
+  }
 
   async handleLogin(
     dto: DTO.LoginUserDTO,
     userAgent?: string,
   ): Promise&lt;DTO.LoginUserResponseDTO&gt; {
+    await this.assertLoginNonce(dto.nonce);
     const loginResult &#x3D; await this.authService.login({
       email: dto.email,
       encryptedPassword: dto.encryptedPassword,
