@@ -1,6 +1,6 @@
-# node-started-backend
+# node-starter-backend
 
-[![npm](https://badge.fury.io/js/node-started-backend.svg)](https://www.npmjs.com/package/node-started-backend)
+[![npm](https://badge.fury.io/js/node-starter-backend.svg)](https://www.npmjs.com/package/node-starter-backend)
 
 Proyecto inicial para backend con NestJS y TypeScript
 

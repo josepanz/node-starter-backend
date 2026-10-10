@@ -1,5 +1,5 @@
 {
-  "name": "node-started-backend",
+  "name": "node-starter-backend",
   "version": "1.0.0-develop.1",
   "description": "Proyecto inicial para backend con NestJS y TypeScript",
   "author": "Jose Panza",
