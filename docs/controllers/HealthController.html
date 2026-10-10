@@ -3,7 +3,7 @@
     <head>
         <meta charset="utf-8">
         <meta http-equiv="x-ua-compatible" content="ie=edge">
-        <title>node-started-backend documentation</title>
+        <title>node-starter-backend documentation</title>
         <meta name="description" content="">
         <meta name="viewport" content="width=device-width, initial-scale=1">
 
@@ -78,7 +78,7 @@
 
         <div class="navbar navbar-default navbar-fixed-top d-md-none p-0">
                <div class="d-flex">
-                    <a href="../" class="navbar-brand">node-started-backend documentation</a>
+                    <a href="../" class="navbar-brand">node-starter-backend documentation</a>
                     <button type="button" class="btn btn-default btn-menu ion-ios-menu" id="btn-menu"></button>
                </div>
         </div>
@@ -213,8 +213,8 @@
 
                     <tr>
                         <td class="col-md-4">
-                            <div class="io-line">Defined in <a href="" data-line="36"
-                                    class="link-to-prism">src/modules/health/health.controller.ts:36</a></div>
+                            <div class="io-line">Defined in <a href="" data-line="47"
+                                    class="link-to-prism">src/modules/health/health.controller.ts:47</a></div>
                         </td>
                     </tr>
 
@@ -234,7 +234,8 @@
 
 
     <div class="tab-pane fade  tab-source-code" id="source">
-        <pre class="line-numbers compodoc-sourcecode"><code class="language-typescript">import { Controller, Get, Version } from &#x27;@nestjs/common&#x27;;
+        <pre class="line-numbers compodoc-sourcecode"><code class="language-typescript">import { Controller, Get, Inject, Optional, Version } from &#x27;@nestjs/common&#x27;;
+import { ConfigType } from &#x27;@nestjs/config&#x27;;
 import { ApiTags } from &#x27;@nestjs/swagger&#x27;;
 import {
   HealthCheck,
@@ -243,7 +244,11 @@ import {
   PrismaHealthIndicator,
 } from &#x27;@nestjs/terminus&#x27;;
 import { toZonedTime } from &#x27;date-fns-tz&#x27;;
+import { APP_CONFIG, AppConfigType } from &#x27;@core/config/config-loader&#x27;;
 import { PrismaDatasource } from &#x27;@core/database/services/prisma.service&#x27;;
+import { Db2HealthIndicator } from &#x27;@core/database/health/db2.health-indicator&#x27;;
+import { RedisHealthIndicator } from &#x27;@core/redis/redis.health-indicator&#x27;;
+import { SmtpHealthIndicator } from &#x27;@modules/email/health/smtp.health-indicator&#x27;;
 import * as path from &#x27;path&#x27;;
 import * as fs from &#x27;fs&#x27;;
 
@@ -264,6 +269,12 @@ export class HealthController {
     private memory: MemoryHealthIndicator,
     private prismaDataSource: PrismaDatasource,
     private db: PrismaHealthIndicator,
+    private smtp: SmtpHealthIndicator,
+    private redis: RedisHealthIndicator,
+    @Inject(APP_CONFIG.KEY)
+    private config: ConfigType&lt;AppConfigType&gt;,
+    // Solo existe si DB2/Sequelize está activo (DATABASE_CONNECTION_STRING)
+    @Optional() private db2?: Db2HealthIndicator,
   ) {}
 
   @Get()
@@ -272,12 +283,16 @@ export class HealthController {
   async check() {
     const healthCheck &#x3D; await this.health.check([
       () &#x3D;&gt; this.db.pingCheck(&#x27;database&#x27;, this.prismaDataSource),
+      ...(this.db2 ? [() &#x3D;&gt; this.db2!.check(&#x27;db2&#x27;)] : []),
       () &#x3D;&gt; this.memory.checkHeap(&#x27;memory_heap&#x27;, 150 * 1024 * 1024), // verifica que el proceso no utiliza mas de 150mb de memoria
     ]);
 
     return {
-      date: toZonedTime(new Date(), &#x27;America/Asuncion&#x27;),
+      date: toZonedTime(new Date(), this.config.timezone),
       info: healthCheck,
+      // Informativo: no participa del chequeo agregado (un SMTP caído no baja el estado general)
+      smtp: this.smtp.check(),
+      redis: await this.redis.check(),
       version: packageJson.version,
     };
   }

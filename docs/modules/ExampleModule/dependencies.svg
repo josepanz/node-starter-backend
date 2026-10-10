@@ -24,71 +24,71 @@
 <title>cluster_ExampleModule</title>
 <polygon fill="none" stroke="black" stroke-dasharray="1,5" points="8,-70 8,-268 516,-268 516,-70 8,-70"/>
 </g>
-<g id="clust6" class="cluster">
-<title>cluster_ExampleModule_providers</title>
-<polygon fill="none" stroke="black" points="150,-78 150,-130 508,-130 508,-78 150,-78"/>
-</g>
 <g id="clust3" class="cluster">
 <title>cluster_ExampleModule_imports</title>
-<polygon fill="none" stroke="black" points="16,-78 16,-130 142,-130 142,-78 16,-78"/>
+<polygon fill="none" stroke="black" points="382,-78 382,-130 508,-130 508,-78 382,-78"/>
 </g>
 <g id="clust4" class="cluster">
 <title>cluster_ExampleModule_exports</title>
-<polygon fill="none" stroke="black" points="168,-208 168,-260 296,-260 296,-208 168,-208"/>
+<polygon fill="none" stroke="black" points="214,-208 214,-260 342,-260 342,-208 214,-208"/>
+</g>
+<g id="clust6" class="cluster">
+<title>cluster_ExampleModule_providers</title>
+<polygon fill="none" stroke="black" points="16,-78 16,-130 374,-130 374,-78 16,-78"/>
 </g>
 <!-- DatabaseModule -->
 <g id="node1" class="node">
 <title>DatabaseModule</title>
-<polygon fill="#8dd3c7" stroke="black" points="134.35,-122 131.35,-126 110.35,-126 107.35,-122 23.65,-122 23.65,-86 134.35,-86 134.35,-122"/>
-<text text-anchor="middle" x="79" y="-99.8" font-family="Times,serif" font-size="14.00">DatabaseModule</text>
+<polygon fill="#8dd3c7" stroke="black" points="500.35,-122 497.35,-126 476.35,-126 473.35,-122 389.65,-122 389.65,-86 500.35,-86 500.35,-122"/>
+<text text-anchor="middle" x="445" y="-99.8" font-family="Times,serif" font-size="14.00">DatabaseModule</text>
 </g>
 <!-- ExampleModule -->
 <g id="node2" class="node">
 <title>ExampleModule</title>
-<polygon fill="#8dd3c7" stroke="black" points="286.81,-187 283.81,-191 262.81,-191 259.81,-187 177.19,-187 177.19,-151 286.81,-151 286.81,-187"/>
-<text text-anchor="middle" x="232" y="-164.8" font-family="Times,serif" font-size="14.00">ExampleModule</text>
+<polygon fill="#8dd3c7" stroke="black" points="332.81,-187 329.81,-191 308.81,-191 305.81,-187 223.19,-187 223.19,-151 332.81,-151 332.81,-187"/>
+<text text-anchor="middle" x="278" y="-164.8" font-family="Times,serif" font-size="14.00">ExampleModule</text>
 </g>
 <!-- DatabaseModule&#45;&gt;ExampleModule -->
 <g id="edge1" class="edge">
 <title>DatabaseModule&#45;&gt;ExampleModule</title>
-<path fill="none" stroke="black" d="M79,-122.11C79,-141.34 79,-169 79,-169 79,-169 167.2,-169 167.2,-169"/>
-<polygon fill="black" stroke="black" points="167.2,-172.5 177.2,-169 167.2,-165.5 167.2,-172.5"/>
+<path fill="none" stroke="black" d="M445,-122.11C445,-141.34 445,-169 445,-169 445,-169 342.68,-169 342.68,-169"/>
+<polygon fill="black" stroke="black" points="342.68,-165.5 332.68,-169 342.68,-172.5 342.68,-165.5"/>
 </g>
 <!-- ExampleService  -->
 <g id="node3" class="node">
 <title>ExampleService </title>
-<polygon fill="#fb8072" stroke="black" points="287.74,-252 176.26,-252 176.26,-216 287.74,-216 287.74,-252"/>
-<text text-anchor="middle" x="232" y="-229.8" font-family="Times,serif" font-size="14.00">ExampleService </text>
+<polygon fill="#fb8072" stroke="black" points="333.74,-252 222.26,-252 222.26,-216 333.74,-216 333.74,-252"/>
+<text text-anchor="middle" x="278" y="-229.8" font-family="Times,serif" font-size="14.00">ExampleService </text>
 </g>
 <!-- ExampleModule&#45;&gt;ExampleService  -->
 <g id="edge2" class="edge">
 <title>ExampleModule&#45;&gt;ExampleService </title>
-<path fill="none" stroke="black" stroke-dasharray="5,2" d="M232,-187.11C232,-187.11 232,-205.99 232,-205.99"/>
-<polygon fill="black" stroke="black" points="228.5,-205.99 232,-215.99 235.5,-205.99 228.5,-205.99"/>
+<path fill="none" stroke="black" stroke-dasharray="5,2" d="M278,-187.11C278,-187.11 278,-205.99 278,-205.99"/>
+<polygon fill="black" stroke="black" points="274.5,-205.99 278,-215.99 281.5,-205.99 274.5,-205.99"/>
 </g>
 <!-- ExampleRepository -->
 <g id="node4" class="node">
 <title>ExampleRepository</title>
-<ellipse fill="#fdb462" stroke="black" cx="412" cy="-104" rx="87.98" ry="18"/>
-<text text-anchor="middle" x="412" y="-99.8" font-family="Times,serif" font-size="14.00">ExampleRepository</text>
+<ellipse fill="#fdb462" stroke="black" cx="278" cy="-104" rx="87.98" ry="18"/>
+<text text-anchor="middle" x="278" y="-99.8" font-family="Times,serif" font-size="14.00">ExampleRepository</text>
 </g>
 <!-- ExampleRepository&#45;&gt;ExampleModule -->
 <g id="edge3" class="edge">
 <title>ExampleRepository&#45;&gt;ExampleModule</title>
-<path fill="none" stroke="black" d="M412,-122.11C412,-141.34 412,-169 412,-169 412,-169 296.98,-169 296.98,-169"/>
-<polygon fill="black" stroke="black" points="296.98,-165.5 286.98,-169 296.98,-172.5 296.98,-165.5"/>
+<path fill="none" stroke="black" d="M278,-122.11C278,-122.11 278,-140.99 278,-140.99"/>
+<polygon fill="black" stroke="black" points="274.5,-140.99 278,-150.99 281.5,-140.99 274.5,-140.99"/>
 </g>
 <!-- ExampleService -->
 <g id="node5" class="node">
 <title>ExampleService</title>
-<ellipse fill="#fdb462" stroke="black" cx="232" cy="-104" rx="74.14" ry="18"/>
-<text text-anchor="middle" x="232" y="-99.8" font-family="Times,serif" font-size="14.00">ExampleService</text>
+<ellipse fill="#fdb462" stroke="black" cx="98" cy="-104" rx="74.14" ry="18"/>
+<text text-anchor="middle" x="98" y="-99.8" font-family="Times,serif" font-size="14.00">ExampleService</text>
 </g>
 <!-- ExampleService&#45;&gt;ExampleModule -->
 <g id="edge4" class="edge">
 <title>ExampleService&#45;&gt;ExampleModule</title>
-<path fill="none" stroke="black" d="M232,-122.11C232,-122.11 232,-140.99 232,-140.99"/>
-<polygon fill="black" stroke="black" points="228.5,-140.99 232,-150.99 235.5,-140.99 228.5,-140.99"/>
+<path fill="none" stroke="black" d="M98,-122.11C98,-141.34 98,-169 98,-169 98,-169 213.02,-169 213.02,-169"/>
+<polygon fill="black" stroke="black" points="213.02,-172.5 223.02,-169 213.02,-165.5 213.02,-172.5"/>
 </g>
 </g>
 </svg>

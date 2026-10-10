@@ -3,7 +3,7 @@
     <head>
         <meta charset="utf-8">
         <meta http-equiv="x-ua-compatible" content="ie=edge">
-        <title>node-started-backend documentation</title>
+        <title>node-starter-backend documentation</title>
         <meta name="description" content="">
         <meta name="viewport" content="width=device-width, initial-scale=1">
 
@@ -78,7 +78,7 @@
 
         <div class="navbar navbar-default navbar-fixed-top d-md-none p-0">
                <div class="d-flex">
-                    <a href="../" class="navbar-brand">node-started-backend documentation</a>
+                    <a href="../" class="navbar-brand">node-starter-backend documentation</a>
                     <button type="button" class="btn btn-default btn-menu ion-ios-menu" id="btn-menu"></button>
                </div>
         </div>
@@ -133,29 +133,41 @@
 <text text-anchor="start" x="429.73" y="-15.4" font-family="Times-12" font-size="14.00"> &#160;Exports</text>
 <g id="clust1" class="cluster">
 <title>cluster_HealthModule</title>
-<polygon fill="none" stroke="black" stroke-dasharray="1,5" points="177,-70 177,-195 319,-195 319,-70 177,-70"/>
+<polygon fill="none" stroke="black" stroke-dasharray="1,5" points="121.5,-70 121.5,-195 374.5,-195 374.5,-70 121.5,-70"/>
 </g>
 <g id="clust3" class="cluster">
 <title>cluster_HealthModule_imports</title>
-<polygon fill="none" stroke="black" points="185,-78 185,-130 311,-130 311,-78 185,-78"/>
+<polygon fill="none" stroke="black" points="129.5,-78 129.5,-130 366.5,-130 366.5,-78 129.5,-78"/>
 </g>
 <!-- DatabaseModule -->
 <g id="node1" class="node">
 <title>DatabaseModule</title>
-<polygon fill="#8dd3c7" stroke="black" points="303.35,-122 300.35,-126 279.35,-126 276.35,-122 192.65,-122 192.65,-86 303.35,-86 303.35,-122"/>
-<text text-anchor="middle" x="248" y="-99.8" font-family="Times,serif" font-size="14.00">DatabaseModule</text>
+<polygon fill="#8dd3c7" stroke="black" points="358.85,-122 355.85,-126 334.85,-126 331.85,-122 248.15,-122 248.15,-86 358.85,-86 358.85,-122"/>
+<text text-anchor="middle" x="303.5" y="-99.8" font-family="Times,serif" font-size="14.00">DatabaseModule</text>
 </g>
 <!-- HealthModule -->
-<g id="node2" class="node">
+<g id="node3" class="node">
 <title>HealthModule</title>
-<polygon fill="#8dd3c7" stroke="black" points="296.37,-187 293.37,-191 272.37,-191 269.37,-187 199.63,-187 199.63,-151 296.37,-151 296.37,-187"/>
-<text text-anchor="middle" x="248" y="-164.8" font-family="Times,serif" font-size="14.00">HealthModule</text>
+<polygon fill="#8dd3c7" stroke="black" points="291.87,-187 288.87,-191 267.87,-191 264.87,-187 195.13,-187 195.13,-151 291.87,-151 291.87,-187"/>
+<text text-anchor="middle" x="243.5" y="-164.8" font-family="Times,serif" font-size="14.00">HealthModule</text>
 </g>
 <!-- DatabaseModule&#45;&gt;HealthModule -->
 <g id="edge1" class="edge">
 <title>DatabaseModule&#45;&gt;HealthModule</title>
-<path fill="none" stroke="black" d="M248,-122.11C248,-122.11 248,-140.99 248,-140.99"/>
-<polygon fill="black" stroke="black" points="244.5,-140.99 248,-150.99 251.5,-140.99 244.5,-140.99"/>
+<path fill="none" stroke="black" d="M270,-122.11C270,-122.11 270,-140.99 270,-140.99"/>
+<polygon fill="black" stroke="black" points="266.5,-140.99 270,-150.99 273.5,-140.99 266.5,-140.99"/>
+</g>
+<!-- EmailModule -->
+<g id="node2" class="node">
+<title>EmailModule</title>
+<polygon fill="#8dd3c7" stroke="black" points="229.99,-122 226.99,-126 205.99,-126 202.99,-122 137.01,-122 137.01,-86 229.99,-86 229.99,-122"/>
+<text text-anchor="middle" x="183.5" y="-99.8" font-family="Times,serif" font-size="14.00">EmailModule</text>
+</g>
+<!-- EmailModule&#45;&gt;HealthModule -->
+<g id="edge2" class="edge">
+<title>EmailModule&#45;&gt;HealthModule</title>
+<path fill="none" stroke="black" d="M212.53,-122.11C212.53,-122.11 212.53,-140.99 212.53,-140.99"/>
+<polygon fill="black" stroke="black" points="209.03,-140.99 212.53,-150.99 216.03,-140.99 209.03,-140.99"/>
 </g>
 </g>
 </svg>
@@ -220,6 +232,9 @@
                         <li class="list-group-item">
                             <a href="../modules/DatabaseModule.html">DatabaseModule</a>
                         </li>
+                        <li class="list-group-item">
+                            <a href="../modules/EmailModule.html">EmailModule</a>
+                        </li>
                     </ul>
                 </div>
             </div>
@@ -234,9 +249,10 @@
 import { HealthController } from &#x27;./health.controller&#x27;;
 import { TerminusModule } from &#x27;@nestjs/terminus&#x27;;
 import { DatabaseModule } from &#x27;../../core/database/database.module&#x27;;
+import { EmailModule } from &#x27;@modules/email/email.module&#x27;;
 
 @Module({
-  imports: [TerminusModule, DatabaseModule],
+  imports: [TerminusModule, DatabaseModule, EmailModule],
   controllers: [HealthController],
 })
 export class HealthModule {}

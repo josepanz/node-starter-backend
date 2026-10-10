@@ -3,7 +3,7 @@
     <head>
         <meta charset="utf-8">
         <meta http-equiv="x-ua-compatible" content="ie=edge">
-        <title>node-started-backend documentation</title>
+        <title>node-starter-backend documentation</title>
         <meta name="description" content="">
         <meta name="viewport" content="width=device-width, initial-scale=1">
 
@@ -78,7 +78,7 @@
 
         <div class="navbar navbar-default navbar-fixed-top d-md-none p-0">
                <div class="d-flex">
-                    <a href="../" class="navbar-brand">node-started-backend documentation</a>
+                    <a href="../" class="navbar-brand">node-starter-backend documentation</a>
                     <button type="button" class="btn btn-default btn-menu ion-ios-menu" id="btn-menu"></button>
                </div>
         </div>
@@ -174,6 +174,7 @@
                                 <a href="#deleteByReference" >deleteByReference</a>
                             </li>
                             <li>
+                                    <span class="modifier"></span>
                                     <span class="modifier"></span>
                                     <span class="modifier"></span>
                                     <span class="modifier"></span>
@@ -278,7 +279,7 @@
             <tr>
                 <td class="col-md-4">
                         <span class="modifier-icon icon ion-ios-reset"></span>
-                    <code>block(id: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/number" target="_blank">number</a>, dto: <a href="../classes/BlockUserRequestDTO.html" target="_self">DTO.BlockUserRequestDTO</a>, user: <a href="../unknowns/User.html" target="_self">Users</a>)</code>
+                    <code>block(id: <a href="../unknowns/num.html" target="_self">number</a>, dto: <a href="../classes/BlockUserRequestDTO.html" target="_self">DTO.BlockUserRequestDTO</a>, user: <a href="../unknowns/User.html" target="_self">Users</a>)</code>
                 </td>
             </tr>
 
@@ -286,14 +287,14 @@
                 <td class="col-md-4">
                     <b>Decorators : </b>
                     <br />
-                    <code>@Patch(&#x27;:id/block&#x27;)<br />@Version(&#x27;1&#x27;)<br />@Permissions(undefined.UPDATE, undefined.ALL)<br />@UsersDocs(&#x27;block&#x27;)<br /></code>
+                    <code>@Patch(&#x27;:id/block&#x27;)<br />@Version(&#x27;1&#x27;)<br />@Permissions(undefined.UPDATE)<br />@UsersDocs(&#x27;block&#x27;)<br /></code>
                 </td>
             </tr>
 
                     <tr>
                         <td class="col-md-4">
-                            <div class="io-line">Defined in <a href="" data-line="149"
-                                    class="link-to-prism">src/api/users/controllers/users.controller.ts:149</a></div>
+                            <div class="io-line">Defined in <a href="" data-line="151"
+                                    class="link-to-prism">src/api/users/controllers/users.controller.ts:151</a></div>
                         </td>
                     </tr>
 
@@ -316,7 +317,7 @@
                                         <tr>
                                                 <td>id</td>
                                             <td>
-                                                            <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/number" target="_blank" >number</a></code>
+                                                            <code><a href="../miscellaneous/variables.html#num" target="_self" >number</a></code>
                                             </td>
 
                                             <td>
@@ -382,7 +383,7 @@
             <tr>
                 <td class="col-md-4">
                         <span class="modifier-icon icon ion-ios-reset"></span>
-                    <code>deleteByReference(referenceId: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank">string</a>, user: <a href="../unknowns/User.html" target="_self">Users</a>)</code>
+                    <code>deleteByReference(referenceId: <a href="../undefineds/t.html" target="_self">string</a>, user: <a href="../unknowns/User.html" target="_self">Users</a>)</code>
                 </td>
             </tr>
 
@@ -390,14 +391,14 @@
                 <td class="col-md-4">
                     <b>Decorators : </b>
                     <br />
-                    <code>@Delete(&#x27;reference/:referenceId&#x27;)<br />@Version(&#x27;1&#x27;)<br />@Permissions(undefined.DELETE, undefined.ALL)<br />@UsersDocs(&#x27;deleteByReference&#x27;)<br /></code>
+                    <code>@Delete(&#x27;reference/:referenceId&#x27;)<br />@Version(&#x27;1&#x27;)<br />@Permissions(undefined.DELETE)<br />@UsersDocs(&#x27;deleteByReference&#x27;)<br /></code>
                 </td>
             </tr>
 
                     <tr>
                         <td class="col-md-4">
-                            <div class="io-line">Defined in <a href="" data-line="115"
-                                    class="link-to-prism">src/api/users/controllers/users.controller.ts:115</a></div>
+                            <div class="io-line">Defined in <a href="" data-line="117"
+                                    class="link-to-prism">src/api/users/controllers/users.controller.ts:117</a></div>
                         </td>
                     </tr>
 
@@ -420,7 +421,7 @@
                                         <tr>
                                                 <td>referenceId</td>
                                             <td>
-                                                            <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
+                                                            <code><a href="../miscellaneous/functions.html#t" target="_self" >string</a></code>
                                             </td>
 
                                             <td>
@@ -466,6 +467,7 @@
                             <span class="modifier"></span>
                             <span class="modifier"></span>
                             <span class="modifier"></span>
+                            <span class="modifier"></span>
                             <span class="modifier">Async</span>
                         <span ><b>findAll</b></span>
                         <a href="#findAll"><span class="icon ion-ios-link"></span></a>
@@ -475,7 +477,7 @@
             <tr>
                 <td class="col-md-4">
                         <span class="modifier-icon icon ion-ios-reset"></span>
-                    <code>findAll(query: <a href="../classes/ListUsersRequestDTO.html" target="_self">DTO.ListUsersRequestDTO</a>, merchantCtx: <a href="../interfaces/IMerchantContext.html" target="_self">IMerchantContext</a>, user: <a href="../interfaces/IUserDataOnJwt.html" target="_self">IUserDataOnJwt</a>)</code>
+                    <code>findAll(query: <a href="../classes/ListUsersRequestDTO.html" target="_self">DTO.ListUsersRequestDTO</a>, tenantCtx: <a href="../interfaces/ITenantContext.html" target="_self">ITenantContext</a>, user: <a href="../interfaces/IUserDataOnJwt.html" target="_self">IUserDataOnJwt</a>)</code>
                 </td>
             </tr>
 
@@ -483,14 +485,14 @@
                 <td class="col-md-4">
                     <b>Decorators : </b>
                     <br />
-                    <code>@Get()<br />@Version(&#x27;1&#x27;)<br />@UseGuards(MerchantContextGuard)<br />@Permissions(undefined.READ, undefined.ALL)<br />@UsersDocs(&#x27;findAll&#x27;)<br /></code>
+                    <code>@Get()<br />@Version(&#x27;1&#x27;)<br />@RateLimit(&#x27;search&#x27;)<br />@UseGuards(TenantContextGuard)<br />@Permissions(undefined.READ)<br />@UsersDocs(&#x27;findAll&#x27;)<br /></code>
                 </td>
             </tr>
 
                     <tr>
                         <td class="col-md-4">
-                            <div class="io-line">Defined in <a href="" data-line="48"
-                                    class="link-to-prism">src/api/users/controllers/users.controller.ts:48</a></div>
+                            <div class="io-line">Defined in <a href="" data-line="50"
+                                    class="link-to-prism">src/api/users/controllers/users.controller.ts:50</a></div>
                         </td>
                     </tr>
 
@@ -523,9 +525,9 @@
 
                                         </tr>
                                         <tr>
-                                                <td>merchantCtx</td>
+                                                <td>tenantCtx</td>
                                             <td>
-                                                            <code><a href="../interfaces/IMerchantContext.html" target="_self" >IMerchantContext</a></code>
+                                                            <code><a href="../interfaces/ITenantContext.html" target="_self" >ITenantContext</a></code>
                                             </td>
 
                                             <td>
@@ -580,7 +582,7 @@
             <tr>
                 <td class="col-md-4">
                         <span class="modifier-icon icon ion-ios-reset"></span>
-                    <code>findOne(id: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/number" target="_blank">number</a>)</code>
+                    <code>findOne(id: <a href="../unknowns/num.html" target="_self">number</a>)</code>
                 </td>
             </tr>
 
@@ -588,14 +590,14 @@
                 <td class="col-md-4">
                     <b>Decorators : </b>
                     <br />
-                    <code>@Get(&#x27;:id&#x27;)<br />@Version(&#x27;1&#x27;)<br />@UseGuards(MerchantContextGuard)<br />@Permissions(undefined.READ, undefined.ALL)<br />@UsersDocs(&#x27;findOne&#x27;)<br /></code>
+                    <code>@Get(&#x27;:id&#x27;)<br />@Version(&#x27;1&#x27;)<br />@UseGuards(TenantContextGuard)<br />@Permissions(undefined.READ)<br />@UsersDocs(&#x27;findOne&#x27;)<br /></code>
                 </td>
             </tr>
 
                     <tr>
                         <td class="col-md-4">
-                            <div class="io-line">Defined in <a href="" data-line="127"
-                                    class="link-to-prism">src/api/users/controllers/users.controller.ts:127</a></div>
+                            <div class="io-line">Defined in <a href="" data-line="129"
+                                    class="link-to-prism">src/api/users/controllers/users.controller.ts:129</a></div>
                         </td>
                     </tr>
 
@@ -618,7 +620,7 @@
                                         <tr>
                                                 <td>id</td>
                                             <td>
-                                                            <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/number" target="_blank" >number</a></code>
+                                                            <code><a href="../miscellaneous/variables.html#num" target="_self" >number</a></code>
                                             </td>
 
                                             <td>
@@ -661,7 +663,7 @@
             <tr>
                 <td class="col-md-4">
                         <span class="modifier-icon icon ion-ios-reset"></span>
-                    <code>findOneByReference(referenceId: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank">string</a>)</code>
+                    <code>findOneByReference(referenceId: <a href="../undefineds/t.html" target="_self">string</a>)</code>
                 </td>
             </tr>
 
@@ -669,14 +671,14 @@
                 <td class="col-md-4">
                     <b>Decorators : </b>
                     <br />
-                    <code>@Get(&#x27;reference/:referenceId&#x27;)<br />@Version(&#x27;1&#x27;)<br />@UseGuards(MerchantContextGuard)<br />@Permissions(undefined.READ, undefined.ALL)<br />@UsersDocs(&#x27;findOneByReference&#x27;)<br /></code>
+                    <code>@Get(&#x27;reference/:referenceId&#x27;)<br />@Version(&#x27;1&#x27;)<br />@UseGuards(TenantContextGuard)<br />@Permissions(undefined.READ)<br />@UsersDocs(&#x27;findOneByReference&#x27;)<br /></code>
                 </td>
             </tr>
 
                     <tr>
                         <td class="col-md-4">
-                            <div class="io-line">Defined in <a href="" data-line="89"
-                                    class="link-to-prism">src/api/users/controllers/users.controller.ts:89</a></div>
+                            <div class="io-line">Defined in <a href="" data-line="91"
+                                    class="link-to-prism">src/api/users/controllers/users.controller.ts:91</a></div>
                         </td>
                     </tr>
 
@@ -699,7 +701,7 @@
                                         <tr>
                                                 <td>referenceId</td>
                                             <td>
-                                                            <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
+                                                            <code><a href="../miscellaneous/functions.html#t" target="_self" >string</a></code>
                                             </td>
 
                                             <td>
@@ -742,7 +744,7 @@
             <tr>
                 <td class="col-md-4">
                         <span class="modifier-icon icon ion-ios-reset"></span>
-                    <code>getEditContext(referenceId: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank">string</a>)</code>
+                    <code>getEditContext(referenceId: <a href="../undefineds/t.html" target="_self">string</a>)</code>
                 </td>
             </tr>
 
@@ -750,14 +752,14 @@
                 <td class="col-md-4">
                     <b>Decorators : </b>
                     <br />
-                    <code>@Get(&#x27;reference/:referenceId/edit-context&#x27;)<br />@Version(&#x27;1&#x27;)<br />@UseGuards(MerchantContextGuard)<br />@Permissions(undefined.READ, undefined.ALL)<br />@UsersDocs(&#x27;getEditContext&#x27;)<br /></code>
+                    <code>@Get(&#x27;reference/:referenceId/edit-context&#x27;)<br />@Version(&#x27;1&#x27;)<br />@UseGuards(TenantContextGuard)<br />@Permissions(undefined.READ)<br />@UsersDocs(&#x27;getEditContext&#x27;)<br /></code>
                 </td>
             </tr>
 
                     <tr>
                         <td class="col-md-4">
-                            <div class="io-line">Defined in <a href="" data-line="61"
-                                    class="link-to-prism">src/api/users/controllers/users.controller.ts:61</a></div>
+                            <div class="io-line">Defined in <a href="" data-line="63"
+                                    class="link-to-prism">src/api/users/controllers/users.controller.ts:63</a></div>
                         </td>
                     </tr>
 
@@ -780,7 +782,7 @@
                                         <tr>
                                                 <td>referenceId</td>
                                             <td>
-                                                            <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
+                                                            <code><a href="../miscellaneous/functions.html#t" target="_self" >string</a></code>
                                             </td>
 
                                             <td>
@@ -822,7 +824,7 @@
             <tr>
                 <td class="col-md-4">
                         <span class="modifier-icon icon ion-ios-reset"></span>
-                    <code>unblock(id: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/number" target="_blank">number</a>, dto: <a href="../classes/UnblockUserRequestDTO.html" target="_self">DTO.UnblockUserRequestDTO</a>, user: <a href="../unknowns/User.html" target="_self">Users</a>)</code>
+                    <code>unblock(id: <a href="../unknowns/num.html" target="_self">number</a>, dto: <a href="../classes/UnblockUserRequestDTO.html" target="_self">DTO.UnblockUserRequestDTO</a>, user: <a href="../unknowns/User.html" target="_self">Users</a>)</code>
                 </td>
             </tr>
 
@@ -830,14 +832,14 @@
                 <td class="col-md-4">
                     <b>Decorators : </b>
                     <br />
-                    <code>@Patch(&#x27;:id/unblock&#x27;)<br />@Version(&#x27;1&#x27;)<br />@Permissions(undefined.UPDATE, undefined.ALL)<br />@UsersDocs(&#x27;unblock&#x27;)<br /></code>
+                    <code>@Patch(&#x27;:id/unblock&#x27;)<br />@Version(&#x27;1&#x27;)<br />@Permissions(undefined.UPDATE)<br />@UsersDocs(&#x27;unblock&#x27;)<br /></code>
                 </td>
             </tr>
 
                     <tr>
                         <td class="col-md-4">
-                            <div class="io-line">Defined in <a href="" data-line="161"
-                                    class="link-to-prism">src/api/users/controllers/users.controller.ts:161</a></div>
+                            <div class="io-line">Defined in <a href="" data-line="163"
+                                    class="link-to-prism">src/api/users/controllers/users.controller.ts:163</a></div>
                         </td>
                     </tr>
 
@@ -860,7 +862,7 @@
                                         <tr>
                                                 <td>id</td>
                                             <td>
-                                                            <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/number" target="_blank" >number</a></code>
+                                                            <code><a href="../miscellaneous/variables.html#num" target="_self" >number</a></code>
                                             </td>
 
                                             <td>
@@ -926,7 +928,7 @@
             <tr>
                 <td class="col-md-4">
                         <span class="modifier-icon icon ion-ios-reset"></span>
-                    <code>update(id: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/number" target="_blank">number</a>, dto: <a href="../classes/UpdateUserRequestDTO.html" target="_self">DTO.UpdateUserRequestDTO</a>, user: <a href="../unknowns/User.html" target="_self">Users</a>)</code>
+                    <code>update(id: <a href="../unknowns/num.html" target="_self">number</a>, dto: <a href="../classes/UpdateUserRequestDTO.html" target="_self">DTO.UpdateUserRequestDTO</a>, user: <a href="../unknowns/User.html" target="_self">Users</a>)</code>
                 </td>
             </tr>
 
@@ -934,14 +936,14 @@
                 <td class="col-md-4">
                     <b>Decorators : </b>
                     <br />
-                    <code>@Put(&#x27;:id&#x27;)<br />@Version(&#x27;1&#x27;)<br />@Permissions(undefined.UPDATE, undefined.ALL)<br />@UsersDocs(&#x27;update&#x27;)<br /></code>
+                    <code>@Put(&#x27;:id&#x27;)<br />@Version(&#x27;1&#x27;)<br />@Permissions(undefined.UPDATE)<br />@UsersDocs(&#x27;update&#x27;)<br /></code>
                 </td>
             </tr>
 
                     <tr>
                         <td class="col-md-4">
-                            <div class="io-line">Defined in <a href="" data-line="137"
-                                    class="link-to-prism">src/api/users/controllers/users.controller.ts:137</a></div>
+                            <div class="io-line">Defined in <a href="" data-line="139"
+                                    class="link-to-prism">src/api/users/controllers/users.controller.ts:139</a></div>
                         </td>
                     </tr>
 
@@ -964,7 +966,7 @@
                                         <tr>
                                                 <td>id</td>
                                             <td>
-                                                            <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/number" target="_blank" >number</a></code>
+                                                            <code><a href="../miscellaneous/variables.html#num" target="_self" >number</a></code>
                                             </td>
 
                                             <td>
@@ -1030,7 +1032,7 @@
             <tr>
                 <td class="col-md-4">
                         <span class="modifier-icon icon ion-ios-reset"></span>
-                    <code>updateByReference(referenceId: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank">string</a>, dto: <a href="../classes/UpdateUserRequestDTO.html" target="_self">DTO.UpdateUserRequestDTO</a>, user: <a href="../unknowns/User.html" target="_self">Users</a>)</code>
+                    <code>updateByReference(referenceId: <a href="../undefineds/t.html" target="_self">string</a>, dto: <a href="../classes/UpdateUserRequestDTO.html" target="_self">DTO.UpdateUserRequestDTO</a>, user: <a href="../unknowns/User.html" target="_self">Users</a>)</code>
                 </td>
             </tr>
 
@@ -1038,14 +1040,14 @@
                 <td class="col-md-4">
                     <b>Decorators : </b>
                     <br />
-                    <code>@Put(&#x27;reference/:referenceId&#x27;)<br />@Version(&#x27;1&#x27;)<br />@Permissions(undefined.UPDATE, undefined.ALL)<br />@UsersDocs(&#x27;updateByReference&#x27;)<br /></code>
+                    <code>@Put(&#x27;reference/:referenceId&#x27;)<br />@Version(&#x27;1&#x27;)<br />@Permissions(undefined.UPDATE)<br />@UsersDocs(&#x27;updateByReference&#x27;)<br /></code>
                 </td>
             </tr>
 
                     <tr>
                         <td class="col-md-4">
-                            <div class="io-line">Defined in <a href="" data-line="99"
-                                    class="link-to-prism">src/api/users/controllers/users.controller.ts:99</a></div>
+                            <div class="io-line">Defined in <a href="" data-line="101"
+                                    class="link-to-prism">src/api/users/controllers/users.controller.ts:101</a></div>
                         </td>
                     </tr>
 
@@ -1068,7 +1070,7 @@
                                         <tr>
                                                 <td>referenceId</td>
                                             <td>
-                                                            <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
+                                                            <code><a href="../miscellaneous/functions.html#t" target="_self" >string</a></code>
                                             </td>
 
                                             <td>
@@ -1135,7 +1137,7 @@
             <tr>
                 <td class="col-md-4">
                         <span class="modifier-icon icon ion-ios-reset"></span>
-                    <code>updateEditContext(referenceId: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank">string</a>, dto: <a href="../classes/UpdateEditContextRequestDTO.html" target="_self">UpdateEditContextRequestDTO</a>, operatorUser: <a href="../unknowns/User.html" target="_self">Users</a>)</code>
+                    <code>updateEditContext(referenceId: <a href="../undefineds/t.html" target="_self">string</a>, dto: <a href="../classes/UpdateEditContextRequestDTO.html" target="_self">UpdateEditContextRequestDTO</a>, operatorUser: <a href="../unknowns/User.html" target="_self">Users</a>)</code>
                 </td>
             </tr>
 
@@ -1143,14 +1145,14 @@
                 <td class="col-md-4">
                     <b>Decorators : </b>
                     <br />
-                    <code>@Put(&#x27;reference/:referenceId/edit-context&#x27;)<br />@Version(&#x27;1&#x27;)<br />@UseGuards(MerchantContextGuard)<br />@Permissions(undefined.UPDATE, undefined.ALL)<br />@UsersDocs(&#x27;updateEditContext&#x27;)<br /></code>
+                    <code>@Put(&#x27;reference/:referenceId/edit-context&#x27;)<br />@Version(&#x27;1&#x27;)<br />@UseGuards(TenantContextGuard)<br />@Permissions(undefined.UPDATE)<br />@UsersDocs(&#x27;updateEditContext&#x27;)<br /></code>
                 </td>
             </tr>
 
                     <tr>
                         <td class="col-md-4">
-                            <div class="io-line">Defined in <a href="" data-line="72"
-                                    class="link-to-prism">src/api/users/controllers/users.controller.ts:72</a></div>
+                            <div class="io-line">Defined in <a href="" data-line="74"
+                                    class="link-to-prism">src/api/users/controllers/users.controller.ts:74</a></div>
                         </td>
                     </tr>
 
@@ -1173,7 +1175,7 @@
                                         <tr>
                                                 <td>referenceId</td>
                                             <td>
-                                                            <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
+                                                            <code><a href="../miscellaneous/functions.html#t" target="_self" >string</a></code>
                                             </td>
 
                                             <td>
@@ -1240,17 +1242,18 @@ import {
 } from &#x27;@nestjs/common&#x27;;
 import { ApiTags, ApiBearerAuth } from &#x27;@nestjs/swagger&#x27;;
 
+import { RateLimit } from &#x27;@core/rate-limit/rate-limit.decorators&#x27;;
 import { UsersApiService } from &#x27;@api/users/services/users-api.service&#x27;;
 import * as DTO from &#x27;@api/users/dtos&#x27;;
 import { UsersDocs } from &#x27;@api/users/docs/users-api.docs&#x27;;
 
 import { PermissionsGuard } from &#x27;@modules/auth/guards/permissions.guard&#x27;;
 import { JwtAuthGuard } from &#x27;@modules/auth/guards/jwt-auth.guard&#x27;;
-import { MerchantContextGuard } from &#x27;@modules/auth/guards/merchant-context.guard&#x27;;
+import { TenantContextGuard } from &#x27;@modules/auth/guards/tenant-context.guard&#x27;;
 import { Permissions } from &#x27;@common/decorators/permissions.decorator&#x27;;
 import { User } from &#x27;@common/decorators/user.decorator&#x27;;
-import { MerchantContext } from &#x27;@modules/auth/decorators/get-merchant-context.decorator&#x27;;
-import { IMerchantContext } from &#x27;@common/interfaces/merchant-context.interface&#x27;;
+import { TenantContext } from &#x27;@modules/auth/decorators/get-tenant-context.decorator&#x27;;
+import { ITenantContext } from &#x27;@common/interfaces/tenant-context.interface&#x27;;
 import { PERMISSIONS } from &#x27;@common/enum/permissions.enum&#x27;;
 import { UpdateEditContextRequestDTO } from &#x27;@api/users/dtos/request/edit-context.request.dto&#x27;;
 import {
@@ -1268,21 +1271,22 @@ export class UsersController {
 
   @Get()
   @Version(&#x27;1&#x27;)
-  @UseGuards(MerchantContextGuard)
-  @Permissions(PERMISSIONS.USER.READ, PERMISSIONS.ADMIN.ALL)
+  @RateLimit(&#x27;search&#x27;)
+  @UseGuards(TenantContextGuard)
+  @Permissions(PERMISSIONS.USER.READ)
   @UsersDocs(&#x27;findAll&#x27;)
   async findAll(
     @Query() query: DTO.ListUsersRequestDTO,
-    @MerchantContext() merchantCtx: IMerchantContext,
+    @TenantContext() tenantCtx: ITenantContext,
     @User() user: IUserDataOnJwt,
   ): Promise&lt;DTO.UsersListResponseDTO&gt; {
-    return await this.usersApiService.findAll(query, merchantCtx, user);
+    return await this.usersApiService.findAll(query, tenantCtx, user);
   }
 
   @Get(&#x27;reference/:referenceId/edit-context&#x27;)
   @Version(&#x27;1&#x27;)
-  @UseGuards(MerchantContextGuard)
-  @Permissions(PERMISSIONS.USER.READ, PERMISSIONS.ADMIN.ALL)
+  @UseGuards(TenantContextGuard)
+  @Permissions(PERMISSIONS.USER.READ)
   @UsersDocs(&#x27;getEditContext&#x27;)
   async getEditContext(
     @Param(&#x27;referenceId&#x27;) referenceId: string,
@@ -1292,8 +1296,8 @@ export class UsersController {
 
   @Put(&#x27;reference/:referenceId/edit-context&#x27;)
   @Version(&#x27;1&#x27;)
-  @UseGuards(MerchantContextGuard)
-  @Permissions(PERMISSIONS.USER.UPDATE, PERMISSIONS.ADMIN.ALL)
+  @UseGuards(TenantContextGuard)
+  @Permissions(PERMISSIONS.USER.UPDATE)
   @UsersDocs(&#x27;updateEditContext&#x27;)
   async updateEditContext(
     @Param(&#x27;referenceId&#x27;) referenceId: string,
@@ -1309,8 +1313,8 @@ export class UsersController {
 
   @Get(&#x27;reference/:referenceId&#x27;)
   @Version(&#x27;1&#x27;)
-  @UseGuards(MerchantContextGuard)
-  @Permissions(PERMISSIONS.USER.READ, PERMISSIONS.ADMIN.ALL)
+  @UseGuards(TenantContextGuard)
+  @Permissions(PERMISSIONS.USER.READ)
   @UsersDocs(&#x27;findOneByReference&#x27;)
   async findOneByReference(
     @Param(&#x27;referenceId&#x27;) referenceId: string,
@@ -1320,7 +1324,7 @@ export class UsersController {
 
   @Put(&#x27;reference/:referenceId&#x27;)
   @Version(&#x27;1&#x27;)
-  @Permissions(PERMISSIONS.USER.UPDATE, PERMISSIONS.ADMIN.ALL)
+  @Permissions(PERMISSIONS.USER.UPDATE)
   @UsersDocs(&#x27;updateByReference&#x27;)
   async updateByReference(
     @Param(&#x27;referenceId&#x27;) referenceId: string,
@@ -1336,7 +1340,7 @@ export class UsersController {
 
   @Delete(&#x27;reference/:referenceId&#x27;)
   @Version(&#x27;1&#x27;)
-  @Permissions(PERMISSIONS.USER.DELETE, PERMISSIONS.ADMIN.ALL)
+  @Permissions(PERMISSIONS.USER.DELETE)
   @UsersDocs(&#x27;deleteByReference&#x27;)
   async deleteByReference(
     @Param(&#x27;referenceId&#x27;) referenceId: string,
@@ -1347,8 +1351,8 @@ export class UsersController {
 
   @Get(&#x27;:id&#x27;)
   @Version(&#x27;1&#x27;)
-  @UseGuards(MerchantContextGuard)
-  @Permissions(PERMISSIONS.USER.READ, PERMISSIONS.ADMIN.ALL)
+  @UseGuards(TenantContextGuard)
+  @Permissions(PERMISSIONS.USER.READ)
   @UsersDocs(&#x27;findOne&#x27;)
   async findOne(
     @Param(&#x27;id&#x27;, ParseIntPipe) id: number,
@@ -1358,7 +1362,7 @@ export class UsersController {
 
   @Put(&#x27;:id&#x27;)
   @Version(&#x27;1&#x27;)
-  @Permissions(PERMISSIONS.USER.UPDATE, PERMISSIONS.ADMIN.ALL)
+  @Permissions(PERMISSIONS.USER.UPDATE)
   @UsersDocs(&#x27;update&#x27;)
   async update(
     @Param(&#x27;id&#x27;, ParseIntPipe) id: number,
@@ -1370,7 +1374,7 @@ export class UsersController {
 
   @Patch(&#x27;:id/block&#x27;)
   @Version(&#x27;1&#x27;)
-  @Permissions(PERMISSIONS.USER.UPDATE, PERMISSIONS.ADMIN.ALL)
+  @Permissions(PERMISSIONS.USER.UPDATE)
   @UsersDocs(&#x27;block&#x27;)
   async block(
     @Param(&#x27;id&#x27;, ParseIntPipe) id: number,
@@ -1382,7 +1386,7 @@ export class UsersController {
 
   @Patch(&#x27;:id/unblock&#x27;)
   @Version(&#x27;1&#x27;)
-  @Permissions(PERMISSIONS.USER.UPDATE, PERMISSIONS.ADMIN.ALL)
+  @Permissions(PERMISSIONS.USER.UPDATE)
   @UsersDocs(&#x27;unblock&#x27;)
   async unblock(
     @Param(&#x27;id&#x27;, ParseIntPipe) id: number,

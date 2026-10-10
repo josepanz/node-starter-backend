@@ -1,0 +1,257 @@
+<!doctype html>
+<html class="no-js" lang="">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="x-ua-compatible" content="ie=edge">
+        <title>node-starter-backend documentation</title>
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+
+        <link rel="icon" type="image/x-icon" href="./images/favicon.ico">
+	   <link rel="stylesheet" href="./styles/style.css">
+        <link rel="stylesheet" href="./styles/dark.css">
+    </head>
+    <body>
+          <script>
+               // Blocking script to avoid flickering dark mode
+               // Dark mode toggle button
+               var useDark = window.matchMedia('(prefers-color-scheme: dark)');
+               var darkModeState = useDark.matches;
+               var $darkModeToggleSwitchers = document.querySelectorAll('.dark-mode-switch input');
+               var $darkModeToggles = document.querySelectorAll('.dark-mode-switch');
+               var darkModeStateLocal = localStorage.getItem('compodoc_darkmode-state');
+
+               function checkToggle(check) {
+                    for (var i = 0; i < $darkModeToggleSwitchers.length; i++) {
+                         $darkModeToggleSwitchers[i].checked = check;
+                    }
+               }
+
+               function toggleDarkMode(state) {
+                    if (window.localStorage) {
+                         localStorage.setItem('compodoc_darkmode-state', state);
+                    }
+
+                    checkToggle(state);
+
+                    const hasClass = document.body.classList.contains('dark');
+
+                    if (state) {
+                         for (var i = 0; i < $darkModeToggles.length; i++) {
+                              $darkModeToggles[i].classList.add('dark');
+                         }
+                         if (!hasClass) {
+                              document.body.classList.add('dark');
+                         }
+                    } else {
+                         for (var i = 0; i < $darkModeToggles.length; i++) {
+                              $darkModeToggles[i].classList.remove('dark');
+                         }
+                         if (hasClass) {
+                              document.body.classList.remove('dark');
+                         }
+                    }
+               }
+
+               useDark.addEventListener('change', function (evt) {
+                    toggleDarkMode(evt.matches);
+               });
+               if (darkModeStateLocal) {
+                    darkModeState = darkModeStateLocal === 'true';
+               }
+               toggleDarkMode(darkModeState);
+          </script>
+          <script>
+              // --- Iframe navigation tracking for Template Playground ---
+              function sendCurrentUrlToParent() {
+                  if (window.parent && window.parent !== window) {
+                      window.parent.postMessage({
+                          type: 'compodoc-iframe-navigate',
+                          url: window.location.pathname + window.location.hash
+                      }, '*');
+                  }
+              }
+              window.addEventListener('hashchange', sendCurrentUrlToParent, false);
+              window.addEventListener('popstate', sendCurrentUrlToParent, false);
+              window.addEventListener('DOMContentLoaded', sendCurrentUrlToParent, false);
+          </script>
+
+        <div class="navbar navbar-default navbar-fixed-top d-md-none p-0">
+               <div class="d-flex">
+                    <a href="./" class="navbar-brand">node-starter-backend documentation</a>
+                    <button type="button" class="btn btn-default btn-menu ion-ios-menu" id="btn-menu"></button>
+               </div>
+        </div>
+
+        <div class="xs-menu menu" id="mobile-menu">
+                <div id="book-search-input" role="search"><input type="text" placeholder="Type to search"></div>            <compodoc-menu></compodoc-menu>
+        </div>
+
+        <div class="container-fluid main">
+           <div class="row main">
+               <div class="d-none d-md-block menu">
+                   <compodoc-menu mode="normal"></compodoc-menu>
+               </div>
+               <!-- START CONTENT -->
+               <div class="content contributing">
+                   <div class="content-data">
+
+
+
+
+<h1>Guía de contribución</h1>
+<h2>Quickstart</h2>
+<p>Requisitos: Node 22, pnpm 10 y Docker. Tras <code>pnpm install</code>, la app levanta localmente sin editar nada (las credenciales de <code>docker-compose.yml</code> coinciden con los defaults de <code>.env.template</code>):</p>
+<b>Example :</b><div><pre class="line-numbers"><code class="language-bash">docker compose up -d
+cp .env.template .env
+pnpm prisma migrate deploy &amp;&amp; pnpm prisma db seed   # 2 migraciones (init + audit_triggers); el seed es idempotente
+pnpm db:verify-audit-triggers                      # opcional: cobertura de triggers de auditoría
+pnpm start:dev                                     # o `pnpm build &amp;&amp; pnpm start:prod`</code></pre></div><p>La API queda en <code>http://localhost:3000/node-starter-backend/api</code> (Swagger en <code>/swagger</code>, salud en <code>/v1/healthcheck</code>). <code>docker compose up -d</code> levanta postgres, redis, mongo, mailpit y seq; solo postgres es necesario: Redis, Mongo, SMTP y Seq se activan completando su variable en <code>.env</code> (<code>REDIS_URL</code>, <code>MONGO_URI</code>, <code>EMAIL_HOST</code>/<code>EMAIL_PORT</code>, <code>SEQ_ENABLED</code>), y sin ellas cada módulo usa su fallback. <code>DATABASE_CONNECTION_STRING</code> (DB2/Sequelize) también es opcional: vacía, ese módulo no se registra. <code>APP_TIMEZONE</code> (default UTC) fija la zona de las fechas del healthcheck. El usuario demo del seed (<code>demo.orders@example.com</code>) trae la contraseña <code>DemoPass1234</code> (solo desarrollo, se guarda hasheada con bcrypt; el seed no la pisa si ya existe una credencial) y las rutas de auth exigen Basic Auth con el cliente M2M demo del seed.</p>
+<h2>Plataformas de CI soportadas</h2>
+<p>El repo es agnóstico del gestor y mantiene ambas configuraciones equivalentes (lint, typecheck, test con cobertura, build, release):</p>
+<ul>
+<li>GitHub: <code>.github/workflows/ci.yml</code> y <code>release.yml</code>, <code>.github/pull_request_template.md</code>, <code>.github/CODEOWNERS</code>.</li>
+<li>GitLab: <code>.gitlab-ci.yml</code>, <code>.gitlab/merge_request_templates/</code> y <code>.gitlab/CODEOWNERS</code>.</li>
+</ul>
+<p><code>release.config.cjs</code> elige <code>@semantic-release/github</code> o <code>@semantic-release/gitlab</code> según <code>GITHUB_ACTIONS</code> / <code>GITLAB_CI</code>; el changelog y el commit de release son comunes. Un cambio de pipeline se aplica en las dos plataformas. Ambas funcionan al subir el repo sin configurar nada: usan el <code>GITHUB_TOKEN</code> automático (GitHub) o las variables predefinidas <code>CI_REGISTRY*</code> (GitLab) y publican la imagen en el registro nativo. Los pasos que requieren infraestructura propia se saltan con un aviso, sin fallar el pipeline: el release de GitLab necesita <code>GITLAB_TOKEN</code> y el despliegue a Kubernetes necesita <code>KUBE_CONFIG_B64</code> en ambas plataformas. En las ramas se construye la imagen sin publicar; en <code>master</code>, <code>qa</code> y <code>develop</code> se publica. Los tests de CI son solo unitarios (sin Postgres ni Redis); el e2e corre como job opcional.</p>
+<h2>Ramas</h2>
+<p>Flujo completo en <a href=".context/rules/git-workflow.md"><code>.context/rules/git-workflow.md</code></a>. Resumen:</p>
+<ul>
+<li><code>main</code> o <code>master</code> (producción; son equivalentes y el repo funciona igual con cualquiera de las dos: CI, release, publicación de imagen y overlay <code>production</code> las tratan idénticas), <code>qa</code> y <code>develop</code> (ambientes, prerelease) y <code>release</code> (integración del sprint).</li>
+<li>Cada tarea en <code>feature/&lt;slug&gt;</code> (también <code>bugfix/</code>, <code>chore/</code>, <code>docs/</code>, <code>refactor/</code>) nacida de <code>master</code>. Para desplegar a un ambiente se usa una rama puente <code>feature/&lt;slug&gt;-dev</code> o <code>-qa</code> y se abre el PR hacia <code>develop</code> o <code>qa</code>.</li>
+<li>Hotfix: <code>hotfix/&lt;slug&gt;</code> desde <code>master</code>, con backports obligatorios a <code>develop</code>, <code>qa</code> y <code>release</code>.</li>
+<li>No se hace push directo a ramas de ambiente ni se reescribe historia compartida.</li>
+</ul>
+<h2>Commits</h2>
+<p>Conventional Commits en español, validados por commitlint (husky <code>commit-msg</code>):</p>
+<b>Example :</b><div><pre class="line-numbers"><code class="language-none">tipo(alcance): descripción en minúsculas, sin punto final</code></pre></div><p>Tipos: <code>feat</code>, <code>fix</code>, <code>refactor</code>, <code>perf</code>, <code>docs</code>, <code>test</code>, <code>ci</code>, <code>build</code>, <code>chore</code>, <code>style</code>, <code>revert</code>. El tipo determina la versión del release: <code>feat</code> y <code>refactor</code> suben minor; <code>fix</code>, <code>perf</code>, <code>docs</code> y <code>ci</code> suben patch; <code>BREAKING CHANGE</code> sube major; <code>chore</code>, <code>test</code> y <code>style</code> no liberan. Una línea de hasta ~72 caracteres, sin nombres de archivo, describiendo el qué y el por qué. Un commit por cambio lógico.</p>
+<p>Hooks: <code>pre-commit</code> corre lint-staged, <code>commit-msg</code> corre commitlint y <code>pre-push</code> corre <code>pnpm build</code>. No se saltean con <code>--no-verify</code>.</p>
+<h2>Definición de hecho (DoD)</h2>
+<p>Antes de abrir el PR, en este orden y sin warnings ni errores nuevos:</p>
+<b>Example :</b><div><pre class="line-numbers"><code class="language-bash">pnpm install              # si se agregaron dependencias
+pnpm prisma validate
+pnpm prisma generate
+pnpm build
+pnpm lint
+pnpm test</code></pre></div><p>Además:</p>
+<ul>
+<li>Todo archivo con lógica nuevo o modificado tiene su <code>.spec.ts</code> (AAA, mocks a nivel de módulo, <code>jest.clearAllMocks()</code>, nombres en español).</li>
+<li>Toda variable de entorno nueva está en <code>src/core/config/config-schema.ts</code>, el loader y <code>.env.template</code> (placeholder, nunca valores reales); si depende de un proveedor, tiene fallback y la app no falla al arrancar sin ella.</li>
+<li>Un cambio de schema incluye su migración en <code>prisma/migrations/</code> y datos demo en <code>prisma/seed.ts</code> si aplica.</li>
+<li>DTOs explícitos con validación y Swagger; sin <code>any</code>; JSDoc en los métodos nuevos.</li>
+<li>Sin secretos, datos reales ni referencias a clientes o empresas concretas.</li>
+<li>El PR usa la plantilla del repo y lista migraciones y variables nuevas como pasos de implementación.</li>
+</ul>
+<h2>Cómo agregar…</h2>
+<h3>Un módulo o feature</h3>
+<ol>
+<li><code>src/modules/&lt;dominio&gt;-db/</code> con <code>&lt;dominio&gt;-db.module.ts</code> y <code>services/&lt;dominio&gt;-db.service.ts</code> (es el único que habla con Prisma; agregá el modelo y la migración).</li>
+<li><code>src/api/&lt;feature&gt;/</code> con <code>&lt;feature&gt;-api.module.ts</code>, <code>controllers/</code>, <code>services/&lt;feature&gt;-api.service.ts</code>, <code>dtos/request|response</code> y <code>docs/&lt;feature&gt;-api.docs.ts</code>.</li>
+<li>Registrar el módulo en <code>src/api/api.module.ts</code> y los permisos en <code>src/common/enum/permissions.enum.ts</code> (<code>@WithPermissions</code>).</li>
+<li>Specs junto a cada archivo con lógica. Ver <a href=".context/rules/architecture.md"><code>.context/rules/architecture.md</code></a>.</li>
+</ol>
+<h3>Un proveedor externo (SMS, push, storage...)</h3>
+<p>Seguí el patrón de <code>src/modules/sms</code>: una interfaz con su token de inyección (<code>ISmsSender</code>, <code>SMS_SENDER</code>), un adaptador por proveedor en <code>adapters/</code>, un adaptador <code>console</code>/<code>noop</code> y un factory en el módulo que elige según la config. Agregá las variables al schema Joi como opcionales, al loader y a <code>.env.template</code>. Sin credenciales debe caer al fallback con un <code>warn</code>, nunca lanzar al arrancar. Probá ambos caminos en el spec.</p>
+<h3>Un job programado</h3>
+<p>Creá una clase que extienda <code>ScheduledJob</code> (<code>@core/scheduler/scheduled-job</code>): <code>name</code>, <code>cronConfigKey</code> (clave nueva en <code>config.scheduler.crons</code>, con su variable <code>*_CRON</code> en schema, loader y <code>.env.template</code>; el valor <code>off</code> lo deshabilita), <code>lockId</code> (valor nuevo en el enum <code>AdvisoryLockId</code> de <code>core/scheduler/advisory-lock-id.enum.ts</code>, único para el advisory lock, o <code>null</code> si <code>run()</code> ya es seguro entre réplicas) y <code>run()</code>. Registrala como provider de su módulo; el <code>JobSchedulerService</code> la descubre sola.</p>
+<h3>Un handler de la cola de trabajos</h3>
+<p>Implementá <code>IJobHandler</code> (<code>src/modules/jobs/interfaces/job-handler.interface.ts</code>) con un <code>type</code> único, <code>validatePayload</code> opcional y <code>handle</code>. Lanzar un error reintenta con backoff; <code>NonRetryableJobError</code> lo descarta sin reintentos. Agregá la clase como provider de <code>JobsModule</code> y una línea en la factory de <code>JOB_HANDLERS</code>; el worker y el registry no se modifican.</p>
+<h3>Una migración</h3>
+<p><code>pnpm prisma migrate dev --name &lt;nombre&gt;</code> (el SQL manual que Prisma no modela vive en <code>audit_triggers</code>). Sin base disponible, generá el SQL con <code>prisma migrate diff</code> (ver <a href=".context/rules/database-conventions.md"><code>.context/rules/database-conventions.md</code></a>). Las tablas auditables necesitan su trigger: <code>pnpm db:verify-audit-triggers</code> lo verifica.</p>
+<h2>Specs de cambios grandes</h2>
+<p>Para trabajo mediano o grande, acordá el alcance antes de codear con OpenSpec (<code>openspec/README.md</code> y <a href=".context/skills/openspec-workflow/SKILL.md"><code>.context/skills/openspec-workflow/SKILL.md</code></a>).</p>
+<h2>Asistentes de IA</h2>
+<p>La guía para asistentes está en <a href="AGENTS.md"><code>AGENTS.md</code></a> y el contexto detallado (reglas, agentes, comandos, skills) en <a href=".context/CONTEXT.md"><code>.context/</code></a>.</p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                   </div><div class="search-results">
+    <div class="has-results">
+        <h1 class="search-results-title"><span class='search-results-count'></span> results matching "<span class='search-query'></span>"</h1>
+        <ul class="search-results-list"></ul>
+    </div>
+    <div class="no-results">
+        <h1 class="search-results-title">No results matching "<span class='search-query'></span>"</h1>
+    </div>
+</div>
+</div>
+               <!-- END CONTENT -->
+           </div>
+       </div>
+
+          <label class="dark-mode-switch">
+               <input type="checkbox">
+               <span class="slider">
+                    <svg class="slider-icon" viewBox="0 0 24 24" fill="none" height="20" stroke="#000" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" width="20" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M21 12.79A9 9 0 1111.21 3 7 7 0 0021 12.79z"></path>
+                    </svg>
+               </span>
+          </label>
+
+       <script>
+            var COMPODOC_CURRENT_PAGE_DEPTH = 0;
+            var COMPODOC_CURRENT_PAGE_CONTEXT = 'contributing';
+            var COMPODOC_CURRENT_PAGE_URL = 'contributing.html';
+            var MAX_SEARCH_RESULTS = 15;
+       </script>
+
+       <script>
+               $darkModeToggleSwitchers = document.querySelectorAll('.dark-mode-switch input');
+               checkToggle(darkModeState);
+               if ($darkModeToggleSwitchers.length > 0) {
+                    for (var i = 0; i < $darkModeToggleSwitchers.length; i++) {
+                         $darkModeToggleSwitchers[i].addEventListener('change', function (event) {
+                              darkModeState = !darkModeState;
+                              toggleDarkMode(darkModeState);
+                         });
+                    }
+               }
+          </script>
+
+       <script src="./js/libs/custom-elements.min.js"></script>
+       <script src="./js/libs/lit-html.js"></script>
+
+       <script src="./js/menu-wc.js" defer></script>
+       <script nomodule src="./js/menu-wc_es5.js" defer></script>
+
+       <script src="./js/libs/bootstrap-native.js"></script>
+
+       <script src="./js/libs/es6-shim.min.js"></script>
+       <script src="./js/libs/EventDispatcher.js"></script>
+       <script src="./js/libs/promise.min.js"></script>
+
+       <script src="./js/compodoc.js"></script>
+
+       <script src="./js/tabs.js"></script>
+       <script src="./js/menu.js"></script>
+       <script src="./js/libs/clipboard.min.js"></script>
+       <script src="./js/libs/prism.js"></script>
+       <script src="./js/sourceCode.js"></script>
+          <script src="./js/search/search.js"></script>
+          <script src="./js/search/lunr.min.js"></script>
+          <script src="./js/search/search-lunr.js"></script>
+          <script src="./js/search/search_index.js"></script>
+       <script src="./js/lazy-load-graphs.js"></script>
+
+
+    </body>
+</html>

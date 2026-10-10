@@ -3,7 +3,7 @@
     <head>
         <meta charset="utf-8">
         <meta http-equiv="x-ua-compatible" content="ie=edge">
-        <title>node-started-backend documentation</title>
+        <title>node-starter-backend documentation</title>
         <meta name="description" content="">
         <meta name="viewport" content="width=device-width, initial-scale=1">
 
@@ -78,7 +78,7 @@
 
         <div class="navbar navbar-default navbar-fixed-top d-md-none p-0">
                <div class="d-flex">
-                    <a href="../" class="navbar-brand">node-started-backend documentation</a>
+                    <a href="../" class="navbar-brand">node-starter-backend documentation</a>
                     <button type="button" class="btn btn-default btn-menu ion-ios-menu" id="btn-menu"></button>
                </div>
         </div>
@@ -184,7 +184,7 @@
                 </tr>
                         <tr>
                             <td class="col-md-4">
-                                <div class="io-line">Defined in <a href="" data-line="17" class="link-to-prism">src/main.ts:17</a></div>
+                                <div class="io-line">Defined in <a href="" data-line="24" class="link-to-prism">src/main.ts:24</a></div>
                             </td>
                         </tr>
             </tbody>
@@ -207,7 +207,7 @@
                                 </tr>
                                 <tr>
                                     <td class="col-md-4">
-                                        <code>version:         <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
+                                        <code>version:         <code><a href="../miscellaneous/functions.html#t" target="_self" >string</a></code>
 </code>
                                     </td>
                                 </tr>
@@ -215,7 +215,7 @@
 
                                     <tr>
                                         <td class="col-md-4">
-                                            <i>Type : </i>        <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
+                                            <i>Type : </i>        <code><a href="../miscellaneous/functions.html#t" target="_self" >string</a></code>
 
                                         </td>
                                     </tr>
@@ -232,7 +232,9 @@
 
     <div class="tab-pane fade  tab-source-code" id="source">
         <pre class="line-numbers compodoc-sourcecode"><code class="language-typescript">import { NestFactory } from &#x27;@nestjs/core&#x27;;
-import { ValidationPipe } from &#x27;@nestjs/common&#x27;;
+import { NestExpressApplication } from &#x27;@nestjs/platform-express&#x27;;
+import { IoAdapter } from &#x27;@nestjs/platform-socket.io&#x27;;
+import { Logger as NestLogger, ValidationPipe } from &#x27;@nestjs/common&#x27;;
 import { ConfigType } from &#x27;@nestjs/config&#x27;;
 import { DocumentBuilder, SwaggerModule } from &#x27;@nestjs/swagger&#x27;;
 import { Logger } from &#x27;nestjs-pino&#x27;;
@@ -243,7 +245,12 @@ import { APP_CONFIG, AppConfigType } from &#x27;@core/config/config-loader&#x27;
 import { AppModule } from &#x27;./app.module&#x27;;
 import { ObservabilityInterceptor } from &#x27;@core/observability/observability.interceptor&#x27;;
 import { AllExceptionsFilter } from &#x27;@core/global-filters/http-exception.filter&#x27;;
+import { SentryReporterService } from &#x27;@core/observability/sentry-reporter.service&#x27;;
+import { TransientConnectionExceptionFilter } from &#x27;@common/filters/transient-connection-exception.filter&#x27;;
+import { PrismaClientExceptionFilter } from &#x27;@common/filters/prisma-client-exception.filter&#x27;;
+import { SequelizeExceptionFilter } from &#x27;@common/filters/sequelize-exception.filter&#x27;;
 import * as express from &#x27;express&#x27;;
+import { RedisIoAdapter } from &#x27;@modules/realtime/redis-io.adapter&#x27;;
 import { join } from &#x27;path&#x27;;
 
 interface PackageJson {
@@ -256,12 +263,28 @@ const packageJson &#x3D; JSON.parse(
 ) as PackageJson;
 
 async function bootstrap() {
-  const app &#x3D; await NestFactory.create(AppModule);
+  const logger &#x3D; new NestLogger(&#x27;Bootstrap&#x27;);
+  const app &#x3D; await NestFactory.create&lt;NestExpressApplication&gt;(AppModule, {
+    // rawBody: bytes originales del request, necesarios para validar firmas HMAC.
+    rawBody: true,
+  });
+  // Express 5 usa &#x27;simple&#x27; por defecto; &#x27;extended&#x27; (qs) soporta arrays y objetos anidados en query.
+  app.set(&#x27;query parser&#x27;, &#x27;extended&#x27;);
   app.use(cookieParser());
   app.useLogger(app.get(Logger));
 
   app.useGlobalInterceptors(app.get(ObservabilityInterceptor));
-  app.useGlobalFilters(new AllExceptionsFilter());
+  app.useGlobalFilters(
+    // Orden de la cadena: transient (503 + Retry-After) -&gt; prisma (P2xxx -&gt; HTTP)
+    // -&gt; sequelize (409/503/500 sin detalle DB2) -&gt; all (fallback)
+    new TransientConnectionExceptionFilter(
+      new PrismaClientExceptionFilter(
+        new SequelizeExceptionFilter(
+          new AllExceptionsFilter(app.get(SentryReporterService)),
+        ),
+      ),
+    ),
+  );
 
   app.useGlobalPipes(
     new ValidationPipe({
@@ -272,6 +295,16 @@ async function bootstrap() {
     }),
   );
   app.enableCors({ origin: true, credentials: true });
+
+  // Realtime: adapter Redis solo si REDIS_URL (varias instancias); si no, in-memory.
+  const wsAdapter &#x3D; new RedisIoAdapter(app);
+  const redisUrl &#x3D; app.get&lt;ConfigType&lt;AppConfigType&gt;&gt;(APP_CONFIG.KEY).redis.url;
+  if (redisUrl &amp;&amp; (await wsAdapter.connect(redisUrl))) {
+    app.useWebSocketAdapter(wsAdapter);
+    logger.log(&#x27;Socket.io usa el adapter Redis&#x27;);
+  } else {
+    app.useWebSocketAdapter(new IoAdapter(app));
+  }
 
   app.enableVersioning();
   app.setGlobalPrefix(&#x27;/node-starter-backend/api&#x27;);
@@ -301,13 +334,13 @@ async function bootstrap() {
   if (fs.existsSync(docsPath)) {
     // Si existe, configuramos el middleware para servirla
     app.use(&#x27;/node-starter-backend/api/docs&#x27;, express.static(docsPath));
-    console.log(
-      &#x60;✅ Documentación de Compodoc servida en /node-starter-backend/api/docs&#x60;,
+    logger.log(
+      &#x27;Documentación de Compodoc servida en /node-starter-backend/api/docs&#x27;,
     );
   } else {
     // Si no existe, solo mostramos un aviso y continuamos
-    console.warn(
-      &#x60;⚠️ Directorio de docs no encontrado en ${docsPath}. La documentación de Compodoc no se servirá.&#x60;,
+    logger.warn(
+      &#x60;Directorio de docs no encontrado en ${docsPath}. La documentación de Compodoc no se servirá.&#x60;,
     );
   }
 

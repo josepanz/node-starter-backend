@@ -3,7 +3,7 @@
     <head>
         <meta charset="utf-8">
         <meta http-equiv="x-ua-compatible" content="ie=edge">
-        <title>node-started-backend documentation</title>
+        <title>node-starter-backend documentation</title>
         <meta name="description" content="">
         <meta name="viewport" content="width=device-width, initial-scale=1">
 
@@ -78,7 +78,7 @@
 
         <div class="navbar navbar-default navbar-fixed-top d-md-none p-0">
                <div class="d-flex">
-                    <a href="../" class="navbar-brand">node-started-backend documentation</a>
+                    <a href="../" class="navbar-brand">node-starter-backend documentation</a>
                     <button type="button" class="btn btn-default btn-menu ion-ios-menu" id="btn-menu"></button>
                </div>
         </div>
@@ -141,13 +141,22 @@
         </p>
 
 
+            <p class="comment">
+                <h3>Description</h3>
+            </p>
+            <p class="comment">
+                <p>Patrón: decorator de filtros (chain of responsibility), mismo esquema que
+TransientConnectionExceptionFilter. Traduce errores Prisma conocidos/de validación a HTTP;
+todo lo demás se delega al filtro fallback. Cadena en main.ts: transient 503 -&gt; prisma -&gt; all.</p>
+
+            </p>
 
 
             <p class="comment">
                 <h3>Implements</h3>
             </p>
             <p class="comment">
-                        <code>ExceptionFilter</code>
+                            <code><a href="../miscellaneous/functions.html#t" target="_self" >ExceptionFilter</a></code>
             </p>
 
 
@@ -199,6 +208,54 @@
     </table>
 </section>
 
+            <section data-compodoc="block-constructor">
+    <h3 id="constructor">Constructor</h3>
+        <table class="table table-sm table-bordered">
+            <tbody>
+                <tr>
+                    <td class="col-md-4">
+<code>constructor(fallback: <a href="../undefineds/t.html" target="_self">ExceptionFilter</a>)</code>
+                    </td>
+                </tr>
+                        <tr>
+                            <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="18" class="link-to-prism">src/common/filters/prisma-client-exception.filter.ts:18</a></div>
+                            </td>
+                        </tr>
+
+                <tr>
+                    <td class="col-md-4">
+                            <div>
+                                    <b>Parameters :</b>
+                                    <table class="params">
+                                        <thead>
+                                            <tr>
+                                                <td>Name</td>
+                                                    <td>Type</td>
+                                                <td>Optional</td>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                                <tr>
+                                                        <td>fallback</td>
+                                                  
+                                                        <td>
+                                                                        <code><a href="../miscellaneous/functions.html#t" target="_self" >ExceptionFilter</a></code>
+                                                        </td>
+                                                  
+                                                    <td>
+                                                            No
+                                                    </td>
+                                                    
+                                                </tr>
+                                        </tbody>
+                                    </table>
+                            </div>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+</section>
 
             <section data-compodoc="block-properties">
     
@@ -231,7 +288,7 @@
                 </tr>
                     <tr>
                         <td class="col-md-4">
-                                <div class="io-line">Defined in <a href="" data-line="14" class="link-to-prism">src/common/filters/prisma-client-exception.filter.ts:14</a></div>
+                                <div class="io-line">Defined in <a href="" data-line="18" class="link-to-prism">src/common/filters/prisma-client-exception.filter.ts:18</a></div>
                         </td>
                     </tr>
 
@@ -258,15 +315,15 @@
             </tr>
             <tr>
                 <td class="col-md-4">
-<code>catch(exception: Prisma.PrismaClientKnownRequestError | Prisma.PrismaClientValidationError, host: ArgumentsHost)</code>
+<code>catch(exception: unknown, host: <a href="../undefineds/t.html" target="_self">ArgumentsHost</a>)</code>
                 </td>
             </tr>
 
 
                     <tr>
                         <td class="col-md-4">
-                            <div class="io-line">Defined in <a href="" data-line="16"
-                                    class="link-to-prism">src/common/filters/prisma-client-exception.filter.ts:16</a></div>
+                            <div class="io-line">Defined in <a href="" data-line="22"
+                                    class="link-to-prism">src/common/filters/prisma-client-exception.filter.ts:22</a></div>
                         </td>
                     </tr>
 
@@ -289,7 +346,7 @@
                                         <tr>
                                                 <td>exception</td>
                                             <td>
-                                                        <code>Prisma.PrismaClientKnownRequestError | Prisma.PrismaClientValidationError</code>
+                                                        <code>unknown</code>
                                             </td>
 
                                             <td>
@@ -301,7 +358,7 @@
                                         <tr>
                                                 <td>host</td>
                                             <td>
-                                                        <code>ArgumentsHost</code>
+                                                            <code><a href="../miscellaneous/functions.html#t" target="_self" >ArgumentsHost</a></code>
                                             </td>
 
                                             <td>
@@ -339,15 +396,15 @@
             <tr>
                 <td class="col-md-4">
                         <span class="modifier-icon icon ion-ios-reset"></span>
-                    <code>extractOriginContext(stack?: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank">string</a>)</code>
+                    <code>extractOriginContext(stack?: <a href="../undefineds/t.html" target="_self">string</a>)</code>
                 </td>
             </tr>
 
 
                     <tr>
                         <td class="col-md-4">
-                            <div class="io-line">Defined in <a href="" data-line="109"
-                                    class="link-to-prism">src/common/filters/prisma-client-exception.filter.ts:109</a></div>
+                            <div class="io-line">Defined in <a href="" data-line="117"
+                                    class="link-to-prism">src/common/filters/prisma-client-exception.filter.ts:117</a></div>
                         </td>
                     </tr>
 
@@ -370,7 +427,7 @@
                                         <tr>
                                                 <td>stack</td>
                                             <td>
-                                                            <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
+                                                            <code><a href="../miscellaneous/functions.html#t" target="_self" >string</a></code>
                                             </td>
 
                                             <td>
@@ -383,7 +440,7 @@
                                 </table>
                             </div>
                         <div class="io-description">
-                            <b>Returns : </b>        <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
+                            <b>Returns : </b>        <code><a href="../miscellaneous/functions.html#t" target="_self" >string</a></code>
 
                         </div>
                             <div class="io-description">
@@ -413,17 +470,25 @@
 import { Prisma } from &#x27;@prisma/client&#x27;;
 import { Response } from &#x27;express&#x27;;
 
-// CRÍTICO: Se deben agregar ambos tipos en el decorador para que NestJS los intercepte
-@Catch(Prisma.PrismaClientKnownRequestError, Prisma.PrismaClientValidationError)
+/**
+ * Patrón: decorator de filtros (chain of responsibility), mismo esquema que
+ * TransientConnectionExceptionFilter. Traduce errores Prisma conocidos/de validación a HTTP;
+ * todo lo demás se delega al filtro fallback. Cadena en main.ts: transient 503 -&gt; prisma -&gt; all.
+ */
+@Catch()
 export class PrismaClientExceptionFilter implements ExceptionFilter {
   private readonly logger &#x3D; new Logger(PrismaClientExceptionFilter.name);
 
-  catch(
-    exception:
-      | Prisma.PrismaClientKnownRequestError
-      | Prisma.PrismaClientValidationError,
-    host: ArgumentsHost,
-  ) {
+  constructor(private readonly fallback: ExceptionFilter) {}
+
+  catch(exception: unknown, host: ArgumentsHost) {
+    if (
+      !(exception instanceof Prisma.PrismaClientKnownRequestError) &amp;&amp;
+      !(exception instanceof Prisma.PrismaClientValidationError)
+    ) {
+      this.fallback.catch(exception, host);
+      return;
+    }
     const ctx &#x3D; host.switchToHttp();
     const response &#x3D; ctx.getResponse&lt;Response&gt;();
     const message &#x3D; exception.message.replace(/\n/g, &#x27;&#x27;);

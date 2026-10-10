@@ -1,0 +1,1194 @@
+<!doctype html>
+<html class="no-js" lang="">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="x-ua-compatible" content="ie=edge">
+        <title>node-starter-backend documentation</title>
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+
+        <link rel="icon" type="image/x-icon" href="../images/favicon.ico">
+	   <link rel="stylesheet" href="../styles/style.css">
+        <link rel="stylesheet" href="../styles/dark.css">
+    </head>
+    <body>
+          <script>
+               // Blocking script to avoid flickering dark mode
+               // Dark mode toggle button
+               var useDark = window.matchMedia('(prefers-color-scheme: dark)');
+               var darkModeState = useDark.matches;
+               var $darkModeToggleSwitchers = document.querySelectorAll('.dark-mode-switch input');
+               var $darkModeToggles = document.querySelectorAll('.dark-mode-switch');
+               var darkModeStateLocal = localStorage.getItem('compodoc_darkmode-state');
+
+               function checkToggle(check) {
+                    for (var i = 0; i < $darkModeToggleSwitchers.length; i++) {
+                         $darkModeToggleSwitchers[i].checked = check;
+                    }
+               }
+
+               function toggleDarkMode(state) {
+                    if (window.localStorage) {
+                         localStorage.setItem('compodoc_darkmode-state', state);
+                    }
+
+                    checkToggle(state);
+
+                    const hasClass = document.body.classList.contains('dark');
+
+                    if (state) {
+                         for (var i = 0; i < $darkModeToggles.length; i++) {
+                              $darkModeToggles[i].classList.add('dark');
+                         }
+                         if (!hasClass) {
+                              document.body.classList.add('dark');
+                         }
+                    } else {
+                         for (var i = 0; i < $darkModeToggles.length; i++) {
+                              $darkModeToggles[i].classList.remove('dark');
+                         }
+                         if (hasClass) {
+                              document.body.classList.remove('dark');
+                         }
+                    }
+               }
+
+               useDark.addEventListener('change', function (evt) {
+                    toggleDarkMode(evt.matches);
+               });
+               if (darkModeStateLocal) {
+                    darkModeState = darkModeStateLocal === 'true';
+               }
+               toggleDarkMode(darkModeState);
+          </script>
+          <script>
+              // --- Iframe navigation tracking for Template Playground ---
+              function sendCurrentUrlToParent() {
+                  if (window.parent && window.parent !== window) {
+                      window.parent.postMessage({
+                          type: 'compodoc-iframe-navigate',
+                          url: window.location.pathname + window.location.hash
+                      }, '*');
+                  }
+              }
+              window.addEventListener('hashchange', sendCurrentUrlToParent, false);
+              window.addEventListener('popstate', sendCurrentUrlToParent, false);
+              window.addEventListener('DOMContentLoaded', sendCurrentUrlToParent, false);
+          </script>
+
+        <div class="navbar navbar-default navbar-fixed-top d-md-none p-0">
+               <div class="d-flex">
+                    <a href="../" class="navbar-brand">node-starter-backend documentation</a>
+                    <button type="button" class="btn btn-default btn-menu ion-ios-menu" id="btn-menu"></button>
+               </div>
+        </div>
+
+        <div class="xs-menu menu" id="mobile-menu">
+                <div id="book-search-input" role="search"><input type="text" placeholder="Type to search"></div>            <compodoc-menu></compodoc-menu>
+        </div>
+
+        <div class="container-fluid main">
+           <div class="row main">
+               <div class="d-none d-md-block menu">
+                   <compodoc-menu mode="normal"></compodoc-menu>
+               </div>
+               <!-- START CONTENT -->
+               <div class="content injectable">
+                   <div class="content-data">
+
+
+
+
+
+
+
+
+
+
+
+
+<ol class="breadcrumb">
+  <li class="breadcrumb-item">Injectables</li>
+  <li class="breadcrumb-item" >CatalogRawRepository</li>
+</ol>
+
+<ul class="nav nav-tabs" role="tablist">
+        <li class="nav-item">
+            <a href="#info" 
+                class="nav-link"
+                class="nav-link active"
+                role="tab" id="info-tab" data-bs-toggle="tab" data-link="info">Info</a>
+        </li>
+        <li class="nav-item">
+            <a href="#source" 
+                class="nav-link"
+                
+                role="tab" id="source-tab" data-bs-toggle="tab" data-link="source">Source</a>
+        </li>
+</ul>
+
+<div class="tab-content">
+    <div class="tab-pane fade active in" id="info">
+        <p class="comment">
+            <h3>File</h3>
+        </p>
+        <p class="comment">
+            <code>src/modules/catalog-raw/repositories/catalog-raw.repository.ts</code>
+        </p>
+
+
+            <p class="comment">
+                <h3>Description</h3>
+            </p>
+            <p class="comment">
+                <p>Patrón: Repository de SQL crudo (estrategia &quot;solo raw query&quot;). Todo el SQL se arma en el helper
+y se ejecuta aquí con <code>QueryTypes</code> explícito. Los errores de Sequelize NO se capturan: suben al
+<code>SequelizeExceptionFilter</code> (409/503/500 sin detalle DB2). Un spec con mocks no prueba el SQL real:
+verificarlo contra la base antes de darlo por cerrado.</p>
+
+            </p>
+
+
+
+            <section data-compodoc="block-index">
+    <h3 id="index">Index</h3>
+    <table class="table table-sm table-bordered index-table">
+        <tbody>
+
+                <tr>
+                    <td class="col-md-4">
+                        <h6><b>Methods</b></h6>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <ul class="index-list">
+                            <li>
+                                    <span class="modifier">Async</span>
+                                <a href="#callExampleProcedure" >callExampleProcedure</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Async</span>
+                                <a href="#findByCode" >findByCode</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Async</span>
+                                <a href="#findByTableFunction" >findByTableFunction</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Async</span>
+                                <a href="#findPage" >findPage</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Async</span>
+                                <a href="#insertItem" >insertItem</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Private</span>
+                                <a href="#toFilters" >toFilters</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Async</span>
+                                <a href="#updatePricesBatch" >updatePricesBatch</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Async</span>
+                                <a href="#updateStatusByCodes" >updateStatusByCodes</a>
+                            </li>
+                        </ul>
+                    </td>
+                </tr>
+
+
+
+
+
+        </tbody>
+    </table>
+</section>
+
+            <section data-compodoc="block-constructor">
+    <h3 id="constructor">Constructor</h3>
+        <table class="table table-sm table-bordered">
+            <tbody>
+                <tr>
+                    <td class="col-md-4">
+<code>constructor(db: <a href="../injectables/SequelizeService.html" target="_self">SequelizeService</a>)</code>
+                    </td>
+                </tr>
+                        <tr>
+                            <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="23" class="link-to-prism">src/modules/catalog-raw/repositories/catalog-raw.repository.ts:23</a></div>
+                            </td>
+                        </tr>
+
+                <tr>
+                    <td class="col-md-4">
+                            <div>
+                                    <b>Parameters :</b>
+                                    <table class="params">
+                                        <thead>
+                                            <tr>
+                                                <td>Name</td>
+                                                    <td>Type</td>
+                                                <td>Optional</td>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                                <tr>
+                                                        <td>db</td>
+                                                  
+                                                        <td>
+                                                                        <code><a href="../injectables/SequelizeService.html" target="_self" >SequelizeService</a></code>
+                                                        </td>
+                                                  
+                                                    <td>
+                                                            No
+                                                    </td>
+                                                    
+                                                </tr>
+                                        </tbody>
+                                    </table>
+                            </div>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+</section>
+
+            <section data-compodoc="block-methods">
+    
+    <h3 id="methods">
+        Methods
+    </h3>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="callExampleProcedure"></a>
+                    <span class="name">
+                            <span class="modifier">Async</span>
+                        <span ><b>callExampleProcedure</b></span>
+                        <a href="#callExampleProcedure"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                        <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>callExampleProcedure(categoryCode: <a href="../undefineds/t.html" target="_self">string</a>, actor: <a href="../undefineds/t.html" target="_self">string</a>, transaction?: <a href="../undefineds/t.html" target="_self">Transaction</a>)</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="169"
+                                    class="link-to-prism">src/modules/catalog-raw/repositories/catalog-raw.repository.ts:169</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                        <div class="io-description"><p>Stored procedure: <code>CALL schema.SP(?, ?)</code> con <code>QueryTypes.SELECT</code> (así el dialecto devuelve el
+result set). Los SP NO llevan parámetros OUT: el driver ODBC no puede bindear literales en un
+OUT y falla con SQL0469; lo que deba devolver, lo devuelve como result set <code>(CODE, MESSAGE)</code>.
+Un SP que falla lo hace con SIGNAL (llega como excepción). <code>SP_EXAMPLE</code> es ficticio.</p>
+<p>COMMITMENT CONTROL: un SP <code>*CHG</code> participa de <code>transaction</code> (su COMMIT/ROLLBACK arrastra todo);
+uno <code>*NONE</code> escribe fuera de ella y no se revierte: llamarlo post-commit y SIN <code>transaction</code>.</p>
+</div>
+
+                            <div class="io-description">
+                                <b>Parameters :</b>
+                                
+                                <table class="params">
+                                    <thead>
+                                        <tr>
+                                            <td>Name</td>
+                                                <td>Type</td>
+                                            <td>Optional</td>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                                <td>categoryCode</td>
+                                            <td>
+                                                            <code><a href="../miscellaneous/functions.html#t" target="_self" >string</a></code>
+                                            </td>
+
+                                            <td>
+                                                    No
+                                            </td>
+
+
+                                        </tr>
+                                        <tr>
+                                                <td>actor</td>
+                                            <td>
+                                                            <code><a href="../miscellaneous/functions.html#t" target="_self" >string</a></code>
+                                            </td>
+
+                                            <td>
+                                                    No
+                                            </td>
+
+
+                                        </tr>
+                                        <tr>
+                                                <td>transaction</td>
+                                            <td>
+                                                            <code><a href="../miscellaneous/functions.html#t" target="_self" >Transaction</a></code>
+                                            </td>
+
+                                            <td>
+                                                    Yes
+                                            </td>
+
+
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        <div class="io-description">
+                            <b>Returns : </b>        <code><a href="../interfaces/IProcedureResultRaw.html" target="_self" >Promise&lt;IProcedureResultRaw[]&gt;</a></code>
+
+                        </div>
+                            <div class="io-description">
+                                
+                            </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="findByCode"></a>
+                    <span class="name">
+                            <span class="modifier">Async</span>
+                        <span ><b>findByCode</b></span>
+                        <a href="#findByCode"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                        <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>findByCode(code: <a href="../undefineds/t.html" target="_self">string</a>)</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="57"
+                                    class="link-to-prism">src/modules/catalog-raw/repositories/catalog-raw.repository.ts:57</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                        <div class="io-description"><p><code>plain: true</code> devuelve <code>T | null</code> (no <code>T</code>): el tipo de retorno lo declara explícito.</p>
+</div>
+
+                            <div class="io-description">
+                                <b>Parameters :</b>
+                                
+                                <table class="params">
+                                    <thead>
+                                        <tr>
+                                            <td>Name</td>
+                                                <td>Type</td>
+                                            <td>Optional</td>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                                <td>code</td>
+                                            <td>
+                                                            <code><a href="../miscellaneous/functions.html#t" target="_self" >string</a></code>
+                                            </td>
+
+                                            <td>
+                                                    No
+                                            </td>
+
+
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        <div class="io-description">
+                            <b>Returns : </b>        <code><a href="../interfaces/ICatalogItemRaw.html" target="_self" >Promise&lt;ICatalogItemRaw | null&gt;</a></code>
+
+                        </div>
+                            <div class="io-description">
+                                
+                            </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="findByTableFunction"></a>
+                    <span class="name">
+                            <span class="modifier">Async</span>
+                        <span ><b>findByTableFunction</b></span>
+                        <a href="#findByTableFunction"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                        <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>findByTableFunction(categoryCode: <a href="../undefineds/t.html" target="_self">string</a>)</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="144"
+                                    class="link-to-prism">src/modules/catalog-raw/repositories/catalog-raw.repository.ts:144</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                        <div class="io-description"><p>Función tabular: <code>SELECT ... FROM TABLE(schema.FN(?))</code>, con <code>QueryTypes.SELECT</code> y parámetros
+posicionales. <code>FN_EXAMPLE</code> es ficticia: ajustar al objeto real del proyecto.</p>
+</div>
+
+                            <div class="io-description">
+                                <b>Parameters :</b>
+                                
+                                <table class="params">
+                                    <thead>
+                                        <tr>
+                                            <td>Name</td>
+                                                <td>Type</td>
+                                            <td>Optional</td>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                                <td>categoryCode</td>
+                                            <td>
+                                                            <code><a href="../miscellaneous/functions.html#t" target="_self" >string</a></code>
+                                            </td>
+
+                                            <td>
+                                                    No
+                                            </td>
+
+
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        <div class="io-description">
+                            <b>Returns : </b>        <code><a href="../interfaces/ICatalogItemRaw.html" target="_self" >Promise&lt;ICatalogItemRaw[]&gt;</a></code>
+
+                        </div>
+                            <div class="io-description">
+                                
+                            </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="findPage"></a>
+                    <span class="name">
+                            <span class="modifier">Async</span>
+                        <span ><b>findPage</b></span>
+                        <a href="#findPage"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                        <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>findPage(params: <a href="../interfaces/CatalogItemQueryParams.html" target="_self">CatalogItemQueryParams</a>)</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="33"
+                                    class="link-to-prism">src/modules/catalog-raw/repositories/catalog-raw.repository.ts:33</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                        <div class="io-description"><p>Página de datos + total con los MISMOS filtros, en paralelo (2 queries; el límite sano por
+request en IBM i es ~5-7 en <code>Promise.all</code>, si hace falta más consolidar con CTEs).</p>
+</div>
+
+                            <div class="io-description">
+                                <b>Parameters :</b>
+                                
+                                <table class="params">
+                                    <thead>
+                                        <tr>
+                                            <td>Name</td>
+                                                <td>Type</td>
+                                            <td>Optional</td>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                                <td>params</td>
+                                            <td>
+                                                            <code><a href="../interfaces/CatalogItemQueryParams.html" target="_self" >CatalogItemQueryParams</a></code>
+                                            </td>
+
+                                            <td>
+                                                    No
+                                            </td>
+
+
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        <div class="io-description">
+                            <b>Returns : </b>        <code><a href="../miscellaneous/functions.html#t" target="_self" >Promise&lt;literal type&gt;</a></code>
+
+                        </div>
+                            <div class="io-description">
+                                
+                            </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="insertItem"></a>
+                    <span class="name">
+                            <span class="modifier">Async</span>
+                        <span ><b>insertItem</b></span>
+                        <a href="#insertItem"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                        <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>insertItem(item: unknown, transaction?: <a href="../undefineds/t.html" target="_self">Transaction</a>)</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="71"
+                                    class="link-to-prism">src/modules/catalog-raw/repositories/catalog-raw.repository.ts:71</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                        <div class="io-description"><p>INSERT parametrizado. Una clave duplicada sube como SQL0803 y el filtro la traduce a 409.</p>
+</div>
+
+                            <div class="io-description">
+                                <b>Parameters :</b>
+                                
+                                <table class="params">
+                                    <thead>
+                                        <tr>
+                                            <td>Name</td>
+                                                <td>Type</td>
+                                            <td>Optional</td>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                                <td>item</td>
+                                            <td>
+                                                        <code>unknown</code>
+                                            </td>
+
+                                            <td>
+                                                    No
+                                            </td>
+
+
+                                        </tr>
+                                        <tr>
+                                                <td>transaction</td>
+                                            <td>
+                                                            <code><a href="../miscellaneous/functions.html#t" target="_self" >Transaction</a></code>
+                                            </td>
+
+                                            <td>
+                                                    Yes
+                                            </td>
+
+
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        <div class="io-description">
+                            <b>Returns : </b>    <code>Promise&lt;void&gt;</code>
+
+                        </div>
+                            <div class="io-description">
+                                
+                            </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="toFilters"></a>
+                    <span class="name">
+                            <span class="modifier">Private</span>
+                        <span ><b>toFilters</b></span>
+                        <a href="#toFilters"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                        <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>toFilters(params: <a href="../interfaces/CatalogItemQueryParams.html" target="_self">CatalogItemQueryParams</a>)</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="183"
+                                    class="link-to-prism">src/modules/catalog-raw/repositories/catalog-raw.repository.ts:183</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                            <div class="io-description">
+                                <b>Parameters :</b>
+                                
+                                <table class="params">
+                                    <thead>
+                                        <tr>
+                                            <td>Name</td>
+                                                <td>Type</td>
+                                            <td>Optional</td>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                                <td>params</td>
+                                            <td>
+                                                            <code><a href="../interfaces/CatalogItemQueryParams.html" target="_self" >CatalogItemQueryParams</a></code>
+                                            </td>
+
+                                            <td>
+                                                    No
+                                            </td>
+
+
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        <div class="io-description">
+                            <b>Returns : </b>        <code><a href="../interfaces/CatalogItemFilterParams.html" target="_self" >CatalogItemFilterParams</a></code>
+
+                        </div>
+                            <div class="io-description">
+                                
+                            </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="updatePricesBatch"></a>
+                    <span class="name">
+                            <span class="modifier">Async</span>
+                        <span ><b>updatePricesBatch</b></span>
+                        <a href="#updatePricesBatch"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                        <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>updatePricesBatch(items: <a href="../interfaces/ICatalogPriceUpdate.html" target="_self">ICatalogPriceUpdate[]</a>, transaction?: <a href="../undefineds/t.html" target="_self">Transaction</a>)</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="119"
+                                    class="link-to-prism">src/modules/catalog-raw/repositories/catalog-raw.repository.ts:119</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                        <div class="io-description"><p>Lote vía JSON: UN parámetro JSON por <code>bind</code> + <code>JSON_TABLE</code> en el servidor, en vez de N round-trips.
+Por qué <code>bind</code> y no <code>replacements</code>: <code>replacements</code> INTERPOLA el valor en el texto SQL y DB2 for i
+corta con SQL0101 (sentencia demasiado larga) al pasar ~32 KB de literal; <code>bind</code> manda el valor
+como parámetro real (CLOB) y el SQL queda chico. Se serializa solo lo que el SQL lee.</p>
+</div>
+
+                            <div class="io-description">
+                                <b>Parameters :</b>
+                                
+                                <table class="params">
+                                    <thead>
+                                        <tr>
+                                            <td>Name</td>
+                                                <td>Type</td>
+                                            <td>Optional</td>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                                <td>items</td>
+                                            <td>
+                                                            <code><a href="../interfaces/ICatalogPriceUpdate.html" target="_self" >ICatalogPriceUpdate[]</a></code>
+                                            </td>
+
+                                            <td>
+                                                    No
+                                            </td>
+
+
+                                        </tr>
+                                        <tr>
+                                                <td>transaction</td>
+                                            <td>
+                                                            <code><a href="../miscellaneous/functions.html#t" target="_self" >Transaction</a></code>
+                                            </td>
+
+                                            <td>
+                                                    Yes
+                                            </td>
+
+
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        <div class="io-description">
+                            <b>Returns : </b>        <code><a href="../miscellaneous/variables.html#num" target="_self" >Promise&lt;number&gt;</a></code>
+
+                        </div>
+                            <div class="io-description">
+                                
+                            </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="updateStatusByCodes"></a>
+                    <span class="name">
+                            <span class="modifier">Async</span>
+                        <span ><b>updateStatusByCodes</b></span>
+                        <a href="#updateStatusByCodes"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                        <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>updateStatusByCodes(codes: <a href="../undefineds/t.html" target="_self">string[]</a>, statusCode: <a href="../undefineds/t.html" target="_self">string</a>, transaction?: <a href="../undefineds/t.html" target="_self">Transaction</a>)</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="91"
+                                    class="link-to-prism">src/modules/catalog-raw/repositories/catalog-raw.repository.ts:91</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                        <div class="io-description"><p>UPDATE masivo por códigos. <code>QueryTypes.BULKUPDATE</code> es el único tipo que en este dialecto
+devuelve las filas afectadas como número (sin <code>type</code>, el driver devuelve <code>[[], []]</code> y
+<code>Number(resultado)</code> da siempre 0). Un UPDATE sobre códigos inexistentes no falla: afecta 0.</p>
+</div>
+
+                            <div class="io-description">
+                                <b>Parameters :</b>
+                                
+                                <table class="params">
+                                    <thead>
+                                        <tr>
+                                            <td>Name</td>
+                                                <td>Type</td>
+                                            <td>Optional</td>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                                <td>codes</td>
+                                            <td>
+                                                            <code><a href="../miscellaneous/functions.html#t" target="_self" >string[]</a></code>
+                                            </td>
+
+                                            <td>
+                                                    No
+                                            </td>
+
+
+                                        </tr>
+                                        <tr>
+                                                <td>statusCode</td>
+                                            <td>
+                                                            <code><a href="../miscellaneous/functions.html#t" target="_self" >string</a></code>
+                                            </td>
+
+                                            <td>
+                                                    No
+                                            </td>
+
+
+                                        </tr>
+                                        <tr>
+                                                <td>transaction</td>
+                                            <td>
+                                                            <code><a href="../miscellaneous/functions.html#t" target="_self" >Transaction</a></code>
+                                            </td>
+
+                                            <td>
+                                                    Yes
+                                            </td>
+
+
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        <div class="io-description">
+                            <b>Returns : </b>        <code><a href="../miscellaneous/variables.html#num" target="_self" >Promise&lt;number&gt;</a></code>
+
+                        </div>
+                            <div class="io-description">
+                                
+                            </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</section>
+
+    </div>
+
+
+    <div class="tab-pane fade  tab-source-code" id="source">
+        <pre class="line-numbers compodoc-sourcecode"><code class="language-typescript">import { Inject, Injectable } from &#x27;@nestjs/common&#x27;;
+import { QueryTypes, Transaction } from &#x27;@sequelize/core&#x27;;
+import { SqlQueryHelper } from &#x27;@common/helpers/sql-query.helper&#x27;;
+import { DatabaseConnections } from &#x27;@core/database/enum/database.enum&#x27;;
+import { SequelizeService } from &#x27;@core/database/services/sequelize.service&#x27;;
+import { CatalogItemHelper } from &#x27;../helpers/catalog-item.helper&#x27;;
+import {
+  CatalogItemFilterParams,
+  CatalogItemQueryParams,
+  ICatalogItemCreate,
+  ICatalogItemRaw,
+  ICatalogPriceUpdate,
+  IProcedureResultRaw,
+} from &#x27;../interfaces/catalog-item.interface&#x27;;
+
+/**
+ * Patrón: Repository de SQL crudo (estrategia &quot;solo raw query&quot;). Todo el SQL se arma en el helper
+ * y se ejecuta aquí con &#x60;QueryTypes&#x60; explícito. Los errores de Sequelize NO se capturan: suben al
+ * &#x60;SequelizeExceptionFilter&#x60; (409/503/500 sin detalle DB2). Un spec con mocks no prueba el SQL real:
+ * verificarlo contra la base antes de darlo por cerrado.
+ */
+@Injectable()
+export class CatalogRawRepository {
+  constructor(
+    @Inject(DatabaseConnections.DEFAULT)
+    private readonly db: SequelizeService,
+  ) {}
+
+  /**
+   * Página de datos + total con los MISMOS filtros, en paralelo (2 queries; el límite sano por
+   * request en IBM i es ~5-7 en &#x60;Promise.all&#x60;, si hace falta más consolidar con CTEs).
+   */
+  async findPage(
+    params: CatalogItemQueryParams,
+  ): Promise&lt;{ rows: ICatalogItemRaw[]; total: number }&gt; {
+    const { query, replacements } &#x3D; CatalogItemHelper.buildItemsQuery(params);
+    const { query: countQuery, replacements: countReplacements } &#x3D;
+      CatalogItemHelper.buildCountQuery(this.toFilters(params));
+    const sequelize &#x3D; this.db.getInstance();
+
+    const [rows, countRow] &#x3D; await Promise.all([
+      sequelize.query&lt;ICatalogItemRaw&gt;(query, {
+        replacements,
+        type: QueryTypes.SELECT,
+      }),
+      sequelize.query&lt;{ total: string | number }&gt;(countQuery, {
+        replacements: countReplacements,
+        type: QueryTypes.SELECT,
+        plain: true,
+      }),
+    ]);
+
+    return { rows, total: Number(countRow?.total ?? 0) };
+  }
+
+  /** &#x60;plain: true&#x60; devuelve &#x60;T | null&#x60; (no &#x60;T&#x60;): el tipo de retorno lo declara explícito. */
+  async findByCode(code: string): Promise&lt;ICatalogItemRaw | null&gt; {
+    const { query, replacements } &#x3D; CatalogItemHelper.buildItemsQuery({
+      exactCode: code,
+      page: 1,
+      pageSize: 1,
+    });
+    return this.db.getInstance().query&lt;ICatalogItemRaw&gt;(query, {
+      replacements,
+      type: QueryTypes.SELECT,
+      plain: true,
+    });
+  }
+
+  /** INSERT parametrizado. Una clave duplicada sube como SQL0803 y el filtro la traduce a 409. */
+  async insertItem(
+    item: ICatalogItemCreate &amp; { createdAt: number },
+    transaction?: Transaction,
+  ): Promise&lt;void&gt; {
+    await this.db.getInstance().query(
+      &#x60;INSERT INTO APPLIB.ITEMS (ITMCOD, ITMDSC, ITMCAT, ITMSTS, ITMPRC, ITMFEC)
+       VALUES (:code, :description, :categoryCode, &#x27;A&#x27;, :price, :createdAt)&#x60;,
+      {
+        replacements: { ...item },
+        type: QueryTypes.INSERT,
+        transaction,
+      },
+    );
+  }
+
+  /**
+   * UPDATE masivo por códigos. &#x60;QueryTypes.BULKUPDATE&#x60; es el único tipo que en este dialecto
+   * devuelve las filas afectadas como número (sin &#x60;type&#x60;, el driver devuelve &#x60;[[], []]&#x60; y
+   * &#x60;Number(resultado)&#x60; da siempre 0). Un UPDATE sobre códigos inexistentes no falla: afecta 0.
+   */
+  async updateStatusByCodes(
+    codes: string[],
+    statusCode: string,
+    transaction?: Transaction,
+  ): Promise&lt;number&gt; {
+    const { placeholders, replacements } &#x3D; SqlQueryHelper.buildInPlaceholders(
+      &#x27;codes&#x27;,
+      codes,
+    );
+    const affected &#x3D; await this.db
+      .getInstance()
+      .query(
+        &#x60;UPDATE APPLIB.ITEMS SET ITMSTS &#x3D; :statusCode WHERE ITMCOD IN (${placeholders})&#x60;,
+        {
+          replacements: { ...replacements, statusCode },
+          type: QueryTypes.BULKUPDATE,
+          transaction,
+        },
+      );
+    return Number(affected ?? 0);
+  }
+
+  /**
+   * Lote vía JSON: UN parámetro JSON por &#x60;bind&#x60; + &#x60;JSON_TABLE&#x60; en el servidor, en vez de N round-trips.
+   * Por qué &#x60;bind&#x60; y no &#x60;replacements&#x60;: &#x60;replacements&#x60; INTERPOLA el valor en el texto SQL y DB2 for i
+   * corta con SQL0101 (sentencia demasiado larga) al pasar ~32 KB de literal; &#x60;bind&#x60; manda el valor
+   * como parámetro real (CLOB) y el SQL queda chico. Se serializa solo lo que el SQL lee.
+   */
+  async updatePricesBatch(
+    items: ICatalogPriceUpdate[],
+    transaction?: Transaction,
+  ): Promise&lt;number&gt; {
+    const payload &#x3D; JSON.stringify({
+      items: items.map(({ code, price }) &#x3D;&gt; ({ code, price })),
+    });
+    const affected &#x3D; await this.db.getInstance().query(
+      &#x60;MERGE INTO APPLIB.ITEMS T
+       USING (
+         SELECT J.ITMCOD, J.PRICE
+         FROM JSON_TABLE($1, &#x27;lax $.items[*]&#x27; COLUMNS (
+           ITMCOD CHAR(10)      PATH &#x27;$.code&#x27;,
+           PRICE  DECIMAL(11,2) PATH &#x27;$.price&#x27;)) AS J
+       ) S ON T.ITMCOD &#x3D; S.ITMCOD
+       WHEN MATCHED THEN UPDATE SET T.ITMPRC &#x3D; S.PRICE&#x60;,
+      { bind: [payload], type: QueryTypes.BULKUPDATE, transaction },
+    );
+    return Number(affected ?? 0);
+  }
+
+  /**
+   * Función tabular: &#x60;SELECT ... FROM TABLE(schema.FN(?))&#x60;, con &#x60;QueryTypes.SELECT&#x60; y parámetros
+   * posicionales. &#x60;FN_EXAMPLE&#x60; es ficticia: ajustar al objeto real del proyecto.
+   */
+  async findByTableFunction(categoryCode: string): Promise&lt;ICatalogItemRaw[]&gt; {
+    return this.db.getInstance().query&lt;ICatalogItemRaw&gt;(
+      &#x60;SELECT
+         TRIM(T.ITMCOD) AS &quot;code&quot;,
+         TRIM(T.ITMDSC) AS &quot;description&quot;,
+         TRIM(T.ITMCAT) AS &quot;categoryCode&quot;,
+         &#x27;&#x27; AS &quot;categoryDescription&quot;,
+         T.ITMSTS AS &quot;status&quot;,
+         T.ITMPRC AS &quot;price&quot;,
+         T.ITMFEC AS &quot;createdAt&quot;
+       FROM TABLE(APPLIB.FN_EXAMPLE(?)) AS T
+       ORDER BY T.ITMCOD&#x60;,
+      { replacements: [categoryCode], type: QueryTypes.SELECT },
+    );
+  }
+
+  /**
+   * Stored procedure: &#x60;CALL schema.SP(?, ?)&#x60; con &#x60;QueryTypes.SELECT&#x60; (así el dialecto devuelve el
+   * result set). Los SP NO llevan parámetros OUT: el driver ODBC no puede bindear literales en un
+   * OUT y falla con SQL0469; lo que deba devolver, lo devuelve como result set &#x60;(CODE, MESSAGE)&#x60;.
+   * Un SP que falla lo hace con SIGNAL (llega como excepción). &#x60;SP_EXAMPLE&#x60; es ficticio.
+   *
+   * COMMITMENT CONTROL: un SP &#x60;*CHG&#x60; participa de &#x60;transaction&#x60; (su COMMIT/ROLLBACK arrastra todo);
+   * uno &#x60;*NONE&#x60; escribe fuera de ella y no se revierte: llamarlo post-commit y SIN &#x60;transaction&#x60;.
+   */
+  async callExampleProcedure(
+    categoryCode: string,
+    actor: string,
+    transaction?: Transaction,
+  ): Promise&lt;IProcedureResultRaw[]&gt; {
+    return this.db
+      .getInstance()
+      .query&lt;IProcedureResultRaw&gt;(&#x27;CALL APPLIB.SP_EXAMPLE(?, ?)&#x27;, {
+        replacements: [categoryCode, actor],
+        type: QueryTypes.SELECT,
+        transaction,
+      });
+  }
+
+  private toFilters(params: CatalogItemQueryParams): CatalogItemFilterParams {
+    const { code, exactCode, description, status, categoryCodes } &#x3D; params;
+    return { code, exactCode, description, status, categoryCodes };
+  }
+}
+</code></pre>
+    </div>
+
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+                   </div><div class="search-results">
+    <div class="has-results">
+        <h1 class="search-results-title"><span class='search-results-count'></span> results matching "<span class='search-query'></span>"</h1>
+        <ul class="search-results-list"></ul>
+    </div>
+    <div class="no-results">
+        <h1 class="search-results-title">No results matching "<span class='search-query'></span>"</h1>
+    </div>
+</div>
+</div>
+               <!-- END CONTENT -->
+           </div>
+       </div>
+
+          <label class="dark-mode-switch">
+               <input type="checkbox">
+               <span class="slider">
+                    <svg class="slider-icon" viewBox="0 0 24 24" fill="none" height="20" stroke="#000" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" width="20" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M21 12.79A9 9 0 1111.21 3 7 7 0 0021 12.79z"></path>
+                    </svg>
+               </span>
+          </label>
+
+       <script>
+            var COMPODOC_CURRENT_PAGE_DEPTH = 1;
+            var COMPODOC_CURRENT_PAGE_CONTEXT = 'injectable';
+            var COMPODOC_CURRENT_PAGE_URL = 'CatalogRawRepository.html';
+            var MAX_SEARCH_RESULTS = 15;
+       </script>
+
+       <script>
+               $darkModeToggleSwitchers = document.querySelectorAll('.dark-mode-switch input');
+               checkToggle(darkModeState);
+               if ($darkModeToggleSwitchers.length > 0) {
+                    for (var i = 0; i < $darkModeToggleSwitchers.length; i++) {
+                         $darkModeToggleSwitchers[i].addEventListener('change', function (event) {
+                              darkModeState = !darkModeState;
+                              toggleDarkMode(darkModeState);
+                         });
+                    }
+               }
+          </script>
+
+       <script src="../js/libs/custom-elements.min.js"></script>
+       <script src="../js/libs/lit-html.js"></script>
+
+       <script src="../js/menu-wc.js" defer></script>
+       <script nomodule src="../js/menu-wc_es5.js" defer></script>
+
+       <script src="../js/libs/bootstrap-native.js"></script>
+
+       <script src="../js/libs/es6-shim.min.js"></script>
+       <script src="../js/libs/EventDispatcher.js"></script>
+       <script src="../js/libs/promise.min.js"></script>
+
+       <script src="../js/compodoc.js"></script>
+
+       <script src="../js/tabs.js"></script>
+       <script src="../js/menu.js"></script>
+       <script src="../js/libs/clipboard.min.js"></script>
+       <script src="../js/libs/prism.js"></script>
+       <script src="../js/sourceCode.js"></script>
+          <script src="../js/search/search.js"></script>
+          <script src="../js/search/lunr.min.js"></script>
+          <script src="../js/search/search-lunr.js"></script>
+          <script src="../js/search/search_index.js"></script>
+       <script src="../js/lazy-load-graphs.js"></script>
+
+
+    </body>
+</html>
