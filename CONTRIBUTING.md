@@ -12,7 +12,7 @@ pnpm db:verify-audit-triggers                      # opcional: cobertura de trig
 pnpm start:dev                                     # o `pnpm build && pnpm start:prod`
 ```
 
-La API queda en `http://localhost:3000/node-starter-backend/api` (Swagger en `/swagger`, salud en `/v1/healthcheck`). `docker compose up -d` levanta postgres, redis, mongo, mailpit y seq; solo postgres es necesario: Redis, Mongo, SMTP y Seq se activan completando su variable en `.env` (`REDIS_URL`, `MONGO_URI`, `EMAIL_HOST`/`EMAIL_PORT`, `SEQ_ENABLED`), y sin ellas cada módulo usa su fallback. `DATABASE_CONNECTION_STRING` (DB2/Sequelize) también es opcional: vacía, ese módulo no se registra. `APP_TIMEZONE` (default UTC) fija la zona de las fechas del healthcheck. El usuario demo del seed (`demo.orders@example.com`) trae la contraseña `DemoPass1234` (solo desarrollo, se guarda hasheada con bcrypt; el seed no la pisa si ya existe una credencial) y las rutas de auth exigen Basic Auth con el cliente M2M demo del seed.
+La API queda en `http://localhost:3000/node-starter-backend/api` (Swagger en `/node-starter-backend/api/swagger`, salud en `/node-starter-backend/api/v1/healthcheck`). `docker compose up -d` levanta postgres, redis, mongo, mailpit y seq; solo postgres es necesario: Redis, Mongo, SMTP y Seq se activan completando su variable en `.env` (`REDIS_URL`, `MONGO_URI`, `EMAIL_HOST`/`EMAIL_PORT`, `SEQ_ENABLED`), y sin ellas cada módulo usa su fallback. `DATABASE_CONNECTION_STRING` (DB2/Sequelize) también es opcional: vacía, ese módulo no se registra. `APP_TIMEZONE` fija la zona IANA de las fechas de respuesta (healthcheck, entre otras). El usuario demo del seed (`demo.orders@example.com`) trae la contraseña `DemoPass1234` (solo desarrollo, se guarda hasheada con bcrypt; el seed no la pisa si ya existe una credencial). Las rutas de auth que exigen Basic Auth (login, alta de contraseña, verificación) usan el cliente M2M demo del seed, no el usuario demo.
 
 ## Plataformas de CI soportadas
 
@@ -98,3 +98,8 @@ Para trabajo mediano o grande, acordá el alcance antes de codear con OpenSpec (
 ## Asistentes de IA
 
 La guía para asistentes está en [`AGENTS.md`](AGENTS.md) y el contexto detallado (reglas, agentes, comandos, skills) en [`.context/`](.context/CONTEXT.md).
+
+## Documentos relacionados
+
+- [`README.md`](README.md): qué es el starter, quickstart, índice de documentación y catálogo de mecanismos.
+- [`ARCHITECTURE.md`](ARCHITECTURE.md): capas, ciclo de vida de una request, módulos opcionales y DB2/Sequelize.

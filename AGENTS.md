@@ -2,7 +2,7 @@
 
 Guía de trabajo en `node-starter-backend` (NestJS 11, TypeScript, Prisma + PostgreSQL, Sequelize opcional, pnpm, Node 22). Es un compendio genérico y demostrativo: todo mecanismo es funcional, genérico (sin dominio de negocio de origen) y con fallback cuando depende de infra o de un proveedor externo.
 
-Contexto detallado: [`.context/CONTEXT.md`](.context/CONTEXT.md) (índice de reglas, agentes, comandos, skills y documentación). Arquitectura: [`ARCHITECTURE.md`](ARCHITECTURE.md). Contribución: [`CONTRIBUTING.md`](CONTRIBUTING.md).
+Contexto detallado: [`.context/CONTEXT.md`](.context/CONTEXT.md) (índice de reglas, agentes, comandos, skills y documentación). Índice general y catálogo de mecanismos: [`README.md`](README.md). Arquitectura: [`ARCHITECTURE.md`](ARCHITECTURE.md). Contribución: [`CONTRIBUTING.md`](CONTRIBUTING.md).
 
 ## Antes de empezar
 
@@ -20,7 +20,8 @@ api (controllers, DTOs, ApiService) -> modules (DBService, servicios, adaptadore
 - `src/modules/<dominio>`: lógica reutilizable. Solo los módulos `*-db` hablan con Prisma; los de integración hablan con sistemas externos.
 - `src/core`: infraestructura del proceso (config Joi, `PrismaDatasource`, filtros, interceptors, middlewares, observabilidad, scheduler, redis, mongo, rate limit). Sin lógica de negocio.
 - `src/common`: decorators, dtos, enums, filters, helpers, pipes, utils, validators. Nada nace acá "por las dudas": se promueve cuando un segundo consumidor real lo necesita.
-- Dirección de imports: `api -> modules -> core`; `modules` nunca importa de `api`.
+- Dirección de imports: `api -> modules -> core`; `modules` nunca importa de `api`. Excepciones existentes documentadas en [`ARCHITECTURE.md`](ARCHITECTURE.md#capas): no usarlas como modelo.
+- DB2/Sequelize (opcional): raw query o ORM tipado según [`.context/rules/db2-sequelize.md`](.context/rules/db2-sequelize.md).
 - Aliases: `@core/*`, `@modules/*`, `@api/*`, `@common/*`, `@auth/*`, `@email/*`.
 
 ## Convenciones clave
