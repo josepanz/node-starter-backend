@@ -1,0 +1,22 @@
+# Solo valores NO sensibles, alineados con .env.template. Los secretos van en un Secret.
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: node-starter-backend-config
+data:
+  NODE_ENV: production
+  PORT: '3000'
+  BASE_URL: https://starter.example.com/node-starter-backend/api
+  PROJECT_NAME: Node starter backend
+  PROJECT_DESCRIPTION: Node starter backend API
+  TZ: UTC
+  SCHEDULER_ENABLED: 'true'
+  SCHEDULER_TIMEZONE: UTC
+  ACCESS_TOKEN_EXPIRES: 15m
+  REFRESH_TOKEN_EXPIRES: 7d
+  TEMP_TOKEN_EXPIRES: 1h
+  RATE_LIMIT_ENABLED: 'true'
+  REDIS_KEY_PREFIX: 'starter:'
+  SEQ_ENABLED: 'false'
+  SEQ_URL: http://seq.example.internal:5341
+  SMS_PROVIDER: console

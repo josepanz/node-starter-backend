@@ -1,0 +1,59 @@
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+
+namespace: starter-qa
+
+resources:
+  - ../../base
+
+# Imagen y version: las actualiza semantic-release (scripts/replace-version.sh) al liberar.
+# Reemplazar newName por el registro real del equipo.
+images:
+  - name: node-starter-backend
+    newName: registry.example.com/org/node-starter-backend
+    newTag: "1.0.0"
+
+patches:
+  - target:
+      kind: Deployment
+      name: node-starter-backend
+    patch: |-
+      - op: replace
+        path: /spec/replicas
+        value: 2
+      - op: replace
+        path: /spec/template/spec/containers/0/resources
+        value:
+          requests:
+            cpu: 100m
+            memory: 256Mi
+          limits:
+            cpu: 500m
+            memory: 512Mi
+  - target:
+      kind: HorizontalPodAutoscaler
+      name: node-starter-backend
+    patch: |-
+      - op: replace
+        path: /spec/minReplicas
+        value: 2
+      - op: replace
+        path: /spec/maxReplicas
+        value: 4
+  - target:
+      kind: Ingress
+      name: node-starter-backend
+    patch: |-
+      - op: replace
+        path: /spec/rules/0/host
+        value: starter.qa.example.com
+  - target:
+      kind: ConfigMap
+      name: node-starter-backend-config
+    patch: |-
+      - op: replace
+        path: /data/NODE_ENV
+        value: qa
+      - op: replace
+        path: /data/BASE_URL
+        value: https://starter.qa.example.com/node-starter-backend/api
