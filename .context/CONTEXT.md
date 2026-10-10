@@ -25,6 +25,7 @@ Puntos de entrada: [`AGENTS.md`](../AGENTS.md) (guía para asistentes), [`ARCHIT
 | [error-handling.md](rules/error-handling.md) | capas de defensa, `ErrorHelper`, filtros, logging |
 | [test.md](rules/test.md) | reglas de testing, mocks, qué probar por archivo |
 | [database-conventions.md](rules/database-conventions.md) | `id` + `referenceId`, auditoría, migraciones, pooler, datos sensibles |
+| [db2-sequelize.md](rules/db2-sequelize.md) | DB2 for IBM i + Sequelize: raw query vs ORM tipado, QueryTypes, bind, SP/TVF, commitment control, errores |
 | [datetime.md](rules/datetime.md) | fechas y zona horaria configurable |
 | [permissions.md](rules/permissions.md) | guards, permisos `dominio:accion`, rate limit |
 | [git-workflow.md](rules/git-workflow.md) | ramas, puentes, hotfix, PR/MR, release, hooks |
@@ -34,7 +35,7 @@ Puntos de entrada: [`AGENTS.md`](../AGENTS.md) (guía para asistentes), [`ARCHIT
 ## Agentes (`agents/`)
 
 - [code-reviewer](agents/code-reviewer.md): revisión por severidad (CRITICAL / WARN / STYLE).
-- [db-advisor](agents/db-advisor.md): schema, índices, queries y migraciones (PostgreSQL y DB2).
+- [db-advisor](agents/db-advisor.md): schema, índices, queries y migraciones (PostgreSQL y DB2/Sequelize, raw o ORM).
 - [testing-agent](agents/testing-agent.md): genera y revisa tests unitarios.
 - [tdd-refactor](agents/tdd-refactor.md): refactor incremental con characterization test, sin romper el contrato HTTP.
 

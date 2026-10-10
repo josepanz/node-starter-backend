@@ -73,4 +73,4 @@ Un pooler en modo transacción (PgBouncer, Supabase `:6543`) exige `?pgbouncer=t
 
 ## DB2 / AS400 (Sequelize)
 
-Acceso solo vía el módulo de Sequelize. Tener presente: CHAR con relleno (usar `TRIM` en `WHERE`), esquema/biblioteca siempre explícito, journaling antes de DML, literales de fecha distintos a PostgreSQL y EBCDIC en comparaciones. No portar queries de PG directo.
+Acceso opcional vía el módulo de Sequelize (sin `DATABASE_CONNECTION_STRING` no se registra). Reglas completas, elección raw query vs ORM tipado e inviolables en [`db2-sequelize.md`](db2-sequelize.md). Resumen: CHAR con relleno (`TRIM`), esquema/biblioteca siempre explícito, journaling antes de DML y commitment control, fechas numéricas YYYYMMDD, `replacements` vs `bind` y EBCDIC en comparaciones. No portar queries de PG directo.
