@@ -1,0 +1,13 @@
+# Responsables de revision por ruta. Reemplazar por el equipo real (usuario o @org/equipo).
+# Cada linea: <patron> <propietarios>. La ultima regla que coincide gana.
+
+# Por defecto, todo el repositorio
+# *                   @your-org/maintainers
+
+# Infraestructura y CI
+# /.github/           @your-org/platform
+# /ci/                @your-org/platform
+# /Dockerfile         @your-org/platform
+
+# Esquema de base de datos
+# /prisma/            @your-org/data

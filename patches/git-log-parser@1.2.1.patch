@@ -1,0 +1,23 @@
+diff --git a/src/index.js b/src/index.js
+index 156f5c1c7b1f5a6129684054c9b66771b069535c..e9e556176009a98f72144aa9d08043660ba30557 100644
+--- a/src/index.js
++++ b/src/index.js
+@@ -9,8 +9,16 @@ var toArgv   = require('argv-formatter').format;
+ var combine  = require('stream-combiner2');
+ var fwd      = require('spawn-error-forwarder');
+ 
+-var END = '==END==';
+-var FIELD = '==FIELD==';
++// PATCH (starter): los delimitadores originales eran los literales
++// legibles '==END==' / '==FIELD=='. Si el mensaje de ALGUN commit del rango
++// contiene esas mismas substrings (por ejemplo, texto que documenta este
++// mismo mecanismo de parseo), el split() de más abajo encuentra delimitadores
++// de más y desincroniza los campos de ese registro (hash/fecha/etc. quedan
++// con el valor de otro campo). Se reemplazan por caracteres de control ASCII
++// pensados justamente para esto (Record/Unit Separator) que no aparecen en
++// texto escrito por una persona, eliminando la colisión de raíz.
++var END = '\x1E';
++var FIELD = '\x1F';
+ 
+ function format (fieldMap) {
+   return fieldMap.map(function (field) {
