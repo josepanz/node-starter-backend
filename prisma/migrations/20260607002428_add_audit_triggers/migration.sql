@@ -4,7 +4,7 @@ DECLARE
     v_old_data JSONB := NULL;
     v_new_data JSONB := NULL;
     v_data_to_sign TEXT;
-    v_secret_key TEXT := 'node_starter_secret_pepper_2026'; 
+    v_secret_key TEXT := COALESCE(current_setting('app.audit_pepper', true), '');
     v_current_user TEXT;
     v_aud_version INT := 1;
     v_current_ip TEXT;
@@ -20,7 +20,11 @@ BEGIN
             RETURN NEW;
         END IF;
 
-        NEW.last_changed_at := CURRENT_TIMESTAMP;
+        -- created_at es inmutable en UPDATE; solo se toca last_changed_at (y si la app no lo fijó).
+        NEW.created_at := OLD.created_at;
+        IF NEW.last_changed_at IS NOT DISTINCT FROM OLD.last_changed_at THEN
+            NEW.last_changed_at := CURRENT_TIMESTAMP;
+        END IF;
         IF NEW.last_changed_by IS NULL THEN
             NEW.last_changed_by := v_current_user;
         ELSE
@@ -37,7 +41,7 @@ BEGIN
     ELSIF (TG_OP = 'INSERT') THEN
         v_new_data := to_jsonb(NEW) - 'last_changed_at' - 'last_changed_by' - 'checksum' - 'change_signature' - 'aud_version';
         v_aud_version := 1;
-        NEW.created_at := CURRENT_TIMESTAMP;
+        NEW.created_at := COALESCE(NEW.created_at, CURRENT_TIMESTAMP);
         IF NEW.created_by IS NULL THEN
             NEW.created_by := v_current_user;
         ELSE

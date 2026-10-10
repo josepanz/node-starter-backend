@@ -37,12 +37,12 @@ CREATE UNIQUE INDEX "<tabla>_reference_id_key" ON "<tabla>"("reference_id");
 
 ## Auditoría
 
-Las tablas con columna `change_signature` se auditan con el trigger genérico `fn_audit_generic_trigger()` (migraciones `add_audit_triggers` y `audit_trace_id`), que la migración asocia a cada tabla con `trg_audit_<tabla>`. Para una tabla nueva auditable, incluir `created_by`, `last_changed_by`, `change_signature` y los campos de auditoría como en las existentes, y crear su trigger en la migración. `pnpm db:verify-audit-triggers` falla (exit 1) si alguna tabla auditable quedó sin trigger: correrlo en CI después de `migrate deploy`.
+Las tablas con columna `change_signature` se auditan con el trigger genérico `fn_audit_generic_trigger()` (migración `audit_triggers`), que la migración asocia a cada tabla con `trg_audit_<tabla>`. Para una tabla nueva auditable, incluir `created_by`, `last_changed_by`, `change_signature` y los campos de auditoría como en las existentes, y crear su trigger en la migración. `pnpm db:verify-audit-triggers` falla (exit 1) si alguna tabla auditable quedó sin trigger: correrlo en CI después de `migrate deploy`.
 
-Puntos a endurecer antes de producción (el starter los deja en modo demostrativo):
+Comportamiento del trigger (ya endurecido):
 
-- El pepper de firma (`v_secret_key`) está como constante en el SQL de la migración. En un proyecto real, leerlo de un GUC de sesión (`current_setting('app.audit_secret_pepper', true)`) que setea la extensión de `PrismaDatasource` desde la config; nunca dejar un secreto en git.
-- El trigger setea `created_at`/`last_changed_at` con `CURRENT_TIMESTAMP` de forma incondicional y pisa el valor que calculó la app (ver [`datetime.md`](datetime.md)). Cambiarlo a `IF NEW.created_at IS NULL THEN ...` en INSERT y, en UPDATE, a `IF NEW.last_changed_at IS NOT DISTINCT FROM OLD.last_changed_at THEN ...`.
+- Pepper de firma: no está en el SQL. El trigger lo lee de `current_setting('app.audit_pepper', true)`, que `PrismaDatasource` setea (`set_config(..., true)`, local a la transacción) desde `AUDIT_SIGNATURE_PEPPER`. Sin esa env la firma se calcula con pepper vacío; en producción definirla y no cambiarla (cambiarla invalida la verificación de firmas previas). Las escrituras fuera del contexto de auditoría (seed, scripts) no pasan por la extensión y firman sin pepper.
+- Fechas: en INSERT `created_at` se respeta si la app lo fijó (`COALESCE`); en UPDATE `created_at` es inmutable (`NEW.created_at := OLD.created_at`) y solo se toca `last_changed_at`, y únicamente si la app no lo cambió (`IS NOT DISTINCT FROM OLD`). Ver [`datetime.md`](datetime.md).
 - Un trigger combinado `BEFORE INSERT OR UPDATE OR DELETE` sí tiene `NEW`/`OLD` válidos (con NULL en el que no aplica): no reescribirlo por un hallazgo sin verificarlo antes con una tabla scratch. Los problemas reales a vigilar son `aud_version` en DELETE y tablas con PK natural sin columna `id` o sin `created_by`, que rompen el trigger genérico.
 
 ## Migraciones

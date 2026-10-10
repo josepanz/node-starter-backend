@@ -1,4 +1,5 @@
-import { Controller, Get, Version } from '@nestjs/common';
+import { Controller, Get, Inject, Version } from '@nestjs/common';
+import { ConfigType } from '@nestjs/config';
 import { ApiTags } from '@nestjs/swagger';
 import {
   HealthCheck,
@@ -7,6 +8,7 @@ import {
   PrismaHealthIndicator,
 } from '@nestjs/terminus';
 import { toZonedTime } from 'date-fns-tz';
+import { APP_CONFIG, AppConfigType } from '@core/config/config-loader';
 import { PrismaDatasource } from '@core/database/services/prisma.service';
 import { RedisHealthIndicator } from '@core/redis/redis.health-indicator';
 import { SmtpHealthIndicator } from '@modules/email/health/smtp.health-indicator';
@@ -32,6 +34,8 @@ export class HealthController {
     private db: PrismaHealthIndicator,
     private smtp: SmtpHealthIndicator,
     private redis: RedisHealthIndicator,
+    @Inject(APP_CONFIG.KEY)
+    private config: ConfigType<AppConfigType>,
   ) {}
 
   @Get()
@@ -44,7 +48,7 @@ export class HealthController {
     ]);
 
     return {
-      date: toZonedTime(new Date(), 'America/Asuncion'),
+      date: toZonedTime(new Date(), this.config.timezone),
       info: healthCheck,
       // Informativo: no participa del chequeo agregado (un SMTP caído no baja el estado general)
       smtp: this.smtp.check(),

@@ -3,7 +3,10 @@ import { HealthModule } from './modules/health/health.module';
 import { ConfigModule, ConfigType } from '@nestjs/config';
 import { configOptions } from '@core/config/config-options';
 import { ObservabilityModule } from '@core/observability/observability.module';
-import { DatabaseModule } from '@core/database/database.module';
+import {
+  DatabaseModule,
+  isSequelizeEnabled,
+} from '@core/database/database.module';
 import { TraceIdMiddleware } from '@core/middlewares/trace-id.middleware';
 import { HttpClientModule } from '@modules/http-client/http-client.module';
 import { ApiModule } from './api/api.module';
@@ -36,28 +39,33 @@ import { registerUppercaseHooks } from '@core/database/helpers/sequelize-registe
     ApiClientsDBModule,
     HealthModule,
     DatabaseModule,
-    DatabaseModule.forRootAsync({
-      useFactory: async (
-        configService: ConfigType<AppConfigType>,
-        databaseHelper: DatabaseHelper,
-      ) => {
-        const models = await databaseHelper.loadModels(__dirname);
-        return {
-          type: 'db2',
-          options: {
-            odbcConnectionString:
-              configService?.database?.connectionString ?? '',
-          },
-          //FIXME: Workaround temporal en database.helper.ts usando fast-glob
-          // models: await importModels(__dirname + '/**/*.entity.{ts,js}'),
-          models,
-          registerHooks(models) {
-            registerUppercaseHooks(models);
-          },
-        };
-      },
-      inject: [APP_CONFIG.KEY, DatabaseHelper],
-    }),
+    // DB2/Sequelize opcional (solo se registra con DATABASE_CONNECTION_STRING)
+    ...(isSequelizeEnabled()
+      ? [
+          DatabaseModule.forRootAsync({
+            useFactory: async (
+              configService: ConfigType<AppConfigType>,
+              databaseHelper: DatabaseHelper,
+            ) => {
+              const models = await databaseHelper.loadModels(__dirname);
+              return {
+                type: 'db2',
+                options: {
+                  odbcConnectionString:
+                    configService?.database?.connectionString ?? '',
+                },
+                //FIXME: Workaround temporal en database.helper.ts usando fast-glob
+                // models: await importModels(__dirname + '/**/*.entity.{ts,js}'),
+                models,
+                registerHooks(models) {
+                  registerUppercaseHooks(models);
+                },
+              };
+            },
+            inject: [APP_CONFIG.KEY, DatabaseHelper],
+          }),
+        ]
+      : []),
     ApiModule,
     HttpClientModule,
     SchedulerModule,

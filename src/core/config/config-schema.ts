@@ -5,6 +5,7 @@ export const configSchema = Joi.object({
   PROJECT_DESCRIPTION: Joi.string().required(),
   BASE_URL: Joi.string().uri().required(),
   PORT: Joi.number().required(),
+  APP_TIMEZONE: Joi.string().default('UTC'),
   NODE_ENV: Joi.string()
     .required()
     .allow('local', 'development', 'qa', 'production'),
@@ -30,7 +31,8 @@ export const configSchema = Joi.object({
   SEQ_URL: Joi.string().uri().required(),
 
   DATABASE_URL: Joi.string().required(),
-  DATABASE_CONNECTION_STRING: Joi.string().required(),
+  // DB2/Sequelize (opcional): sin esta variable no se registra el módulo Sequelize y la app arranca igual
+  DATABASE_CONNECTION_STRING: Joi.string().allow('').optional(),
 
   // EMAIL: sin EMAIL_HOST se usa ConsoleEmailSender (solo loguea, no envía)
   EMAIL_HOST: Joi.string().allow('').optional(),
@@ -79,6 +81,7 @@ export const configSchema = Joi.object({
 
   // SCHEDULER: cron de 6 campos (con segundos). El valor `off` deshabilita ese job.
   SCHEDULER_ENABLED: Joi.boolean().default(true),
+  AUDIT_SIGNATURE_PEPPER: Joi.string().allow('').optional(),
   SCHEDULER_TIMEZONE: Joi.string().default('UTC'),
   JOBS_WORKER_CRON: Joi.string().default('*/15 * * * * *'),
   IDEMPOTENCY_PURGE_CRON: Joi.string().default('0 30 3 * * *'),

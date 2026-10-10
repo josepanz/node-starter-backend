@@ -7,11 +7,17 @@ import { SequelizeService } from './services/sequelize.service';
 import { RawQueryExecutorService } from '@core/database/base/sequelize/raw-query-executor.service';
 import { DatabaseConnections } from './enum/database.enum';
 import { ModelStatic } from '@sequelize/core';
+import { isOptionalEnvSet } from '@core/config/optional-env';
+
+/** ¿Hay DB2/Sequelize configurada? Sin `DATABASE_CONNECTION_STRING` el módulo no se registra. */
+export function isSequelizeEnabled(): boolean {
+  return isOptionalEnvSet('DATABASE_CONNECTION_STRING');
+}
 
 const defaultConnectionName = DatabaseConnections.DEFAULT;
 @Module({
-  providers: [PrismaDatasource, DatabaseHelper, RawQueryExecutorService],
-  exports: [PrismaDatasource, DatabaseHelper, RawQueryExecutorService],
+  providers: [PrismaDatasource, DatabaseHelper],
+  exports: [PrismaDatasource, DatabaseHelper],
 })
 export class DatabaseModule {
   /**
@@ -29,8 +35,9 @@ export class DatabaseModule {
           provide: connectionName,
           useFactory: () => new SequelizeService(config),
         },
+        RawQueryExecutorService,
       ],
-      exports: [connectionName],
+      exports: [connectionName, RawQueryExecutorService],
     };
   }
 
@@ -56,8 +63,10 @@ export class DatabaseModule {
             new SequelizeService(options),
           inject: [`${connectionName}_DB_OPTIONS`],
         },
+        // Solo existe si hay conexión Sequelize (depende de ella)
+        RawQueryExecutorService,
       ],
-      exports: [connectionName],
+      exports: [connectionName, RawQueryExecutorService],
     };
   }
 

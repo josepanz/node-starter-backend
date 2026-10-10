@@ -59,7 +59,7 @@ Con las utilidades UTC; `setHours`/`getDate` operan en la TZ local del proceso y
 
 ## Triggers y defaults que pisan fechas
 
-- El trigger de auditoría del starter hoy pisa `created_at`/`last_changed_at` con `CURRENT_TIMESTAMP` aunque la app los haya calculado (ver el endurecimiento en [`database-conventions.md`](database-conventions.md)). Convertido a `IF NEW.x IS NULL`, respeta el valor explícito. Verificar el estado real de la migración en el ambiente antes de asumir que un timestamp de "ahora" es correcto.
+- El trigger de auditoría respeta un `created_at`/`last_changed_at` explícito de la app (INSERT/UPDATE) y deja `created_at` inmutable en UPDATE (ver [`database-conventions.md`](database-conventions.md)).
 - `@default(now())` y `@updatedAt` de Prisma son una fuente de "ahora" que ignora la zona de negocio (el primero lo resuelve Postgres con el GUC `timezone` de la sesión; el segundo usa el instante UTC real del proceso). Si el modelo exige hora de pared, `createdAt`/`lastChangedAt` se pasan explícitos desde el service.
 
 ## Prohibiciones

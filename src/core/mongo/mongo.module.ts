@@ -2,23 +2,11 @@ import { DynamicModule, Module } from '@nestjs/common';
 import { ConfigType } from '@nestjs/config';
 import { MongooseModule } from '@nestjs/mongoose';
 import { APP_CONFIG, AppConfigType } from '@core/config/config-loader';
-import { configOptions } from '@core/config/config-options';
+import { isOptionalEnvSet } from '@core/config/optional-env';
 
-/**
- * ¿Hay Mongo configurado? Misma regla que `config.mongo.uri` (vacío = apagado).
- * Los decoradores @Module se evalúan al IMPORTAR los archivos, antes de que `ConfigModule.forRoot`
- * cargue el `.env`; por eso, si la variable no está definida, se carga el archivo acá (sin pisar
- * variables ya presentes, igual que ConfigModule). Definirla (aun vacía) evita leer el archivo.
- */
+/** ¿Hay Mongo configurado? Misma regla que `config.mongo.uri` (vacío = apagado). */
 export function isMongoEnabled(): boolean {
-  if (process.env.MONGO_URI === undefined) {
-    try {
-      process.loadEnvFile(configOptions.envFilePath as string);
-    } catch {
-      // Sin .env (CI, contenedor): se usa solo el entorno del proceso.
-    }
-  }
-  return (process.env.MONGO_URI ?? '').trim() !== '';
+  return isOptionalEnvSet('MONGO_URI');
 }
 
 /**

@@ -17,6 +17,7 @@ export const APP_CONFIG = registerAs('config', () => {
   return {
     env: process.env.NODE_ENV,
     baseUrl: process.env.BASE_URL,
+    timezone: text(process.env.APP_TIMEZONE, 'UTC'),
     apiconfig: {
       port: Number(process.env.PORT),
     },
@@ -231,13 +232,15 @@ export const APP_CONFIG = registerAs('config', () => {
     },
     audit: {
       exportBatchSize: num(process.env.AUDIT_EXPORT_BATCH_SIZE, 500),
+      // Pepper de change_signature (GUC app.audit_pepper); vacío = firma sin pepper
+      signaturePepper: process.env.AUDIT_SIGNATURE_PEPPER ?? '',
     },
     realtime: {
       throttleLimit: num(process.env.WS_THROTTLE_LIMIT, 20),
       throttleWindowSeconds: num(process.env.WS_THROTTLE_WINDOW_SECONDS, 10),
     },
     database: {
-      connectionString: process.env.DATABASE_CONNECTION_STRING,
+      connectionString: text(process.env.DATABASE_CONNECTION_STRING),
     },
     s3: {
       accessKeyId: process.env.S3_ACCESS_KEY_ID,

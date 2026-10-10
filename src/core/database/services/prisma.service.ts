@@ -1,8 +1,10 @@
 /* eslint-disable @typescript-eslint/no-unsafe-member-access */
 /* eslint-disable @typescript-eslint/no-unsafe-call */
-import { Injectable, Logger, OnModuleInit } from '@nestjs/common';
+import { Inject, Injectable, Logger, OnModuleInit } from '@nestjs/common';
+import { ConfigType } from '@nestjs/config';
 import { PrismaClient } from '@prisma/client';
 import { AsyncLocalStorage } from 'async_hooks';
+import { APP_CONFIG, AppConfigType } from '@core/config/config-loader';
 import { RequestContext } from '@common/context/request-context';
 
 export const auditStorage = new AsyncLocalStorage<{
@@ -19,6 +21,13 @@ const auditTxActive = new AsyncLocalStorage<boolean>();
 export class PrismaDatasource extends PrismaClient implements OnModuleInit {
   public isConnected: boolean = false;
   private readonly logger = new Logger(PrismaDatasource.name);
+
+  constructor(
+    @Inject(APP_CONFIG.KEY)
+    private readonly appConfig: ConfigType<AppConfigType>,
+  ) {
+    super();
+  }
 
   public readonly extended = this.$extends({
     query: {
@@ -54,6 +63,8 @@ export class PrismaDatasource extends PrismaClient implements OnModuleInit {
                 await tx.$executeRaw`SELECT set_config('app.user_agent', ${context.userAgent}, true)`;
                 await tx.$executeRaw`SELECT set_config('app.application_name', ${context.applicationName}, true)`;
                 // traceId de la request: el trigger lo guarda en audit_logs.extra_data para correlacionar
+                // pepper de la firma de auditoría: viene del entorno, nunca del SQL versionado
+                await tx.$executeRaw`SELECT set_config('app.audit_pepper', ${this.appConfig.audit.signaturePepper}, true)`;
                 await tx.$executeRaw`SELECT set_config('app.trace_id', ${RequestContext.getTraceId() ?? ''}, true)`;
 
                 // Ejecutar la operación del modelo a través de tx (misma conexión/transacción)
