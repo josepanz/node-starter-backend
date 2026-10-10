@@ -1,3 +1,6 @@
+-- Auditoría: función genérica + triggers + objetos que Prisma no modela.
+-- El pepper de la firma se lee del GUC app.audit_pepper (lo setea PrismaDatasource desde AUDIT_SIGNATURE_PEPPER).
+-- extra_data guarda applicationName y traceId (app.application_name / app.trace_id).
 CREATE OR REPLACE FUNCTION fn_audit_generic_trigger()
 RETURNS TRIGGER AS $$
 DECLARE
@@ -90,11 +93,14 @@ BEGIN
         v_current_ip,
         COALESCE(NULLIF(current_setting('app.user_agent', true), ''), NULLIF(current_setting('application_name', true), ''), 'unknown'),
         v_aud_version,
-        CASE
-            WHEN NULLIF(current_setting('app.application_name', true), '') IS NOT NULL
-            THEN jsonb_build_object('applicationName', current_setting('app.application_name', true))::text
-            ELSE NULL
-        END,
+        -- extra_data: applicationName y traceId (solo los presentes); NULL si no hay ninguno.
+        NULLIF(
+            jsonb_strip_nulls(jsonb_build_object(
+                'applicationName', NULLIF(current_setting('app.application_name', true), ''),
+                'traceId', NULLIF(current_setting('app.trace_id', true), '')
+            )),
+            '{}'::jsonb
+        )::text,
         COALESCE(NEW.change_signature, OLD.change_signature)
     );
 
@@ -105,7 +111,10 @@ BEGIN
 END;
 $$ LANGUAGE plpgsql;
 
--- para crear recursivamente
+-- Una sola versión activa por tipo de documento legal (índice único parcial; Prisma no lo modela).
+CREATE UNIQUE INDEX "uq_legal_document_one_active_per_type" ON "legal_document_versions"("type") WHERE "is_active" = true;
+
+-- Trigger trg_audit_<tabla> en toda tabla con columna change_signature (excepto audit_logs)
 DO $$
 DECLARE
     t RECORD;
