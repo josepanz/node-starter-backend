@@ -27,12 +27,13 @@
     "prepare": "husky || true",
     "seed": "ts-node prisma/seed.ts",
     "db:verify-audit-triggers": "ts-node prisma/verify-audit-triggers.ts",
-    "docs:generate": "npx compodoc -p tsconfig.json -d docs",
-    "docs:json": "npx compodoc -p tsconfig.json -d docs -e json",
+    "docs:generate": "npx compodoc -p tsconfig.build.json -d docs",
+    "docs:json": "npx compodoc -p tsconfig.build.json -d docs -e json",
     "update:readme": "node scripts/update-readme.js",
-    "docs:serve": "npx compodoc -s -d docs",
+    "docs:serve": "npx compodoc -p tsconfig.build.json -s -d docs",
     "docs:rebuild": "pnpm run docs:generate && pnpm run docs:serve",
     "docs:update-readme": "pnpm run docs:json && pnpm run update:readme",
+    "docs:all": "pnpm run docs:generate && pnpm run docs:json && pnpm run update:readme",
     "test:ci": "jest --coverage --ci --maxWorkers=2",
     "release:dry": "semantic-release --dry-run --no-ci"
   },
@@ -97,7 +98,6 @@
     "passport-jwt": "^4.0.1",
     "pdfmake": "^0.3.9",
     "pino-pretty": "^13.0.0",
-    "read-pkg-up": "^11.0.0",
     "reflect-metadata": "^0.2.2",
     "rxjs": "^7.8.1",
     "socket.io": "^4.8.4",
@@ -151,8 +151,7 @@
     "ts-node": "^10.9.2",
     "tsconfig-paths": "^4.2.0",
     "typescript": "^5.7.3",
-    "typescript-eslint": "^8.20.0",
-    "update-readme": "^1.0.4"
+    "typescript-eslint": "^8.20.0"
   },
   "pnpm": {
     "onlyBuiltDependencies": [
