@@ -4,7 +4,7 @@ import { WsException } from '@nestjs/websockets';
 import type { Socket } from 'socket.io';
 import { APP_CONFIG, AppConfigType } from '@core/config/config-loader';
 import { CryptoHelper } from '@common/helpers/crypto-helpers';
-import { IJwtPayload } from '@api/auth/interfaces/jwt-payload.interface';
+import { IJwtPayload } from '@common/interfaces/jwt-payload.interface';
 import { JwtStrategy } from '@modules/auth/strategies/jwt.strategy';
 import { IUserDataOnJwt } from '@modules/auth/interfaces/user-data-on-jwt.interface';
 

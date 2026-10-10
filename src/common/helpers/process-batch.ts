@@ -1,4 +1,4 @@
-import { StorageExecutionOptions } from '@modules/storage/interfaces/storage.interface';
+import { ExecutionOptions } from '@common/interfaces/execution-options.interface';
 import {
   ServiceUnavailableException,
   BadRequestException,
@@ -7,7 +7,7 @@ import {
 export class ProcessBatchManager {
   async executeWithRetry<T>(
     operation: () => Promise<T>,
-    executionOptions?: StorageExecutionOptions,
+    executionOptions?: ExecutionOptions,
   ): Promise<T> {
     const retryAttempts = this.resolveRetryAttempts(
       executionOptions?.retryAttempts,

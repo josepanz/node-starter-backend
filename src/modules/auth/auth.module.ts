@@ -6,6 +6,7 @@ import { AuthService } from '@modules/auth/services/auth.service';
 import { AuthTokenService } from '@modules/auth/services/auth-token.service';
 import { AuthPasswordService } from '@modules/auth/services/auth-password.service';
 
+import { JwtStrategy, JwtRefreshStrategy } from '@modules/auth/strategies';
 import { CredentialsRepository } from '@modules/auth/repositories';
 
 @Module({
@@ -16,7 +17,9 @@ import { CredentialsRepository } from '@modules/auth/repositories';
     AuthPasswordService,
 
     CredentialsRepository,
+    JwtStrategy,
+    JwtRefreshStrategy,
   ],
-  exports: [AuthService, AuthTokenService, AuthPasswordService],
+  exports: [AuthService, AuthTokenService, AuthPasswordService, JwtStrategy],
 })
 export class AuthModule {}

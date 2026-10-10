@@ -4,7 +4,7 @@ import { UpdateUserRequestDTO } from '@api/users/dtos/request/update-user.reques
 import { ListUsersRequestDTO } from '@api/users/dtos/request/list-users.request.dto';
 import { BlockUserRequestDTO } from '@api/users/dtos/request/block-user.request.dto';
 import { UnblockUserRequestDTO } from '@api/users/dtos/request/unblock-user.request.dto';
-import { UpdateEditContextRequestDTO } from '@api/users/dtos/request/edit-context.request.dto';
+import { UpdateEditContextRequestDTO } from '@modules/users-db/dtos/edit-context.request.dto';
 import {
   UserResponseDTO,
   UserDetailResponseDTO,

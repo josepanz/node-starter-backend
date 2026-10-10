@@ -8,7 +8,7 @@ import {
 import { Permissions, Prisma } from '@prisma/client';
 import { PrismaDatasource } from '@core/database/services/prisma.service';
 import { PermissionsCacheService } from '@core/cache/permissions-cache.service';
-import { GetPermissionListQueryDTO } from '@api/roles-permission/dtos/request';
+import { GetPermissionListQueryDTO } from '@modules/roles-permission-db/dtos/get-permission.request';
 
 @Injectable()
 export class PermissionsDBService {

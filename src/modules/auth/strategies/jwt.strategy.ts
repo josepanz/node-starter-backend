@@ -4,7 +4,7 @@ import { ExtractJwt, Strategy } from 'passport-jwt';
 import { UsersDBService } from '@modules/users-db/services/users-db.service';
 import { APP_CONFIG, AppConfigType } from '@core/config/config-loader';
 import { ConfigType } from '@nestjs/config';
-import { IJwtPayload } from '@api/auth/interfaces';
+import { IJwtPayload } from '@common/interfaces/jwt-payload.interface';
 import { UserWithSecuritiesExtended } from '../types/user.types';
 import { PermissionsCacheService } from '@core/cache/permissions-cache.service';
 import { IUserDataOnJwt } from '../interfaces/user-data-on-jwt.interface';

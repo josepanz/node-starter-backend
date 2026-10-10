@@ -12,13 +12,14 @@ src/
 └── common/   transversal: decorators, dtos, enum, errors, events, filters, helpers, i18n, pipes, utils, validators
 ```
 
-La dependencia va en un solo sentido: `api -> modules -> core`, y `common` lo puede usar cualquiera. La regla es que `modules/` no importe de `api/` y que `core/` y `common/` no importen de `api/` ni de `modules/`. Hoy `core/` la cumple; hay excepciones conocidas en las otras dos capas (ver más abajo).
+La dependencia va en un solo sentido: `api -> modules -> core`, y `common` lo puede usar cualquiera. `modules/` no importa de `api/`, y `core/` y `common/` no importan de `api/` ni de `modules/`. Lo verifica `pnpm lint:layers` (`scripts/check-layers.js`, incluido en `pnpm lint`).
 
-Excepciones conocidas (deuda técnica, no son el modelo a seguir):
+Excepciones deliberadas (listadas en `ALLOWED` de `scripts/check-layers.js`):
 
-- `common/` importa de `modules/` y `api/` en 5 archivos (decoradores de guards de auth y consentimiento, `common/helpers/crypto-helpers.ts`, `common/helpers/process-batch.ts`, `common/validators/is-password-compliant.validator.ts`).
-- `modules/` importa de `api/` en 8 archivos, casi todos tipos o DTOs de auth y users (por ejemplo `modules/auth/strategies/jwt.strategy.ts` y `modules/email/services/email.service.ts`).
-- `api/storage/storage-api.service.ts` inyecta `PrismaDatasource` directamente. La convención de `AGENTS.md` pide que `api/` no lo haga.
+- `common/decorators/with-permissions.decorator.ts` y `requires-active-consent.decorator.ts` (y el spec del primero): decoradores compuestos que referencian los guards de `modules/auth` y `modules/legal-db`. Un decorador de composición necesita la clase concreta del guard.
+- `core/infra-wiring.spec.ts`: test de cableado que instancia módulos de dominio reales.
+
+Todo lo demás (tipos de JWT, política de contraseñas, opciones de ejecución por lotes, DTOs de consulta usados por servicios) vive en la capa más baja que lo necesita; los `index.ts` de `api/` los re-exportan cuando hace falta.
 
 ```mermaid
 flowchart LR

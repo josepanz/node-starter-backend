@@ -26,6 +26,13 @@ api  ->  modules  ->  core
 
 Un import que viola esa dirección es un error de diseño: la lógica está en la capa equivocada.
 
+Se verifica con `pnpm lint:layers` (`scripts/check-layers.js`, parte de `pnpm lint`). Si un tipo/DTO lo necesitan dos capas, va en la más baja que lo consume (`common/` o el módulo de dominio) y `api/` lo re-exporta.
+
+Excepciones deliberadas (únicas permitidas, definidas en `ALLOWED` del script):
+
+- `common/decorators/with-permissions.decorator.ts` (+ spec) y `common/decorators/requires-active-consent.decorator.ts`: decoradores compuestos que usan guards de `modules/auth` y `modules/legal-db`.
+- `core/infra-wiring.spec.ts`: test de cableado con módulos de dominio reales.
+
 ## `src/api/<feature>/`
 
 Traduce HTTP a dominio y no sabe de Prisma.

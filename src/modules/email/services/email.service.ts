@@ -11,7 +11,6 @@ import { ISendEmailOptions } from '@modules/email/interfaces/email.interface';
 import { CryptoHelper } from '@common/helpers/crypto-helpers';
 import { APP_CONFIG, AppConfigType } from '@core/config/config-loader';
 import { ConfigType } from '@nestjs/config';
-import { UserResponseDTO } from '@api/users/dtos/response/user.response.dto';
 import { Users } from '@prisma/client';
 import { EmailTypeEnum } from '@modules/email/enum/email-type.enum';
 import {
@@ -96,7 +95,7 @@ export class EmailService {
           {
             sub: String(user.id),
             email: user.email,
-            user: user as UserResponseDTO,
+            user,
           },
           'RS256',
           this.configService.authentication.tempTokenExpires,

@@ -27,7 +27,7 @@ import { User } from '@common/decorators/user.decorator';
 import { TenantContext } from '@modules/auth/decorators/get-tenant-context.decorator';
 import { ITenantContext } from '@common/interfaces/tenant-context.interface';
 import { PERMISSIONS } from '@common/enum/permissions.enum';
-import { UpdateEditContextRequestDTO } from '@api/users/dtos/request/edit-context.request.dto';
+import { UpdateEditContextRequestDTO } from '@modules/users-db/dtos/edit-context.request.dto';
 import {
   GetEditContextResponseDTO,
   UpdateEditContextResponseDTO,

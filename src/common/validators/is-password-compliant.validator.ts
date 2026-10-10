@@ -7,7 +7,7 @@ import {
   passwordPolicyFromEnv,
   PasswordPolicy,
   validatePasswordPolicy,
-} from '@modules/auth/helpers/password-policy.helper';
+} from '@common/helpers/password-policy.helper';
 
 /**
  * Patrón: adapter de class-validator sobre el helper puro. Sin `policy` explícita lee la

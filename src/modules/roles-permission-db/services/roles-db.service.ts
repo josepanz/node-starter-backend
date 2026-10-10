@@ -8,7 +8,7 @@ import {
 import { Roles, Prisma } from '@prisma/client';
 import { PrismaDatasource } from '@core/database/services/prisma.service';
 import { PermissionsCacheService } from '@core/cache/permissions-cache.service';
-import { GetRoleListQueryDTO } from '@api/roles-permission/dtos/request/get-role.request';
+import { GetRoleListQueryDTO } from '@modules/roles-permission-db/dtos/get-role.request';
 import { RolePermissionsDBService } from './role-permissions-db.service';
 
 @Injectable()

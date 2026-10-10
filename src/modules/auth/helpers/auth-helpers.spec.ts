@@ -2,7 +2,7 @@ import {
   DEFAULT_PASSWORD_POLICY,
   passwordPolicyFromEnv,
   validatePasswordPolicy,
-} from './password-policy.helper';
+} from '@common/helpers/password-policy.helper';
 import {
   computePasswordExpiration,
   daysUntilPasswordExpiration,

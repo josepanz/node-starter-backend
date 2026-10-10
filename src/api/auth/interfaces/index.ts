@@ -1,2 +1,2 @@
 export * from './authenticated-request.interface';
-export * from './jwt-payload.interface';
+export * from '@common/interfaces/jwt-payload.interface';

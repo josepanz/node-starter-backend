@@ -10,7 +10,7 @@ import {
 } from '@nestjs/common';
 import { ConfigType } from '@nestjs/config';
 import { APP_CONFIG, AppConfigType } from '@core/config/config-loader';
-import { validatePasswordPolicy } from '@modules/auth/helpers/password-policy.helper';
+import { validatePasswordPolicy } from '@common/helpers/password-policy.helper';
 import {
   computePasswordExpiration,
   isPasswordExpired,
