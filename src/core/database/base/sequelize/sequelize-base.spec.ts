@@ -1,3 +1,4 @@
+import { Logger } from '@nestjs/common';
 import { Model } from '@sequelize/core';
 import {
   createFakeTransaction,
@@ -187,6 +188,23 @@ describe('SequelizeBaseService', () => {
     await expect(service.findByPk(3)).resolves.toBe('pk');
     expect(repository.findAll).toHaveBeenCalledWith({ a: 1 }, {});
     expect(repository.bulkCreate).toHaveBeenCalledWith([{ n: 1 }], {});
+  });
+
+  it('las operaciones rutinarias loguean en debug y no en warn', async () => {
+    const logger = (service as unknown as { logger: Logger }).logger;
+    const debug = jest
+      .spyOn(logger, 'debug')
+      .mockImplementation(() => undefined);
+    const warn = jest.spyOn(logger, 'warn').mockImplementation(() => undefined);
+    repository.bulkUpdate.mockResolvedValue(1);
+    await service.findOne({ a: 1 });
+    await service.findAll({ a: 1 });
+    await service.createOne({ n: 1 });
+    await service.bulkCreate([{ n: 1 }]);
+    await service.update({ b: 1 }, { where: { a: 1 } });
+    await service.delete({ a: 1 });
+    expect(debug).toHaveBeenCalledTimes(6);
+    expect(warn).not.toHaveBeenCalled();
   });
 
   it('update delega en bulkUpdate y devuelve filas afectadas', async () => {
