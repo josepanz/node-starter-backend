@@ -7,11 +7,12 @@ Requisitos: Node 22, pnpm 10 y Docker. Tras `pnpm install`, la app levanta local
 ```bash
 docker compose up -d
 cp .env.template .env
-pnpm prisma migrate deploy && pnpm prisma db seed
-pnpm start:dev
+pnpm prisma migrate deploy && pnpm prisma db seed   # 2 migraciones (init + audit_triggers); el seed es idempotente
+pnpm db:verify-audit-triggers                      # opcional: cobertura de triggers de auditoría
+pnpm start:dev                                     # o `pnpm build && pnpm start:prod`
 ```
 
-La API queda en `http://localhost:3000/node-starter-backend/api` (Swagger en `/swagger`, salud en `/v1/healthcheck`). `docker compose up -d` levanta postgres, redis, mongo, mailpit y seq; solo postgres es necesario: Redis, Mongo, SMTP y Seq se activan completando su variable en `.env` (`REDIS_URL`, `MONGO_URI`, `EMAIL_HOST`/`EMAIL_PORT`, `SEQ_ENABLED`), y sin ellas cada módulo usa su fallback.
+La API queda en `http://localhost:3000/node-starter-backend/api` (Swagger en `/swagger`, salud en `/v1/healthcheck`). `docker compose up -d` levanta postgres, redis, mongo, mailpit y seq; solo postgres es necesario: Redis, Mongo, SMTP y Seq se activan completando su variable en `.env` (`REDIS_URL`, `MONGO_URI`, `EMAIL_HOST`/`EMAIL_PORT`, `SEQ_ENABLED`), y sin ellas cada módulo usa su fallback. `DATABASE_CONNECTION_STRING` (DB2/Sequelize) también es opcional: vacía, ese módulo no se registra. `APP_TIMEZONE` (default UTC) fija la zona de las fechas del healthcheck. El usuario demo del seed no tiene contraseña (se activa por `create-password`) y las rutas de auth exigen Basic Auth con el cliente M2M demo del seed.
 
 ## Plataformas de CI soportadas
 
@@ -88,7 +89,7 @@ Implementá `IJobHandler` (`src/modules/jobs/interfaces/job-handler.interface.ts
 
 ### Una migración
 
-`pnpm prisma migrate dev --name <nombre>`. Sin base disponible, generá el SQL con `prisma migrate diff` (ver [`.context/rules/database-conventions.md`](.context/rules/database-conventions.md)). Las tablas auditables necesitan su trigger: `pnpm db:verify-audit-triggers` lo verifica.
+`pnpm prisma migrate dev --name <nombre>` (el SQL manual que Prisma no modela vive en `audit_triggers`). Sin base disponible, generá el SQL con `prisma migrate diff` (ver [`.context/rules/database-conventions.md`](.context/rules/database-conventions.md)). Las tablas auditables necesitan su trigger: `pnpm db:verify-audit-triggers` lo verifica.
 
 ## Specs de cambios grandes
 
