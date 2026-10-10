@@ -5,7 +5,7 @@
  * audit-log:read, legal:* y ai-disclosure:*, documentos legales TERMS/PRIVACY v1 activos,
  * políticas de retención demo,
  * y una credencial M2M demo (ver DEMO_API_CLIENT).
- * No crea credenciales: el usuario demo se activa por el flujo normal de contraseña.
+ * El usuario demo recibe una contraseña DEMO hasheada (ver DEMO_USER_PASSWORD), solo desarrollo.
  * Uso: `pnpm seed`
  */
 import {
@@ -91,6 +91,10 @@ const DEMO_API_CLIENT = {
   rateLimitPerMinute: 30,
 };
 
+// Contraseña DEMO del usuario demo. SOLO desarrollo local (se guarda hasheada con bcrypt);
+// cumple la política por defecto. En cualquier otro entorno rotarla por el flujo de contraseña.
+const DEMO_USER_PASSWORD = 'DemoPass1234';
+
 const DEMO_ORDERS = [
   {
     referenceId: '00000000-0000-4000-8000-000000000001',
@@ -171,6 +175,19 @@ async function main(): Promise<void> {
     update: {},
     create: { userId: user.id, roleId: role.id, createdBy: SEED_USER },
   });
+
+  // Idempotente: solo crea la credencial si el usuario aún no tiene ninguna (no pisa rotaciones).
+  const existingCredential = await prisma.userCredentials.findFirst({
+    where: { userId: user.id },
+  });
+  if (!existingCredential) {
+    await prisma.userCredentials.create({
+      data: {
+        userId: user.id,
+        passwordHash: await bcrypt.hash(DEMO_USER_PASSWORD, 10),
+      },
+    });
+  }
 
   const adminPermissions = await Promise.all(
     ADMIN_DEMO_PERMISSIONS.map((name) =>
