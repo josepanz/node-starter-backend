@@ -47,15 +47,23 @@ import { registerUppercaseHooks } from '@core/database/helpers/sequelize-registe
               configService: ConfigType<AppConfigType>,
               databaseHelper: DatabaseHelper,
             ) => {
+              // Descubre las `*.entity.{js,ts}` bajo src/ (o dist/); ver DatabaseHelper.
               const models = await databaseHelper.loadModels(__dirname);
+              const { connectionString, pool, queryTimeoutSec } =
+                configService.database;
               return {
                 type: 'db2',
                 options: {
-                  odbcConnectionString:
-                    configService?.database?.connectionString ?? '',
+                  odbcConnectionString: connectionString,
+                  // QueryTimeout se agrega al connection string dentro de SequelizeService.
+                  queryTimeoutSec,
+                  pool: {
+                    max: pool.max,
+                    min: pool.min,
+                    acquire: pool.acquireMs,
+                    idle: pool.idleMs,
+                  },
                 },
-                //FIXME: Workaround temporal en database.helper.ts usando fast-glob
-                // models: await importModels(__dirname + '/**/*.entity.{ts,js}'),
                 models,
                 registerHooks(models) {
                   registerUppercaseHooks(models);

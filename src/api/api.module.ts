@@ -16,6 +16,8 @@ import { AccountApiModule } from '@api/account/account-api.module';
 import { AiDisclosureApiModule } from '@api/ai-disclosure/ai-disclosure-api.module';
 import { AuditLogsApiModule } from '@api/audit-logs/audit-logs-api.module';
 import { ActivityLogsApiModule } from '@api/activity-logs/activity-logs-api.module';
+import { CatalogRawApiModule } from '@api/catalog-raw/catalog-raw-api.module';
+import { CatalogOrmApiModule } from '@api/catalog-orm/catalog-orm-api.module';
 
 @Module({
   imports: [
@@ -36,6 +38,9 @@ import { ActivityLogsApiModule } from '@api/activity-logs/activity-logs-api.modu
     AiDisclosureApiModule,
     AuditLogsApiModule,
     ActivityLogsApiModule,
+    // DEMO DB2/Sequelize (503 claro si DATABASE_CONNECTION_STRING está vacío)
+    CatalogRawApiModule,
+    CatalogOrmApiModule,
   ],
 })
 export class ApiModule {}

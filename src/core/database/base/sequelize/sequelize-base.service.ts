@@ -142,7 +142,7 @@ export abstract class SequelizeBaseService<
    * @param id De la entidad a retornar
    * @returns Entidad
    */
-  async findByPk(id: number): Promise<TModel | null> {
+  async findByPk(id: number | string): Promise<TModel | null> {
     return await this.repository.findByPk(id);
   }
 }

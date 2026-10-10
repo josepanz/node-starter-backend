@@ -1,32 +1,39 @@
-// raw-query-executor.service.ts
-import { Injectable, Inject } from '@nestjs/common';
-import { QueryOptions, Transaction, QueryTypes } from '@sequelize/core';
-import { DatabaseConnections } from '@core/database/enum/database.enum'; // Asegúrate de que esta ruta sea correcta
-import { SequelizeService } from '@core/database/services/sequelize.service'; // Asegúrate de que esta ruta sea correcta
+import { Injectable, Inject, Logger } from '@nestjs/common';
+import {
+  QueryOptions,
+  QueryTypes,
+  Transaction,
+  TransactionOptions,
+} from '@sequelize/core';
+import { DatabaseConnections } from '@core/database/enum/database.enum';
+import { SequelizeService } from '@core/database/services/sequelize.service';
 
 /**
- * Interfaz para las opciones de consulta que acepta el método query de Sequelize.
+ * Opciones de consulta que acepta el método query de Sequelize (subconjunto usado por el starter).
  */
 export type IRawQueryOptions = {
-  // Los tipos de consulta más comunes (SELECT, INSERT, UPDATE, DELETE, etc.)
+  // SELECT, INSERT, UPDATE, DELETE, BULKUPDATE, RAW...
   type?: QueryTypes;
   // Transacción opcional para ejecutar la query dentro de ella
   transaction?: Transaction;
-  // Opciones de reemplazo para placeholders (:nombre) o (?)
+  // Placeholders `:nombre` (objeto) o `?` (array). INTERPOLA el valor en el texto SQL.
   replacements?: Record<string, unknown> | unknown[];
+  // Parámetros reales `$1`, `$2` (array) o `$nombre` (objeto). Obligatorio para payloads grandes.
+  bind?: Record<string, unknown> | unknown[];
+  // Devuelve solo la primera fila (`T | null`) en vez de un array
+  plain?: boolean;
   // Si Sequelize debe imprimir el SQL en la consola
   logging?: boolean;
 };
 
 /**
- * Servicio genérico para ejecutar consultas SQL crudas directamente.
- * Esto es útil para consultas complejas, optimizaciones o dialectos específicos
- * que Sequelize no maneja bien de forma declarativa (como DB2/AS400).
+ * Patrón: Facade/Adapter sobre `sequelize.query` para SQL crudo (SP, TVF, JSON_TABLE, SQL específico
+ * del dialecto que el ORM no expresa bien). Una instancia por conexión: la default se inyecta por
+ * clase y las nombradas con `@InjectRawQueryExecutor(connectionName)`.
  */
 @Injectable()
 export class RawQueryExecutorService {
   constructor(
-    // Inyectamos el servicio de Sequelize que ya tienes
     @Inject(DatabaseConnections.DEFAULT)
     private readonly dbService: SequelizeService,
   ) {}
@@ -36,35 +43,62 @@ export class RawQueryExecutorService {
    *
    * @template T El tipo del objeto o array de objetos que esperas como resultado.
    * @param sqlQuery La cadena SQL a ejecutar.
-   * @param options Opciones de la consulta (transaction, replacements, type, etc.).
-   * @returns Una promesa que resuelve con el resultado de la consulta.
+   * @param options Opciones de la consulta (transaction, replacements, bind, type, plain).
+   * @returns Una promesa que resuelve con el resultado de la consulta (con `plain: true`, `T | null`).
    */
   async executeRawQuery<T = unknown[]>(
     sqlQuery: string,
     options: IRawQueryOptions = {},
   ): Promise<T> {
-    const defaultOptions: QueryOptions = {
-      // Por defecto, usa SELECT para la mayoría de los casos de lectura
-      type: options.type || QueryTypes.SELECT,
+    const queryOptions: QueryOptions = {
+      // Por defecto SELECT: en el dialecto IBM i también devuelve el result set de CALL y TABLE(...)
+      type: options.type ?? QueryTypes.SELECT,
       transaction: options.transaction,
       replacements: options.replacements,
-      logging: false,
+      bind: options.bind,
+      plain: options.plain,
+      logging: options.logging
+        ? (sql: string) => Logger.debug(sql, RawQueryExecutorService.name)
+        : false,
     };
 
-    // La función query de Sequelize devuelve un array de [results, metadata]
     const results = await this.dbService
       .getInstance()
-      .query(sqlQuery, defaultOptions);
+      .query(sqlQuery, queryOptions);
 
-    // Tipamos y retornamos solo los resultados (el primer elemento del array)
     return results as T;
   }
 
   /**
-   * Metodo que inicia la transaccion para meter las ejecuciones sql en este bloque
-   * @returns Transaction
+   * Ejecuta un UPDATE/DELETE y devuelve las filas afectadas.
+   * Con `QueryTypes.BULKUPDATE` es el único camino que devuelve el conteo como número en el dialecto
+   * IBM i; sin `type` el driver devuelve `[[], []]` y `Number(resultado)` da siempre 0.
    */
-  async beginTransaction(): Promise<Transaction> {
-    return await this.dbService.getInstance().startUnmanagedTransaction();
+  async executeAffectedRows(
+    sqlQuery: string,
+    options: Omit<IRawQueryOptions, 'type' | 'plain'> = {},
+  ): Promise<number> {
+    const affected = await this.executeRawQuery<number | undefined>(sqlQuery, {
+      ...options,
+      type: QueryTypes.BULKUPDATE,
+    });
+    return Number(affected ?? 0);
+  }
+
+  /**
+   * Transacción administrada (commit/rollback automáticos) sobre la conexión de este executor.
+   */
+  async transaction<T>(
+    fn: (tx: Transaction) => PromiseLike<T> | T,
+    options?: TransactionOptions,
+  ): Promise<T> {
+    return this.dbService.transaction(fn, options);
+  }
+
+  /**
+   * Inicia una transacción manual: quien la abre debe llamar `commit()`/`rollback()`.
+   */
+  async beginTransaction(options?: TransactionOptions): Promise<Transaction> {
+    return await this.dbService.beginTransaction(options);
   }
 }

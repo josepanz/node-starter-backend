@@ -47,6 +47,13 @@ export const PERMISSIONS = {
     CREATE: 'legal:create',
     UPDATE: 'legal:update',
   },
+  // DEMO DB2/Sequelize: catálogo (raw query y ORM tipado)
+  CATALOG: {
+    CREATE: 'catalog:create',
+    READ: 'catalog:read',
+    UPDATE: 'catalog:update',
+    DELETE: 'catalog:delete',
+  },
   AUDIT_LOG: {
     READ: 'audit-log:read',
   },

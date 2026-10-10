@@ -241,6 +241,13 @@ export const APP_CONFIG = registerAs('config', () => {
     },
     database: {
       connectionString: text(process.env.DATABASE_CONNECTION_STRING),
+      pool: {
+        max: num(process.env.DB2_POOL_MAX, 10),
+        min: num(process.env.DB2_POOL_MIN, 2),
+        acquireMs: num(process.env.DB2_POOL_ACQUIRE_MS, 30000),
+        idleMs: num(process.env.DB2_POOL_IDLE_MS, 10000),
+      },
+      queryTimeoutSec: num(process.env.DB2_QUERY_TIMEOUT_SECONDS, 30),
     },
     s3: {
       accessKeyId: process.env.S3_ACCESS_KEY_ID,

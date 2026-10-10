@@ -33,6 +33,13 @@ export const configSchema = Joi.object({
   DATABASE_URL: Joi.string().required(),
   // DB2/Sequelize (opcional): sin esta variable no se registra el módulo Sequelize y la app arranca igual
   DATABASE_CONNECTION_STRING: Joi.string().allow('').optional(),
+  // Pool DB2: cada conexión es un job en el servidor IBM i (coordinar con sysadmin antes de subir max)
+  DB2_POOL_MAX: Joi.number().integer().min(1).default(10),
+  DB2_POOL_MIN: Joi.number().integer().min(0).default(2),
+  DB2_POOL_ACQUIRE_MS: Joi.number().integer().min(1).default(30000),
+  DB2_POOL_IDLE_MS: Joi.number().integer().min(1).default(10000),
+  // QueryTimeout (s) agregado al connection string si no viene en él; 0 = sin tope
+  DB2_QUERY_TIMEOUT_SECONDS: Joi.number().integer().min(0).default(30),
 
   // EMAIL: sin EMAIL_HOST se usa ConsoleEmailSender (solo loguea, no envía)
   EMAIL_HOST: Joi.string().allow('').optional(),

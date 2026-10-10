@@ -2,7 +2,7 @@
  * Seed idempotente (upsert) con datos DEMO del dominio genérico `orders`:
  * permisos order:*, un rol, un usuario demo y 3 órdenes en distintos estados.
  * Además el rol ADMIN_DEMO con permisos job:*, message:*, notification:*, api-client:*,
- * audit-log:read, legal:* y ai-disclosure:*, documentos legales TERMS/PRIVACY v1 activos,
+ * audit-log:read, legal:*, ai-disclosure:* y catalog:*, documentos legales TERMS/PRIVACY v1 activos,
  * políticas de retención demo,
  * y una credencial M2M demo (ver DEMO_API_CLIENT).
  * El usuario demo recibe una contraseña DEMO hasheada (ver DEMO_USER_PASSWORD), solo desarrollo.
@@ -46,6 +46,11 @@ const ADMIN_DEMO_PERMISSIONS = [
   'ai-disclosure:create',
   'ai-disclosure:read',
   'ai-disclosure:update',
+  // DEMO DB2/Sequelize: catálogo (raw query y ORM tipado)
+  'catalog:create',
+  'catalog:read',
+  'catalog:update',
+  'catalog:delete',
 ];
 
 // Documentos legales v1 (texto DEMO; reemplazar por el real y publicar versiones vía API).
