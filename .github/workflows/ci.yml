@@ -107,9 +107,16 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
-      - name: Nombre de imagen en minusculas
+      # Nombre en minusculas y slug del ref (equivalente a CI_COMMIT_REF_SLUG de GitLab): un tag de
+      # Docker no admite "/", y en PRs el ref es "<n>/merge" y en ramas "feat/<nombre>".
+      - name: Nombre de imagen y slug del ref
         id: image
-        run: echo "name=ghcr.io/${GITHUB_REPOSITORY,,}" >> "$GITHUB_OUTPUT"
+        env:
+          REF_NAME: ${{ github.head_ref || github.ref_name }}
+        run: |
+          slug="$(echo "${REF_NAME,,}" | sed -E 's/[^a-z0-9._-]+/-/g; s/^[-.]+//; s/-+$//' | cut -c1-63)"
+          echo "name=ghcr.io/${GITHUB_REPOSITORY,,}" >> "$GITHUB_OUTPUT"
+          echo "slug=${slug:-ref}" >> "$GITHUB_OUTPUT"
 
       - uses: docker/setup-buildx-action@v3
 
@@ -127,7 +134,7 @@ jobs:
           push: ${{ env.PUBLISH == 'true' }}
           platforms: linux/amd64
           tags: |
-            ${{ steps.image.outputs.name }}:${{ github.ref_name }}-latest
+            ${{ steps.image.outputs.name }}:${{ steps.image.outputs.slug }}-latest
             ${{ steps.image.outputs.name }}:${{ github.sha }}
           cache-from: type=gha
           cache-to: type=gha,mode=max
