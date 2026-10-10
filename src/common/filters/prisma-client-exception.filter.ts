@@ -8,17 +8,25 @@ import {
 import { Prisma } from '@prisma/client';
 import { Response } from 'express';
 
-// CRÍTICO: Se deben agregar ambos tipos en el decorador para que NestJS los intercepte
-@Catch(Prisma.PrismaClientKnownRequestError, Prisma.PrismaClientValidationError)
+/**
+ * Patrón: decorator de filtros (chain of responsibility), mismo esquema que
+ * TransientConnectionExceptionFilter. Traduce errores Prisma conocidos/de validación a HTTP;
+ * todo lo demás se delega al filtro fallback. Cadena en main.ts: transient 503 -> prisma -> all.
+ */
+@Catch()
 export class PrismaClientExceptionFilter implements ExceptionFilter {
   private readonly logger = new Logger(PrismaClientExceptionFilter.name);
 
-  catch(
-    exception:
-      | Prisma.PrismaClientKnownRequestError
-      | Prisma.PrismaClientValidationError,
-    host: ArgumentsHost,
-  ) {
+  constructor(private readonly fallback: ExceptionFilter) {}
+
+  catch(exception: unknown, host: ArgumentsHost) {
+    if (
+      !(exception instanceof Prisma.PrismaClientKnownRequestError) &&
+      !(exception instanceof Prisma.PrismaClientValidationError)
+    ) {
+      this.fallback.catch(exception, host);
+      return;
+    }
     const ctx = host.switchToHttp();
     const response = ctx.getResponse<Response>();
     const message = exception.message.replace(/\n/g, '');

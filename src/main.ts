@@ -14,6 +14,7 @@ import { ObservabilityInterceptor } from '@core/observability/observability.inte
 import { AllExceptionsFilter } from '@core/global-filters/http-exception.filter';
 import { SentryReporterService } from '@core/observability/sentry-reporter.service';
 import { TransientConnectionExceptionFilter } from '@common/filters/transient-connection-exception.filter';
+import { PrismaClientExceptionFilter } from '@common/filters/prisma-client-exception.filter';
 import * as express from 'express';
 import { RedisIoAdapter } from '@modules/realtime/redis-io.adapter';
 import { join } from 'path';
@@ -40,8 +41,11 @@ async function bootstrap() {
 
   app.useGlobalInterceptors(app.get(ObservabilityInterceptor));
   app.useGlobalFilters(
+    // Orden de la cadena: transient (503 + Retry-After) -> prisma (P2xxx -> HTTP) -> all (fallback)
     new TransientConnectionExceptionFilter(
-      new AllExceptionsFilter(app.get(SentryReporterService)),
+      new PrismaClientExceptionFilter(
+        new AllExceptionsFilter(app.get(SentryReporterService)),
+      ),
     ),
   );
 
